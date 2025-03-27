@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyft Driver App - DART | Dario Fidanza</title>
+    <meta name="description" content="Accident Reporting Tool on Lyft's Driver App">
+    <link rel="stylesheet" href="../ea-design-system/assets/public/css/styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="project-header">
+        <div class="container">
+            <h1>Lyft Driver App - DART</h1>
+            <p class="subtitle">Accident Reporting Tool on Lyft's Driver App</p>
+        </div>
+    </header>
+
+    <main class="project-content">
+        <div class="container">
+            <img src="../../@Assets/lyft-driver-app/hero.jpg" alt="Lyft Driver App DART Interface" class="hero-image">
+
+            <section class="project-intro">
+                <h2>More Empathy for Drivers and Efficiency for Agents</h2>
+                <p>Pre-COVID19, about 60% of accidents are reported by Drivers (~1300 per week), and 35% of the total accident reports are submitted on Driver In-app Accident Reporting (~750 per week).</p>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <h3>Role</h3>
+                        <p>Lead Product Designer: Interface & experience. Supervised contractor support. Worked closely with the Engineer Manager, Project Manager and Developers.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h3>Tools</h3>
+                        <p>Docs, Figma, RMIS [Back-end System]</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="project-problem">
+                <h2>The Problem</h2>
+                <ul>
+                    <li>One third of the accidents reported via in-app are false negatives, issues not supported by the Risk team.</li>
+                    <li>Over 90% of the reports required agents to confirm data, and correct the report manually. On the contrary phone reported accidents are accurate.</li>
+                    <li>Data showed that in-app usage of accidents reporting is low, drivers prefer to call our agents by phone instead. Qualitative experiments highlighted that drivers are confused by the app, takes too long to fill the report manually and are unsatisfied with the experience.</li>
+                </ul>
+            </section>
+
+            <section class="project-constraints">
+                <h2>Constraints</h2>
+                <div class="constraint-item">
+                    <h3>Sensitivity using wording and imagery</h3>
+                    <p>Drivers using our in-app feature to report accidents require extreme empathy. We need to showcase compassion, care, and support as they may be still in shock from an accident, loss, injury, stressing about financial outcomes, and/or loss of livelihood if their car is deactivated.</p>
+                </div>
+                <div class="constraint-item">
+                    <h3>Avoiding time consuming flows</h3>
+                    <p>Users may be in a hurry, irritated or dishearten to complete lengthy forms.</p>
+                </div>
+                <div class="constraint-item">
+                    <h3>Clarity on form requirements</h3>
+                    <p>Humans are prone to errors, data needs to be stored cleanly in the back end.</p>
+                </div>
+            </section>
+
+            <section class="project-process">
+                <h2>Understanding the Process</h2>
+                <img src="../../@Assets/lyft-driver-app/process.jpg" alt="Process Flow Diagram" class="full-width-image">
+                <p>In order to understand where we could improve with efficiencies, we observed agents and read submitted reports to understand what the current flow looked like on both sides of the process.</p>
+                <p>We later interviewed agents to understand what their pain points were.</p>
+                <p>When sessions ended, we collated the data into a user journey that helped us highlight opportunities on how to to improve the flow.</p>
+                
+                <img src="../../@Assets/lyft-driver-app/user-journey.jpg" alt="User Journey Map" class="full-width-image">
+            </section>
+
+            <section class="project-opportunities">
+                <h2>Opportunities</h2>
+                
+                <div class="opportunity-group">
+                    <h3>Drivers</h3>
+                    <blockquote>
+                        "Drivers need the reporting process to be painless, simple and fast. Drivers need clarity about what constitutes an accident so that they may report the correct type of issue in-app without doubts. Drivers need to be redirected to the correct flow when they learn this tool is not what they need."
+                    </blockquote>
+                    <ul>
+                        <li>Provide the best user experience for accident reporting to encourage more drivers to report accidents in-app, easier, faster and safely.</li>
+                        <li>Focus on the absolute most necessary information to fill in.</li>
+                        <li>Transparency: Drivers will be able to submit accident reports in a timely manner, and get a resolution for their case faster.</li>
+                        <li>Simplicity, make a stressful situation effortless.</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-group">
+                    <h3>Agents</h3>
+                    <blockquote>
+                        "Agents need a fully completed form to eliminate the need for phone calls requesting missing information from the driver and expedite the claim handling process, improving their productivity and saving Lyft money and getting drivers back on the road faster, making Lyft money."
+                    </blockquote>
+                    <ul>
+                        <li>Providing smart data form autocomplete and auto validation will minimize the need for associate's manual validation and follow ups, effectively increasing productivity.</li>
+                        <li>Speed: the faster tasks are completed the fastest the case gets to a resolution.</li>
+                        <li>Trust in the data: Human review not always required, reliable or efficient</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="project-solutions">
+                <h2>Solutions</h2>
+                <p>The final experience iterated in a few key areas:</p>
+                <ul>
+                    <li>Improved language communication and iconography. More clear definition of what constitutes an accident to lower false positives.</li>
+                    <li>Telematic data captured from drivers' phones autocompletes fields minimizing calls from agents to confirm manually entered user data.</li>
+                    <li>Trim unnecessary fields, add necessary ones to minimize also help agents verify and process forms.</li>
+                    <li>Added in-line validation and conditional fields with progressive disclosure to help drivers complete the form faster and lower error rates.</li>
+                </ul>
+
+                <div class="solution-detail">
+                    <h3>Entry Point Improvements</h3>
+                    <img src="../../@Assets/lyft-driver-app/entry-point.jpg" alt="Entry Point Interface" class="solution-image">
+                    <p>To reduce 1/3 false-positives reports, the wording was changed so that drivers understand this main purpose of this flow: to report car accidents. If they were attempting to report another type of issue, such as rider throwing up in the car, the secondary CTA will guide them to the proper flow.</p>
+                </div>
+
+                <div class="solution-detail">
+                    <h3>Narrow Answers Scope</h3>
+                    <img src="../../@Assets/lyft-driver-app/accident-cause.jpg" alt="Accident Cause Selection" class="solution-image">
+                    <p>To make the information requested more clear, avoid incorrect answers, and help organize the data storage, instructions in the prompts had been reworded. With the help of the 'accident cause selector' we help our agents process the claim properly and gauge budget allocation more accurately.</p>
+                </div>
+
+                <div class="solution-detail">
+                    <h3>Smarter Locator Selector</h3>
+                    <img src="../../@Assets/lyft-driver-app/navigation-screen.jpg" alt="Location Selection Interface" class="solution-image">
+                    <p>In the old version, the default location was set to where the driver was when they open the in-app reporting tool. Drivers would often list a random city or state, sometimes by mistake or often to just be able to submit the report, this created misdirecting our claims to the incorrect insurance partner.</p>
+                    <p>In the new version, the location will default to the ride if historical, or if at the scene, default to the current location. Also with the addition of the map typeahead list, users have the ability to search and narrow down to a location faster, improving their experience.</p>
+                </div>
+
+                <div class="solution-detail">
+                    <h3>Damage Selector Improvements</h3>
+                    <img src="../../@Assets/lyft-driver-app/damage-selector.jpg" alt="Damage Selection Interface" class="solution-image">
+                    <p>The damage selector tool now includes primary and secondary damage fields, essential information that helps our agents to decide if a car requires deactivation. We also added an option to clarify if no areas were impacted, allowing users to properly report accidents that may include injuries or property damage but no car damage.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="project-footer">
+        <div class="container">
+            <p>© 2024 Dario Fidanza. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

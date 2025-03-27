@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Dario Fidanza</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --primary: 210 40% 98%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 212.7 26.8% 83.9%;
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: hsl(var(--background));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        main {
+            margin-top: 4rem;
+            min-height: calc(100vh - 4rem);
+        }
+
+        .project-card {
+            background-size: cover;
+            background-position: center;
+            min-height: 320px;
+        }
+
+        /* Individual project card backgrounds */
+        .project-card[data-project="creative-tonic-agency"] {
+            background-image: url('Assets/Projects/creative-tonic-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-design-system"] {
+            background-image: url('Assets/Projects/ea-design-system-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-digital-workspace"] {
+            background-image: url('Assets/Projects/ea-digital-workspace-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-learning-management"] {
+            background-image: url('Assets/Projects/ea-learning-thumb.jpg');
+        }
+
+        .project-card[data-project="forkright-brand"] {
+            background-image: url('Assets/Projects/forkright-thumb.jpg');
+        }
+
+        .project-card[data-project="fresh2design"] {
+            background-image: url('Assets/Projects/fresh2design-thumb.jpg');
+        }
+
+        .project-card[data-project="human-centered-design"] {
+            background-image: url('Assets/Projects/human-centered-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-driver-app"] {
+            background-image: url('Assets/Projects/lyft-driver-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-home-search"] {
+            background-image: url('Assets/Projects/lyft-home-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-rmis"] {
+            background-image: url('Assets/Projects/lyft-rmis-thumb.jpg');
+        }
+
+        .project-card[data-project="pmg-digital-marketing"] {
+            background-image: url('Assets/Projects/pmg-thumb.jpg');
+        }
+
+        .project-card[data-project="salesforce-crm"] {
+            background-image: url('Assets/Projects/salesforce-thumb.jpg');
+        }
+
+        /* Add to your existing project card backgrounds */
+        .project-card[data-project="instacart-tooling"] {
+            background-image: url('Assets/Projects/instacart-tooling-thumb.jpg');
+        }
+
+        .project-card[data-project="carrotwork"] {
+            background-image: url('Assets/Projects/carrotwork-thumb.jpg');
+        }
+
+        .project-card[data-project="partner-platform"] {
+            background-image: url('Assets/Projects/partner-platform-thumb.jpg');
+        }
+
+        .project-card[data-project="store-manager"] {
+            background-image: url('Assets/Projects/store-manager-thumb.jpg');
+        }
+
+        .project-card[data-project="shopper-northstar"] {
+            background-image: url('Assets/Projects/shopper-northstar-thumb.jpg');
+        }
+
+        /* Project card hover effects */
+        .project-card .overlay {
+            background: linear-gradient(to bottom, hsla(222.2, 84%, 4.9%, 0.9), rgba(48, 0, 115, 0.5));
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Content wrapper styles */
+        .project-card .content-wrapper {
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .project-card:hover .content-wrapper {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="max-w-[2000px] mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+            <!-- Left side links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="Index.html#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
+                <a href="Index.html#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
+                <a href="Index.html#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
+            </div>
+
+            <!-- Center logo -->
+            <a href="Index.html" class="flex items-center absolute left-1/2 transform -translate-x-1/2">
+                <img src="Assets/logo.svg" alt="Dario Fidanza" class="h-10 block dark:hidden">
+                <img src="Assets/LogoWhite.svg" alt="Dario Fidanza" class="h-10 hidden dark:block">
+            </a>
+
+            <!-- Right side social icons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-dribbble"></i>
+                </a>
+                <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-medium"></i>
+                </a>
+                <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-pinterest"></i>
+                </a>
+                <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                    <i class="bi bi-camera-fill"></i>
+                </a>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle dark mode">
+                    <i class="bi bi-sun-fill hidden dark:block text-lg"></i>
+                    <i class="bi bi-moon-fill block dark:hidden text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle mobile menu">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
+            <div class="container px-4 py-4">
+                <!-- Navigation links -->
+                <div class="flex flex-col space-y-4 mb-6">
+                    <a href="Index.html#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
+                    <a href="Index.html#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                    <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
+                    <a href="Index.html#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
+                </div>
+                
+                <!-- Social icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-dribbble"></i>
+                    </a>
+                    <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-medium"></i>
+                    </a>
+                    <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-pinterest"></i>
+                    </a>
+                    <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
+                        <i class="bi bi-camera-fill"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-[2000px] mx-auto px-4 md:px-6">
+        <div class="pt-8">
+            <h1 class="text-4xl font-bold mb-2">
+                <span class="line-through opacity-70">One</span> a few more things.
+            </h1>
+            <h3 class="text-base text-muted-foreground mb-8 max-w-2xl">
+                A collection of selected works showcasing my experience in design systems, user experience, and digital innovation.
+            </h3>
+            
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1. Instacart Tooling Design System -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="instacart-tooling">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Instacart Tooling Design System</h3>
+                            <p class="text-sm opacity-90 mt-2">0-1 component library design and development unifying Instacart Partner Portal, Ads Manager, Caper tooling, and Foodstorm platforms.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Coming Soon
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CarrotWork -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="carrotwork">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">CarrotWork</h3>
+                            <p class="text-sm opacity-90 mt-2">Advanced labor scheduling platform optimizing retail workforce management for order picking and delivery operations.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Coming Soon
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Instacart Partner Platform Pickup Onboarding -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="partner-platform">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Instacart Partner Platform Pickup Onboarding</h3>
+                            <p class="text-sm opacity-90 mt-2">Streamlined onboarding experience for retail partners integrating pickup services into their operations.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Coming Soon
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Instacart Store Manager App -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="store-manager">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Instacart Store Manager App</h3>
+                            <p class="text-sm opacity-90 mt-2">Retail management platform providing real-time order status tracking, cancellation handling, rapid shift scheduling, and comprehensive performance analytics.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Coming Soon
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Shopper App Northstar -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="shopper-northstar">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Shopper App Northstar</h3>
+                            <p class="text-sm opacity-90 mt-2">Next-generation shopper experience platform focusing on efficiency, earnings transparency, and user satisfaction.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Coming Soon
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Lyft Driver App -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-driver-app">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Lyft Driver App</h3>
+                            <p class="text-sm opacity-90 mt-2">Driver-focused application redesign for Lyft.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/lyft-driver-app/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Lyft Home -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-home-search">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Lyft Home</h3>
+                            <p class="text-sm opacity-90 mt-2">Homepage redesign and optimization for Lyft.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/lyft-home-search/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Lyft RMIS -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-rmis">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Lyft RMIS</h3>
+                            <p class="text-sm opacity-90 mt-2">Risk Management Information System for Lyft.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/lyft-rmis/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. EA Design System -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-design-system">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">EA Design System</h3>
+                            <p class="text-sm opacity-90 mt-2">Enterprise-wide design system implementation for Electronic Arts.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/ea-design-system/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. EA Digital Workspace -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-digital-workspace">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">EA Digital Workspace</h3>
+                            <p class="text-sm opacity-90 mt-2">Digital workplace transformation for Electronic Arts employees.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/ea-digital-workspace/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. EA Learning -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-learning-management">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">EA Learning</h3>
+                            <p class="text-sm opacity-90 mt-2">Learning management system redesign for Electronic Arts.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/ea-learning-management/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. PMG -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="pmg-digital-marketing">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">PMG</h3>
+                            <p class="text-sm opacity-90 mt-2">Digital marketing platform design for PMG.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/pmg-digital-marketing/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. Creative Tonic Agency -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="creative-tonic-agency">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Creative Tonic Agency</h3>
+                            <p class="text-sm opacity-90 mt-2">Brand identity and digital experience design for Creative Tonic Agency.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/creative-tonic-agency/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. Forkright -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="forkright-brand">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Forkright</h3>
+                            <p class="text-sm opacity-90 mt-2">Recipe management and meal planning application design.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/forkright-brand/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15. Human Centered Design -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="human-centered-design">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Human Centered Design</h3>
+                            <p class="text-sm opacity-90 mt-2">Design thinking and innovation consulting practice.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/human-centered-design/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16. Salesforce -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="salesforce-crm">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Salesforce</h3>
+                            <p class="text-sm opacity-90 mt-2">Enterprise CRM platform design for Salesforce.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="projects/salesforce-crm/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                View project
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            // Store the preference
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when resizing to larger viewport
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

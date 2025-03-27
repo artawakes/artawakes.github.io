@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dario Fidanza - Design System Designer</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Dario Fidanza - Design System Designer specializing in creating comprehensive component libraries and establishing design system governance">
+    <meta name="keywords" content="Design System, UX Design, Product Design, Figma, Storybook">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 210 40% 98%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 212.7 26.8% 83.9%;
+        }
+
+        .project-card {
+            background-size: cover;
+            background-position: center;
+            min-height: 320px;
+        }
+
+        /* Individual project card backgrounds */
+        .project-card[data-project="creative-tonic"] {
+            background-image: url('../Assets/Projects/creative-tonic-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-design-system"] {
+            background-image: url('../Assets/Projects/ea-design-system-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-digital-workspace"] {
+            background-image: url('../Assets/Projects/ea-digital-workspace-thumb.jpg');
+        }
+
+        .project-card[data-project="ea-learning"] {
+            background-image: url('../Assets/Projects/ea-learning-thumb.jpg');
+        }
+
+        .project-card[data-project="forkright"] {
+            background-image: url('../Assets/Projects/forkright-thumb.jpg');
+        }
+
+        .project-card[data-project="fresh2design"] {
+            background-image: url('../Assets/Projects/fresh2design-thumb.jpg');
+        }
+
+        .project-card[data-project="human-centered"] {
+            background-image: url('../Assets/Projects/human-centered-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-driver"] {
+            background-image: url('../Assets/Projects/lyft-driver-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-home"] {
+            background-image: url('../Assets/Projects/lyft-home-thumb.jpg');
+        }
+
+        .project-card[data-project="lyft-rmis"] {
+            background-image: url('../Assets/Projects/lyft-rmis-thumb.jpg');
+        }
+
+        .project-card[data-project="pmg"] {
+            background-image: url('../Assets/Projects/pmg-thumb.jpg');
+        }
+
+        .project-card[data-project="salesforce"] {
+            background-image: url('../Assets/Projects/salesforce-thumb.jpg');
+        }
+
+        /* Logo color handling */
+        .navbar-brand img {
+            transition: filter 0.3s ease;
+        }
+        
+        html.dark .navbar-brand img {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Project card text background and overlay */
+        .project-card .content-wrapper {
+            background-color: hsl(var(--card));
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Light mode overlay */
+        html:not(.dark) .project-card .overlay {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+        }
+
+        /* Dark mode overlay */
+        html.dark .project-card .overlay {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="max-w-[2000px] mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+            <!-- Left side links - hidden on mobile -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
+                <a href="#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
+                <a href="#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
+            </div>
+
+            <!-- Center logo -->
+            <a href="#top" class="flex items-center absolute left-1/2 transform -translate-x-1/2">
+                <img src="Assets/logo.svg" alt="Dario Fidanza" class="h-10 block dark:hidden">
+                <img src="Assets/LogoWhite.svg" alt="Dario Fidanza" class="h-10 hidden dark:block">
+            </a>
+
+            <!-- Right side social icons - hidden on mobile -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn Profile">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Dribbble Portfolio">
+                    <i class="bi bi-dribbble"></i>
+                </a>
+                <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Medium Blog">
+                    <i class="bi bi-medium"></i>
+                </a>
+                <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Pinterest Profile">
+                    <i class="bi bi-pinterest"></i>
+                </a>
+                <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub Profile">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Bluesky Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                    </svg>
+                </a>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle dark mode">
+                    <i class="bi bi-sun-fill hidden dark:block text-lg"></i>
+                    <i class="bi bi-moon-fill block dark:hidden text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-full bg-card hover:bg-card/80 transition-colors" title="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
+            <div class="container px-4 py-4">
+                <!-- Navigation links -->
+                <div class="flex flex-col space-y-4 mb-6">
+                    <a href="#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
+                    <a href="#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                    <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
+                    <a href="#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
+                </div>
+                
+                <!-- Social icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn Profile">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Dribbble Portfolio">
+                        <i class="bi bi-dribbble"></i>
+                    </a>
+                    <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Medium Blog">
+                        <i class="bi bi-medium"></i>
+                    </a>
+                    <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Pinterest Profile">
+                        <i class="bi bi-pinterest"></i>
+                    </a>
+                    <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub Profile">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Bluesky Profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                            <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                        </svg>
+                    </a>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle dark mode">
+                        <i class="bi bi-sun-fill hidden dark:block text-lg"></i>
+                        <i class="bi bi-moon-fill block dark:hidden text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="hero-section min-h-screen flex items-center justify-center relative overflow-hidden">
+        
+        <div class="max-w-[2000px] mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <!-- Modified image styling with rounded corners -->
+                <div class="mb-8">
+                    <img 
+                        src="Assets/IMG_5006 2.JPG" 
+                        alt="Dario Fidanza" 
+                        class="w-400 h-300 mx-auto rounded-lg"
+                    >
+                </div>
+                <h1 id="hero-title" class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                    Design System
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">Designer</span>
+                </h1>
+                <div id="hero-subtitle" class="text-xl text-muted-foreground mb-8">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <a href="projects-login.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">
+                    View Projects
+                    <i class="bi bi-lock-fill ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="journey" class="py-16 bg-muted/50">
+        <div class="max-w-[2000px] mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <!-- Title on its own line -->
+                <h2 class="text-3xl font-bold mb-8">Pixels, Person and Purpose</h2>
+                
+                <!-- Two-column text layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                    <div class="space-y-4 text-muted-foreground">
+                        <p>
+                            My design path began at an architecture firm in Buenos Aires while studying technical drawing and computer logic. When the internet boom hit, I jumped into webmastering at one of the first Software Training Centers to offer online education before moving to California 22 years ago. My passion for experience design led me to contract with innovative tech agencies like Mutual Mobile and Jackrabbit Mobile in Texas, which eventually opened doors to Electronic Arts.
+                        </p>
+                        <p>
+                            EA brought me to San Francisco 8 years ago, followed by exciting roles at Lyft and now Instacart, where I've grown from product designer to systems designer over the last four years.
+                        </p>
+                    </div>
+                    <div class="space-y-4 text-muted-foreground">
+                        <p>
+                            I'm a hybrid designer, strategist, and above all, a doer who thrives on crafting meaningful experiences. Beyond work, I'm currently tackling a 100-day React/JS challenge while exploring AI tools to rebuild my portfolio. I co-host a podcast about mental health and gay dating, and recently published my first fiction book, "Debugging the Bay."
+                        </p>
+                        <p>
+                            My certifications in yoga instruction and personal training keep me grounded, while dance classes, knitting, and learning Arabic (my third language) fuel my creativity. I express myself through digital illustrations—currently recreating X-Men '97 characters—and nature photography walks. One of my favorite things is bringing friends together for monthly board game nights, creating connections that extend beyond screens.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Replace the certifications and CTA section with this updated layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Certifications section - left column -->
+                    <div>
+                        <div class="bg-card p-6 rounded-lg border">
+                            <h3 class="text-lg font-semibold mb-4">Certifications & Training</h3>
+                            <ul class="space-y-2 text-muted-foreground">
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    User Experience Design
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Interaction Design
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Visual Communication Design
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    IDEO's Human-Centered Approach
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    IBM's Design Thinking Facilitation
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Resume CTAs - right column -->
+                    <div class="flex flex-col space-y-4">
+                        <a href="../Resume-25.html" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">
+                            View Resume
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1lxlSSqcu8nFxSaiGLltG03O1JbQqq1mm/view?usp=sharing" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">
+                            Download Resume
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Update the Image Grid section -->
+    <section class="py-16 bg-background">
+        <div class="max-w-[2000px] mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <!-- Image Grid -->
+                <div class="grid grid-rows-2 grid-flow-col gap-0 h-[600px]">
+                    <!-- First Row -->
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/7b963d41-de48-491e-b052-b3065e2d7b1f.JPG" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/7b963d41-de48-491e-b052-b3065e2d7b1f.JPG" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/e25f0e43-d649-4f1c-9bea-e55e77d55eb7_rw_1920.jpg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/e25f0e43-d649-4f1c-9bea-e55e77d55eb7_rw_1920.jpg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/b3fe8ba6-a611-4272-8074-516dc7f6b563_rw_1920.jpg" 
+                             alt="About Me - Design Workshop" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/b3fe8ba6-a611-4272-8074-516dc7f6b563_rw_1920.jpg" 
+                                 alt="About Me - Design Workshop" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/a2b48476-b128-4db5-bc21-6c2045847824_rw_1920.jpeg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/a2b48476-b128-4db5-bc21-6c2045847824_rw_1920.jpeg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+
+                    <!-- Second Row -->
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/87460fc0-5bbd-4b91-926a-b1b1ad0b291b_rw_600.jpg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover object-left transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/87460fc0-5bbd-4b91-926a-b1b1ad0b291b_rw_600.jpg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-left">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/fb07e252-f620-4ccf-933d-9e27003665bb_rw_1920.jpg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/fb07e252-f620-4ccf-933d-9e27003665bb_rw_1920.jpg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/62988081-059d-484e-94c3-dba63ca2ffef_rw_1200.jpg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/62988081-059d-484e-94c3-dba63ca2ffef_rw_1200.jpg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                    <div class="overflow-hidden group relative">
+                        <img src="sections/AboutMe/ffda4e0a-a40a-423b-b1d6-f04a76418d20_rw_1920.jpeg" 
+                             alt="About Me" 
+                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-100">
+                        <div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <img src="sections/AboutMe/ffda4e0a-a40a-423b-b1d6-f04a76418d20_rw_1920.jpeg" 
+                                 alt="About Me" 
+                                 class="w-full h-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engagement Section -->
+    <section id="engagement" class="py-16 bg-muted/50">
+        <div class="max-w-[2000px] mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight mb-4">Community & Engagement</h2>
+                    <p class="text-muted-foreground max-w-2xl mx-auto">
+                        Here I list my favorite collaborations fostering connection with fellow creatives or hosting community events.✨
+                    </p>
+                </div>
+                
+                <!-- Cells & Pixels Podcast -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="sections/Engagement/Cells&PixelsLogo.jpg" alt="Cells & Pixels Logo" class="h-12 w-auto">
+                            <h3 class="text-2xl font-semibold">Cells & Pixels Podcast</h3>
+                        </div>
+                        <p class="text-muted-foreground">In February 2021, I shared my experience working with the Claims Tech team and LGBTQ+ ERG at Lyft on the Cells and Pixels podcast. The show, hosted by Koji Pereira, features professionals discussing product design, UX research, and diversity in tech.</p>
+                        <a href="https://www.instagram.com/p/CK7lVGnMAGJ/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4">
+                            Listen to Episode
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Add divider and spacing -->
+                <div class="border-t border-muted/30 my-16"></div>
+
+                <!-- Fresh2Design -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="sections/Engagement/Fresh2designEvent.jpeg" alt="Fresh2Design Event 1" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/Fresh2designEvent2.jpeg" alt="Fresh2Design Event 2" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/Fresh2designEvent3.jpeg" alt="Fresh2Design Event 3" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/Fresh2designEvent4.jpeg" alt="Fresh2Design Event 4" class="w-full h-48 object-cover rounded-lg">
+                    </div>
+                    <div class="md:col-start-2 space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="sections/Engagement/Fresh2designlogo.gif" alt="Fresh2Design Logo" class="h-12 w-auto">
+                            <h3 class="text-2xl font-semibold">Fresh2Design Community Meetup</h3>
+                        </div>
+                        <p class="text-muted-foreground">As Branding & Operations Director for fresh2design (2015-2019), I helped grow our Austin-based meetup to over 3,500 members. I led brand strategy, defined scaling processes, and hosted various events including software education panels and storytelling events.</p>
+                        <div class="bg-card p-6 rounded-lg border">
+                            <h4 class="font-semibold mb-3">Notable Events:</h4>
+                            <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+                                <li>Adobe XD's "Evolution of the Design Process" during SXSW Interactive</li>
+                                <li>LGBTQ Voices in Tech storytelling event</li>
+                                <li>Hurricane Harvey Relief Pin Show fundraiser</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add divider and spacing -->
+                <div class="border-t border-muted/30 my-16"></div>
+
+                <!-- AIGA Austin -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="sections/Engagement/AIGAlogo.png" alt="AIGA Logo" class="h-12 w-auto">
+                            <img src="sections/Engagement/SmallTalksLogo.jpg" alt="AIGA Small Talks Logo" class="h-12 w-auto ml-2">
+                            <h3 class="text-2xl font-semibold">AIGA Austin: Small Talks Series Chair</h3>
+                        </div>
+                        <p class="text-muted-foreground">As the AIGA Austin Chair for Small Talks, I elevated the program through industry partnerships and fresh content focusing on emerging design trends.</p>
+                        <div class="bg-card p-6 rounded-lg border">
+                            <h4 class="font-semibold mb-3">UX for New Tech Series:</h4>
+                            <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+                                <li>"Wearables" at Under Armor</li>
+                                <li>"Omni-Channel Design" at Mutual Mobile</li>
+                                <li>"Integrated Reality" at argodesign</li>
+                                <li>"Designing for Diversity" at R/GA</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="sections/Engagement/AIGAEvent.jpg" alt="AIGA Event 1" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AIGAEvent2.jpg" alt="AIGA Event 2" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AIGAEvent3.jpg" alt="AIGA Event 3" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AIGAEvent5.jpg" alt="AIGA Event 5" class="w-full h-48 object-cover rounded-lg">
+                    </div>
+                </div>
+                <!-- Add divider and spacing -->
+                <div class="border-t border-muted/30 my-16"></div>
+
+                <!-- Austin Design Week -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="sections/Engagement/AustinDesignWeekEvent.jpg" alt="Austin Design Week Event 1" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AustinDesignWeekEvent2.jpg" alt="Austin Design Week Event 2" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AustinDesignWeekevent3.jpg" alt="Austin Design Week Event 3" class="w-full h-48 object-cover rounded-lg">
+                        <img src="sections/Engagement/AustinDesignWeekEvent4.jpg" alt="Austin Design Week Event 4" class="w-full h-48 object-cover rounded-lg">
+                    </div>
+                    <div class="md:col-start-2 space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="sections/Engagement/AustinDesignWeeklogo.jpg" alt="Austin Design Week Logo" class="h-12 w-auto">
+                            <h3 class="text-2xl font-semibold">Austin Design Week</h3>
+                        </div>
+                        <p class="text-muted-foreground">Led Workshops and Education Programs for Austin Design Week 2017, coordinating 30+ events and managing hosts to ensure successful experiences throughout the conference week.</p>
+                        <blockquote class="border-l-4 border-primary pl-4 italic">
+                            <p class="text-muted-foreground">"What an incredible week and it was all due to your efforts. What you all pulled off was an exceptional year!"</p>
+                            <footer class="text-sm text-muted-foreground mt-2">— Candice Digby, ADW Co-Founder</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Update the Contact Section -->
+    <section class="py-16">
+        <div class="max-w-[2000px] mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold tracking-tight mb-4">Say hello!</h2>
+                <p class="text-muted-foreground mb-8">
+                    Drop me a line if you are working on something cool, or want to geek out about design systems or talk shop 👋
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="mailto:varnish-beehive.4s@icloud.com" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">
+                        Email Me
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Footer -->
+    <footer class="py-8 bg-muted/50">
+      
+    </footer>
+
+    <script type="module">
+        import siteContent from './content.js';
+        
+        // Function to populate content
+        function populateContent() {
+            // Hero section
+            document.querySelector('#hero-title').textContent = siteContent.hero.title;
+            document.querySelector('#hero-subtitle').textContent = siteContent.hero.subtitle;
+            
+            // About section
+            document.querySelector('#about-title').textContent = siteContent.about.title;
+            // ... and so on for other sections
+        }
+        
+        // Call the function when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', populateContent);
+    </script>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            // Store the preference
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        // Add animation classes to sections
+        document.querySelectorAll('section, .project-card').forEach(element => {
+            element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(element);
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when resizing to larger viewport
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 
