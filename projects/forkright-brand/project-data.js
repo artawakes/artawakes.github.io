@@ -108,8 +108,8 @@ export default {
             url: "../creative-tonic-agency/index.html"
         },
         next: {
-            title: "Human Centered Design",
-            url: "../human-centered-design/index.html"
+            title: "Fresh2Design Rebrand",
+            url: "../fresh2design/index.html"
         }
     }
 }; 
