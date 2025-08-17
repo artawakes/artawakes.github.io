@@ -109,6 +109,84 @@
         html.dark .navbar-brand img {
             filter: brightness(0) invert(1);
         }
+    
+        /* Enhanced Image Styling */
+        .project-image-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .project-image-container:hover {
+            transform: scale(1.02);
+        }
+        
+        .project-image {
+            border-radius: calc(var(--radius) + 4px);
+            border: 2px solid hsl(var(--border));
+            transition: border-color 0.2s ease-in-out;
+        }
+        
+        .project-image-container:hover .project-image {
+            border-color: hsl(var(--primary));
+        }
+        
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+        }
+        
+        .image-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: calc(var(--radius) + 4px);
+            border: 2px solid hsl(var(--border));
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s ease-in-out;
+        }
+        
+        .modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Key Outcomes spacing */
+        .key-outcomes {
+            margin-top: 24px;
+        }
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen">
@@ -261,8 +339,9 @@
 
             <!-- Project Image -->
             <section class="mb-16">
-                <div class="rounded-lg overflow-hidden border">
-                    <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="w-full h-auto">
+                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image w-full h-auto">
+    </div>
                 </div>
                 <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
             </section>
@@ -425,21 +504,23 @@
                     
                     // Choose layout based on number of images
                     if (step.images.length === 1) {
-                        imagesDiv.className = 'rounded-lg overflow-hidden border mb-4';
+                        imagesDiv.className = 'project-image-container mb-4';
+                        imagesDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
                         const img = document.createElement('img');
                         img.src = step.images[0].src;
                         img.alt = step.images[0].alt;
-                        img.className = 'w-full h-auto';
+                        img.className = 'project-image w-full h-auto';
                         imagesDiv.appendChild(img);
                     } else {
                         imagesDiv.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
                         step.images.forEach(image => {
                             const imgDiv = document.createElement('div');
-                            imgDiv.className = 'rounded-lg overflow-hidden border';
+                            imgDiv.className = 'project-image-container';
+                            imgDiv.onclick = () => openImageModal(image.src, image.alt);
                             const img = document.createElement('img');
                             img.src = image.src;
                             img.alt = image.alt;
-                            img.className = 'w-full h-auto';
+                            img.className = 'project-image w-full h-auto';
                             imgDiv.appendChild(img);
                             imagesDiv.appendChild(imgDiv);
                         });
@@ -450,7 +531,7 @@
                 // Add outcomes if they exist
                 if (step.outcomes && step.outcomes.length > 0) {
                     const outcomesDiv = document.createElement('div');
-                    outcomesDiv.className = 'bg-card rounded-lg border p-6';
+                    outcomesDiv.className = 'bg-card rounded-lg border p-6 key-outcomes';
                     
                     const outcomesHeading = document.createElement('h4');
                     outcomesHeading.className = 'font-semibold mb-3';
@@ -546,6 +627,44 @@
             element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
             observer.observe(element);
         });
+    
+        // Image Modal Functions
+        function openImageModal(src, alt) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = src;
+            modalImg.alt = alt;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
     </script>
-</body>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeImageModal()">&times;</button>
+            <img id="modalImage" class="modal-image" src="" alt="">
+        </div>
+    </div>
+    </body>
 </html> 
