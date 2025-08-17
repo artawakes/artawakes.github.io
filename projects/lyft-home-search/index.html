@@ -187,6 +187,13 @@
         .key-outcomes {
             margin-top: 24px;
         }
+    
+        /* Specific image background styling */
+        .lyft-mobile-search-image {
+            background-color: #B2B9DE;
+            padding: 20px;
+            border-radius: calc(var(--radius) + 4px);
+        }
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen">
@@ -506,6 +513,12 @@
                     if (step.images.length === 1) {
                         imagesDiv.className = 'project-image-container mb-4';
                         imagesDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
+                        
+                        // Add specific styling for the Lyft mobile search image
+                        if (step.images[0].src.includes('eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png')) {
+                            imagesDiv.classList.add('lyft-mobile-search-image');
+                        }
+                        
                         const img = document.createElement('img');
                         img.src = step.images[0].src;
                         img.alt = step.images[0].alt;
@@ -517,6 +530,12 @@
                             const imgDiv = document.createElement('div');
                             imgDiv.className = 'project-image-container';
                             imgDiv.onclick = () => openImageModal(image.src, image.alt);
+                            
+                            // Add specific styling for the Lyft mobile search image
+                            if (image.src.includes('eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png')) {
+                                imgDiv.classList.add('lyft-mobile-search-image');
+                            }
+                            
                             const img = document.createElement('img');
                             img.src = image.src;
                             img.alt = image.alt;
