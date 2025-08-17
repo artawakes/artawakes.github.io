@@ -25,72 +25,66 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/lyft-driver-app/hero.jpg",
-        alt: "Lyft Driver App DART Interface",
-        caption: "Driver Accident Reporting Tool (DART) interface showcasing the improved user experience"
+        src: "./Images/34abed72-1155-4d81-a261-d90d00160a05.jpg",
+        alt: "Lyft Driver App",
+        caption: "Driver-focused application redesign for Lyft"
     },
     
     // Process steps
     process: [
         {
-            title: "Understanding the Problem",
+            title: "Research & Discovery",
             content: [
-                "One third of the accidents reported via in-app were false negatives, issues not supported by the Risk team.",
-                "Over 90% of the reports required agents to confirm data and correct the report manually, while phone-reported accidents were more accurate.",
-                "Data showed that in-app usage of accident reporting was low, with drivers preferring to call agents by phone. Qualitative research revealed that drivers found the app confusing, time-consuming, and unsatisfactory."
+                "Conducted user research with Lyft drivers to understand their workflow and pain points",
+                "Analyzed the existing driver app to identify areas for improvement",
+                "Studied accident reporting processes and driver communication needs"
             ],
             images: [
                 {
-                    src: "../../@Assets/lyft-driver-app/process.jpg",
-                    alt: "Process Flow Diagram"
+                    src: "./Images/bcf1ac7e-471a-408f-b309-3f4dc23b95bd_rw_1920.jpg",
+                    alt: "Driver Research Process"
                 },
                 {
-                    src: "../../@Assets/lyft-driver-app/user-journey.jpg",
-                    alt: "User Journey Map"
-                }
-            ]
-        },
-        {
-            title: "Design Constraints & Opportunities",
-            content: [
-                "Sensitivity in wording and imagery was crucial, as drivers might be in shock from an accident, dealing with injuries, or worried about financial impacts.",
-                "The flow needed to be concise to accommodate users who might be in a hurry or distressed.",
-                "Data accuracy was essential for clean backend storage and efficient processing.",
-                "We identified opportunities to improve both driver and agent experiences through smart data collection and clearer communication."
-            ]
-        },
-        {
-            title: "Solutions & Implementation",
-            content: [
-                "Improved language communication and iconography to better define what constitutes an accident.",
-                "Implemented telematic data capture from drivers' phones to automate field completion.",
-                "Streamlined form fields and added in-line validation with conditional fields.",
-                "Enhanced location selection and damage reporting capabilities."
-            ],
-            images: [
-                {
-                    src: "../../@Assets/lyft-driver-app/entry-point.jpg",
-                    alt: "Entry Point Interface"
-                },
-                {
-                    src: "../../@Assets/lyft-driver-app/accident-cause.jpg",
-                    alt: "Accident Cause Selection"
-                },
-                {
-                    src: "../../@Assets/lyft-driver-app/navigation-screen.jpg",
-                    alt: "Location Selection Interface"
-                },
-                {
-                    src: "../../@Assets/lyft-driver-app/damage-selector.jpg",
-                    alt: "Damage Selection Interface"
+                    src: "./Images/dc5f0573-6681-400e-a433-55e54888ce8a_rw_3840.jpg",
+                    alt: "User Journey Mapping"
                 }
             ],
             outcomes: [
-                "Reduced false-positive reports by clarifying the purpose of the reporting tool",
-                "Improved data accuracy through automated field completion",
-                "Streamlined the reporting process for drivers in stressful situations",
-                "Enhanced location accuracy for proper insurance partner routing",
-                "Improved damage reporting with primary and secondary damage fields"
+                "Identified key driver pain points",
+                "Mapped user journey and touchpoints",
+                "Defined improvement opportunities"
+            ]
+        },
+        {
+            title: "Design & Implementation",
+            content: [
+                "Redesigned the driver app interface to improve usability and reduce cognitive load",
+                "Created streamlined accident reporting flow with clear step-by-step guidance",
+                "Implemented improved navigation and information architecture",
+                "Added real-time communication features for driver support"
+            ],
+            images: [
+                {
+                    src: "./Images/62cd093b-7fba-4c93-a8f2-5f90d5176ac6_rw_1920.jpg",
+                    alt: "Entry Point Design"
+                },
+                {
+                    src: "./Images/143b0232-a036-4ec6-a5df-e1722a10ed21_rw_1920.jpg",
+                    alt: "Accident Cause Selection"
+                },
+                {
+                    src: "./Images/588241db-680c-4d2b-8fc4-6efd78d936da_rw_3840.jpg",
+                    alt: "Navigation Screen"
+                },
+                {
+                    src: "./Images/f5139e3a-bf09-45dd-9238-655691f200cf_rw_1920.jpeg",
+                    alt: "Damage Selector"
+                }
+            ],
+            outcomes: [
+                "Improved driver app usability",
+                "Streamlined accident reporting process",
+                "Enhanced driver communication tools"
             ]
         }
     ],

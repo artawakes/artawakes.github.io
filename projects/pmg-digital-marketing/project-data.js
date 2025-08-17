@@ -25,61 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/pmg-digital-marketing/strategy-overview.jpg",
-        alt: "Digital Marketing Strategy Overview",
-        caption: "Comprehensive digital marketing strategy framework for PMG"
+        src: "./Images/59736bd7-8481-4ad5-ad5c-bcf482fc6346.jpg",
+        alt: "PMG Digital Marketing",
+        caption: "Digital marketing platform design for PMG"
     },
     
     // Process steps
     process: [
         {
-            title: "Research & Analysis",
+            title: "Research & Discovery",
             content: [
-                "Conducted comprehensive competitive landscape analysis to identify market opportunities",
-                "Performed user behavior research to understand target audience needs",
-                "Completed content audit and gap analysis to inform strategy",
-                "Reviewed channel performance to optimize resource allocation"
+                "Conducted comprehensive analysis of digital marketing platform requirements",
+                "Interviewed marketing teams to understand campaign management needs",
+                "Analyzed existing tools and identified integration opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/pmg-digital-marketing/content-hub.jpg",
-                    alt: "Content Hub Design"
-                }
-            ]
-        },
-        {
-            title: "Strategy Development",
-            content: [
-                "Created a content hub for thought leadership content",
-                "Developed social media engagement framework",
-                "Implemented email marketing automation systems",
-                "Designed analytics and reporting dashboard for performance tracking"
-            ],
-            images: [
+                    src: "./Images/661a80bd-b9f3-4a3f-80a8-8a5c025d7745_rw_1920.jpg",
+                    alt: "Strategy Overview"
+                },
                 {
-                    src: "../../@Assets/pmg-digital-marketing/analytics-dashboard.jpg",
-                    alt: "Analytics Dashboard"
-                }
-            ]
-        },
-        {
-            title: "Implementation & Results",
-            content: [
-                "Launched integrated digital marketing campaigns across multiple channels",
-                "Optimized lead generation processes and conversion paths"
-            ],
-            images: [
-                {
-                    src: "../../@Assets/pmg-digital-marketing/campaign-results.jpg",
-                    alt: "Campaign Performance Results"
+                    src: "./Images/58584d90-b66d-4c17-a876-9f544088c59e_rw_1920.jpg",
+                    alt: "Content Hub"
                 }
             ],
             outcomes: [
-                "40% increase in organic traffic",
-                "65% improvement in lead quality",
-                "25% higher engagement rates",
-                "50% reduction in cost per acquisition",
-                "Improved content discovery and sharing"
+                "Identified key marketing platform needs",
+                "Mapped campaign management workflows",
+                "Defined integration requirements"
+            ]
+        },
+        {
+            title: "Design & Implementation",
+            content: [
+                "Designed comprehensive digital marketing platform with campaign management tools",
+                "Created analytics dashboard for performance tracking and optimization",
+                "Developed content management system for multi-channel campaigns",
+                "Implemented automated reporting and insights generation"
+            ],
+            images: [
+                {
+                    src: "./Images/97eb0bd2-ca5b-45ad-bdde-d9760e461c2f_rw_1920.jpg",
+                    alt: "Analytics Dashboard"
+                },
+                {
+                    src: "./Images/98811efe-0a6e-4ffa-a5f1-2b5246b7b913_rw_1920.jpg",
+                    alt: "Campaign Results"
+                }
+            ],
+            outcomes: [
+                "Enhanced campaign management capabilities",
+                "Improved analytics and reporting",
+                "Streamlined content creation process"
             ]
         }
     ],

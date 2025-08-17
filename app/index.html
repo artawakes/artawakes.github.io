@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portfolio Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Portfolio Editor</h1>
+                <div class="website-root">
+                    <span>Website Root:</span>
+                    <span id="website-root-display">Not set</span>
+                    <button id="select-root-btn">Select Root</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="save-btn" disabled>Save</button>
+                <span id="save-status"></span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Projects</h2>
+                    <button id="refresh-projects-btn">Refresh</button>
+                </div>
+                <div class="projects-list" id="projects-list">
+                    <div class="no-projects">No projects found</div>
+                </div>
+            </aside>
+
+            <!-- Editor -->
+            <main class="editor">
+                <div class="editor-header">
+                    <h2 id="current-page-title">Select a project to edit</h2>
+                    <div class="editor-controls">
+                        <button id="undo-btn" disabled>Undo</button>
+                        <button id="redo-btn" disabled>Redo</button>
+                        <button id="add-paragraph-btn">Add Paragraph</button>
+                        <button id="add-image-btn">Add Image</button>
+                    </div>
+                </div>
+                
+                <div class="editor-content" id="editor-content">
+                    <div class="no-page-selected">
+                        <p>Select a project from the sidebar to start editing</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Image Picker Modal -->
+    <div id="image-picker-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Image</h3>
+                <button id="close-image-picker" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="image-grid" class="image-grid">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Settings Modal -->
+    <div id="image-settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Image Settings</h3>
+                <button id="close-image-settings" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="image-alt">Alt Text:</label>
+                    <input type="text" id="image-alt" placeholder="Describe the image">
+                </div>
+                <div class="form-group">
+                    <label for="image-size">Size:</label>
+                    <select id="image-size">
+                        <option value="sm">Small</option>
+                        <option value="md" selected>Medium</option>
+                        <option value="lg">Large</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="form-group" id="custom-width-group" style="display: none;">
+                    <label for="image-width">Width (px):</label>
+                    <input type="number" id="image-width" min="100" max="1200" value="400">
+                </div>
+                <div class="form-actions">
+                    <button id="apply-image-settings">Apply</button>
+                    <button id="cancel-image-settings">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../lib/domSerialize.js"></script>
+    <script src="editor.js"></script>
+</body>
+</html>

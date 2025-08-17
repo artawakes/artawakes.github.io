@@ -25,37 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/creative-tonic/homepage-mockup.jpg",
-        alt: "Creative Tonic Homepage Mockup",
-        caption: "Final homepage design showcasing the new responsive structure"
+        src: "./Images/bb001467-161f-4864-a851-3a51cd8b57bd.jpg",
+        alt: "Creative Tonic Agency",
+        caption: "Brand identity and digital experience design for Creative Tonic Agency"
     },
     
     // Process steps
     process: [
         {
-            title: "Initial Wireframing",
+            title: "Research & Discovery",
             content: [
-                "Created quick wireframes of the new homepage structure",
-                "Developed HD mockups in Adobe XD for direction approval"
+                "Conducted comprehensive brand research and competitive analysis",
+                "Analyzed target audience and market positioning",
+                "Studied existing brand assets and digital presence"
             ],
             images: [
                 {
-                    src: "../../@Assets/creative-tonic/homepage-wireframe.jpg",
+                    src: "./Images/2625b5b0-305d-4907-b5f2-4b1c68d367a1_rw_1920.jpg",
+                    alt: "Homepage Mockup"
+                },
+                {
+                    src: "./Images/3206450a-4745-40c5-8281-4bc4f9c96c71_rw_1200.jpg",
                     alt: "Homepage Wireframe"
                 }
+            ],
+            outcomes: [
+                "Defined brand positioning and values",
+                "Identified target audience segments",
+                "Established design direction"
             ]
         },
         {
-            title: "Development",
+            title: "Design & Implementation",
             content: [
-                "Built the project on a staging site using Wordpress with Visual Composer",
-                "Custom build of Salient theme"
+                "Created comprehensive brand identity system including logo, color palette, and typography",
+                "Designed responsive website with modern UI/UX principles",
+                "Developed marketing materials and brand guidelines",
+                "Implemented digital experience across all touchpoints"
             ],
             images: [
                 {
-                    src: "../../@Assets/creative-tonic/about-page.jpg",
+                    src: "./Images/28f0b247-6f7b-427a-b6ae-5be0c458dcda_rw_1920.jpg",
                     alt: "About Page Design"
+                },
+                {
+                    src: "./Images/fcd6d095-8d83-4537-a218-bbdddfe7cf84_rw_1920.jpg",
+                    alt: "Project Page Design"
                 }
+            ],
+            outcomes: [
+                "Complete brand identity system",
+                "Responsive website design",
+                "Comprehensive brand guidelines"
             ]
         },
         {
@@ -66,7 +87,7 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/creative-tonic/project-page.jpg",
+                    src: "./Images/84ff7acb-b0b9-4c8e-9801-23c1593a3b28_rw_1920.jpg",
                     alt: "Project Page Design"
                 }
             ],

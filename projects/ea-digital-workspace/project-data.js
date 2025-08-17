@@ -25,41 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/ea-digital-workspace/homepage-design.jpg",
-        alt: "EA Digital Workspace Homepage Design",
-        caption: "New homepage design showcasing improved content discovery and navigation"
+        src: "./Images/b2e0c306-51d4-43fc-a0d3-cbb337157267.jpg",
+        alt: "EA Digital Workspace",
+        caption: "Digital workplace transformation for Electronic Arts employees"
     },
     
     // Process steps
     process: [
         {
-            title: "Discovery & Planning",
+            title: "Research & Discovery",
             content: [
-                "Conducted content audit of existing intranet",
-                "Interviewed content owners and stakeholders",
-                "Analyzed user behavior and pain points",
-                "Developed content migration strategy"
+                "Conducted comprehensive analysis of current digital workplace tools and processes",
+                "Interviewed employees across different departments to understand pain points",
+                "Analyzed existing systems and identified integration opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-digital-workspace/content-structure.jpg",
-                    alt: "Content Structure Analysis"
+                    src: "./Images/521a0ca8-7389-47b9-a8f6-7bdfc34873fb_rwc_0x0x748x499x748.jpg",
+                    alt: "Homepage Design"
+                },
+                {
+                    src: "./Images/828e6f73-1025-4ab7-bb06-d06acab4371a_rw_1200.jpg",
+                    alt: "Content Structure"
                 }
+            ],
+            outcomes: [
+                "Identified key workplace challenges",
+                "Mapped current tool landscape",
+                "Defined transformation goals"
             ]
         },
         {
-            title: "Design & Development",
+            title: "Design & Implementation",
             content: [
-                "Created new information architecture",
-                "Designed intuitive navigation system",
-                "Developed responsive layouts",
-                "Implemented advanced search functionality"
+                "Designed unified digital workspace platform integrating multiple tools",
+                "Created intuitive search interface for improved content discovery",
+                "Developed mobile-responsive design for remote work",
+                "Implemented seamless integration between different workplace systems"
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-digital-workspace/search-interface.jpg",
-                    alt: "Search Interface Design"
+                    src: "./Images/936507e0-52d1-4871-be1f-1bd399e39f68_rw_1200.jpg",
+                    alt: "Search Interface"
+                },
+                {
+                    src: "./Images/f262a84b-759f-4abd-9268-292e0554c33d_rw_1920.jpg",
+                    alt: "Mobile View"
                 }
+            ],
+            outcomes: [
+                "Unified digital workspace platform",
+                "Improved content discovery",
+                "Enhanced mobile accessibility"
             ]
         },
         {
@@ -72,7 +89,7 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-digital-workspace/mobile-view.jpg",
+                    src: "./Images/5ddaec65-c0dc-4c1e-9a8e-05591971df96_rw_1920.jpg",
                     alt: "Mobile View Implementation"
                 }
             ],

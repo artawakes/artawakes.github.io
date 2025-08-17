@@ -25,37 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/salesforce-crm/customization-interface.jpg",
-        alt: "Brand Customization Interface",
-        caption: "The brand customization interface allowing companies to customize their Salesforce mobile app"
+        src: "./Images/6d81c0ee-f1ee-4990-a255-54e493066dd4.png",
+        alt: "Salesforce CRM",
+        caption: "Enterprise CRM platform design for Salesforce"
     },
     
     // Process steps
     process: [
         {
-            title: "Understanding Key Use Cases",
+            title: "Research & Discovery",
             content: [
-                "We identified two primary use cases: Employee Adoption and Stakeholder Buy-in. Companies needed to brand custom versions of the Salesforce app and publish it on app stores to quickly socialize it within their organization and increase usage adoption.",
-                "The solution also needed to serve as a marketing tool to demonstrate value and get buy-in from key stakeholders within companies."
+                "Conducted comprehensive analysis of enterprise CRM requirements",
+                "Interviewed sales teams and administrators to understand workflow needs",
+                "Analyzed existing Salesforce platform limitations and opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/salesforce-crm/preview-mode.jpg",
-                    alt: "App Preview Mode"
+                    src: "./Images/34c87f31-528c-4bba-b927-e6aa87f3fb1c.png",
+                    alt: "Customization Interface"
+                },
+                {
+                    src: "./Images/62e0afdd-aaa5-43d7-9d17-9e44c8660419.png",
+                    alt: "Preview Mode"
                 }
+            ],
+            outcomes: [
+                "Identified key CRM pain points",
+                "Mapped enterprise workflow requirements",
+                "Defined customization needs"
             ]
         },
         {
-            title: "Solution Development",
+            title: "Design & Implementation",
             content: [
-                "We developed a comprehensive brand customization interface that allows companies to customize app appearance with company branding and preview changes in real-time.",
-                "The system includes tools for generating branded app builds for app store submission and managing multiple brand variations across the organization."
+                "Designed comprehensive CRM customization interface for enterprise users",
+                "Created intuitive brand management system for multi-tenant environments",
+                "Developed streamlined deployment flow for configuration changes",
+                "Implemented advanced reporting and analytics capabilities"
             ],
             images: [
                 {
-                    src: "../../@Assets/salesforce-crm/brand-management.jpg",
-                    alt: "Brand Management Dashboard"
+                    src: "./Images/d65c36e3-368e-4bfb-abdb-78da2c832daf_rw_1920.jpg",
+                    alt: "Brand Management"
+                },
+                {
+                    src: "./Images/ea0acb41-1944-4fc0-aba2-331df636a2d5_rw_1920.jpg",
+                    alt: "Deployment Flow"
                 }
+            ],
+            outcomes: [
+                "Enhanced CRM customization capabilities",
+                "Improved brand management system",
+                "Streamlined deployment processes"
             ]
         },
         {
@@ -66,7 +87,7 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/salesforce-crm/deployment-flow.jpg",
+                    src: "./Images/6b7dcef3-90b9-48d5-aeda-6ace03458338_rw_1920.jpg",
                     alt: "App Deployment Flow"
                 }
             ],

@@ -25,45 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/forkright-brand/brand-guidelines.jpg",
-        alt: "Forkright Brand Guidelines",
-        caption: "Comprehensive brand guidelines showcasing the new visual identity system"
+        src: "./Images/d0816a0f-ef41-4cd8-8e09-53d553af2638.jpg",
+        alt: "Forkright Brand",
+        caption: "Recipe management and meal planning application design"
     },
     
     // Process steps
     process: [
         {
-            title: "Discovery Phase",
+            title: "Research & Discovery",
             content: [
-                "Conducted a thorough brand audit and analysis to understand existing brand elements and opportunities",
-                "Performed stakeholder interviews to align on brand vision and objectives",
-                "Researched market positioning and conducted competitor analysis to identify unique opportunities",
-                "Developed strategic recommendations based on research findings"
+                "Conducted comprehensive research on recipe management and meal planning needs",
+                "Interviewed home cooks and food enthusiasts to understand workflow requirements",
+                "Analyzed existing recipe apps and identified improvement opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/forkright-brand/color-system.jpg",
-                    alt: "Color System Development"
+                    src: "./Images/2ca906a8-d696-4e6e-ad83-12f4734b16a9_rw_1920.jpeg",
+                    alt: "Brand Guidelines"
+                },
+                {
+                    src: "./Images/a34600e1-77f0-4a93-9819-342501b70a2c_rw_1200.jpeg",
+                    alt: "Color System"
                 }
+            ],
+            outcomes: [
+                "Identified key user needs and pain points",
+                "Mapped recipe management workflows",
+                "Defined brand positioning and values"
             ]
         },
         {
-            title: "Development Phase",
+            title: "Design & Implementation",
             content: [
-                "Created a comprehensive visual identity system including logo variations, color palette, and typography",
-                "Developed a flexible design system architecture to support various applications",
-                "Built a robust component library for digital applications",
-                "Created detailed implementation guidelines for consistent brand application"
+                "Created comprehensive brand identity system with modern, approachable design",
+                "Developed intuitive recipe management interface with smart categorization",
+                "Designed meal planning features with nutritional information integration",
+                "Implemented social sharing and community features"
             ],
             images: [
                 {
-                    src: "../../@Assets/forkright-brand/typography.jpg",
-                    alt: "Typography System"
+                    src: "./Images/ff01f81e-8770-4625-abe0-c28d5c7059a9_rw_1200.jpeg",
+                    alt: "Typography"
                 },
                 {
-                    src: "../../@Assets/forkright-brand/component-library.jpg",
+                    src: "./Images/18c19358-c18d-43ba-8b35-5374f84c6dd7_rw_1200.jpeg",
                     alt: "Component Library"
                 }
+            ],
+            outcomes: [
+                "Complete brand identity system",
+                "Intuitive recipe management interface",
+                "Comprehensive component library"
             ]
         },
         {

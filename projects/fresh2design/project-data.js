@@ -25,45 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/fresh2design/brand-identity.jpg",
-        alt: "Fresh2Design Brand Identity",
-        caption: "New brand identity system showcasing the community-focused design approach"
+        src: "./Images/f4958edd-8420-4f4c-a6c0-7b032b0f8e2b_rw_1200.png",
+        alt: "Fresh2Design",
+        caption: "Community platform for design professionals in Austin"
     },
     
     // Process steps
     process: [
         {
-            title: "Community Research",
+            title: "Research & Discovery",
             content: [
-                "Conducted comprehensive member surveys and interviews to understand community needs and expectations",
-                "Analyzed event attendance patterns and engagement metrics to identify opportunities for improvement",
-                "Studied platform usage patterns to optimize the digital experience",
-                "Gathered feedback from community leaders and event organizers"
+                "Conducted comprehensive research on design community needs in Austin",
+                "Interviewed local designers to understand networking and collaboration requirements",
+                "Analyzed existing community platforms and identified improvement opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/fresh2design/website-design.jpg",
-                    alt: "Website Design and Community Platform"
+                    src: "./Images/1945e552-9c72-42b0-aa47-3b4f7c9c0c98_rw_3840.jpg",
+                    alt: "Brand Identity"
+                },
+                {
+                    src: "./Images/8475ceee-9538-4a7c-bf17-576d361b2495_rw_1920.jpg",
+                    alt: "Website Design"
                 }
+            ],
+            outcomes: [
+                "Identified key community platform needs",
+                "Mapped user engagement requirements",
+                "Defined brand positioning and values"
             ]
         },
         {
-            title: "Brand Development",
+            title: "Design & Implementation",
             content: [
-                "Created a new visual identity system that reflected the community's values and aspirations",
-                "Developed a flexible platform design to support various event types and community initiatives",
-                "Established comprehensive branding guidelines for events and partnerships",
-                "Implemented new community guidelines and engagement strategies"
+                "Created comprehensive brand identity system for the design community",
+                "Designed responsive website with modern UI/UX principles",
+                "Developed mobile app for on-the-go community engagement",
+                "Implemented marketing materials and promotional campaigns"
             ],
             images: [
                 {
-                    src: "../../@Assets/fresh2design/mobile-app.jpg",
-                    alt: "Mobile App Interface"
+                    src: "./Images/185b0fa1-ba64-4b53-ac61-39e0abc37fda_rw_1920.png",
+                    alt: "Mobile App"
                 },
                 {
-                    src: "../../@Assets/fresh2design/marketing-materials.jpg",
+                    src: "./Images/6f4d4000-d7ae-4824-a926-059f552a8d8c_rw_3840.png",
                     alt: "Marketing Materials"
                 }
+            ],
+            outcomes: [
+                "Complete brand identity system",
+                "Responsive website and mobile app",
+                "Comprehensive marketing materials"
             ]
         },
         {

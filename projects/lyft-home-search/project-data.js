@@ -25,7 +25,7 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/lyft-home-search/search-interface.jpg",
+        src: "./Images/7bc4e239-1e28-4f94-b185-e814544275e2.jpg",
         alt: "Search Interface Design",
         caption: "Redesigned search interface featuring predictive suggestions and smart location detection"
     },
@@ -41,11 +41,11 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/lyft-home-search/search-interface.jpg",
+                    src: "./Images/d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg",
                     alt: "Search Interface Design"
                 },
                 {
-                    src: "../../@Assets/lyft-home-search/results-page.jpg",
+                    src: "./Images/13d6b2f4-186e-44b8-9cd5-cfb6baab8fd3_rw_600.png",
                     alt: "Search Results Page"
                 }
             ]
@@ -60,11 +60,11 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/lyft-home-search/filters-design.jpg",
+                    src: "./Images/e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg",
                     alt: "Search Filters Design"
                 },
                 {
-                    src: "../../@Assets/lyft-home-search/mobile-view.jpg",
+                    src: "./Images/eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png",
                     alt: "Mobile Search Experience"
                 }
             ]

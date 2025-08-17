@@ -25,41 +25,58 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "../../@Assets/ea-learning-management/dashboard-view.jpg",
-        alt: "EA Learning Management Dashboard",
-        caption: "Main dashboard showing personalized learning paths and progress tracking"
+        src: "./Images/9f9f7cbd-c99e-4b09-83e8-7e730debe410.jpg",
+        alt: "EA Learning Management",
+        caption: "Learning management system redesign for Electronic Arts"
     },
     
     // Process steps
     process: [
         {
-            title: "Discovery",
+            title: "Research & Discovery",
             content: [
-                "Stakeholder interviews",
-                "Learning needs assessment",
-                "Technical requirements gathering",
-                "Competitive analysis"
+                "Conducted comprehensive analysis of learning management system requirements",
+                "Interviewed employees and training teams to understand learning needs",
+                "Analyzed existing LMS platform limitations and opportunities"
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-learning-management/course-catalog.jpg",
-                    alt: "Course Catalog Design"
+                    src: "./Images/9c0cc8cc-7a07-485d-a203-0edc49e459d7_rwc_0x88x2291x1527x2291.jpg",
+                    alt: "Dashboard View"
+                },
+                {
+                    src: "./Images/9f9f7cbd-c99e-4b09-83e8-7e730debe410_rw_1200.jpg",
+                    alt: "Course Catalog"
                 }
+            ],
+            outcomes: [
+                "Identified key learning platform needs",
+                "Mapped training workflow requirements",
+                "Defined user experience improvements"
             ]
         },
         {
-            title: "Implementation",
+            title: "Design & Implementation",
             content: [
-                "Platform architecture design",
-                "Content strategy development",
-                "User interface design",
-                "Integration planning"
+                "Redesigned learning management system with improved user experience",
+                "Created intuitive course catalog and enrollment interface",
+                "Developed progress tracking and analytics dashboard",
+                "Implemented mobile-responsive design for learning on-the-go"
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-learning-management/progress-tracking.jpg",
-                    alt: "Progress Tracking Interface"
+                    src: "./Images/44a6eeab-2e0b-4823-b9b7-fe4bdf1f217d_rw_1200.png",
+                    alt: "Progress Tracking"
+                },
+                {
+                    src: "./Images/88559d82-6e06-4e6c-831c-c0e0ed5d5a13_rw_1920.jpg",
+                    alt: "Mobile Learning"
                 }
+            ],
+            outcomes: [
+                "Enhanced learning platform usability",
+                "Improved course discovery and enrollment",
+                "Streamlined progress tracking"
             ]
         },
         {
@@ -70,7 +87,7 @@ export default {
             ],
             images: [
                 {
-                    src: "../../@Assets/ea-learning-management/mobile-learning.jpg",
+                    src: "./Images/2c7a4011-835a-4f94-acc6-d64c9f3b1f1d_rw_1920.jpg",
                     alt: "Mobile Learning Interface"
                 }
             ],
