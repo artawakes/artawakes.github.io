@@ -188,12 +188,25 @@
             margin-top: 24px;
         }
     
+        
         /* Specific image background styling */
         .lyft-mobile-search-image {
             background-color: #B2B9DE;
             padding: 20px;
             border-radius: calc(var(--radius) + 4px);
+            border: 2px solid hsl(var(--border));
+            transition: border-color 0.2s ease-in-out;
         }
+        
+        .lyft-mobile-search-image:hover {
+            border-color: hsl(var(--primary));
+        }
+        
+        .lyft-mobile-search-image .project-image {
+            border: none;
+            border-radius: 0;
+        }
+    
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen">
