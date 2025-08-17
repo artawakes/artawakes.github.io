@@ -94,8 +94,8 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Salesforce CRM",
-            url: "../salesforce-crm/index.html"
+            title: "Lyft Driver App",
+            url: "../lyft-driver-app/index.html"
         },
         next: {
             title: "Lyft RMIS",

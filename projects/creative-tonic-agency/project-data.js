@@ -109,9 +109,13 @@ export default {
     
     // Navigation to other projects
     navigation: {
+        prev: {
+            title: "PMG Digital Marketing",
+            url: "../pmg-digital-marketing/index.html"
+        },
         next: {
-            title: "Human Centered Design",
-            url: "../human-centered-design/index.html"
+            title: "Forkright Brand",
+            url: "../forkright-brand/index.html"
         }
     }
 }; 

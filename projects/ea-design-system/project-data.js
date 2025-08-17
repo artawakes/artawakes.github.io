@@ -94,6 +94,10 @@ export default {
     
     // Navigation to other projects
     navigation: {
+        prev: {
+            title: "Lyft RMIS",
+            url: "../lyft-rmis/index.html"
+        },
         next: {
             title: "EA Digital Workspace",
             url: "../ea-digital-workspace/index.html"

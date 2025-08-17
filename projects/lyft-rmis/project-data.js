@@ -242,12 +242,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Lyft Driver App",
-            url: "../lyft-driver-app/index.html"
-        },
-        next: {
             title: "Lyft Home Search",
             url: "../lyft-home-search/index.html"
+        },
+        next: {
+            title: "EA Design System",
+            url: "../ea-design-system/index.html"
         }
     }
 }; 

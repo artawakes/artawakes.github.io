@@ -90,12 +90,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Lyft RMIS",
-            url: "../lyft-rmis/index.html"
+            title: "EA Learning Management",
+            url: "../ea-learning-management/index.html"
         },
         next: {
-            title: "Forkright Brand",
-            url: "../forkright-brand/index.html"
+            title: "Creative Tonic Agency",
+            url: "../creative-tonic-agency/index.html"
         }
     }
 }; 

@@ -114,8 +114,8 @@ export default {
             url: "../human-centered-design/index.html"
         },
         next: {
-            title: "Lyft Home Search",
-            url: "../lyft-home-search/index.html"
+            title: "Lyft Driver App",
+            url: "../lyft-driver-app/index.html"
         }
     }
 }; 

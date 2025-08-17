@@ -105,7 +105,7 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Forkright Brand System",
+            title: "Forkright Brand",
             url: "../forkright-brand/index.html"
         },
         next: {

@@ -98,12 +98,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Enterprise Search",
-            url: "../enterprise-search/index.html"
+            title: "Salesforce CRM",
+            url: "../salesforce-crm/index.html"
         },
         next: {
-            title: "Creative Tonic",
-            url: "../creative-tonic/index.html"
+            title: "Lyft Home Search",
+            url: "../lyft-home-search/index.html"
         }
     }
 }; 

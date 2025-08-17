@@ -104,12 +104,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "EA Learning Management",
-            url: "../ea-learning-management/index.html"
+            title: "Creative Tonic Agency",
+            url: "../creative-tonic-agency/index.html"
         },
         next: {
-            title: "Fresh2Design Rebrand",
-            url: "../fresh2design/index.html"
+            title: "Human Centered Design",
+            url: "../human-centered-design/index.html"
         }
     }
 }; 

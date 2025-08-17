@@ -114,8 +114,8 @@ export default {
             url: "../ea-digital-workspace/index.html"
         },
         next: {
-            title: "Salesforce CRM",
-            url: "../salesforce-crm/index.html"
+            title: "PMG Digital Marketing",
+            url: "../pmg-digital-marketing/index.html"
         }
     }
 }; 

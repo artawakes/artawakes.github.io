@@ -113,12 +113,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Fresh2Design Rebrand",
-            url: "../fresh2design/index.html"
+            title: "Forkright Brand",
+            url: "../forkright-brand/index.html"
         },
         next: {
-            title: "Enterprise Search",
-            url: "../enterprise-search/index.html"
+            title: "Salesforce CRM",
+            url: "../salesforce-crm/index.html"
         }
     }
 }; 
