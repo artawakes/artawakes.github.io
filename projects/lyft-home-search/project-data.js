@@ -94,12 +94,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Creative Tonic",
-            url: "../creative-tonic/index.html"
+            title: "Salesforce CRM",
+            url: "../salesforce-crm/index.html"
         },
         next: {
-            title: "Lyft Driver App",
-            url: "../lyft-driver-app/index.html"
+            title: "Lyft RMIS",
+            url: "../lyft-rmis/index.html"
         }
     }
 }; 

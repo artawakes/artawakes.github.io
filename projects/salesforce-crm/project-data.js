@@ -110,12 +110,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "PMG Digital Marketing",
-            url: "../pmg-digital-marketing/index.html"
+            title: "Human Centered Design",
+            url: "../human-centered-design/index.html"
         },
         next: {
-            title: "Lyft RMIS",
-            url: "../lyft-rmis/index.html"
+            title: "Lyft Home Search",
+            url: "../lyft-home-search/index.html"
         }
     }
 }; 
