@@ -187,6 +187,69 @@
         .key-outcomes {
             margin-top: 24px;
         }
+    
+        /* Special Layout Styles for EA Design System */
+        .ea-components-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .ea-components-layout .project-image-container:first-child {
+            grid-column: 1 / -1;
+        }
+        
+        .ea-components-layout .project-image-container:not(:first-child) {
+            grid-column: span 1;
+        }
+        
+        .ea-layout-examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .ea-audit-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ea-audit-layout .project-image-container:first-child,
+        .ea-audit-layout .project-image-container:nth-child(2) {
+            grid-column: span 1;
+        }
+        
+        .ea-audit-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .ea-audit-thumbnails .project-image-container {
+            grid-column: span 1;
+        }
+        
+        .ea-audit-thumbnails .project-image {
+            max-height: 80px;
+            object-fit: cover;
+        }
+        
+        @media (max-width: 768px) {
+            .ea-layout-examples-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ea-audit-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .ea-audit-thumbnails {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen">
@@ -535,6 +598,16 @@
                     if (step.images.length === 1) {
                         imagesDiv.className = 'project-image-container mb-4';
                         imagesDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
+                        
+                        // Add special layout classes based on section title
+                        if (step.title === 'Design Systems Component') {
+                            imagesDiv.parentElement.classList.add('ea-components-layout');
+                        } else if (step.title === 'Layout Examples') {
+                            imagesDiv.parentElement.classList.add('ea-layout-examples-grid');
+                        } else if (step.title === 'Research and Notifications Audit') {
+                            imagesDiv.parentElement.classList.add('ea-audit-layout');
+                        }
+                        
                         const img = document.createElement('img');
                         img.src = step.images[0].src;
                         img.alt = step.images[0].alt;
@@ -546,6 +619,30 @@
                             const imgDiv = document.createElement('div');
                             imgDiv.className = 'project-image-container';
                             imgDiv.onclick = () => openImageModal(image.src, image.alt);
+                            
+                            // Add special layout classes based on section title
+                            if (step.title === 'Design Systems Component') {
+                                imagesDiv.classList.add('ea-components-layout');
+                            } else if (step.title === 'Layout Examples') {
+                                imagesDiv.classList.add('ea-layout-examples-grid');
+                            } else if (step.title === 'Research and Notifications Audit') {
+                                // Special handling for audit section
+                                if (image.src.includes('1.png') || image.src.includes('2.png')) {
+                                    // First two images get large layout
+                                    imagesDiv.classList.add('ea-audit-layout');
+                                } else {
+                                    // Rest get thumbnail layout
+                                    if (!imagesDiv.querySelector('.ea-audit-thumbnails')) {
+                                        const thumbnailsDiv = document.createElement('div');
+                                        thumbnailsDiv.className = 'ea-audit-thumbnails';
+                                        imagesDiv.appendChild(thumbnailsDiv);
+                                    }
+                                    const thumbnailsDiv = imagesDiv.querySelector('.ea-audit-thumbnails');
+                                    thumbnailsDiv.appendChild(imgDiv);
+                                    return; // Skip adding to main imagesDiv
+                                }
+                            }
+                            
                             const img = document.createElement('img');
                             img.src = image.src;
                             img.alt = image.alt;
