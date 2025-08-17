@@ -1,5 +1,110 @@
 /* Main styles for portfolio website */
 
+/* Consistent Margins - 92px left and right */
+.site-container {
+    max-width: calc(100vw - 184px); /* 100vw - (92px * 2) */
+    margin-left: 92px;
+    margin-right: 92px;
+}
+
+@media (max-width: 1200px) {
+    .site-container {
+        max-width: calc(100vw - 64px);
+        margin-left: 32px;
+        margin-right: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-container {
+        max-width: calc(100vw - 32px);
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+
+/* Image Grid Layout - Better organization for multiple sizes */
+.project-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+/* Square containers for multiple images */
+.project-images-grid .project-image-container {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 4px);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+/* Individual image styling for grid */
+.project-images-grid .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    border-radius: 0;
+    transition: none;
+}
+
+/* Single image container (not in grid) */
+.project-image-container:not(.project-images-grid .project-image-container) {
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    border-radius: calc(var(--radius) + 4px);
+    overflow: hidden;
+}
+
+/* Single image styling */
+.project-image-container:not(.project-images-grid .project-image-container) .project-image {
+    max-height: 600px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: calc(var(--radius) + 4px);
+    border: 2px solid hsl(var(--border));
+    transition: border-color 0.2s ease-in-out;
+    display: block;
+}
+
+/* Hover effects */
+.project-image-container:hover {
+    transform: scale(1.02);
+}
+
+.project-image-container:hover .project-image {
+    border-color: hsl(var(--primary));
+}
+
+.project-images-grid .project-image-container:hover {
+    border-color: hsl(var(--primary));
+}
+
+.project-image-container:hover {
+    transform: scale(1.02);
+}
+
+.project-image-container:hover .project-image {
+    border-color: hsl(var(--primary));
+}
+
+/* Ensure modal shows full image regardless of constraints */
+.modal-image {
+    max-height: none !important;
+    max-width: 90vw;
+    height: auto;
+    object-fit: contain;
+}
+
 /* Utility Classes */
 .text-gradient {
     background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));

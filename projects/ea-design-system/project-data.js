@@ -1,5 +1,5 @@
 // Sample project data structure
-export default {
+const projectData = {
     // Basic info
     title: "EA Design System",
     subtitle: "Leading the development of a comprehensive design system to unify Electronic Arts' digital products and improve design efficiency.",
@@ -33,7 +33,7 @@ export default {
     // Process steps
     process: [
         {
-            title: "Design Systems Component",
+            title: "Design Systems Components",
             content: [
                 "Developed comprehensive component library with consistent design patterns",
                 "Created reusable UI components for buttons, forms, navigation, and data displays",
@@ -216,7 +216,7 @@ export default {
             ]
         },
         {
-            title: "Implementation",
+            title: "Launch and Maintenance",
             content: [
                 "Rolled out design system in phases across EA digital products",
                 "Provided comprehensive team training and support programs",
@@ -245,77 +245,6 @@ export default {
                 "Enhanced product quality and user experience"
             ]
         }
-    ],,
-    
-    // Project details
-    details: {
-        client: "Electronic Arts",
-        timeline: "18 months",
-        role: "Lead Designer",
-        deliverables: "Component Library, Documentation, Training Program"
-    },
-    
-    // Feature image with caption
-    featureImage: {
-        src: "./Images/Components/Components.jpg",
-        alt: "EA Design System Component Library",
-        caption: "Component library showcasing unified design patterns across EA's digital products"
-    },
-    
-    // Process steps
-    process: [
-        {
-            title: "Research & Analysis",
-            content: [
-                "Conducted audit of existing design patterns",
-                "Analyzed user interface inconsistencies",
-                "Gathered stakeholder requirements",
-                "Reviewed competitor design systems"
-            ],
-            images: [
-                {
-                    src: "images/design-patterns.jpg",
-                    alt: "Design Patterns Analysis"
-                }
-            ]
-        },
-        {
-            title: "Design & Development",
-            content: [
-                "Created core design principles and guidelines",
-                "Developed component library",
-                "Built documentation and usage guidelines",
-                "Implemented version control system"
-            ],
-            images: [
-                {
-                    src: "images/design-documentation.jpg",
-                    alt: "Design Documentation"
-                }
-            ]
-        },
-        {
-            title: "Implementation",
-            content: [
-                "Rolled out system in phases",
-                "Provided team training and support",
-                "Established governance model",
-                "Created maintenance procedures"
-            ],
-            images: [
-                {
-                    src: "images/system-architecture.jpg",
-                    alt: "System Architecture"
-                }
-            ],
-            outcomes: [
-                "40% reduction in design-to-development time",
-                "60% improvement in design consistency",
-                "Increased team collaboration",
-                "Streamlined design process",
-                "Enhanced product quality"
-            ]
-        }
     ],
     
     // Key Features and Results as reflections
@@ -335,4 +264,7 @@ export default {
             url: "../ea-digital-workspace/index.html"
         }
     }
-}; 
+};
+
+// Make projectData available globally
+window.projectData = projectData; 

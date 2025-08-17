@@ -80,6 +80,29 @@
             --ring: 212.7 26.8% 83.9%;
         }
 
+        /* Consistent Margins - 92px left and right */
+        .site-container {
+            max-width: calc(100vw - 184px); /* 100vw - (92px * 2) */
+            margin-left: 92px;
+            margin-right: 92px;
+        }
+
+        @media (max-width: 1200px) {
+            .site-container {
+                max-width: calc(100vw - 64px);
+                margin-left: 32px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .site-container {
+                max-width: calc(100vw - 32px);
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+        }
+
         body {
             background-color: hsl(var(--background));
             color: hsl(var(--foreground));
@@ -202,7 +225,7 @@
 <body>
     <!-- Navigation -->
     <nav class="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div class="max-w-[2000px] mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+        <div class="site-container flex h-16 items-center justify-between">
             <!-- Left side links -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="index.html" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
@@ -286,7 +309,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-[2000px] mx-auto px-4 md:px-6">
+            <main class="site-container">
         <div class="pt-8">
             <h1 class="text-4xl font-bold mb-2">
                 <span class="line-through opacity-70">One</span> a few more things.
