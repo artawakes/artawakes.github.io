@@ -90,12 +90,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "EA Learning Management",
-            url: "../ea-learning-management/index.html"
+            title: "Fresh2Design",
+            url: "../fresh2design/index.html"
         },
         next: {
-            title: "Creative Tonic Agency",
-            url: "../creative-tonic-agency/index.html"
+            title: "Human Centered Design",
+            url: "../human-centered-design/index.html"
         }
     }
 }; 

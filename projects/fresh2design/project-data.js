@@ -109,8 +109,8 @@ export default {
             url: "../forkright-brand/index.html"
         },
         next: {
-            title: "Human Centered Design",
-            url: "../human-centered-design/index.html"
+            title: "PMG",
+            url: "../pmg-digital-marketing/index.html"
         }
     }
 }; 

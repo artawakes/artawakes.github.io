@@ -110,8 +110,8 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "PMG Digital Marketing",
-            url: "../pmg-digital-marketing/index.html"
+            title: "EA Learning",
+            url: "../ea-learning-management/index.html"
         },
         next: {
             title: "Forkright Brand",

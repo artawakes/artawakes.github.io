@@ -114,8 +114,8 @@ export default {
             url: "../ea-digital-workspace/index.html"
         },
         next: {
-            title: "PMG Digital Marketing",
-            url: "../pmg-digital-marketing/index.html"
+            title: "Creative Tonic Agency",
+            url: "../creative-tonic-agency/index.html"
         }
     }
 }; 

@@ -113,8 +113,8 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Fresh2Design Rebrand",
-            url: "../fresh2design/index.html"
+            title: "PMG",
+            url: "../pmg-digital-marketing/index.html"
         },
         next: {
             title: "Salesforce CRM",
