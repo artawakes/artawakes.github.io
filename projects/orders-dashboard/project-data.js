@@ -1,9 +1,9 @@
-// Order Dashboard Design project data
+// Orders Dashboard project data
 export default {
     // Basic info
-    title: "Order Dashboard Design",
+    title: "Orders Dashboard",
     subtitle: "Design a dashboard that transforms complex logistics into clear, actionable workflows for Customer support.",
-    description: "Order Dashboard Design project by Dario Fidanza - A comprehensive dashboard solution that streamlines logistics operations and enhances customer support workflows.",
+    description: "Orders Dashboard project by Dario Fidanza - A comprehensive dashboard solution that streamlines logistics operations and enhances customer support workflows.",
     keywords: ["Dashboard Design", "Logistics", "Customer Support", "UX Design", "Workflow Design"],
     
     // Tags display on the project page
@@ -11,7 +11,7 @@ export default {
     
     // Overview text (each array item is a paragraph)
     overview: [
-        "The Order Dashboard Design project focused on creating a comprehensive dashboard solution that transforms complex logistics operations into clear, actionable workflows for customer support teams.",
+        "The Orders Dashboard project focused on creating a comprehensive dashboard solution that transforms complex logistics operations into clear, actionable workflows for customer support teams.",
         "This project addressed the challenge of managing multiple order streams, tracking delivery statuses, and providing real-time support to customers while maintaining operational efficiency."
     ],
     
@@ -26,7 +26,7 @@ export default {
     // Feature image with caption
     featureImage: {
         src: "./Images/placeholder-image.jpg",
-        alt: "Order Dashboard Design - Main Interface",
+        alt: "Orders Dashboard - Main Interface",
         caption: "Main dashboard interface showing order management and customer support workflows"
     },
     
@@ -84,12 +84,12 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Previous Project",
-            url: "../previous-project/index.html"
+            title: "Instacart Store Manager App",
+            url: "../store-manager/index.html"
         },
         next: {
-            title: "Next Project",
-            url: "../next-project/index.html"
+            title: "Instacart Partner Platform Pickup Onboarding",
+            url: "../partner-platform/index.html"
         }
     }
 };

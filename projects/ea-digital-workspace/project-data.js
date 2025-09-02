@@ -116,7 +116,7 @@ export default {
             url: "../ea-design-system/index.html"
         },
         next: {
-            title: "EA Learning Management",
+            title: "EA Learning",
             url: "../ea-learning-management/index.html"
         }
     }

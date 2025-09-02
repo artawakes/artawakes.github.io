@@ -193,7 +193,7 @@
         }
 
         .project-card[data-project="store-manager"] {
-            background-image: url('Assets/Projects/Coming-soon.png');
+            background-image: url('Assets/Projects/InstacartStoreManager.png');
         }
 
         .project-card[data-project="shopper-northstar"] {
@@ -201,7 +201,7 @@
         }
 
         .project-card[data-project="order-dashboard"] {
-            background-image: url('Assets/Projects/order-dashboard-thumb.jpg');
+            background-image: url('Assets/Projects/InstacartOrders.png');
         }
 
         /* Project card hover effects */
@@ -228,17 +228,13 @@
         /* Disable hover effects on "Coming Soon" buttons */
         .project-card[data-project="carrotwork"] .mt-4 .bg-primary,
         .project-card[data-project="partner-platform"] .mt-4 .bg-primary,
-        .project-card[data-project="store-manager"] .mt-4 .bg-primary,
-        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary,
-        .project-card[data-project="order-dashboard"] .mt-4 .bg-primary {
+        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary {
             transition: none !important;
         }
 
         .project-card[data-project="carrotwork"] .mt-4 .bg-primary:hover,
         .project-card[data-project="partner-platform"] .mt-4 .bg-primary:hover,
-        .project-card[data-project="store-manager"] .mt-4 .bg-primary:hover,
-        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary:hover,
-        .project-card[data-project="order-dashboard"] .mt-4 .bg-primary:hover {
+        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary:hover {
             background-color: hsl(var(--primary)) !important;
         }
     </style>
@@ -361,7 +357,49 @@
                     </div>
                 </div>
 
-                <!-- 2. CarrotWork -->
+                <!-- 2. Instacart Store Manager App -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="store-manager">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Instacart Store Manager App</h3>
+                            <p class="text-sm opacity-90 mt-2">Retail management platform providing real-time order status tracking, cancellation handling, rapid shift scheduling, and comprehensive performance analytics.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/TEMPLATE?node-id=2009-3128&viewport=-95%2C-3398%2C0.46&t=O98fqS2l8P5H7tZg-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Figma Deck
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M7 7h10v10"></path>
+                                    <path d="M7 17 17 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Orders Dashboard -->
+                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="order-dashboard">
+                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
+                        <div class="content-wrapper text-white">
+                            <h3 class="text-lg font-semibold">Orders Dashboard</h3>
+                            <p class="text-sm opacity-90 mt-2">Design a dashboard that transforms complex logistics into clear, actionable workflows for Customer support.</p>
+                        </div>
+                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/TEMPLATE?node-id=2015-5253&viewport=-95%2C-4782%2C0.46&t=A0vEpp1tQ5gbPdRA-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Figma Deck
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                                    <path d="M7 7h10v10"></path>
+                                    <path d="M7 17 17 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 4. CarrotWork -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="carrotwork">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -380,7 +418,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Instacart Partner Platform Pickup Onboarding -->
+                <!-- 5. Instacart Partner Platform Pickup Onboarding -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="partner-platform">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -399,26 +437,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Instacart Store Manager App -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="store-manager">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Instacart Store Manager App</h3>
-                            <p class="text-sm opacity-90 mt-2">Retail management platform providing real-time order status tracking, cancellation handling, rapid shift scheduling, and comprehensive performance analytics.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Coming Soon
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. Shopper App Northstar -->
+                <!-- 6. Shopper App Northstar -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="shopper-northstar">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -437,26 +456,9 @@
                     </div>
                 </div>
 
-                <!-- 6. Order Dashboard Design -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="order-dashboard">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Order Dashboard Design</h3>
-                            <p class="text-sm opacity-90 mt-2">Design a dashboard that transforms complex logistics into clear, actionable workflows for Customer support.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Coming Soon
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 8. Lyft Driver App -->
+
+                <!-- 7. Lyft Driver App -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-driver-app">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -476,7 +478,7 @@
                     </div>
                 </div>
 
-                <!-- 9. Lyft Home -->
+                <!-- 8. Lyft Home -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-home-search">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -496,7 +498,7 @@
                     </div>
                 </div>
 
-                <!-- 10. Lyft RMIS -->
+                <!-- 9. Lyft RMIS -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-rmis">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -516,7 +518,7 @@
                     </div>
                 </div>
 
-                <!-- 11. EA Design System -->
+                <!-- 10. EA Design System -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-design-system">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -536,7 +538,7 @@
                     </div>
                 </div>
 
-                <!-- 12. EA Digital Workspace -->
+                <!-- 11. EA Digital Workspace -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-digital-workspace">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -556,7 +558,7 @@
                     </div>
                 </div>
 
-                <!-- 13. EA Learning -->
+                <!-- 12. EA Learning -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-learning-management">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -576,7 +578,7 @@
                     </div>
                 </div>
 
-                <!-- 15. Creative Tonic Agency -->
+                <!-- 13. Creative Tonic Agency -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="creative-tonic-agency">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -596,7 +598,7 @@
                     </div>
                 </div>
 
-                <!-- 16. Forkright -->
+                <!-- 14. Forkright -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="forkright-brand">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -616,7 +618,7 @@
                     </div>
                 </div>
 
-                <!-- 17. Fresh2Design -->
+                <!-- 15. Fresh2Design -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="fresh2design">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -636,7 +638,7 @@
                     </div>
                 </div>
 
-                <!-- 18. PMG -->
+                <!-- 16. PMG -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="pmg-digital-marketing">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -656,7 +658,7 @@
                     </div>
                 </div>
 
-                <!-- 20. Human Centered Design -->
+                <!-- 17. Human Centered Design -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="human-centered-design">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">
@@ -676,7 +678,7 @@
                     </div>
                 </div>
 
-                <!-- 21. Salesforce -->
+                <!-- 18. Salesforce -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="salesforce-crm">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="p-6 h-full flex flex-col justify-between relative z-10">

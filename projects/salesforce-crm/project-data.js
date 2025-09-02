@@ -114,8 +114,8 @@ export default {
             url: "../human-centered-design/index.html"
         },
         next: {
-            title: "Lyft Driver App",
-            url: "../lyft-driver-app/index.html"
+            title: "Instacart Tooling Design System",
+            url: "../ea-design-system/index.html"
         }
     }
 }; 
