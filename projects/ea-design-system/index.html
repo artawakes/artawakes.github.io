@@ -254,11 +254,12 @@
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1rem;
+            width: 100%;
         }
         
-        .ea-audit-layout .project-image-container:first-child,
-        .ea-audit-layout .project-image-container:nth-child(2) {
+        .ea-audit-layout .project-image-container {
             grid-column: span 1;
+            width: 100%;
         }
         
         .ea-audit-thumbnails {
@@ -266,6 +267,8 @@
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 0.5rem;
             margin-top: 1rem;
+            width: 100%;
+            clear: both;
         }
         
         .ea-audit-thumbnails .project-image-container {
