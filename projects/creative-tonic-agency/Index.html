@@ -319,6 +319,37 @@
             border-color: hsl(var(--primary));
         }
         
+        /* Force alignment for all project images */
+        .project-image-container {
+            text-align: left !important;
+        }
+        
+        .project-image-container .project-image {
+            vertical-align: top !important;
+            object-position: top left !important;
+        }
+        
+        /* Specific alignment for 550df7ce-b5df-490d-b6f7-61b4751efbf2_rw_1920.jpg */
+        .project-image-container .project-image[src*="550df7ce-b5df-490d-b6f7-61b4751efbf2_rw_1920.jpg"] {
+            object-position: top right !important;
+        }
+        
+        /* Full width hero styling for 84ff7acb-b0b9-4c8e-9801-23c1593a3b28_rw_1920.jpg */
+        .project-image-container .project-image[src*="84ff7acb-b0b9-4c8e-9801-23c1593a3b28_rw_1920.jpg"] {
+            width: 100% !important;
+            max-width: none !important;
+            height: auto !important;
+            object-fit: cover !important;
+            object-position: top center !important;
+            display: block !important;
+        }
+        
+        .project-image-container:has(.project-image[src*="84ff7acb-b0b9-4c8e-9801-23c1593a3b28_rw_1920.jpg"]) {
+            width: 100% !important;
+            max-width: none !important;
+            display: block !important;
+        }
+        
         /* Ensure modal shows full image regardless of constraints */
         .modal-image {
             max-height: none !important;
