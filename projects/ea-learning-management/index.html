@@ -368,6 +368,32 @@
             background-color: #FFFFFF !important;
         }
         
+        /* Equal height containers with white fills for specific images */
+        .project-images-grid .project-image-container:has(.project-image[src*="fb7e5aa5-2647-4e3d-8572-8d048037a49a_rw_1200.png"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="f09dc01c-e19e-4769-97b1-a5f9a0f51342_rw_1920.png"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            background-color: #FFFFFF !important;
+            align-self: stretch !important;
+        }
+        
+        .project-images-grid .project-image-container .project-image[src*="fb7e5aa5-2647-4e3d-8572-8d048037a49a_rw_1200.png"],
+        .project-images-grid .project-image-container .project-image[src*="f09dc01c-e19e-4769-97b1-a5f9a0f51342_rw_1920.png"] {
+            object-position: top !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
         /* Ensure modal shows full image regardless of constraints */
         .modal-image {
             max-height: none !important;
