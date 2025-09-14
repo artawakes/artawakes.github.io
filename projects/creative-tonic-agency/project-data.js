@@ -71,6 +71,14 @@ export default {
                 {
                     src: "./Images/fcd6d095-8d83-4537-a218-bbdddfe7cf84_rw_1920.jpg",
                     alt: "Project Page Design"
+                },
+                {
+                    src: "./Images/550df7ce-b5df-490d-b6f7-61b4751efbf2_rw_1920.jpg",
+                    alt: "Design Implementation"
+                },
+                {
+                    src: "./Images/4eb8eb06-c488-4381-bf55-65a630d1910a_rw_1920.jpg",
+                    alt: "Brand Evolution"
                 }
             ],
             outcomes: [
