@@ -231,8 +231,10 @@
         /* Special Layout Styles for EA Design System */
         .ea-components-layout {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1rem;
+            align-items: start;
+            justify-items: start;
         }
         
         .ea-components-layout .project-image-container:first-child {
@@ -241,6 +243,18 @@
         
         .ea-components-layout .project-image-container:not(:first-child) {
             grid-column: span 1;
+        }
+        
+        .ea-components-layout .project-image-container {
+            display: block !important;
+            text-align: left !important;
+        }
+        
+        .ea-components-layout .project-image-container .project-image {
+            display: block !important;
+            margin: 0 !important;
+            vertical-align: top !important;
+            object-position: top left !important;
         }
         
         .ea-layout-examples-grid {
@@ -397,6 +411,11 @@
         
         .project-images-grid .project-image-container:hover {
             border-color: hsl(var(--primary));
+        }
+        
+        /* Ensure all images in EA Design System are aligned to top */
+        .project-image {
+            object-position: top !important;
         }
         
         /* Ensure modal shows full image regardless of constraints */
@@ -558,13 +577,6 @@
                 </div>
             </section>
 
-            <!-- Project Image -->
-            <section class="mb-16">
-                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
-                    <img id="project-feature-image" src="./Images/feature-image.jpg" alt="EA Design System Feature Image" class="project-image w-full h-auto">
-                </div>
-                <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
-            </section>
 
             <!-- Process Section -->
             <section class="mb-16">

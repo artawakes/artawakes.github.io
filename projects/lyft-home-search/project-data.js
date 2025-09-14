@@ -102,16 +102,15 @@ export default {
                 "45% reduction in search abandonment",
                 "25% improvement in conversion rate",
                 "60% faster average search time",
-                "92% positive user feedback"
+                "92% positive user feedback",
+                "75% NPS Score (Top quartile)",
+                "50% of users gave 10/10 rating for recommendation",
+                "0 flagged documents or SECIR reports"
             ],
             images: [
                 {
                     src: "./Images/d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg",
                     alt: "Search Interface Design"
-                },
-                {
-                    src: "./Images/13d6b2f4-186e-44b8-9cd5-cfb6baab8fd3_rw_600.png",
-                    alt: "Search Results Page"
                 },
                 {
                     src: "./Images/e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg",

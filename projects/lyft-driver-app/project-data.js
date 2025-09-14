@@ -69,12 +69,12 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/62cd093b-7fba-4c93-a8f2-5f90d5176ac6_rw_1920.jpg",
-                    alt: "Entry Point Design"
-                },
-                {
                     src: "./Images/143b0232-a036-4ec6-a5df-e1722a10ed21_rw_1920.jpg",
                     alt: "Accident Cause Selection"
+                },
+                {
+                    src: "./Images/62cd093b-7fba-4c93-a8f2-5f90d5176ac6_rw_1920.jpg",
+                    alt: "Entry Point Design"
                 },
                 {
                     src: "./Images/588241db-680c-4d2b-8fc4-6efd78d936da_rw_3840.jpg",

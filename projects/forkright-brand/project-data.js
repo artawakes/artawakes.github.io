@@ -39,10 +39,9 @@ export default {
                 alt: "Design Process Hero"
             },
             content: [
-                "Conducted comprehensive competitor analysis of health food brands",
-                "Interviewed health food enthusiasts to understand what attracted them to health food brands",
-                "Created a mood board for inspiration on colors, tones, style, and feeling we wanted the brand to convey",
-                "Developed sketches and mockups to refine the logomark and establish overall patterns and colors"
+                "Conducted comprehensive research on recipe management and meal planning needs",
+                "Interviewed home cooks and food enthusiasts to understand workflow requirements",
+                "Analyzed existing recipe apps and identified improvement opportunities"
             ],
             images: [
                 {
@@ -87,8 +86,8 @@ export default {
                 }
             ],
             outcomes: [
-                "Identified key brand differentiation opportunities",
-                "Mapped competitor landscape and market positioning",
+                "Identified key user needs and pain points",
+                "Mapped recipe management workflows",
                 "Defined brand positioning and values"
             ]
         },
@@ -96,9 +95,9 @@ export default {
             title: "Design & Implementation",
             content: [
                 "Created comprehensive brand identity system with modern, approachable design",
-                "Developed flexible logo system with multiple variations and applications",
-                "Designed cohesive color palette and typography system",
-                "Implemented brand guidelines and asset library for consistent application"
+                "Developed intuitive recipe management interface with smart categorization",
+                "Designed meal planning features with nutritional information integration",
+                "Implemented social sharing and community features"
             ],
             images: [
                 {
@@ -152,8 +151,8 @@ export default {
             ],
             outcomes: [
                 "Complete brand identity system",
-                "Flexible logo system with multiple applications",
-                "Comprehensive brand guidelines and asset library"
+                "Intuitive recipe management interface",
+                "Comprehensive component library"
             ]
         },
         {

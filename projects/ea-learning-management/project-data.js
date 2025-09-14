@@ -25,7 +25,7 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "./Images/b5bf5cb1-786e-4ba2-b263-53429e5de381_rw_1920.jpg",
+        src: "./Images/9f9f7cbd-c99e-4b09-83e8-7e730debe410.jpg",
         alt: "EA Learning Management",
         caption: "Learning management system redesign for Electronic Arts"
     },
@@ -113,6 +113,10 @@ export default {
                     alt: "Notification System"
                 },
                 {
+                    src: "./Images/b5bf5cb1-786e-4ba2-b263-53429e5de381_rw_1920.jpg",
+                    alt: "Learning Platform Interface"
+                },
+                {
                     src: "./Images/df2165ba-1e85-4b29-bbb5-f2ecb36ace35_rw_1920.jpg",
                     alt: "User Interface Design"
                 },
@@ -157,10 +161,6 @@ export default {
                 {
                     src: "./Images/44a6eeab-2e0b-4823-b9b7-fe4bdf1f217d_rw_1200.png",
                     alt: "Progress Tracking Results"
-                },
-                {
-                    src: "./Images/9f9f7cbd-c99e-4b09-83e8-7e730debe410.jpg",
-                    alt: "Learning Platform Results"
                 }
             ],
             outcomes: [
