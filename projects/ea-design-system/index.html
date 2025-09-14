@@ -287,6 +287,12 @@
             background-color: rgba(0, 0, 255, 0.1) !important;
         }
         
+        .ea-audit-grid-container {
+            width: 100% !important;
+            margin-top: 1rem !important;
+            clear: both !important;
+        }
+        
         .ea-audit-thumbnails .project-image {
             max-height: 80px;
             object-fit: cover;
@@ -787,10 +793,18 @@
                                 }
                             });
                             
+                            // Add first two images to the current imagesDiv
                             imagesDiv.appendChild(mainLayoutDiv);
+                            
+                            // Create a separate container for the grid that will be added after the text content
+                            const gridContainer = document.createElement('div');
+                            gridContainer.className = 'ea-audit-grid-container';
                             if (thumbnailsDiv.children.length > 0) {
-                                imagesDiv.appendChild(thumbnailsDiv);
+                                gridContainer.appendChild(thumbnailsDiv);
                             }
+                            
+                            // Add the grid container to the step div (after the text content)
+                            stepDiv.appendChild(gridContainer);
                         } else {
                             // Regular handling for other sections
                             if (step.title === 'Design Systems Component') {
