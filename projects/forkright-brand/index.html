@@ -263,7 +263,8 @@
         
         /* Single image container (not in grid) */
         .project-image-container:not(.project-images-grid .project-image-container) {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
             border-radius: calc(var(--radius) + 4px);
@@ -273,12 +274,13 @@
         /* Single image styling */
         .project-image-container:not(.project-images-grid .project-image-container) .project-image {
             max-height: 600px;
-            width: auto;
+            max-width: 896px; /* max-w-4xl equivalent */
+            width: 100%;
             height: auto;
             object-fit: contain;
             border-radius: calc(var(--radius) + 4px);
-            border: 2px solid hsl(var(--border));
-            transition: border-color 0.2s ease-in-out;
+            border: none;
+            transition: none;
             display: block;
         }
         
@@ -454,7 +456,7 @@
             <!-- Project Image -->
             <section class="mb-16">
                 <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
-        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image w-full h-auto">
+        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image">
     </div>
                 </div>
                 <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
@@ -462,7 +464,6 @@
 
             <!-- Process Section -->
             <section class="mb-16">
-                <h2 class="text-2xl font-bold mb-6">Design Process</h2>
                 <div id="project-process" class="space-y-8">
                     <!-- Process content will be dynamically populated -->
                 </div>
@@ -590,13 +591,47 @@
             featureImage.alt = projectData.featureImage.alt;
             document.getElementById('project-feature-caption').textContent = projectData.featureImage.caption;
             
+            // Add hero image below feature image if it exists in first process step
+            const firstStep = projectData.process[0];
+            if (firstStep && firstStep.heroImage) {
+                const heroImageContainer = document.createElement('div');
+                heroImageContainer.className = 'project-image-container mb-6 flex justify-center';
+                heroImageContainer.onclick = () => openImageModal(firstStep.heroImage.src, firstStep.heroImage.alt);
+                const heroImg = document.createElement('img');
+                heroImg.src = firstStep.heroImage.src;
+                heroImg.alt = firstStep.heroImage.alt;
+                heroImg.className = 'project-image';
+                heroImg.style.maxHeight = '600px';
+                heroImg.style.maxWidth = '896px';
+                heroImg.style.width = '100%';
+                heroImageContainer.appendChild(heroImg);
+                
+                // Insert after the feature image section (after the caption)
+                const featureCaption = document.getElementById('project-feature-caption');
+                featureCaption.parentNode.insertBefore(heroImageContainer, featureCaption.nextSibling);
+            }
+            
             // Populate process steps
             const processContainer = document.getElementById('project-process');
+            console.log('Process data:', projectData.process);
+            
+            // Add Design Process title after first step's hero image
+            let designProcessTitleAdded = false;
+            
             projectData.process.forEach(step => {
                 // Create step container
                 const stepDiv = document.createElement('div');
                 
-                // Create heading
+                // Add Design Process title for first step
+                if (!designProcessTitleAdded) {
+                    const designProcessTitle = document.createElement('h2');
+                    designProcessTitle.className = 'text-2xl font-bold mb-6';
+                    designProcessTitle.textContent = 'Design Process';
+                    stepDiv.appendChild(designProcessTitle);
+                    designProcessTitleAdded = true;
+                }
+                
+                // Create heading (after hero image)
                 const heading = document.createElement('h3');
                 heading.className = 'text-xl font-semibold mb-4';
                 heading.textContent = step.title;
