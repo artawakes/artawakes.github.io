@@ -316,6 +316,46 @@
             border-color: hsl(var(--primary));
         }
         
+        /* Force alignment for all project images */
+        .project-image-container {
+            text-align: left !important;
+        }
+        
+        .project-image-container .project-image {
+            vertical-align: top !important;
+            object-position: top left !important;
+        }
+        
+        /* Specific alignment for fc203494-9e8f-4770-85d8-8bcda223adfc_rw_1920.jpg */
+        .project-image-container .project-image[src*="fc203494-9e8f-4770-85d8-8bcda223adfc_rw_1920.jpg"] {
+            object-position: top center !important;
+        }
+        
+        /* Specific alignment for f755fd0e-6cea-4b77-813f-e830cbc632a9_rw_1920.jpg */
+        .project-image-container .project-image[src*="f755fd0e-6cea-4b77-813f-e830cbc632a9_rw_1920.jpg"] {
+            object-position: top left !important;
+        }
+        
+        /* Specific alignment for f28c0e05-0317-47f0-9a03-deb7609bef23_rw_1920.jpg */
+        .project-image-container .project-image[src*="f28c0e05-0317-47f0-9a03-deb7609bef23_rw_1920.jpg"] {
+            object-position: top center !important;
+        }
+        
+        /* Full width hero styling for 5ddaec65-c0dc-4c1e-9a8e-05591971df96_rw_1920.jpg */
+        .project-image-container .project-image[src*="5ddaec65-c0dc-4c1e-9a8e-05591971df96_rw_1920.jpg"] {
+            width: 100% !important;
+            max-width: none !important;
+            height: auto !important;
+            object-fit: cover !important;
+            object-position: top center !important;
+        }
+        
+        .project-image-container:has(.project-image[src*="5ddaec65-c0dc-4c1e-9a8e-05591971df96_rw_1920.jpg"]) {                                                                                                        
+            width: 100% !important;
+            max-width: none !important;
+            display: block !important;
+        }
+        
         /* Ensure modal shows full image regardless of constraints */
         .modal-image {
             max-height: none !important;
