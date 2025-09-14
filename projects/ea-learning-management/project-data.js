@@ -187,7 +187,7 @@ export default {
         },
         next: {
             title: "Creative Tonic Agency",
-            url: "../creative-tonic-agency/index.html"
+            url: "../creative-tonic-agency/Index.html"
         }
     }
 }; 
