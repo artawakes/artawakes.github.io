@@ -189,7 +189,7 @@
         }
 
         .project-card[data-project="partner-platform"] {
-            background-image: url('Assets/Projects/Coming-soon.png');
+            background-image: url('Assets/Projects/Onboarding.png');
         }
 
         .project-card[data-project="store-manager"] {
@@ -197,7 +197,7 @@
         }
 
         .project-card[data-project="shopper-northstar"] {
-            background-image: url('Assets/Projects/Coming-soon.png');
+            background-image: url('Assets/Projects/Shopper.png');
         }
 
         .project-card[data-project="order-dashboard"] {
@@ -225,16 +225,7 @@
             opacity: 1;
         }
 
-        /* Disable hover effects on "Coming Soon" buttons */
-        .project-card[data-project="partner-platform"] .mt-4 .bg-primary,
-        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary {
-            transition: none !important;
-        }
-
-        .project-card[data-project="partner-platform"] .mt-4 .bg-primary:hover,
-        .project-card[data-project="shopper-northstar"] .mt-4 .bg-primary:hover {
-            background-color: hsl(var(--primary)) !important;
-        }
+        /* Disable hover effects on "Coming Soon" buttons - no longer needed */
     </style>
 </head>
 <body>
@@ -333,8 +324,9 @@
                 A collection of selected works showcasing my experience in design systems, user experience, and digital innovation.
             </h3>
             
-            <!-- Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Recent Work Section -->
+            <h2 class="text-2xl font-semibold mb-6">Recent work</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 <!-- 1. Instacart Tooling Design System -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="instacart-tooling">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -426,12 +418,13 @@
                             <p class="text-sm opacity-90 mt-2">Streamlined onboarding experience for retail partners integrating pickup services into their operations.</p>
                         </div>
                         <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Coming Soon
+                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2006-3688&t=u2dI5V3nh8TA08kU-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Figma Deck
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                    <path d="M7 7h10v10"></path>
+                                    <path d="M7 17 17 7"></path>
                                 </svg>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -445,18 +438,21 @@
                             <p class="text-sm opacity-90 mt-2">Next-generation shopper experience platform focusing on efficiency, earnings transparency, and user satisfaction.</p>
                         </div>
                         <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Coming Soon
+                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2015-6187&t=TlXY1ROIVIlZDLoZ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                Figma Deck
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                    <path d="M7 7h10v10"></path>
+                                    <path d="M7 17 17 7"></path>
                                 </svg>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
 
-
-
+            <!-- Older Work Section -->
+            <h2 class="text-2xl font-semibold mb-6">Older work</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- 7. Lyft Driver App -->
                 <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-driver-app">
                     <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>

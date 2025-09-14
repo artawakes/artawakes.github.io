@@ -98,8 +98,8 @@ export default {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Shopper App Northstar",
-            url: "../shopper-northstar/index.html"
+            title: "Salesforce CRM",
+            url: "../salesforce-crm/index.html"
         },
         next: {
             title: "Lyft Home Search",

@@ -256,12 +256,12 @@ const projectData = {
     // Navigation to other projects
     navigation: {
         prev: {
-            title: "Salesforce",
-            url: "../salesforce-crm/index.html"
+            title: "Lyft RMIS",
+            url: "../lyft-rmis/index.html"
         },
         next: {
-            title: "Instacart Store Manager App",
-            url: "../store-manager/index.html"
+            title: "EA Digital Workspace",
+            url: "../ea-digital-workspace/index.html"
         }
     }
 };
