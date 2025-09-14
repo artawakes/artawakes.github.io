@@ -1,7 +1,7 @@
 // Sample project data structure
 export default {
     // Basic info
-    title: "Lyft Driver App - DART",
+    title: "Lyft Driver App",
     subtitle: "Accident Reporting Tool on Lyft's Driver App",
     description: "Redesigning the accident reporting experience to improve efficiency and empathy for both drivers and agents",
     keywords: ["UX Design", "Product Design", "Mobile App", "User Experience"],
@@ -40,6 +40,10 @@ export default {
                 "Studied accident reporting processes and driver communication needs"
             ],
             images: [
+                {
+                    src: "./Images/18a3ea79-c34e-47c5-a0bb-364fd0a8ad7b_rw_1200.jpg",
+                    alt: "Driver App Interface"
+                },
                 {
                     src: "./Images/bcf1ac7e-471a-408f-b309-3f4dc23b95bd_rw_1920.jpg",
                     alt: "Driver Research Process"

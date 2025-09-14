@@ -237,6 +237,23 @@
             align-items: start;
         }
         
+        /* Special layout for 3 images in a row */
+        .project-images-grid.three-columns {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        @media (max-width: 768px) {
+            .project-images-grid.three-columns {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .project-images-grid.three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         /* Square containers for multiple images */
         .project-images-grid .project-image-container {
             aspect-ratio: 1;
@@ -627,6 +644,10 @@
                         imagesDiv.appendChild(img);
                     } else {
                         imagesDiv.className = 'project-images-grid';
+                        // Add three-columns class if there are exactly 3 images
+                        if (step.images.length === 3) {
+                            imagesDiv.classList.add('three-columns');
+                        }
                         step.images.forEach(image => {
                             const imgDiv = document.createElement('div');
                             imgDiv.className = 'project-image-container';
