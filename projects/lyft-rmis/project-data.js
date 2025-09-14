@@ -44,6 +44,10 @@ export default {
                 {
                     src: "./Images/2.jpeg",
                     alt: "Initial Project Brief"
+                },
+                {
+                    src: "./Images/20.png",
+                    alt: "Research & Discovery Analysis"
                 }
             ],
             outcomes: [
@@ -155,6 +159,18 @@ export default {
             ],
             images: [
                 {
+                    src: "./Images/21b.png",
+                    alt: "Design System Components"
+                },
+                {
+                    src: "./Images/21c.png",
+                    alt: "Visual Design Elements"
+                },
+                {
+                    src: "./Images/21d.png",
+                    alt: "Design System Implementation"
+                },
+                {
                     src: "./Images/18a.png",
                     alt: "Color Palette"
                 },
@@ -163,8 +179,8 @@ export default {
                     alt: "Component Library"
                 },
                 {
-                    src: "./Images/26a.png",
-                    alt: "Design System Documentation"
+                    src: "./Images/23a.png",
+                    alt: "Design System Overview"
                 }
             ],
             outcomes: [
@@ -183,16 +199,48 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/24a.png",
-                    alt: "High-Fidelity Prototypes"
+                    src: "./Images/24b.png",
+                    alt: "Prototyping User Flow 1"
                 },
                 {
-                    src: "./Images/21a.png",
-                    alt: "User Feedback Integration"
+                    src: "./Images/24c.png",
+                    alt: "Prototyping User Flow 2"
                 },
                 {
-                    src: "./Images/22.png",
-                    alt: "Accessibility Considerations"
+                    src: "./Images/23b.png",
+                    alt: "Prototyping User Flow 3"
+                },
+                {
+                    src: "./Images/24d.png",
+                    alt: "Prototyping User Flow 4"
+                },
+                {
+                    src: "./Images/24e.png",
+                    alt: "Prototyping User Flow 5"
+                },
+                {
+                    src: "./Images/25b.png",
+                    alt: "Prototyping User Flow 6"
+                },
+                {
+                    src: "./Images/25c.png",
+                    alt: "Prototyping User Flow 7"
+                },
+                {
+                    src: "./Images/25d.png",
+                    alt: "Prototyping User Flow 8"
+                },
+                {
+                    src: "./Images/25e.png",
+                    alt: "Prototyping User Flow 9"
+                },
+                {
+                    src: "./Images/28.png",
+                    alt: "Implementation Guidelines"
+                },
+                {
+                    src: "./Images/29.png",
+                    alt: "Project Outcome & Metrics"
                 }
             ],
             outcomes: [
@@ -211,16 +259,20 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/25a.png",
-                    alt: "Final Design Screens"
+                    src: "./Images/26a.png",
+                    alt: "Implementation Overview"
                 },
                 {
-                    src: "./Images/28.png",
-                    alt: "Implementation Guidelines"
+                    src: "./Images/26b.png",
+                    alt: "Implementation Details"
                 },
                 {
-                    src: "./Images/29.png",
-                    alt: "Project Outcome & Metrics"
+                    src: "./Images/26c.png",
+                    alt: "Implementation Process"
+                },
+                {
+                    src: "./Images/26d.png",
+                    alt: "Implementation Results"
                 }
             ],
             outcomes: [
