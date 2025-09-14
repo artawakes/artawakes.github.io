@@ -701,41 +701,61 @@
                         imagesDiv.appendChild(img);
                     } else {
                         imagesDiv.className = 'project-images-grid';
-                        step.images.forEach(image => {
-                            const imgDiv = document.createElement('div');
-                            imgDiv.className = 'project-image-container';
-                            imgDiv.onclick = () => openImageModal(image.src, image.alt);
+                        // Special handling for audit section
+                        if (step.title === 'Research and Notifications Audit') {
+                            // Create main layout for first two images
+                            const mainLayoutDiv = document.createElement('div');
+                            mainLayoutDiv.className = 'ea-audit-layout';
                             
-                            // Add special layout classes based on section title
+                            // Create thumbnails container for remaining images
+                            const thumbnailsDiv = document.createElement('div');
+                            thumbnailsDiv.className = 'ea-audit-thumbnails';
+                            
+                            step.images.forEach((image, index) => {
+                                const imgDiv = document.createElement('div');
+                                imgDiv.className = 'project-image-container';
+                                imgDiv.onclick = () => openImageModal(image.src, image.alt);
+                                
+                                const img = document.createElement('img');
+                                img.src = image.src;
+                                img.alt = image.alt;
+                                img.className = 'project-image w-full h-auto';
+                                imgDiv.appendChild(img);
+                                
+                                if (index < 2) {
+                                    // First two images go in main layout
+                                    mainLayoutDiv.appendChild(imgDiv);
+                                } else {
+                                    // Rest go in thumbnails
+                                    thumbnailsDiv.appendChild(imgDiv);
+                                }
+                            });
+                            
+                            imagesDiv.appendChild(mainLayoutDiv);
+                            if (thumbnailsDiv.children.length > 0) {
+                                imagesDiv.appendChild(thumbnailsDiv);
+                            }
+                        } else {
+                            // Regular handling for other sections
                             if (step.title === 'Design Systems Component') {
                                 imagesDiv.classList.add('ea-components-layout');
                             } else if (step.title === 'Layout Examples') {
                                 imagesDiv.classList.add('ea-layout-examples-grid');
-                            } else if (step.title === 'Research and Notifications Audit') {
-                                // Special handling for audit section
-                                if (image.src.includes('1.png') || image.src.includes('2.png')) {
-                                    // First two images get large layout
-                                    imagesDiv.classList.add('ea-audit-layout');
-                                } else {
-                                    // Rest get thumbnail layout
-                                    if (!imagesDiv.querySelector('.ea-audit-thumbnails')) {
-                                        const thumbnailsDiv = document.createElement('div');
-                                        thumbnailsDiv.className = 'ea-audit-thumbnails';
-                                        imagesDiv.appendChild(thumbnailsDiv);
-                                    }
-                                    const thumbnailsDiv = imagesDiv.querySelector('.ea-audit-thumbnails');
-                                    thumbnailsDiv.appendChild(imgDiv);
-                                    return; // Skip adding to main imagesDiv
-                                }
                             }
                             
-                            const img = document.createElement('img');
-                            img.src = image.src;
-                            img.alt = image.alt;
-                            img.className = 'project-image w-full h-auto';
-                            imgDiv.appendChild(img);
-                            imagesDiv.appendChild(imgDiv);
-                        });
+                            step.images.forEach(image => {
+                                const imgDiv = document.createElement('div');
+                                imgDiv.className = 'project-image-container';
+                                imgDiv.onclick = () => openImageModal(image.src, image.alt);
+                                
+                                const img = document.createElement('img');
+                                img.src = image.src;
+                                img.alt = image.alt;
+                                img.className = 'project-image w-full h-auto';
+                                imgDiv.appendChild(img);
+                                imagesDiv.appendChild(imgDiv);
+                            });
+                        }
                     }
                     stepDiv.appendChild(imagesDiv);
                 }
