@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/6d81c0ee-f1ee-4990-a255-54e493066dd4.png",
         alt: "Salesforce CRM",
-        caption: "Stepper wizard CRM flow for intuitive brand customization experience"
+        caption: ""
     },
     
     // Process steps

@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/b5bf5cb1-786e-4ba2-b263-53429e5de381_rw_1920.jpg",
         alt: "EA Learning Management",
-        caption: "Learning management system redesign for Electronic Arts"
+        caption: ""
     },
     
     // Process steps

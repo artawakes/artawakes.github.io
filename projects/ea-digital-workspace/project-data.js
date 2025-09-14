@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/b2e0c306-51d4-43fc-a0d3-cbb337157267.jpg",
         alt: "EA Digital Workspace",
-        caption: "Digital workplace transformation for Electronic Arts employees"
+        caption: ""
     },
     
     // Process steps

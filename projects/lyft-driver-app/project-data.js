@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/34abed72-1155-4d81-a261-d90d00160a05.jpg",
         alt: "Lyft Driver App",
-        caption: "Driver-focused application redesign for Lyft"
+        caption: ""
     },
     
     // Process steps

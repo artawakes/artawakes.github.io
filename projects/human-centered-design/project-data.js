@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/e521ef52-01c2-40d7-ab8a-481fc31b069e_rw_1920.JPG",
         alt: "Trans Youth Support Organization Results",
-        caption: "Results showing the impact of our design thinking workshops and process optimization work"
+        caption: ""
     },
     
     // Process steps

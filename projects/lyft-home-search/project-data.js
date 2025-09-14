@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/7bc4e239-1e28-4f94-b185-e814544275e2.jpg",
         alt: "Search Interface Design",
-        caption: "Redesigned search interface featuring predictive suggestions and smart location detection"
+        caption: ""
     },
     
     // Process steps

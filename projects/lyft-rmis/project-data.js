@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/1.jpg",
         alt: "RMIS Dashboard Interface",
-        caption: "Lyft Risk Management Information System (RMIS)"
+        caption: ""
     },
     
     // Process steps

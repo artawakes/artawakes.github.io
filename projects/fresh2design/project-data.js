@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/0dfecaed-a952-4b16-99e3-b7f61a6a4d0b_rw_1920.jpg",
         alt: "Fresh2Design",
-        caption: "Community platform for design professionals in Austin"
+        caption: ""
     },
     
     // Process steps

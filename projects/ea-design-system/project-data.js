@@ -27,7 +27,7 @@ const projectData = {
     featureImage: {
         src: "./Images/Components/Components.jpg",
         alt: "EA Design System Component Library",
-        caption: "Component library showcasing unified design patterns across EA's digital products"
+        caption: ""
     },
     
     // Process steps

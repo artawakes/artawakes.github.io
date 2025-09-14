@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/bb001467-161f-4864-a851-3a51cd8b57bd.jpg",
         alt: "Creative Tonic Agency",
-        caption: "Brand identity and digital experience design for Creative Tonic Agency"
+        caption: ""
     },
     
     // Process steps

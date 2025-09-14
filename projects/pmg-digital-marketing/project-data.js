@@ -27,7 +27,7 @@ export default {
     featureImage: {
         src: "./Images/98811efe-0a6e-4ffa-a5f1-2b5246b7b913_rw_1920.jpg",
         alt: "PMG Website Redesign",
-        caption: "Complete responsive website redesign showcasing PMG's client portfolio"
+        caption: ""
     },
     
     // Process steps
