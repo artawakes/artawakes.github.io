@@ -307,10 +307,9 @@
 
         .hero-images-container .project-image-container .project-image {
             width: 100% !important;
-            height: auto !important;
-            object-fit: contain !important;
+            height: 254px !important;
+            object-fit: cover !important;
             object-position: center top !important;
-            max-height: 600px !important;
         }
 
         /* Single image styling */
@@ -320,7 +319,7 @@
         }
         
         .project-image-container:not(.project-images-grid .project-image-container) .project-image {
-            max-height: 300px;
+            max-height: 500px;
             width: 100% !important;
             height: auto;
             object-fit: cover;
@@ -348,18 +347,51 @@
             object-position: top left !important;
         }
         
+        /* Make specific image 25% taller */
+        .project-image-container .project-image[src*="a1a54073-47ab-4bc4-8189-77aa6fe84a23_rw_3840.jpg"] {
+            max-height: 625px !important;
+        }
+        
+        /* Background color for specific image containers */
+        .project-image-container:has(.project-image[src*="2c820158-5a89-4b1b-9644-b6e1b22d98d0_rw_1920.png"]),
+        .project-image-container:has(.project-image[src*="eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png"]) {
+            background-color: #B1BAE5 !important;
+        }
+        
+        /* Results & Impact grid layout */
+        .project-images-grid:has(.project-image[src*="d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg"]),
+        .project-images-grid:has(.project-image[src*="e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg"]) {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 1rem !important;
+            align-items: stretch !important;
+        }
+        
         /* Full width containers for specific images in Results & Impact */
         .project-image-container:has(.project-image[src*="d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg"]),
         .project-image-container:has(.project-image[src*="e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg"]) {
             width: 100% !important;
             max-width: 100% !important;
+            aspect-ratio: unset !important;
+            height: auto !important;
         }
         
-        /* Shorter height for specific images in Results & Impact */
+        /* Make right image container match left image height and add white background */
+        .project-image-container:has(.project-image[src*="e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg"]) {
+            background-color: #FFFFFF !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        /* Images fit container width and height adjusts to content */
         .project-image-container:has(.project-image[src*="d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg"]) .project-image,
         .project-image-container:has(.project-image[src*="e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg"]) .project-image {
-            max-height: 100px !important;
-            height: 100px !important;
+            width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            object-fit: contain !important;
+            object-position: center top !important;
         }
         
         /* Ensure modal shows full image regardless of constraints */
@@ -480,6 +512,16 @@
     <main class="site-container py-12">
         <div>
             
+            <!-- Project Image -->
+            <section class="mb-16">
+                <div id="hero-images-container" class="hero-images-container">
+                    <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Home Search Feature Image" class="project-image w-full h-auto">
+                    </div>
+                </div>
+                <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
+            </section>
+
             <!-- Project Overview -->
             <section class="mb-16">
                 <h2 class="text-2xl font-bold mb-6">Project Overview</h2>
@@ -509,16 +551,6 @@
                         </dl>
                     </div>
                 </div>
-            </section>
-
-            <!-- Project Image -->
-            <section class="mb-16">
-                <div id="hero-images-container" class="hero-images-container">
-                    <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
-                        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Home Search Feature Image" class="project-image w-full h-auto">
-                    </div>
-                </div>
-                <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
             </section>
 
             <!-- Process Section -->
