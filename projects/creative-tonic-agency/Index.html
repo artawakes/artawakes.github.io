@@ -270,6 +270,28 @@
             overflow: hidden;
         }
         
+        /* Hero images container for single full-width image */
+        .hero-images-container {
+            display: block !important;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero images specific styling for single full-width image */
+        .hero-images-container .project-image-container {
+            display: block !important;
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        .hero-images-container .project-image-container .project-image {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            max-height: 600px !important;
+        }
+
         /* Single image styling */
         .project-image-container:not(.project-images-grid .project-image-container) .project-image {
             max-height: 600px;
@@ -399,7 +421,7 @@
     <!-- Project Header -->
     <header class="pt-24 pb-12 bg-muted/50">
         <div class="site-container">
-            <div class="max-w-4xl mx-auto">
+            <div>
                 <div class="mb-6">
                     <h1 id="project-title" class="text-3xl md:text-4xl font-bold tracking-tight mb-2">Project Title</h1>
                     <p id="project-subtitle" class="text-muted-foreground">Project subtitle or brief description</p>
@@ -412,8 +434,8 @@
     </header>
 
     <!-- Project Content -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="max-w-4xl mx-auto">
+    <main class="site-container py-12">
+        <div>
             
             <!-- Project Overview -->
             <section class="mb-16">
@@ -448,9 +470,10 @@
 
             <!-- Project Image -->
             <section class="mb-16">
-                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
-        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image w-full h-auto">
-    </div>
+                <div id="hero-images-container" class="hero-images-container">
+                    <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Creative Tonic Agency Feature Image" class="project-image w-full h-auto">
+                    </div>
                 </div>
                 <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
             </section>
@@ -480,13 +503,10 @@
                         </svg>
                         <span id="prev-project-title">Previous Project</span>
                     </a>
-                    </a>
                     
                     <!-- All Projects Link - Centered -->
                     <a href="../../projects.html" class="inline-flex items-center text-sm font-medium project-nav-link order-first sm:order-none">
                         All Projects
-                    </a>
-
                     </a>
                     <a id="next-project-link" href="#" class="inline-flex items-center text-sm font-medium project-nav-link">
                         <span id="next-project-title">Next Project</span>
