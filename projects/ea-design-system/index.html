@@ -783,9 +783,6 @@
                                 }
                             });
                             
-                            // Add first two images to the current imagesDiv
-                            imagesDiv.appendChild(mainLayoutDiv);
-                            
                             // Create a separate container for the grid that will be added after the text content
                             const gridContainer = document.createElement('div');
                             gridContainer.className = 'ea-audit-grid-container';
@@ -795,6 +792,9 @@
                             
                             // Add the grid container to the step div (after the text content)
                             stepDiv.appendChild(gridContainer);
+                            
+                            // Add first two images to the current imagesDiv
+                            imagesDiv.appendChild(mainLayoutDiv);
                         } else {
                             // Regular handling for other sections
                             if (step.title === 'Design Systems Component') {
