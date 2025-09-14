@@ -41,12 +41,34 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg",
-                    alt: "Search Interface Design"
+                    src: "./Images/a1a54073-47ab-4bc4-8189-77aa6fe84a23_rw_3840.jpg",
+                    alt: "Lyft Home Search Interface"
+                }
+            ]
+        },
+        {
+            title: "Search Interface Design",
+            content: [
+                "Comprehensive redesign of the search interface focusing on user experience and visual hierarchy",
+                "Implementation of advanced search features including predictive suggestions and real-time results",
+                "Mobile-first approach ensuring optimal experience across all device types"
+            ],
+            images: [
+                {
+                    src: "./Images/d044dfe2-cbb3-49f0-b3c4-ceec641e0010_rw_1920.jpg",
+                    alt: "Search Interface Design 1"
                 },
                 {
-                    src: "./Images/13d6b2f4-186e-44b8-9cd5-cfb6baab8fd3_rw_600.png",
-                    alt: "Search Results Page"
+                    src: "./Images/f0486778-5a0d-4e4f-84cb-d7df9f367afe_rw_1920.jpg",
+                    alt: "Search Interface Design 2"
+                },
+                {
+                    src: "./Images/277793e7-e92e-4006-b16f-98cf8547c967_rw_1920.jpg",
+                    alt: "Search Interface Design 3"
+                },
+                {
+                    src: "./Images/98a09f36-9a10-4b2a-9f7e-0ce4810d77f2_rw_1920.png",
+                    alt: "Search Interface Design 4"
                 }
             ]
         },
@@ -60,8 +82,8 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg",
-                    alt: "Search Filters Design"
+                    src: "./Images/2c820158-5a89-4b1b-9644-b6e1b22d98d0_rw_1920.png",
+                    alt: "Search Implementation Design"
                 },
                 {
                     src: "./Images/eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png",
@@ -81,6 +103,20 @@ export default {
                 "25% improvement in conversion rate",
                 "60% faster average search time",
                 "92% positive user feedback"
+            ],
+            images: [
+                {
+                    src: "./Images/d3e54fca-a6ce-4070-9a3d-09b8050eaa6c_rw_1920.jpg",
+                    alt: "Search Interface Design"
+                },
+                {
+                    src: "./Images/13d6b2f4-186e-44b8-9cd5-cfb6baab8fd3_rw_600.png",
+                    alt: "Search Results Page"
+                },
+                {
+                    src: "./Images/e3ed1ee6-2d11-450c-bf02-56ff59b00ce5_rw_1920.jpg",
+                    alt: "Search Filters Design"
+                }
             ]
         }
     ],

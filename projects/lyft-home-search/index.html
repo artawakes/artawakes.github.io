@@ -641,10 +641,7 @@
                         imagesDiv.className = 'project-image-container mb-4';
                         imagesDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
                         
-                        // Add specific styling for the Lyft mobile search image
-                        if (step.images[0].src.includes('eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png')) {
-                            imagesDiv.classList.add('lyft-mobile-search-image');
-                        }
+                        // Remove special styling for consistent appearance
                         
                         const img = document.createElement('img');
                         img.src = step.images[0].src;
@@ -658,10 +655,7 @@
                             imgDiv.className = 'project-image-container';
                             imgDiv.onclick = () => openImageModal(image.src, image.alt);
                             
-                            // Add specific styling for the Lyft mobile search image
-                            if (image.src.includes('eb864932-81ad-4d97-9732-d165e00dbe22_rw_1920.png')) {
-                                imgDiv.classList.add('lyft-mobile-search-image');
-                            }
+                            // Remove special styling for consistent grid appearance
                             
                             const img = document.createElement('img');
                             img.src = image.src;
