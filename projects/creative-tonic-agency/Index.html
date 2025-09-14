@@ -273,8 +273,9 @@
         /* Hero images container for single full-width image */
         .hero-images-container {
             display: block !important;
-            width: 100%;
-            margin: 0 auto;
+            width: 100% !important;
+            margin: 0 !important;
+            max-width: none !important;
         }
 
         /* Hero images specific styling for single full-width image */
@@ -282,14 +283,16 @@
             display: block !important;
             width: 100% !important;
             max-width: none !important;
+            margin: 0 !important;
         }
 
         .hero-images-container .project-image-container .project-image {
             width: 100% !important;
             height: auto !important;
-            object-fit: contain !important;
+            object-fit: cover !important;
             object-position: center !important;
             max-height: 600px !important;
+            display: block !important;
         }
 
         /* Single image styling */
