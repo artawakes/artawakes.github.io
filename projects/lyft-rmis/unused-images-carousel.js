@@ -47,7 +47,7 @@ class UnusedImagesCarousel {
                             </button>
                             
                             <!-- Main Image -->
-                            <img id="mainUnusedImage" src="" alt="Unused project image" class="main-image w-full h-full object-cover">
+                            <img id="mainUnusedImage" src="" alt="Unused project image" class="main-image w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)">
                         </div>
                         
                         <!-- Thumbnails -->
@@ -75,7 +75,7 @@ class UnusedImagesCarousel {
             <div class="thumbnail flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${index === 0 ? 'border-primary' : 'border-transparent'}" 
                  onclick="unusedCarousel.selectImage(${index})" 
                  data-index="${index}">
-                <img src="${image.thumbnail || image.src}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover">
+                <img src="${image.thumbnail || image.src}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover cursor-pointer" onclick="event.stopPropagation(); openImageModal('${image.src}', '${image.alt || `Additional project image ${index + 1}`}')">
             </div>
         `).join('');
     }
@@ -169,6 +169,11 @@ const carouselStyles = `
 
         .main-image {
             transition: opacity 0.3s ease;
+        }
+
+        .main-image:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
         }
     </style>
 `;
