@@ -319,6 +319,11 @@
             border-color: hsl(var(--primary));
         }
         
+        /* White background for transparent image */
+        .project-image-container:has(.project-image[src*="e4f900a1-0fcb-4617-8852-4b46fc38e4e5_rw_3840.png"]) {
+            background-color: white !important;
+        }
+        
         /* Ensure modal shows full image regardless of constraints */
         .modal-image {
             max-height: none !important;
