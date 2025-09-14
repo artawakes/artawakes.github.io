@@ -38,13 +38,10 @@ export default {
                 "Conducted user interviews with claim handlers to understand their workflow and pain points",
                 "Performed comprehensive analysis of the current RMIS system to identify optimization opportunities",
                 "Collected user needs assessment and interview insights to guide development",
-                "Conducted competitive analysis to identify industry best practices"
+                "Conducted competitive analysis to identify industry best practices",
+                "QUOTE_START:How might we improve RMIS' navigation, information architecture and layout to help users become more efficient at their jobs.QUOTE_END"
             ],
             images: [
-                {
-                    src: "./Images/2.jpeg",
-                    alt: "Initial Project Brief"
-                },
                 {
                     src: "./Images/20.png",
                     alt: "Research & Discovery Analysis"

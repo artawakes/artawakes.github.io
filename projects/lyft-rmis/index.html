@@ -256,6 +256,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: top;
             border: none;
             border-radius: 0;
             transition: none;
@@ -290,7 +291,7 @@
             width: 100% !important;
             height: auto !important;
             object-fit: cover !important;
-            object-position: center !important;
+            object-position: top !important;
             max-height: 600px !important;
             display: block !important;
         }
@@ -306,6 +307,7 @@
             width: 100% !important;
             height: auto;
             object-fit: cover;
+            object-position: top;
             border-radius: calc(var(--radius) + 4px);
             border: 2px solid hsl(var(--border));
             transition: border-color 0.2s ease-in-out;
@@ -322,6 +324,171 @@
         
         .project-images-grid .project-image-container:hover {
             border-color: hsl(var(--primary));
+        }
+        
+        /* Quote styling for problem statement */
+        .problem-quote {
+            border-left: 4px solid hsl(var(--primary));
+            padding: 40px 1rem 40px 1rem;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: hsl(var(--foreground));
+            max-width: 50%;
+            display: block;
+        }
+        
+        /* System Architecture Analysis images styling */
+        .project-images-grid .project-image-container:has(.project-image[src*="3a.jpg"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="3b.jpg"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: inline-block !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            align-self: start !important;
+        }
+        
+        .project-image-container .project-image[src*="3a.jpg"],
+        .project-image-container .project-image[src*="3b.jpg"] {
+            object-position: top right !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* User Needs Assessment images styling - Force apply with more specific selectors */
+        .project-images-grid .project-image-container:has(.project-image[src*="4a.png"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            background-color: #FFFFFF !important;
+            align-self: stretch !important;
+        }
+        
+        .project-images-grid .project-image-container:has(.project-image[src*="4b.png"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: inline-block !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            align-self: stretch !important;
+        }
+        
+        /* Image styling with more specific selectors */
+        .project-images-grid .project-image-container .project-image[src*="4a.png"] {
+            object-position: center !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .project-images-grid .project-image-container .project-image[src*="4b.png"] {
+            object-position: top right !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Information Architecture & User Flows images styling - Equal height containers with white fills */
+        .project-images-grid .project-image-container:has(.project-image[src*="7.png"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="9.jpeg"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="11.png"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            background-color: #FFFFFF !important;
+            align-self: stretch !important;
+        }
+        
+        .project-images-grid .project-image-container .project-image[src*="7.png"],
+        .project-images-grid .project-image-container .project-image[src*="9.jpeg"],
+        .project-images-grid .project-image-container .project-image[src*="11.png"] {
+            object-position: top left !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Design System & Visual Design images styling - Top left alignment, keep container size */
+        .project-images-grid .project-image-container .project-image[src*="21b.png"],
+        .project-images-grid .project-image-container .project-image[src*="21c.png"],
+        .project-images-grid .project-image-container .project-image[src*="21d.png"],
+        .project-images-grid .project-image-container .project-image[src*="18a.png"],
+        .project-images-grid .project-image-container .project-image[src*="19a.png"],
+        .project-images-grid .project-image-container .project-image[src*="23a.png"] {
+            object-position: top left !important;
+        }
+        
+        /* Prototyping and Refinement images styling - Fill container, top center alignment */
+        .project-images-grid .project-image-container .project-image[src*="24b.png"] {
+            object-position: top center !important;
+            object-fit: cover !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* Implementation & Results images styling - Equal height containers with white fills */
+        .project-images-grid .project-image-container:has(.project-image[src*="26a.png"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="26b.png"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="26c.png"]),
+        .project-images-grid .project-image-container:has(.project-image[src*="26d.png"]) {
+            height: auto !important;
+            aspect-ratio: unset !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            background-color: #FFFFFF !important;
+            align-self: stretch !important;
+        }
+        
+        .project-images-grid .project-image-container .project-image[src*="26a.png"],
+        .project-images-grid .project-image-container .project-image[src*="26b.png"],
+        .project-images-grid .project-image-container .project-image[src*="26c.png"],
+        .project-images-grid .project-image-container .project-image[src*="26d.png"] {
+            object-position: top !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Additional Project Images carousel styling - Top center alignment and increased height */
+        .main-image {
+            object-position: top center !important;
+        }
+        
+        /* Increase carousel height by 25% */
+        .carousel-container .relative.h-96 {
+            height: 480px !important; /* 384px * 1.25 = 480px */
         }
         
         /* Ensure modal shows full image regardless of constraints */
@@ -489,6 +656,13 @@
                 <!-- ... existing code ... -->
             </section>
 
+            <!-- Full Width Image -->
+            <section class="mb-16">
+                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                    <img src="./Images/24c.png" alt="RMIS Interface Overview" class="project-image w-full h-auto">
+                </div>
+            </section>
+
             <!-- Process Section -->
             <section class="mb-16">
                 <h2 class="text-2xl font-bold mb-6">Design Process</h2>
@@ -643,9 +817,18 @@
                 const textDiv = document.createElement('div');
                 textDiv.className = 'space-y-4 text-muted-foreground mb-6';
                 step.content.forEach(paragraph => {
-                    const p = document.createElement('p');
-                    p.textContent = paragraph;
-                    textDiv.appendChild(p);
+                    // Check if this is a quote
+                    if (paragraph.startsWith('QUOTE_START:') && paragraph.endsWith('QUOTE_END')) {
+                        const quoteText = paragraph.replace('QUOTE_START:', '').replace('QUOTE_END', '');
+                        const blockquote = document.createElement('blockquote');
+                        blockquote.className = 'problem-quote';
+                        blockquote.textContent = `"${quoteText}"`;
+                        textDiv.appendChild(blockquote);
+                    } else {
+                        const p = document.createElement('p');
+                        p.textContent = paragraph;
+                        textDiv.appendChild(p);
+                    }
                 });
                 stepDiv.appendChild(textDiv);
                 
@@ -923,19 +1106,14 @@
         // Unused images data for Lyft RMIS project
         const unusedImages = [
             {
-                src: "./Images/5.jpeg",
-                alt: "Additional RMIS interface view 1",
-                thumbnail: "./Images/5.jpeg"
+                src: "./Images/8a.jpg",
+                alt: "Additional RMIS interface view 3",
+                thumbnail: "./Images/8a.jpg"
             },
             {
                 src: "./Images/6.jpg",
                 alt: "Additional RMIS interface view 2",
                 thumbnail: "./Images/6.jpg"
-            },
-            {
-                src: "./Images/8a.jpg",
-                alt: "Additional RMIS interface view 3",
-                thumbnail: "./Images/8a.jpg"
             },
             {
                 src: "./Images/8b.png",
@@ -956,36 +1134,6 @@
                 src: "./Images/10b.png",
                 alt: "Additional RMIS interface view 7",
                 thumbnail: "./Images/10b.png"
-            },
-            {
-                src: "./Images/12a.png",
-                alt: "Additional RMIS interface view 8",
-                thumbnail: "./Images/12a.png"
-            },
-            {
-                src: "./Images/12b.png",
-                alt: "Additional RMIS interface view 9",
-                thumbnail: "./Images/12b.png"
-            },
-            {
-                src: "./Images/12c.jpg",
-                alt: "Additional RMIS interface view 10",
-                thumbnail: "./Images/12c.jpg"
-            },
-            {
-                src: "./Images/13a.jpg",
-                alt: "Additional RMIS interface view 11",
-                thumbnail: "./Images/13a.jpg"
-            },
-            {
-                src: "./Images/13b.jpg",
-                alt: "Additional RMIS interface view 12",
-                thumbnail: "./Images/13b.jpg"
-            },
-            {
-                src: "./Images/13c.jpg",
-                alt: "Additional RMIS interface view 13",
-                thumbnail: "./Images/13c.jpg"
             },
             {
                 src: "./Images/14.png",
@@ -1033,89 +1181,9 @@
                 thumbnail: "./Images/20.png"
             },
             {
-                src: "./Images/21b.png",
-                alt: "Additional RMIS interface view 23",
-                thumbnail: "./Images/21b.png"
-            },
-            {
-                src: "./Images/21c.png",
-                alt: "Additional RMIS interface view 24",
-                thumbnail: "./Images/21c.png"
-            },
-            {
-                src: "./Images/21d.png",
-                alt: "Additional RMIS interface view 25",
-                thumbnail: "./Images/21d.png"
-            },
-            {
-                src: "./Images/23a.png",
-                alt: "Additional RMIS interface view 26",
-                thumbnail: "./Images/23a.png"
-            },
-            {
                 src: "./Images/23b.png",
                 alt: "Additional RMIS interface view 27",
                 thumbnail: "./Images/23b.png"
-            },
-            {
-                src: "./Images/24b.png",
-                alt: "Additional RMIS interface view 28",
-                thumbnail: "./Images/24b.png"
-            },
-            {
-                src: "./Images/24c.png",
-                alt: "Additional RMIS interface view 29",
-                thumbnail: "./Images/24c.png"
-            },
-            {
-                src: "./Images/24d.png",
-                alt: "Additional RMIS interface view 30",
-                thumbnail: "./Images/24d.png"
-            },
-            {
-                src: "./Images/24e.png",
-                alt: "Additional RMIS interface view 31",
-                thumbnail: "./Images/24e.png"
-            },
-            {
-                src: "./Images/25b.png",
-                alt: "Additional RMIS interface view 32",
-                thumbnail: "./Images/25b.png"
-            },
-            {
-                src: "./Images/25c.png",
-                alt: "Additional RMIS interface view 33",
-                thumbnail: "./Images/25c.png"
-            },
-            {
-                src: "./Images/25d.png",
-                alt: "Additional RMIS interface view 34",
-                thumbnail: "./Images/25d.png"
-            },
-            {
-                src: "./Images/25e.png",
-                alt: "Additional RMIS interface view 35",
-                thumbnail: "./Images/25e.png"
-            },
-            {
-                src: "./Images/26b.png",
-                alt: "Additional RMIS interface view 36",
-                thumbnail: "./Images/26b.png"
-            },
-            {
-                src: "./Images/26c.png",
-                alt: "Additional RMIS interface view 37",
-                thumbnail: "./Images/26c.png"
-            },
-            {
-                src: "./Images/26d.png",
-                alt: "Additional RMIS interface view 38",
-                thumbnail: "./Images/26d.png"
-            },
-            {
-                src: "./Images/27.png",
-                alt: "Additional RMIS interface view 39",
-                thumbnail: "./Images/27.png"
             }
         ];
         
