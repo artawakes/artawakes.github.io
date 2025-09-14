@@ -27,10 +27,10 @@ class UnusedImagesCarousel {
         return `
             <section class="mb-16">
                 <h2 class="text-2xl font-bold mb-6">Additional Project Images</h2>
-                <div class="bg-card rounded-lg border p-6">
+                <div class="bg-card rounded-lg border overflow-hidden">
                     
                     <!-- Carousel Container -->
-                    <div class="carousel-container rounded-lg overflow-hidden relative">
+                    <div class="carousel-container overflow-hidden relative">
                         <!-- Main Image Display -->
                         <div class="relative h-96 flex items-center justify-center">
                             <!-- Navigation Buttons -->
@@ -47,7 +47,7 @@ class UnusedImagesCarousel {
                             </button>
                             
                             <!-- Main Image -->
-                            <img id="mainUnusedImage" src="" alt="Unused project image" class="main-image max-w-full max-h-full object-contain">
+                            <img id="mainUnusedImage" src="" alt="Unused project image" class="main-image w-full h-full object-cover">
                         </div>
                         
                         <!-- Thumbnails -->
@@ -59,7 +59,7 @@ class UnusedImagesCarousel {
                     </div>
                     
                     <!-- Image Info -->
-                    <div class="mt-4 text-center">
+                    <div class="p-4 text-center">
                         <p class="text-sm text-muted-foreground">
                             <span id="imageCounter">1</span> of <span id="totalImages">${this.totalImages}</span> additional images
                         </p>
