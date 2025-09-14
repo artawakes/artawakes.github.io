@@ -286,6 +286,28 @@
             border-radius: calc(var(--radius) + 4px);
             overflow: hidden;
         }
+
+        /* Hero images container for single full-width image */
+        .hero-images-container {
+            display: block !important;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero images specific styling for single full-width image */
+        .hero-images-container .project-image-container {
+            display: block !important;
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        .hero-images-container .project-image-container .project-image {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            max-height: 600px !important;
+        }
         
         /* Single image styling */
         .project-image-container:not(.project-images-grid .project-image-container) .project-image {
@@ -413,7 +435,6 @@
     <!-- Project Header -->
     <header class="pt-24 pb-12 bg-muted/50">
         <div class="site-container">
-            <div class="max-w-4xl mx-auto">
                 <div class="mb-6">
                     <h1 id="project-title" class="text-3xl md:text-4xl font-bold tracking-tight mb-2">Project Title</h1>
                     <p id="project-subtitle" class="text-muted-foreground">Project subtitle or brief description</p>
@@ -426,8 +447,7 @@
     </header>
 
     <!-- Project Content -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="max-w-4xl mx-auto">
+    <main class="site-container py-12">
             
             <!-- Project Overview -->
             <section class="mb-16">
@@ -462,9 +482,10 @@
 
             <!-- Project Image -->
             <section class="mb-16">
-                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
-        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image w-full h-auto">
-    </div>
+                <div id="hero-images-container" class="hero-images-container">
+                    <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                        <img id="project-feature-image" src="./Images/feature-image.jpg" alt="Lyft Driver App Feature Image" class="project-image">
+                    </div>
                 </div>
                 <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Caption for the image, if needed</p>
             </section>
@@ -509,8 +530,6 @@
                         </svg>
                     </a>
                 </div>
-            </div>
-        </div>
     </main>
 
     <!-- Contact Section -->
@@ -606,6 +625,7 @@
             featureImage.src = projectData.featureImage.src;
             featureImage.alt = projectData.featureImage.alt;
             document.getElementById('project-feature-caption').textContent = projectData.featureImage.caption;
+            
             
             // Populate process steps
             const processContainer = document.getElementById('project-process');
