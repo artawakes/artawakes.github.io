@@ -25,7 +25,7 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "./Images/59736bd7-8481-4ad5-ad5c-bcf482fc6346.jpg",
+        src: "./Images/98811efe-0a6e-4ffa-a5f1-2b5246b7b913_rw_1920.jpg",
         alt: "PMG Digital Marketing",
         caption: "Digital marketing platform design for PMG"
     },
@@ -69,7 +69,7 @@ export default {
                     alt: "Analytics Dashboard"
                 },
                 {
-                    src: "./Images/98811efe-0a6e-4ffa-a5f1-2b5246b7b913_rw_1920.jpg",
+                    src: "./Images/59736bd7-8481-4ad5-ad5c-bcf482fc6346.jpg",
                     alt: "Campaign Results"
                 }
             ],
