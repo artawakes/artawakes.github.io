@@ -616,8 +616,35 @@
                 if (step.images && step.images.length > 0) {
                     const imagesDiv = document.createElement('div');
                     
-                    // Choose layout based on number of images
-                    if (step.images.length === 1) {
+                    // Special layout for Fresh2Design Research & Discovery section
+                    if (step.title === "Research & Discovery" && step.images.length === 3) {
+                        // First image - full width
+                        const firstImageDiv = document.createElement('div');
+                        firstImageDiv.className = 'project-image-container mb-6';
+                        firstImageDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
+                        const firstImg = document.createElement('img');
+                        firstImg.src = step.images[0].src;
+                        firstImg.alt = step.images[0].alt;
+                        firstImg.className = 'project-image w-full h-auto';
+                        firstImageDiv.appendChild(firstImg);
+                        imagesDiv.appendChild(firstImageDiv);
+                        
+                        // Remaining images - grid layout
+                        const gridDiv = document.createElement('div');
+                        gridDiv.className = 'project-images-grid';
+                        for (let i = 1; i < step.images.length; i++) {
+                            const imgDiv = document.createElement('div');
+                            imgDiv.className = 'project-image-container';
+                            imgDiv.onclick = () => openImageModal(step.images[i].src, step.images[i].alt);
+                            const img = document.createElement('img');
+                            img.src = step.images[i].src;
+                            img.alt = step.images[i].alt;
+                            img.className = 'project-image w-full h-auto';
+                            imgDiv.appendChild(img);
+                            gridDiv.appendChild(imgDiv);
+                        }
+                        imagesDiv.appendChild(gridDiv);
+                    } else if (step.images.length === 1) {
                         imagesDiv.className = 'project-image-container mb-4';
                         imagesDiv.onclick = () => openImageModal(step.images[0].src, step.images[0].alt);
                         const img = document.createElement('img');

@@ -25,7 +25,7 @@ export default {
     
     // Feature image with caption
     featureImage: {
-        src: "./Images/f4958edd-8420-4f4c-a6c0-7b032b0f8e2b_rw_1200.png",
+        src: "./Images/0dfecaed-a952-4b16-99e3-b7f61a6a4d0b_rw_1920.jpg",
         alt: "Fresh2Design",
         caption: "Community platform for design professionals in Austin"
     },
@@ -40,6 +40,10 @@ export default {
                 "Analyzed existing community platforms and identified improvement opportunities"
             ],
             images: [
+                {
+                    src: "./Images/5ba036b7-9018-4b89-a817-d29d1396e9b4_rw_1920.png",
+                    alt: "Community Values"
+                },
                 {
                     src: "./Images/1945e552-9c72-42b0-aa47-3b4f7c9c0c98_rw_3840.jpg",
                     alt: "Brand Identity"
@@ -71,6 +75,14 @@ export default {
                 {
                     src: "./Images/6f4d4000-d7ae-4824-a926-059f552a8d8c_rw_3840.png",
                     alt: "Marketing Materials"
+                },
+                {
+                    src: "./Images/e4f900a1-0fcb-4617-8852-4b46fc38e4e5_rw_3840.png",
+                    alt: "Brand Guidelines"
+                },
+                {
+                    src: "./Images/def655e3-8b43-4a0f-b149-5b03cd7b2286_rw_3840.png",
+                    alt: "Design System"
                 }
             ],
             outcomes: [
