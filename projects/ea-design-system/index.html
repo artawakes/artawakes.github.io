@@ -250,29 +250,41 @@
         }
         
         .ea-audit-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            width: 100%;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 1rem !important;
+            margin-bottom: 1rem !important;
+            width: 100% !important;
+            clear: both !important;
         }
         
         .ea-audit-layout .project-image-container {
-            grid-column: span 1;
-            width: 100%;
+            grid-column: span 1 !important;
+            width: 100% !important;
         }
         
         .ea-audit-thumbnails {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.5rem;
-            margin-top: 1rem;
-            width: 100%;
-            clear: both;
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+            gap: 0.5rem !important;
+            margin-top: 1rem !important;
+            width: 100% !important;
+            clear: both !important;
         }
         
         .ea-audit-thumbnails .project-image-container {
-            grid-column: span 1;
+            grid-column: span 1 !important;
+        }
+        
+        /* Debug styles to ensure layout is applied */
+        .ea-audit-layout {
+            border: 2px solid red !important;
+            background-color: rgba(255, 0, 0, 0.1) !important;
+        }
+        
+        .ea-audit-thumbnails {
+            border: 2px solid blue !important;
+            background-color: rgba(0, 0, 255, 0.1) !important;
         }
         
         .ea-audit-thumbnails .project-image {
