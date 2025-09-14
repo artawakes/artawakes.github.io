@@ -270,6 +270,31 @@
             overflow: hidden;
         }
         
+        /* Hero images container for single full-width image */
+        .hero-images-container {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+            max-width: none !important;
+        }
+
+        /* Hero images specific styling for single full-width image */
+        .hero-images-container .project-image-container {
+            display: block !important;
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+        }
+
+        .hero-images-container .project-image-container .project-image {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            max-height: 600px !important;
+            display: block !important;
+        }
+
         /* Single image styling */
         .project-image-container:not(.project-images-grid .project-image-container) {
             width: 100% !important;
@@ -417,6 +442,16 @@
                     <!-- Tags will be dynamically populated -->
                 </div>
             </div>
+        </div>
+        
+        <!-- Project Hero Image -->
+        <div class="site-container">
+            <div id="hero-images-container" class="hero-images-container">
+                <div class="project-image-container" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                    <img id="project-feature-image" src="./Images/1.jpg" alt="RMIS Dashboard Interface" class="project-image w-full h-auto">
+                </div>
+            </div>
+            <p id="project-feature-caption" class="text-sm text-muted-foreground italic mt-2 text-center">Lyft Risk Management Information System (RMIS)</p>
         </div>
     </header>
 
@@ -592,6 +627,12 @@
             document.getElementById('project-timeline').textContent = projectData.details.timeline;
             document.getElementById('project-role').textContent = projectData.details.role;
             document.getElementById('project-deliverables').textContent = projectData.details.deliverables;
+            
+            // Set feature image
+            const featureImage = document.getElementById('project-feature-image');
+            featureImage.src = projectData.featureImage.src;
+            featureImage.alt = projectData.featureImage.alt;
+            document.getElementById('project-feature-caption').textContent = projectData.featureImage.caption;
             
             // Populate process steps
             const processContainer = document.getElementById('project-process');
