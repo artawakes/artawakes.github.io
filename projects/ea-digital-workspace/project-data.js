@@ -41,11 +41,11 @@ export default {
             ],
             images: [
                 {
-                    src: "./Images/521a0ca8-7389-47b9-a8f6-7bdfc34873fb_rwc_0x0x748x499x748.jpg",
+                    src: "./Images/fc203494-9e8f-4770-85d8-8bcda223adfc_rw_1920.jpg",
                     alt: "Homepage Design"
                 },
                 {
-                    src: "./Images/828e6f73-1025-4ab7-bb06-d06acab4371a_rw_1200.jpg",
+                    src: "./Images/5e8a856a-b68e-4d1e-b9e8-9c16ce38d4e9_rw_1200.jpg",
                     alt: "Content Structure"
                 }
             ],
@@ -77,6 +77,40 @@ export default {
                 "Unified digital workspace platform",
                 "Improved content discovery",
                 "Enhanced mobile accessibility"
+            ]
+        },
+        {
+            title: "Digital Workspace Interface",
+            content: [
+                "Comprehensive interface design showcasing the unified digital workspace platform",
+                "Multiple views demonstrating the integration of various tools and services",
+                "User interface components and interaction patterns for improved employee experience"
+            ],
+            images: [
+                {
+                    src: "./Images/2da4ce49-2c97-40a5-baee-dc4fc0c5bd1f_rw_1920.jpg",
+                    alt: "Digital Workspace Interface Overview"
+                },
+                {
+                    src: "./Images/f755fd0e-6cea-4b77-813f-e830cbc632a9_rw_1920.jpg",
+                    alt: "Workspace Tools Integration"
+                },
+                {
+                    src: "./Images/f28c0e05-0317-47f0-9a03-deb7609bef23_rw_1920.jpg",
+                    alt: "User Interface Components"
+                },
+                {
+                    src: "./Images/df9086d3-03eb-469a-9c25-cb94f52b6349_rw_1920.jpg",
+                    alt: "Workspace Navigation Design"
+                },
+                {
+                    src: "./Images/aa2b0ea0-cc7a-49f5-af91-07edac615d58_rw_1920.jpg",
+                    alt: "Digital Platform Features"
+                },
+                {
+                    src: "./Images/63e57d89-f1f9-44ae-bc1e-1a226c30339b_rw_1920.jpg",
+                    alt: "Workspace User Experience"
+                }
             ]
         },
         {
