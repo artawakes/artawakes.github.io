@@ -296,11 +296,16 @@
         }
 
         /* Single image styling */
+        .project-image-container:not(.project-images-grid .project-image-container) {
+            width: 100% !important;
+            display: block !important;
+        }
+        
         .project-image-container:not(.project-images-grid .project-image-container) .project-image {
             max-height: 600px;
-            width: auto;
+            width: 100% !important;
             height: auto;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: calc(var(--radius) + 4px);
             border: 2px solid hsl(var(--border));
             transition: border-color 0.2s ease-in-out;
