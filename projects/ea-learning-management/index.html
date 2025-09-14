@@ -330,7 +330,7 @@
         .project-image-container .project-image[src*="44a6eeab-2e0b-4823-b9b7-fe4bdf1f217d_rw_1200.png"] {
             width: 100% !important;
             max-width: none !important;
-            height: 400px !important;
+            height: 320px !important;
             object-fit: cover !important;
             object-position: top center !important;
             display: block !important;
@@ -338,18 +338,18 @@
         
         .project-image-container .project-image[src*="9f9f7cbd-c99e-4b09-83e8-7e730debe410.jpg"] {
             width: 100% !important;
-            max-width: none !important;
-            height: 400px !important;
-            object-fit: cover !important;
-            object-position: top center !important;
+            max-width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            object-position: center !important;
             display: block !important;
         }
         
-        .project-image-container:has(.project-image[src*="44a6eeab-2e0b-4823-b9b7-fe4bdf1f217d_rw_1200.png"]) {
+        .project-image-container:has(.project-image[src*="44a6eeab-2e0b-4823-b9b7-fe4bdf1f217d_rw_1200.png"]) {                                                                                                        
             width: 100% !important;
             max-width: none !important;
             display: block !important;
-            height: 400px !important;
+            height: 320px !important;
             overflow: hidden !important;
             clear: both !important;
             margin-bottom: 1rem !important;
@@ -358,11 +358,14 @@
         .project-image-container:has(.project-image[src*="9f9f7cbd-c99e-4b09-83e8-7e730debe410.jpg"]) {
             width: 100% !important;
             max-width: none !important;
-            display: block !important;
-            height: 400px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 320px !important;
             overflow: hidden !important;
             clear: both !important;
             margin-bottom: 1rem !important;
+            background-color: #FFFFFF !important;
         }
         
         /* Ensure modal shows full image regardless of constraints */
