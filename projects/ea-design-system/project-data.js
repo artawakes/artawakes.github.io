@@ -72,10 +72,6 @@ const projectData = {
                 {
                     src: "./Images/Components/bd888720-b611-476c-b4c7-cd490941d771_rw_1200.png",
                     alt: "Component Patterns"
-                },
-                {
-                    src: "./Images/Components/b2662da9-359b-4b6c-8e5c-9d477d0d2ad4_rw_1920.png",
-                    alt: "Component System"
                 }
             ]
         },
