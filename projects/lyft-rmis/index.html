@@ -1018,6 +1018,11 @@
 
         // Intersection Observer for fade-in animations with fallback
         function initAnimations() {
+            // First, ensure all content is visible by default
+            document.querySelectorAll('section, header').forEach(element => {
+                element.classList.add('opacity-100', 'translate-y-0');
+            });
+            
             // Check if IntersectionObserver is supported
             if ('IntersectionObserver' in window) {
                 const observerOptions = {
@@ -1035,9 +1040,10 @@
                     });
                 }, observerOptions);
 
-                // Add animation classes to sections
+                // Add animation classes to sections (but keep them visible)
                 document.querySelectorAll('section, header').forEach(element => {
-                    element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+                    element.classList.add('transition-all', 'duration-700');
+                    // Don't add opacity-0 initially - let them be visible
                     observer.observe(element);
                 });
             } else {

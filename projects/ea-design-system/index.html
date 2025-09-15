@@ -943,27 +943,50 @@
             }
         });
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-                    entry.target.classList.remove('opacity-0', 'translate-y-4');
-                }
+        // Intersection Observer for fade-in animations with mobile fallback
+        function initAnimations() {
+            // First, ensure all content is visible by default
+            document.querySelectorAll('section, header').forEach(element => {
+                element.classList.add('opacity-100', 'translate-y-0');
             });
-        }, observerOptions);
+            
+            // Check if IntersectionObserver is supported
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
 
-        // Add animation classes to sections
-        document.querySelectorAll('section, header').forEach(element => {
-            element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
-            observer.observe(element);
-        });
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                            entry.target.classList.remove('opacity-0', 'translate-y-4');
+                        }
+                    });
+                }, observerOptions);
+
+                // Add animation classes to sections (but keep them visible)
+                document.querySelectorAll('section, header').forEach(element => {
+                    element.classList.add('transition-all', 'duration-700');
+                    // Don't add opacity-0 initially - let them be visible
+                    observer.observe(element);
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver support
+                document.querySelectorAll('section, header').forEach(element => {
+                    element.classList.add('opacity-100', 'translate-y-0');
+                });
+            }
+        }
+        
+        // Initialize animations when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnimations);
+        } else {
+            initAnimations();
+        }
     
         // Image Modal Functions
         function openImageModal(src, alt) {
