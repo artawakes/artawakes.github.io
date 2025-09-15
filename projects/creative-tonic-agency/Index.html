@@ -601,9 +601,9 @@
         </div>
     </footer>
 
-    <script type="module">
-        // Import project data
-        import projectData from './project-data.js';
+    <script src="./project-data.js"></script>
+    <script>
+        console.log('Script loaded, projectData:', projectData);
         
         // Function to populate the project content
         function populateProjectContent() {
@@ -777,27 +777,58 @@
             }
         });
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-                    entry.target.classList.remove('opacity-0', 'translate-y-4');
-                }
+        // Intersection Observer for fade-in animations with Safari mobile fallback
+        function initAnimations() {
+            // First, ensure all content is visible by default
+            document.querySelectorAll('section, header').forEach(element => {
+                element.classList.add('opacity-100', 'translate-y-0');
             });
-        }, observerOptions);
+            
+            // Detect Safari mobile specifically
+            const isSafariMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent);
+            const isMobileSafari = /CriOS|FxiOS|OPiOS|mercury/.test(navigator.userAgent);
+            
+            // Check if IntersectionObserver is supported and not Safari mobile
+            if ('IntersectionObserver' in window && !isSafariMobile && !isMobileSafari) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
 
-        // Add animation classes to sections
-        document.querySelectorAll('section, header').forEach(element => {
-            element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
-            observer.observe(element);
-        });
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                            entry.target.classList.remove('opacity-0', 'translate-y-4');
+                        }
+                    });
+                }, observerOptions);
+
+                // Add animation classes to sections (but keep them visible)
+                document.querySelectorAll('section, header').forEach(element => {
+                    element.classList.add('transition-all', 'duration-700');
+                    // Don't add opacity-0 initially - let them be visible
+                    observer.observe(element);
+                });
+            } else {
+                // Fallback for Safari mobile and browsers without IntersectionObserver support
+                document.querySelectorAll('section, header').forEach(element => {
+                    element.classList.add('opacity-100', 'translate-y-0');
+                    // Add subtle animation for Safari mobile
+                    if (isSafariMobile || isMobileSafari) {
+                        element.style.transition = 'opacity 0.3s ease-in-out';
+                    }
+                });
+            }
+        }
+        
+        // Initialize animations when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnimations);
+        } else {
+            initAnimations();
+        }
     
         // Image Modal Functions
         function openImageModal(src, alt) {

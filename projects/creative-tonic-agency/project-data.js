@@ -1,5 +1,5 @@
 // Sample project data structure
-export default {
+const projectData = {
     // Basic info
     title: "Creative Tonic Agency",
     subtitle: "A fresh new look for Creative Tonic's design expertise, with a responsive structure and enhanced content presentation.",
@@ -122,4 +122,7 @@ export default {
             url: "../forkright-brand/index.html"
         }
     }
-}; 
+};
+
+// Make projectData available globally
+window.projectData = projectData; 
