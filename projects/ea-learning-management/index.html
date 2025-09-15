@@ -788,8 +788,26 @@
             }
         }
         
-        // Call the function when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', populateProjectContent);
+        // Call the function when the DOM is loaded with error handling
+        function safePopulateContent() {
+            try {
+                if (typeof projectData !== 'undefined' && projectData) {
+                    populateProjectContent();
+                } else {
+                    console.warn('Project data not loaded, using fallback content');
+                    // Fallback: show basic content even if projectData fails to load
+                    document.getElementById('project-title').textContent = 'Project Title';
+                    document.getElementById('project-subtitle').textContent = 'Project subtitle or brief description';
+                }
+            } catch (error) {
+                console.error('Error populating project content:', error);
+                // Ensure basic content is always visible
+                document.getElementById('project-title').textContent = 'Project Title';
+                document.getElementById('project-subtitle').textContent = 'Project subtitle or brief description';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', safePopulateContent);
     </script>
 
     <script>
