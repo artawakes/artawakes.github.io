@@ -225,6 +225,33 @@
             opacity: 1;
         }
 
+        /* Mobile tap improvements */
+        @media (max-width: 768px) {
+            .project-card {
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+                transition: transform 0.1s ease-in-out;
+            }
+            
+            .project-card:active {
+                transform: scale(0.98);
+            }
+            
+            /* Make content visible on mobile for better UX */
+            .project-card .content-wrapper {
+                opacity: 1 !important;
+            }
+            
+            .project-card .mt-4 {
+                opacity: 1 !important;
+            }
+            
+            /* Add visual feedback for mobile taps */
+            .project-card:active .overlay {
+                opacity: 0.3 !important;
+            }
+        }
+        
         /* Disable hover effects on "Coming Soon" buttons - no longer needed */
     </style>
 </head>
@@ -731,6 +758,37 @@
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) {
                 document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        });
+
+        // Make project cards fully clickable on mobile
+        document.querySelectorAll('.project-card').forEach(card => {
+            // Find the link inside the card
+            const link = card.querySelector('a[href]');
+            
+            if (link) {
+                // Make the entire card clickable
+                card.style.cursor = 'pointer';
+                
+                // Add click handler to the card
+                card.addEventListener('click', (e) => {
+                    // Don't trigger if clicking on the link itself
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        return;
+                    }
+                    
+                    // Navigate to the project
+                    window.location.href = link.href;
+                });
+                
+                // Add mobile-specific styles
+                card.addEventListener('touchstart', () => {
+                    card.style.transform = 'scale(0.98)';
+                });
+                
+                card.addEventListener('touchend', () => {
+                    card.style.transform = '';
+                });
             }
         });
     </script>
