@@ -1,5 +1,5 @@
 // Sample project data structure
-export default {
+const projectData = {
     // Basic info
     title: "Lyft RMIS",
     subtitle: "Lowering Lyft's costs through better predictions and more efficient claim handling process",
@@ -299,4 +299,7 @@ export default {
             url: "../ea-design-system/index.html"
         }
     }
-}; 
+};
+
+// Make projectData available globally
+window.projectData = projectData; 

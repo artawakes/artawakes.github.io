@@ -1,5 +1,5 @@
 // Sample project data structure
-export default {
+const projectData = {
     // Basic info
     title: "EA Learning Management",
     subtitle: "Creating a comprehensive learning platform that empowers EA employees to develop their skills and advance their careers.",
@@ -190,4 +190,7 @@ export default {
             url: "../creative-tonic-agency/Index.html"
         }
     }
-}; 
+};
+
+// Make projectData available globally
+window.projectData = projectData; 
