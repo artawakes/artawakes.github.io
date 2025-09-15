@@ -597,9 +597,9 @@
         </div>
     </footer>
 
-    <script type="module">
-        // Import project data
-        import projectData from './project-data.js';
+    <script src="./project-data.js"></script>
+    <script>
+        console.log('Script loaded, projectData:', projectData);
         
         // Function to populate the project content
         function populateProjectContent() {

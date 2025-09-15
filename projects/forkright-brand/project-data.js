@@ -1,5 +1,5 @@
 // Sample project data structure
-export default {
+const projectData = {
     // Basic info
     title: "Forkright Brand System",
     subtitle: "Creating a cohesive and scalable brand system that reflects Forkright's mission to revolutionize the food service industry.",
@@ -189,4 +189,7 @@ export default {
             url: "../fresh2design/index.html"
         }
     }
-}; 
+};
+
+// Make projectData available globally
+window.projectData = projectData; 
