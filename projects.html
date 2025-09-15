@@ -237,18 +237,30 @@
                 transform: scale(0.98);
             }
             
-            /* Make content visible on mobile for better UX */
+            /* Hide content by default on mobile, show on tap */
             .project-card .content-wrapper {
-                opacity: 1 !important;
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
             }
             
             .project-card .mt-4 {
-                opacity: 1 !important;
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
             }
             
-            /* Add visual feedback for mobile taps */
-            .project-card:active .overlay {
-                opacity: 0.3 !important;
+            .project-card .overlay {
+                opacity: 0;
+                transition: opacity 0.2s ease-in-out;
+            }
+            
+            /* Show content and overlay on tap */
+            .project-card.tapped .content-wrapper,
+            .project-card.tapped .mt-4 {
+                opacity: 1;
+            }
+            
+            .project-card.tapped .overlay {
+                opacity: 1;
             }
         }
         
@@ -770,7 +782,46 @@
                 // Make the entire card clickable
                 card.style.cursor = 'pointer';
                 
-                // Add click handler to the card
+                let isTapped = false;
+                let touchStartTime = 0;
+                
+                // Handle touch start - show content
+                card.addEventListener('touchstart', (e) => {
+                    touchStartTime = Date.now();
+                    isTapped = true;
+                    card.classList.add('tapped');
+                    card.style.transform = 'scale(0.98)';
+                });
+                
+                // Handle touch end - navigate if it was a tap (not a drag)
+                card.addEventListener('touchend', (e) => {
+                    const touchDuration = Date.now() - touchStartTime;
+                    
+                    // Only navigate if it was a quick tap (not a drag or long press)
+                    if (isTapped && touchDuration < 500) {
+                        // Don't trigger if touching the link itself
+                        if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+                            e.preventDefault();
+                            window.location.href = link.href;
+                        }
+                    }
+                    
+                    // Reset visual state
+                    setTimeout(() => {
+                        card.classList.remove('tapped');
+                        card.style.transform = '';
+                        isTapped = false;
+                    }, 150);
+                });
+                
+                // Handle touch cancel - reset state
+                card.addEventListener('touchcancel', () => {
+                    card.classList.remove('tapped');
+                    card.style.transform = '';
+                    isTapped = false;
+                });
+                
+                // Handle mouse click for desktop
                 card.addEventListener('click', (e) => {
                     // Don't trigger if clicking on the link itself
                     if (e.target.tagName === 'A' || e.target.closest('a')) {
@@ -779,15 +830,6 @@
                     
                     // Navigate to the project
                     window.location.href = link.href;
-                });
-                
-                // Add mobile-specific styles
-                card.addEventListener('touchstart', () => {
-                    card.style.transform = 'scale(0.98)';
-                });
-                
-                card.addEventListener('touchend', () => {
-                    card.style.transform = '';
                 });
             }
         });
