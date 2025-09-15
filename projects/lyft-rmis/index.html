@@ -267,6 +267,21 @@
                 width: 100%;
                 margin-bottom: 1rem;
             }
+            
+            /* Ensure process sections are visible on mobile */
+            #project-process {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                min-height: 200px;
+            }
+            
+            #project-process > div {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                margin-bottom: 2rem;
+            }
         }
         
         /* Square containers for multiple images */
@@ -369,16 +384,15 @@
             display: block;
         }
         
-        /* System Architecture Analysis images styling */
-        .project-images-grid .project-image-container:has(.project-image[src*="3a.jpg"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="3b.jpg"]) {
-            height: auto !important;
-            aspect-ratio: unset !important;
-            display: inline-block !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            align-self: start !important;
+        /* System Architecture Analysis images styling - Simplified for mobile */
+        .project-images-grid .project-image-container {
+            height: auto;
+            aspect-ratio: unset;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            align-self: start;
         }
         
         .project-image-container .project-image[src*="3a.jpg"],
@@ -392,28 +406,18 @@
             padding: 0 !important;
         }
         
-        /* User Needs Assessment images styling - Force apply with more specific selectors */
-        .project-images-grid .project-image-container:has(.project-image[src*="4a.png"]) {
-            height: auto !important;
-            aspect-ratio: unset !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            background-color: #FFFFFF !important;
-            align-self: stretch !important;
-        }
-        
-        .project-images-grid .project-image-container:has(.project-image[src*="4b.png"]) {
-            height: auto !important;
-            aspect-ratio: unset !important;
-            display: inline-block !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            align-self: stretch !important;
+        /* User Needs Assessment images styling - Simplified for mobile */
+        .project-images-grid .project-image-container {
+            height: auto;
+            aspect-ratio: unset;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background-color: #FFFFFF;
+            align-self: stretch;
         }
         
         /* Image styling with more specific selectors */
@@ -437,20 +441,18 @@
             padding: 0 !important;
         }
         
-        /* Information Architecture & User Flows images styling - Equal height containers with white fills */
-        .project-images-grid .project-image-container:has(.project-image[src*="7.png"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="9.jpeg"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="11.png"]) {
-            height: auto !important;
-            aspect-ratio: unset !important;
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            background-color: #FFFFFF !important;
-            align-self: stretch !important;
+        /* Information Architecture & User Flows images styling - Simplified for mobile */
+        .project-images-grid .project-image-container {
+            height: auto;
+            aspect-ratio: unset;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background-color: #FFFFFF;
+            align-self: stretch;
         }
         
         .project-images-grid .project-image-container .project-image[src*="7.png"],
@@ -483,21 +485,18 @@
             height: 100% !important;
         }
         
-        /* Implementation & Results images styling - Equal height containers with white fills */
-        .project-images-grid .project-image-container:has(.project-image[src*="26a.png"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="26b.png"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="26c.png"]),
-        .project-images-grid .project-image-container:has(.project-image[src*="26d.png"]) {
-            height: auto !important;
-            aspect-ratio: unset !important;
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            background-color: #FFFFFF !important;
-            align-self: stretch !important;
+        /* Implementation & Results images styling - Simplified for mobile */
+        .project-images-grid .project-image-container {
+            height: auto;
+            aspect-ratio: unset;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background-color: #FFFFFF;
+            align-self: stretch;
         }
         
         .project-images-grid .project-image-container .project-image[src*="26a.png"],
@@ -700,6 +699,11 @@
                 <h2 class="text-2xl font-bold mb-6">Design Process</h2>
                 <div id="project-process" class="space-y-8">
                     <!-- Process content will be dynamically populated -->
+                    <noscript>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                            <p class="text-yellow-800">JavaScript is required to load the full project content. Please enable JavaScript to view the complete design process.</p>
+                        </div>
+                    </noscript>
                 </div>
             </section>
 
@@ -834,8 +838,13 @@
             document.getElementById('project-feature-caption').textContent = projectData.featureImage.caption;
             
             // Populate process steps
+            console.log('Starting process population...');
             const processContainer = document.getElementById('project-process');
+            console.log('Process container found:', processContainer);
+            console.log('Process data:', projectData.process);
+            
             projectData.process.forEach(step => {
+                console.log('Processing step:', step.title);
                 // Create step container
                 const stepDiv = document.createElement('div');
                 
@@ -920,6 +929,8 @@
                 processContainer.appendChild(stepDiv);
             });
             
+            console.log('Process population completed. Container children:', processContainer.children.length);
+            
             // Set reflections
             const reflectionsContainer = document.getElementById('project-reflections');
             projectData.reflections.forEach(paragraph => {
@@ -946,6 +957,7 @@
         function safePopulateContent() {
             try {
                 if (typeof projectData !== 'undefined' && projectData) {
+                    console.log('Project data loaded successfully, populating content...');
                     populateProjectContent();
                 } else {
                     console.warn('Project data not loaded, using fallback content');
@@ -961,7 +973,21 @@
             }
         }
         
-        document.addEventListener('DOMContentLoaded', safePopulateContent);
+        // Try to load content immediately
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', safePopulateContent);
+        } else {
+            safePopulateContent();
+        }
+        
+        // Fallback timeout to ensure content loads even if there are delays
+        setTimeout(() => {
+            const processContainer = document.getElementById('project-process');
+            if (processContainer && processContainer.children.length === 0) {
+                console.warn('Process content not loaded after timeout, showing fallback');
+                processContainer.innerHTML = '<div class="text-center text-gray-500 py-8">Loading project content...</div>';
+            }
+        }, 3000);
     </script>
 
     <script>
