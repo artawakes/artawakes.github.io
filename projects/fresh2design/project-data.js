@@ -110,7 +110,7 @@ export default {
     
     // Notable Events and Impact as reflections
     reflections: [
-        "The rebranding project successfully transformed Fresh2Design into a vibrant community hub, hosting significant events such as Adobe XD's 'Evolution of the Design Process' during SXSW Interactive, LGBTQ Voices in Tech storytelling events, Hurricane Harvey Relief fundraisers, and regular educational programming.",
+        "The rebranding project successfully transformed Fresh2Design into a vibrant community hub, hosting significant events such as SXSW: Adobe XD on 'Design Evolution', LGBTQ Voices in Tech storytelling events, Hurricane Harvey Relief fundraisers, and regular educational programming.",
         "The impact extended beyond mere numbers, creating lasting value through sustainable community growth models, meaningful partnerships, and establishing Fresh2Design as a cornerstone of Austin's design ecosystem. The project demonstrated the power of combining strong branding with community-focused initiatives to create lasting impact."
     ],
     
