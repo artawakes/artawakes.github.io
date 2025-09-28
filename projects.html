@@ -225,18 +225,30 @@
             opacity: 1;
         }
 
+        /* Consistent tap targets for all devices */
+        .project-card {
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s ease-in-out;
+            position: relative;
+        }
+        
+        .project-card:active {
+            transform: scale(0.98);
+        }
+        
+        /* Ensure buttons have consistent tap target size (minimum 44px) */
+        .project-card a {
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
         /* Mobile tap improvements */
         @media (max-width: 768px) {
-            .project-card {
-                cursor: pointer;
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-                transition: transform 0.1s ease-in-out;
-            }
-            
-            .project-card:active {
-                transform: scale(0.98);
-            }
-            
             /* Hide content by default on mobile, show on tap */
             .project-card .content-wrapper {
                 opacity: 0;
@@ -779,12 +791,14 @@
             }
         });
 
-        // Make project cards fully clickable on mobile
+        // Make project cards fully clickable with consistent tap targets
         document.querySelectorAll('.project-card').forEach(card => {
-            // Find the link inside the card
-            const link = card.querySelector('a[href]');
+            // Find the primary link inside the card (prefer project links over Figma links)
+            const projectLink = card.querySelector('a[href*="projects/"]');
+            const figmaLink = card.querySelector('a[href*="figma.com"]');
+            const primaryLink = projectLink || figmaLink;
             
-            if (link) {
+            if (primaryLink) {
                 // Make the entire card clickable
                 card.style.cursor = 'pointer';
                 
@@ -805,10 +819,15 @@
                     
                     // Only navigate if it was a quick tap (not a drag or long press)
                     if (isTapped && touchDuration < 500) {
-                        // Don't trigger if touching the link itself
+                        // Don't trigger if touching any link directly
                         if (e.target.tagName !== 'A' && !e.target.closest('a')) {
                             e.preventDefault();
-                            window.location.href = link.href;
+                            // Use the same link behavior as the button
+                            if (primaryLink.target === '_blank') {
+                                window.open(primaryLink.href, '_blank', 'noopener,noreferrer');
+                            } else {
+                                window.location.href = primaryLink.href;
+                            }
                         }
                     }
                     
@@ -829,13 +848,17 @@
                 
                 // Handle mouse click for desktop
                 card.addEventListener('click', (e) => {
-                    // Don't trigger if clicking on the link itself
+                    // Don't trigger if clicking on any link directly
                     if (e.target.tagName === 'A' || e.target.closest('a')) {
                         return;
                     }
                     
-                    // Navigate to the project
-                    window.location.href = link.href;
+                    // Use the same link behavior as the button
+                    if (primaryLink.target === '_blank') {
+                        window.open(primaryLink.href, '_blank', 'noopener,noreferrer');
+                    } else {
+                        window.location.href = primaryLink.href;
+                    }
                 });
             }
         });
