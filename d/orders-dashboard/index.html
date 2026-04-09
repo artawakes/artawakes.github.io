@@ -55,6 +55,13 @@ nav {
 .arrow-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
 .arrow-btn:hover { border-color: var(--border-strong); color: var(--text); }
 .arrow-btn:disabled { opacity: 0.3; cursor: default; }
+@keyframes arrowRingPulse {
+  0%   { opacity: 0.65; transform: scale(1); }
+  100% { opacity: 0;    transform: scale(1.8); }
+}
+#nextBtn { position: relative; }
+#nextBtn::after { content: ''; position: absolute; inset: -5px; border-radius: 13px; border: 1.5px solid var(--accent); animation: arrowRingPulse 1.6s ease-out infinite; pointer-events: none; }
+.nav-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; white-space: nowrap; pointer-events: none; }
 .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
 .theme-btn:hover { border-color: var(--border-strong); color: var(--text); }
 
@@ -826,6 +833,7 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
   <div class="cover-right">
     <img src="Images/slide1_img0.jpg" alt="Orders Dashboard screenshot">
   </div>
+  <p class="nav-hint">Use ← → arrow keys or click the buttons to navigate</p>
 </div>
 
 <!-- ═══════════════════════════════════════════════
