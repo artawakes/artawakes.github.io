@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northstar Vision — Instacart Shopper App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+/* ─── CSS VARIABLES ─── */
+:root {
+  --bg: #07101f;
+  --bg2: #0d1a2e;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --text: #f0f4ff;
+  --text-dim: #8fa8c4;
+  --text-muted: #b8cce0;
+  --accent: #4f80f5;
+  --accent2: #7c5af5;
+  --green: #3dba7e;
+  --amber: #f5a623;
+  --red: #FF6332;
+  --pink: #e0459a;
+}
+
+/* ─── LAYOUT ─── */
+html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+:root { --nav-h: 60px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+  background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); text-decoration: none; opacity: 0.85; text-shadow: 0 0 18px rgba(79,128,245,0.28); flex-shrink: 0; }
+.nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
+.nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.slide-counter { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.05em; min-width: 44px; text-align: right; }
+.nav-arrows { display: flex; gap: 4px; }
+.arrow-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
+.arrow-btn:hover { border-color: var(--border-strong); color: var(--text); }
+.arrow-btn:disabled { opacity: 0.3; cursor: default; }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
+.theme-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+/* PROGRESS */
+.progress-bar { position: fixed; top: var(--nav-h); left: 0; height: 2px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent) 100%); background-size: 200% auto; animation: progressShimmer 3s linear infinite; z-index: 99; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+@keyframes progressShimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+
+/* SLIDES */
+#slides { position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 96px 80px 40px;
+  opacity: 0; transform: translateY(28px); pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+  background: var(--bg);
+  background-image: radial-gradient(rgba(79,128,245,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide > * { position: relative; z-index: 1; }
+
+/* light mode */
+.slide-light {
+  --bg: #f4f6fd;
+  --surface: rgba(255,255,255,0.75);
+  --border: rgba(0,0,0,0.09);
+  --text: #07101f;
+  --text-dim: #3a5070;
+  --text-muted: #7a90a8;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.slide-dots { background-image: none; }
+.slide-grid {
+  background-image:
+    linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+.layout-vc { justify-content: center; padding-top: 40px; }
+
+/* ─── TYPOGRAPHY ─── */
+h1 { font-family: 'Hepta Slab', serif; font-size: clamp(36px, 5vw, 72px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; color: var(--text); }
+h2 { font-family: 'Hepta Slab', serif; font-size: clamp(26px, 3.2vw, 50px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; color: var(--text); }
+h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--text); }
+.overline { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
+.overline.green { color: var(--green); }
+.overline.purple { color: var(--accent2); }
+.overline.amber { color: var(--amber); }
+.overline.red { color: var(--red); }
+.subtitle { font-size: clamp(16px, 1.6vw, 21px); font-weight: 400; line-height: 1.5; color: var(--text-dim); }
+.body-text { font-size: 14px; font-weight: 400; line-height: 1.6; color: var(--text-dim); }
+.card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.card-label.green { color: var(--green); }
+.card-label.purple { color: var(--accent2); }
+.card-label.amber { color: var(--amber); }
+.card-label.red { color: var(--red); }
+
+/* ─── DIVIDER ─── */
+.divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; margin: 20px 0; animation: shimmerLine 2.5s linear infinite, glowPulse 2.5s ease-in-out infinite; background-size: 200% 100%; }
+@keyframes shimmerLine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+@keyframes glowPulse { 0%, 100% { box-shadow: 0 0 4px rgba(79,128,245,0.4); } 50% { box-shadow: 0 0 12px rgba(79,128,245,0.8); } }
+.cover-line { width: 56px; height: 3px; background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent); border-radius: 2px; margin: 24px 0; animation: shimmerLine 3s linear infinite; background-size: 200% 100%; }
+
+/* ─── CARDS ─── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.2s, background 0.2s; }
+.card:hover { border-color: var(--border-strong); background: rgba(255,255,255,0.06); }
+.metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; transition: all 0.2s; }
+.metric-card:hover { border-color: rgba(79,128,245,0.3); box-shadow: 0 0 20px rgba(79,128,245,0.07); }
+.metric-number { font-size: clamp(24px, 2.6vw, 42px); font-weight: 800; line-height: 1; color: var(--text); }
+.metric-number.green { color: var(--green); }
+.metric-number.accent { color: var(--accent); }
+.metric-number.purple { color: var(--accent2); }
+.metric-number.amber { color: var(--amber); }
+.metric-label { font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
+
+/* ─── TAGS ─── */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(79,128,245,0.3); background: rgba(79,128,245,0.08); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
+.tag.green { border-color: rgba(61,186,126,0.3); background: rgba(61,186,126,0.08); color: var(--green); }
+.tag.purple { border-color: rgba(124,90,245,0.3); background: rgba(124,90,245,0.08); color: var(--accent2); }
+.tag.amber { border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.08); color: var(--amber); }
+.tag.red { border-color: rgba(255,99,50,0.3); background: rgba(255,99,50,0.08); color: var(--red); }
+
+/* ─── BULLET LIST ─── */
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.bullet-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+.bullet-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
+.bullet-list.green li::before { background: var(--green); }
+.bullet-list.purple li::before { background: var(--accent2); }
+.bullet-list.red li::before { background: var(--red); }
+
+/* ─── GRIDS ─── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+
+/* ─── ICON BOX ─── */
+.icon-box { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.icon-box.blue { background: rgba(79,128,245,0.13); }
+.icon-box.green { background: rgba(61,186,126,0.13); }
+.icon-box.purple { background: rgba(124,90,245,0.13); }
+.icon-box.amber { background: rgba(245,166,35,0.13); }
+.icon-box.red { background: rgba(255,99,50,0.13); }
+
+/* ─── BEFORE/AFTER ─── */
+.ba-card { border-radius: 12px; padding: 20px; border: 1px solid; }
+.ba-before { border-color: rgba(255,99,50,0.3); background: rgba(255,99,50,0.05); }
+.ba-after  { border-color: rgba(61,186,126,0.3); background: rgba(61,186,126,0.05); }
+
+/* ─── IMAGE WRAPPER ─── */
+.uploaded-img-wrap { position: relative; border-radius: 10px; overflow: hidden; }
+.uploaded-img-wrap img { display: block; width: 100%; }
+
+/* ─── GLOW ─── */
+.cover-glow { position: absolute !important; }
+@keyframes coverGlowPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.07); opacity: 0.8; } }
+
+/* ─── CANVAS ─── */
+.dots-canvas { position: absolute !important; inset: 0; pointer-events: none; z-index: 0; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes subtlePop { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
+@keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes agendaPulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.6); } }
+
+/* ─── LIGHT THEME ─── */
+html.light { --bg: #f4f6fd; --bg2: #e8ecf8; --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.15); --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8; }
+html.light nav { background: rgba(244,246,253,0.92); }
+html.light .arrow-btn, html.light .theme-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); color: var(--text-dim); }
+html.light .nav-btn { color: var(--text-dim); }
+html.light .nav-btn.active { background: var(--accent); color: #fff; }
+html.light .slide { background-color: var(--bg); background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px); }
+
+/* ─── COVER ─── */
+#slide-1 { display: grid; grid-template-columns: 46% 1fr; grid-template-rows: 1fr; padding: 0; }
+.cover-left { padding: 80px 48px 60px 80px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+.cover-right { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 40px 40px 40px 20px; }
+.cover-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, transparent 30%); z-index: 1; }
+.cover-right img { display: block; max-height: 90%; width: auto; border-radius: 12px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); position: relative; z-index: 2; }
+.instacart-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 28px; }
+.instacart-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+
+/* ─── STAT CALLOUT ─── */
+.stat-callout { display: flex; flex-direction: column; gap: 2px; }
+.stat-number { font-size: clamp(36px, 4.5vw, 64px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.stat-label { font-size: 13px; color: var(--text-dim); font-weight: 400; }
+
+/* ─── PHASE TRACK ─── */
+.phase-track { display: flex; gap: 0; position: relative; }
+.phase-track::before { content: ''; position: absolute; top: 28px; left: 28px; right: 28px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), var(--green)); opacity: 0.5; z-index: 0; }
+.phase-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; position: relative; z-index: 1; }
+.phase-num { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; border: 2px solid; background: var(--bg); }
+.phase-num.blue { color: var(--accent); border-color: var(--accent); }
+.phase-num.purple { color: var(--accent2); border-color: var(--accent2); }
+.phase-num.green { color: var(--green); border-color: var(--green); }
+.phase-num.amber { color: var(--amber); border-color: var(--amber); }
+
+/* slide-specific tweaks */
+#slide-4 .bullet-list li::before { background: #000; }
+#slide-5 { justify-content: center !important; padding-top: 40px !important; }
+.mobile-gate {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 40px;
+}
+@media (max-width: 900px) {
+  .mobile-gate { display: flex; }
+  .slide, nav, .progress-bar { display: none !important; }
+}
+
+/* ═══════ EDIT MODE ═══════ */
+.edit-toolbar { display:none; position:fixed; top:14px; right:155px; z-index:9999; gap:8px; align-items:center; }
+body.edit-mode .edit-toolbar { display:flex; }
+.edit-badge { padding:4px 10px; background:rgba(245,166,35,0.12); border:1px solid rgba(245,166,35,0.35); border-radius:6px; font-size:10px; font-weight:700; color:#f5a623; letter-spacing:0.1em; text-transform:uppercase; }
+.edit-save-btn { padding:4px 14px; background:var(--accent); border:none; border-radius:6px; font-size:11px; font-weight:600; color:#fff; cursor:pointer; }
+.edit-save-btn:hover { opacity:0.82; }
+body.edit-mode [contenteditable] { outline:none; cursor:text; }
+body.edit-mode [contenteditable]:hover { outline:1px dashed rgba(245,166,35,0.45); border-radius:3px; }
+body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:rgba(245,166,35,0.04); }
+body.edit-mode .img-placeholder { cursor:pointer; transition:border-color .2s,background .2s; }
+body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:rgba(245,166,35,0.07); }
+body.edit-mode .uploaded-img-wrap::after { content:'⟳ Replace'; position:absolute; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:0.05em; }
+body.edit-mode .uploaded-img-wrap:hover::after { opacity:1; }
+body.edit-mode .uploaded-img-wrap { cursor:pointer; }
+
+/* ── Notes panel (edit mode bottom bar) ── */
+#notes-panel {
+  display:none; position:fixed; bottom:0; left:0; right:0; z-index:9998;
+  background:rgba(8,11,18,0.97); border-top:1px solid rgba(79,128,245,0.25);
+  backdrop-filter:blur(14px); flex-direction:column;
+  box-shadow:0 -4px 28px rgba(0,0,0,0.55);
+}
+body.edit-mode #notes-panel { display:flex; }
+.np-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:7px 20px; font-size:10px; font-weight:700; color:var(--accent);
+  letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0;
+}
+.np-header button {
+  background:rgba(79,128,245,0.13); border:1px solid rgba(79,128,245,0.28);
+  color:var(--accent); border-radius:6px; padding:4px 13px; font-size:10px;
+  cursor:pointer; font-family:inherit; letter-spacing:0.06em; font-weight:700;
+  transition:background .15s;
+}
+.np-header button:hover { background:rgba(79,128,245,0.25); }
+#np-textarea {
+  background:transparent; border:none; outline:none; resize:none;
+  color:var(--text); font-family:inherit; font-size:13px; line-height:1.65;
+  padding:6px 20px 14px; min-height:72px; max-height:130px;
+}
+#np-textarea::placeholder { color:var(--text-muted); }
+
+/* ── Presenter mode overlay ── */
+html.presenter-mode body { overflow:auto; margin:0; background:#080b12; }
+html.presenter-mode .slide, html.presenter-mode nav,
+html.presenter-mode .progress-bar, html.presenter-mode .edit-toolbar,
+html.presenter-mode #notes-panel { display:none !important; }
+#presenter-ui { display:none; min-height:100vh; flex-direction:column;
+  background:#080b12; color:#e2e8f4; font-family:inherit; }
+html.presenter-mode #presenter-ui { display:flex; }
+.p-header {
+  display:flex; align-items:center; gap:20px; padding:16px 28px;
+  border-bottom:1px solid rgba(79,128,245,0.18); background:rgba(79,128,245,0.035);
+  flex-shrink:0;
+}
+.p-slide-info { flex:1; min-width:0; }
+.p-overline { font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(79,128,245,0.7); margin-bottom:2px; }
+.p-slide-num { font-size:15px; font-weight:700; color:#e2e8f4; }
+.p-slide-title { font-size:12px; color:rgba(226,232,244,0.55); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.p-controls { display:flex; gap:8px; flex-shrink:0; }
+.p-btn { padding:6px 18px; background:rgba(79,128,245,0.13); border:1px solid rgba(79,128,245,0.28); color:var(--accent); border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s; }
+.p-btn:hover { background:rgba(79,128,245,0.25); }
+.p-timer { font-size:22px; font-weight:700; letter-spacing:0.04em; color:#e2e8f4; font-variant-numeric:tabular-nums; flex-shrink:0; min-width:64px; text-align:right; }
+.p-body { display:flex; flex:1; overflow:hidden; }
+.p-notes-section { flex:1; display:flex; flex-direction:column; padding:22px 28px; min-width:0; }
+.p-next-section { width:260px; flex-shrink:0; padding:22px 24px; border-left:1px solid rgba(79,128,245,0.12); background:rgba(79,128,245,0.025); }
+.p-label { font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(79,128,245,0.6); margin-bottom:10px; }
+.p-next-title { font-size:14px; font-weight:600; color:rgba(226,232,244,0.8); line-height:1.4; }
+.p-reset-btn { background:rgba(79,128,245,0.1); border:1px solid rgba(79,128,245,0.25); color:var(--accent); border-radius:8px; padding:6px 14px; font-size:11px; cursor:pointer; font-family:inherit; font-weight:600; }
+#p-notes { flex:1; background:rgba(79,128,245,0.04); border:1px solid rgba(79,128,245,0.18); border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit; font-size:14px; line-height:1.7; resize:none; outline:none; }
+#p-notes::placeholder { color:rgba(226,232,244,0.2); }
+#p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
+</style>
+<link rel="stylesheet" href="../shared/nav.css">
+</head>
+<body>
+<div class="mobile-gate">
+  <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
+  <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
+</div>
+
+<nav>
+  <a class="nav-logo" href="#">Darío Fidanza</a>
+  <div class="nav-center">
+    <!-- Intro — collapsed -->
+    <div class="nav-project" data-project="intro" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../intro/index.html">Intro</button>
+    </div>
+    <!-- Tooling DS — collapsed -->
+    <div class="nav-project" data-project="tds" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../tooling-ds/index.html">Tooling DS</button>
+    </div>
+    <!-- Orders Dashboard — collapsed -->
+    <div class="nav-project" data-project="orders" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+    </div>
+    <!-- Shopper Northstar — expanded (active) -->
+    <div class="nav-project" data-project="northstar" data-state="expanded">
+      <div class="nav-pills">
+        <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
+        <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
+        <button class="nav-btn" onclick="goToSection('system')">System</button>
+        <button class="nav-btn" onclick="goToSection('components')">Transformation</button>
+        <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
+    <span class="slide-counter" id="counter">1 / 15</span>
+    <div class="nav-arrows">
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
+    </div>
+  </div>
+</nav>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<div id="slides">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-1" data-section="intro">
+  <canvas class="dots-canvas" id="canvas-1"></canvas>
+  <div class="cover-glow" style="top:-10%;right:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+
+  <div class="cover-left">
+    <div class="instacart-badge">
+      <span class="instacart-dot"></span>
+      Instacart Shopper App
+    </div>
+    <h1 style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) both">
+      Northstar<br>Vision
+    </h1>
+    <div class="cover-line"></div>
+    <p class="subtitle" style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; max-width:440px">
+      Reimagining the shopper experience
+    </p>
+    <p class="body-text" style="margin-top:12px; max-width:400px; animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both">
+      A vision framework that unified 3 product pods and delivered measurable improvements to shopper satisfaction, engagement, and retention.
+    </p>
+    <div style="display:flex;gap:20px;margin-top:36px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both">
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--green)">+8%</div>
+        <div class="stat-label">shopper satisfaction</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--accent)">+5%</div>
+        <div class="stat-label">batch acceptance</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--accent2)">3</div>
+        <div class="stat-label">pods unified</div>
+      </div>
+    </div>
+    <div style="margin-top:32px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
+      <span class="tag" style="margin-left:0">Product Design</span>
+      <span class="tag green" style="margin-left:8px">2024</span>
+    </div>
+  </div>
+
+  <div class="cover-right">
+    <img src="images/Northstar.gif" alt="Northstar shopper app mockup">
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — CONTEXT
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-2" data-section="intro">
+  <canvas class="dots-canvas" id="canvas-2"></canvas>
+  <span class="overline">Context & Goal</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:660px">
+    Shoppers needed a more cohesive, human app experience
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-2" style="margin-top:8px;flex:1;gap:28px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div class="icon-box purple">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="card-label purple">Goal</span>
+        </div>
+        <div style="font-size:clamp(18px,2.2vw,26px);font-family:'Hepta Slab',serif;font-weight:400;color:var(--text);line-height:1.3;margin-bottom:14px">
+          Reduce cognitive load, improve delight
+        </div>
+        <ul class="bullet-list purple">
+          <li>Give shoppers confidence at every step of the job</li>
+          <li>Surface meaningful, actionable performance data</li>
+          <li>Celebrate milestones to drive long-term retention</li>
+          <li>Unify 3 pods' work into a single cohesive system</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px">
+        <div class="metric-card" style="flex:1;text-align:center">
+          <div class="metric-number purple">3</div>
+          <div class="metric-label">product pods unified</div>
+        </div>
+        <div class="metric-card" style="flex:1;text-align:center">
+          <div class="metric-number green">+8%</div>
+          <div class="metric-label">shopper satisfaction</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;align-items:flex-start;justify-content:center">
+      <div class="uploaded-img-wrap" style="flex:1;max-width:200px;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <img src="images/slide2_img_11.png" alt="Shopper app screen">
+      </div>
+      <div class="uploaded-img-wrap" style="flex:1;max-width:200px;margin-top:28px;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+        <img src="images/slide2_img_12.png" alt="Shopper app screen">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — CHALLENGE
+══════════════════════════════════════════════════ -->
+<div class="slide layout-vc" id="slide-3" data-section="problem">
+  <span class="overline red">Challenge</span>
+  <h2 style="max-width:620px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Three pain points stalling shopper satisfaction
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <span class="card-label red">01</span>
+      </div>
+      <h3 style="margin-bottom:10px">Fragmented app</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Multiple disconnected surfaces forced shoppers to context-switch constantly, increasing cognitive overhead on every batch.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
+        <img src="images/slide3_img_9.png" alt="Fragmented app screen" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <span class="card-label red">02</span>
+      </div>
+      <h3 style="margin-bottom:10px">High cognitive load</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Overwhelming information density with no clear hierarchy. Shoppers — especially new ones — felt lost and made more errors.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
+        <img src="images/slide3_img_10.png" alt="High cognitive load screen" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <span class="card-label red">03</span>
+      </div>
+      <h3 style="margin-bottom:10px">No guidance for complex tasks</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Shoppers faced complex scenarios — substitutions, multi-store batches, customer issues — with no in-app guidance or support.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
+        <img src="images/slide3_img_11.png" alt="No guidance screen" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — INSIGHTS (light)
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light slide-grid" id="slide-4" data-section="problem">
+  <div class="grid-2" style="gap:36px;align-items:center;flex:1">
+    <div>
+      <span class="overline">Research</span>
+      <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">What shoppers told us</h2>
+      <div class="divider"></div>
+      <p class="subtitle" style="margin-bottom:20px">Qualitative sessions, diary studies, and data analysis across thousands of active shoppers.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15)">
+        <img src="images/slide4_img_10.png" alt="Research synthesis" style="width:100%;display:block">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <span class="overline" style="margin-bottom:0">Key Insights</span>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <span class="card-label">Navigation & flow</span>
+        </div>
+        <h3 style="font-size:15px">Shoppers frustrated with finding items and navigating stores</h3>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box purple">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="card-label purple">Recognition & fairness</span>
+        </div>
+        <h3 style="font-size:15px">Desire for fair recognition and actionable feedback</h3>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box amber">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <span class="card-label amber">Retention risk</span>
+        </div>
+        <h3 style="font-size:15px">Highest churn risk among top-tier "Diamond" shoppers</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — STRATEGY
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light" id="slide-5" data-section="problem">
+  <span class="overline purple">Strategy</span>
+  <h2 style="max-width:680px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Three design principles that guided every decision</h2>
+  <div class="divider"></div>
+  <div class="uploaded-img-wrap" style="margin-top:12px;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.12)">
+    <img src="images/slide5_img_19.png" alt="Strategy overview" style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top">
+  </div>
+  <div class="grid-3" style="margin-top:16px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <span class="card-label" style="font-size:10px">Principle 01</span>
+      </div>
+      <h3 style="font-size:16px;margin-bottom:8px">Human touch</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Shoppers are people, not productivity metrics. Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
+    </div>
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <span class="card-label purple" style="font-size:10px">Principle 02</span>
+      </div>
+      <h3 style="font-size:16px;margin-bottom:8px">Guidance</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Surface the right information at the right moment. Reduce decision fatigue by providing clear, contextual cues for complex tasks.</p>
+    </div>
+    <div class="card" style="border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div class="icon-box green">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="card-label green" style="font-size:10px">Principle 03</span>
+      </div>
+      <h3 style="font-size:16px;margin-bottom:8px">System cohesion</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Three pods, one experience. Align cross-functional work around shared design language, patterns, and decisions to reduce redundancy.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — KEY CONCEPTS
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-6" data-section="system">
+  <span class="overline purple">Key Concepts</span>
+  <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Two pillars that drive the redesign</h2>
+  <div class="divider"></div>
+  <div class="grid-2" style="flex:1;margin-top:10px;gap:24px">
+
+    <!-- Guidance & Education -->
+    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05);display:flex;flex-direction:row;gap:20px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <div class="icon-box blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <span class="card-label">Guidance & Education</span>
+        </div>
+        <h3 style="margin-bottom:12px">Shopper confidence & efficiency</h3>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:16px">In-context education and timely prompts help shoppers make better decisions faster — reducing errors and handling time on complex batches.</p>
+        <ul class="bullet-list" style="gap:8px">
+          <li>Contextual toasts for difficult scenarios</li>
+          <li>Step-by-step substitution guidance</li>
+          <li>Proactive alerts for store-specific issues</li>
+        </ul>
+        <div style="margin-top:16px">
+          <span class="tag" style="font-size:10px">↑ Shopper confidence</span>
+          <span class="tag" style="margin-left:8px;font-size:10px">↑ Efficiency</span>
+        </div>
+      </div>
+      <div class="uploaded-img-wrap" style="width:120px;flex-shrink:0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
+        <img src="images/slide6_img_9.png" alt="Guidance concept" style="width:100%;display:block">
+      </div>
+    </div>
+
+    <!-- Human Touch -->
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);display:flex;flex-direction:row;gap:20px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <div class="icon-box purple">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <span class="card-label purple">Human Touch</span>
+        </div>
+        <h3 style="margin-bottom:12px">Higher shopper motivation</h3>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:16px">Genuine recognition and meaningful milestones make shoppers feel valued. Celebrating tenure and performance drives long-term engagement.</p>
+        <ul class="bullet-list purple" style="gap:8px">
+          <li>Shopping anniversary celebrations</li>
+          <li>Earnings dashboard with trend insights</li>
+          <li>Objective, outcome-based performance reviews</li>
+        </ul>
+        <div style="margin-top:16px">
+          <span class="tag purple" style="font-size:10px">↑ Motivation</span>
+          <span class="tag green" style="margin-left:8px;font-size:10px">↑ Retention</span>
+        </div>
+      </div>
+      <div class="uploaded-img-wrap" style="width:120px;flex-shrink:0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
+        <img src="images/slide6_img_10.png" alt="Human touch concept" style="width:100%;display:block">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — DESIGN SYSTEM
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-7" data-section="system">
+  <span class="overline purple">North Star Design System</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Unified 3 pods' work into a single cohesive system</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:28px;flex:1;margin-top:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:14px;width:280px;flex-shrink:0">
+      <div class="card" style="border-color:rgba(79,128,245,0.25)">
+        <div class="card-label" style="margin-bottom:8px">What we solved</div>
+        <ul class="bullet-list" style="gap:8px">
+          <li style="font-size:13px">Eliminated duplicate components across pods</li>
+          <li style="font-size:13px">Established shared color, type & spacing tokens</li>
+          <li style="font-size:13px">Documented patterns for common shopper flows</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(61,186,126,0.25)">
+        <div class="card-label green" style="margin-bottom:8px">Outcomes</div>
+        <ul class="bullet-list green" style="gap:8px">
+          <li style="font-size:13px">Faster cross-pod iteration</li>
+          <li style="font-size:13px">Consistent experience across all surfaces</li>
+          <li style="font-size:13px">Reduced design-dev rework</li>
+        </ul>
+      </div>
+    </div>
+    <div class="uploaded-img-wrap" style="flex:1;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:subtlePop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+      <img src="images/slide7_img_9.png" alt="North Star Design System" style="width:100%;display:block">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — FEATURES
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-8" data-section="system">
+  <span class="overline">Features</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">A cohesive suite of tools for modern shoppers</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:20px;flex:1;margin-top:12px;align-items:stretch">
+    <!-- Left: large hero screen -->
+    <div style="flex:1.2;display:flex;flex-direction:column;gap:14px">
+      <div class="uploaded-img-wrap" style="flex:1;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.5)">
+        <img src="images/slide8_img_3.png" alt="Feature overview" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+    </div>
+    <!-- Right: grid of screens -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
+        <img src="images/slide8_img_4.png" alt="Feature screen" style="width:100%;display:block">
+      </div>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
+        <img src="images/slide8_img_5.png" alt="Feature screen" style="width:100%;display:block">
+      </div>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
+        <img src="images/slide8_img_6.png" alt="Feature screen" style="width:100%;display:block">
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:10px">
+        <div class="card-label purple" style="font-size:10px">Live in app</div>
+        <h3 style="font-size:15px">Education, metrics & celebrations</h3>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.55">All three features shipped and live in the Instacart Shopper App.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9 — IMPLEMENTATION
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-9" data-section="system">
+  <span class="overline">Implementation</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three features shipped in the first sprint</h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="flex:1;margin-top:16px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both;align-items:stretch">
+    <div class="card" style="border-color:rgba(79,128,245,0.25);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span class="card-label">Education toasts</span>
+      </div>
+      <h3 style="margin-bottom:10px;font-size:17px">Contextual guidance, live in app</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Timely toasts that surface at the right moment — during store entry, substitution scenarios, and batch completion — to reduce errors and boost confidence.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;max-height:180px">
+        <img src="images/slide9_img_5.png" alt="Education toasts" style="width:100%;object-fit:cover">
+      </div>
+      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+    </div>
+    <div class="card" style="border-color:rgba(124,90,245,0.25);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <span class="card-label purple">Dashboard refresh</span>
+      </div>
+      <h3 style="margin-bottom:10px;font-size:17px">Meaningful stats, surfaced clearly</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Redesigned earnings and performance dashboard that surfaces trends, streaks, and goal progress — replacing an opaque, static view with dynamic, actionable data.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+        <div style="background:rgba(124,90,245,0.08);border:1px solid rgba(124,90,245,0.2);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:var(--accent2)">+12%</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">dashboard engagement</div>
+        </div>
+        <div style="background:rgba(61,186,126,0.08);border:1px solid rgba(61,186,126,0.2);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:var(--green)">+5%</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">batch acceptance</div>
+        </div>
+      </div>
+      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+    </div>
+    <div class="card" style="border-color:rgba(245,166,35,0.25);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box amber">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="card-label amber">Shopping anniversary</span>
+      </div>
+      <h3 style="margin-bottom:10px;font-size:17px">Yearly milestone feature</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">A personal celebration for shopper tenure milestones — surfacing stats, highlights, and a genuine "thank you" at each anniversary. Directly addressed top-shopper churn risk.</p>
+      <div style="margin-top:16px;padding:14px;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:8px">
+        <div style="font-size:11px;color:var(--amber);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Impact</div>
+        <div style="font-size:13px;color:var(--text-dim)">Improved retention among top-tier "Diamond" shoppers</div>
+      </div>
+      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10 — EX. TRANSFORMATION: ONBOARDING
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-10" data-section="components" style="padding-top:60px">
+  <span class="overline amber">Experience Transformation</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Onboarding</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
+    <!-- Before -->
+    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="tag red" style="font-size:10px">Before</span>
+      </div>
+      <h3 style="font-size:16px;color:var(--red)">Awkward pop-ups</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Generic pop-ups displaying in untimely moments — interrupting workflows, missed by shoppers, adding friction instead of value.</p>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
+        <img src="images/slide10_img_15.png" alt="Before: awkward pop-ups" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(255,99,50,0.04)">
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+
+    <!-- After -->
+    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="tag green" style="font-size:10px">After</span>
+      </div>
+      <h3 style="font-size:16px;color:var(--green)">Timely lock-screen cards</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Live Notifications surfaced on the lock screen based on geolocation — appearing at exactly the right moment, before the shopper even opens the app.</p>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
+        <img src="images/slide10_img_16.png" alt="After: timely lock-screen cards" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(61,186,126,0.04)">
+      </div>
+    </div>
+
+    <!-- Full context image -->
+    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
+      <img src="images/slide10_img_3.png" alt="Onboarding transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11 — EX. TRANSFORMATION: METRICS
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-11" data-section="components" style="padding-top:60px">
+  <span class="overline amber">Experience Transformation</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Metrics</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
+    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
+      <h3 style="font-size:16px;color:var(--red)">Generic celebratory toasts</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Static, one-size-fits-all congratulations with no data or context. Shoppers couldn't understand what drove their earnings or how to improve.</p>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
+        <img src="images/slide11_img_4.png" alt="Before: generic toasts" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(255,99,50,0.04)">
+      </div>
+    </div>
+
+    <div style="flex-shrink:0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+
+    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
+      <h3 style="font-size:16px;color:var(--green)">Dashboards tied to earnings</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A dynamic dashboard showing trends, streaks, and earnings breakdowns. Shoppers can now understand their performance and take action to improve it.</p>
+      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
+        <img src="images/slide11_img_5.png" alt="After: earnings dashboard" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(61,186,126,0.04)">
+      </div>
+    </div>
+
+    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
+      <img src="images/slide11_img_3.png" alt="Metrics transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 12 — EX. TRANSFORMATION: FEEDBACK
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-12" data-section="components" style="padding-top:60px">
+  <span class="overline amber">Experience Transformation</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Feedback</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
+    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
+      <h3 style="font-size:16px;color:var(--red)">Subjective star ratings</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A single 1–5 star rating per order, highly susceptible to customer bias. No context, no explanation — shoppers couldn't appeal or learn from feedback.</p>
+      <div style="margin-top:auto;padding:16px;background:rgba(255,99,50,0.06);border:1px solid rgba(255,99,50,0.2);border-radius:8px">
+        <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:6px">Problem</div>
+        <div style="font-size:13px;color:var(--text-dim)">Top shoppers felt unfairly penalized by outlier reviews with no recourse</div>
+      </div>
+    </div>
+
+    <div style="flex-shrink:0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+
+    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
+      <h3 style="font-size:16px;color:var(--green)">Objective, outcome-based metrics</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Performance based on actual outcomes: on-time deliveries, substitution quality, item found rates. Fair, transparent, and actionable for every shopper.</p>
+      <div style="margin-top:auto;padding:16px;background:rgba(61,186,126,0.06);border:1px solid rgba(61,186,126,0.2);border-radius:8px">
+        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:6px">Outcome</div>
+        <div style="font-size:13px;color:var(--text-dim)">Improved trust and transparency. Reduced frustration among Diamond shoppers.</div>
+      </div>
+    </div>
+
+    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
+      <img src="images/slide12_img_11.png" alt="Feedback transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13 — OUTCOMES
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-13" data-section="impact" style="justify-content:center;padding-top:60px">
+  <canvas class="dots-canvas" id="canvas-13"></canvas>
+  <span class="overline green">Outcomes</span>
+  <h2 style="max-width:600px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Measurable gains across satisfaction, earnings, and retention</h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:20px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="metric-card" style="text-align:center;border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
+      <div class="metric-number green" style="font-size:52px">+8%</div>
+      <div class="metric-label" style="font-size:14px;margin-top:10px">Shopper satisfaction</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Measured via post-batch surveys across 100K+ active shoppers</div>
+    </div>
+    <div class="metric-card" style="text-align:center;border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
+      <div class="metric-number accent" style="font-size:52px">+5%</div>
+      <div class="metric-label" style="font-size:14px;margin-top:10px">Batch acceptance rate</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Shoppers accepting more batches after dashboard and guidance improvements</div>
+    </div>
+    <div class="metric-card" style="text-align:center;border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+      <div class="metric-number purple" style="font-size:52px">↑</div>
+      <div class="metric-label" style="font-size:14px;margin-top:10px">Diamond shopper retention</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Reduced churn among top-tier shoppers — the most impactful cohort for platform health</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14 — LEARNINGS
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light slide-grid" id="slide-14" data-section="impact">
+  <span class="overline">Learnings</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three lessons that changed how we work</h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="flex:1;margin-top:16px;align-items:stretch">
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="card-label">Alignment</span>
+      </div>
+      <h3 style="margin-bottom:12px;font-size:17px">Align early across pods and leadership</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Cross-pod alignment from day one prevented duplicated work and late-stage pivots. When leadership is involved early, decisions move faster and stick.</p>
+      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden">
+        <img src="images/slide14_img_12.png" alt="Alignment" style="width:100%;display:block">
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <span class="card-label purple">Process</span>
+      </div>
+      <h3 style="margin-bottom:12px;font-size:17px">Design with content & research from day one</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Embedding content design and research in the process from the start — not as a review at the end — produced better flows and avoided costly late-stage rewrites.</p>
+      <div style="margin-top:auto;padding:16px;background:rgba(124,90,245,0.06);border:1px solid rgba(124,90,245,0.2);border-radius:8px;margin-top:16px">
+        <p style="font-size:12px;color:var(--accent2);font-style:italic;line-height:1.5">"Content changes late in design mean layout changes, which mean engineering changes."</p>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+        <div class="icon-box green">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <span class="card-label green">Quality</span>
+      </div>
+      <h3 style="margin-bottom:12px;font-size:17px">Balance usability and accuracy to earn trust</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Simplifying the UI doesn't mean hiding complexity. Shoppers need to trust the data as much as they need it to be easy to read. Both are non-negotiable.</p>
+      <div style="margin-top:auto;padding:16px;background:rgba(61,186,126,0.06);border:1px solid rgba(61,186,126,0.2);border-radius:8px;margin-top:16px">
+        <p style="font-size:12px;color:var(--green);font-style:italic;line-height:1.5">Cross-functional input → better mental models</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 15 — TAKEAWAY
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-15" data-section="impact" style="display:grid;grid-template-columns:52% 1fr;padding:0">
+  <canvas class="dots-canvas" id="canvas-15"></canvas>
+  <div class="cover-glow" style="top:-10%;right:40%;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.15) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+
+  <div style="padding:80px 48px 60px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+    <span class="overline purple" style="margin-bottom:18px">Takeaway</span>
+    <h1 style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) both;font-size:clamp(32px,4vw,56px)">
+      Defining a vision isn't just about new UI
+    </h1>
+    <div class="cover-line"></div>
+    <p class="subtitle" style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;max-width:440px">
+      It's about reducing cognitive load, adding delight, and aligning the team around real shopper needs.
+    </p>
+    <p class="body-text" style="margin-top:14px;max-width:420px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both;line-height:1.65">
+      The Northstar gave 3 pods a shared direction — translating into shipped features, measurable outcomes, and a foundation for everything the Shopper App becomes next.
+    </p>
+    <ul class="bullet-list purple" style="margin-top:24px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both">
+      <li>+8% shopper satisfaction in post-launch survey</li>
+      <li>+5% batch acceptance, driven by dashboard redesign</li>
+      <li>Improved Diamond shopper retention via anniversary feature</li>
+    </ul>
+    <div style="margin-top:28px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
+      <span class="tag" style="margin-left:0">Product Design</span>
+      <span class="tag green" style="margin-left:8px">2024</span>
+    </div>
+  </div>
+
+  <div style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:40px 60px 40px 20px;z-index:2">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 25%);z-index:1;pointer-events:none"></div>
+    <img src="images/slide15_img_10.png" alt="Northstar app vision" style="display:block;max-height:88%;width:auto;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,0.65);position:relative;z-index:2">
+  </div>
+</div>
+
+</div><!-- /slides -->
+
+<script>
+// ─── DOT WAVE CANVAS ───
+function initDotCanvas(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const slide = canvas.parentElement;
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = slide.offsetWidth; canvas.height = slide.offsetHeight; }
+  resize();
+  const spacing = 42;
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cols = Math.ceil(canvas.width / spacing) + 1;
+    const rows = Math.ceil(canvas.height / spacing) + 1;
+    const bandAngle = Math.PI / 4;
+    const bandWidth = canvas.width * 0.35;
+    const bandSpeed = 0.4;
+    const bandPos = ((t * bandSpeed) % (canvas.width * 1.4)) - canvas.width * 0.2;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * spacing, y = r * spacing;
+        const proj = x * Math.cos(bandAngle) + y * Math.sin(bandAngle);
+        const dist = Math.abs(proj - bandPos);
+        const wave = Math.max(0, 1 - dist / bandWidth);
+        const alpha = 0.08 + wave * 0.22;
+        const radius = 1.2 + wave * 1.4;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(79,128,245,${alpha})`;
+        ctx.fill();
+      }
+    }
+    t += 0.5;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', resize);
+}
+['canvas-1','canvas-2','canvas-13','canvas-15'].forEach(initDotCanvas);
+
+// ─── NAVIGATION ───
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const sections = { intro:0, problem:2, system:5, components:9, impact:12 };
+
+function updateNav() {
+  const section = slides[current].dataset.section;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const map = { intro:0, problem:1, system:2, components:3, impact:4 };
+  document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
+  document.getElementById('counter').textContent = `${current+1} / ${total}`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total-1;
+  document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
+}
+
+function goTo(i) {
+  if (i < 0 || i >= total || i === current) return;
+  const prev = slides[current];
+  prev.classList.remove('active');
+  if (i > current) { prev.classList.add('exit-up'); setTimeout(() => prev.classList.remove('exit-up'), 500); }
+  current = i;
+  slides[current].classList.add('active');
+  updateNav();
+  if (typeof deckSend === 'function') deckSend({type:'nav',index:current,total});
+}
+
+function nextSlide() { goTo(current+1); }
+function prevSlide() { goTo(current-1); }
+function goToSection(n) { goTo(sections[n]); }
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
+  if (e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') { e.preventDefault(); nextSlide(); }
+  else if (e.key==='ArrowLeft'||e.key==='ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) { dx < 0 ? nextSlide() : prevSlide(); } });
+
+slides[0].classList.add('active');
+updateNav();
+
+// ─── THEME TOGGLE ───
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀';
+  localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
+}
+if (localStorage.getItem('deck-theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('themeBtn').textContent = '🌙';
+}
+
+// ═══════ EDIT MODE ═══════
+let editMode = false;
+const EDITABLE_SEL = 'h1,h2,h3,h4,.overline,.card-label,.metric-number,.metric-label,.tag';
+
+function toggleEditMode() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  if (editMode) {
+    document.querySelectorAll('#slides ' + EDITABLE_SEL).forEach(el => {
+      if (!el.closest('.edit-toolbar,.img-placeholder,.nav')) {
+        el.setAttribute('contenteditable', 'true');
+      }
+    });
+    bindPlaceholders();
+    updateNotesPanel();
+  } else {
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  }
+}
+
+function bindPlaceholders() {
+  document.querySelectorAll('.img-placeholder:not([data-edit-bound])').forEach(ph => {
+    ph.dataset.editBound = '1';
+    ph.addEventListener('click', () => { if (editMode) pickImage(ph); });
+  });
+  document.querySelectorAll('.uploaded-img-wrap:not([data-edit-bound])').forEach(wrap => {
+    wrap.dataset.editBound = '1';
+    wrap.addEventListener('click', () => { if (editMode) pickImage(wrap); });
+  });
+}
+
+function pickImage(target) {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const style = target.getAttribute('style') || '';
+      const wrap = document.createElement('div');
+      wrap.className = 'uploaded-img-wrap';
+      if (style) wrap.setAttribute('style', style);
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      wrap.appendChild(img);
+      target.replaceWith(wrap);
+      wrap.dataset.editBound = '1';
+      wrap.addEventListener('click', () => { if (editMode) pickImage(wrap); });
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function saveDeck() {
+  const notesEl = document.getElementById('deck-notes-data');
+  if (notesEl) notesEl.textContent = JSON.stringify(getNotes());
+  const savedSlide = current;
+  goTo(0);
+  const wasEdit = editMode;
+  document.body.classList.remove('edit-mode');
+  const savedCE = [];
+  document.querySelectorAll('[contenteditable]').forEach(el => { savedCE.push(el); el.removeAttribute('contenteditable'); });
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  if (wasEdit) {
+    document.body.classList.add('edit-mode');
+    savedCE.forEach(el => el.setAttribute('contenteditable', 'true'));
+  }
+  goTo(savedSlide);
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'deck.html' });
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+// Capture phase keyboard shortcuts
+document.addEventListener('keydown', e => {
+  const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
+  if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
+  if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveDeck(); return; }
+  if (inText && (e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'||e.key===' ')) {
+    e.stopImmediatePropagation();
+  }
+}, true);
+
+// ═══════ NOTES + PRESENTER MODE ═══════
+let _presenterWin = null;
+let _bc = null;
+try { _bc = new BroadcastChannel('deck-sync-v1'); } catch(e) {}
+
+function deckSend(msg) {
+  if (_bc) try { _bc.postMessage(msg); } catch(e) {}
+  if (_presenterWin && !_presenterWin.closed) {
+    try { _presenterWin.postMessage(msg, '*'); } catch(e) {}
+  }
+  if (window.opener && !window.opener.closed) {
+    try { window.opener.postMessage(msg, '*'); } catch(e) {}
+  }
+}
+
+function deckListen(handler) {
+  if (_bc) _bc.onmessage = e => handler(e.data);
+  window.addEventListener('message', e => { if (e.data && e.data.type) handler(e.data); });
+}
+
+function getSlideTitle(i) {
+  if (!slides[i]) return '—';
+  const h = slides[i].querySelector('h1,h2');
+  return h ? h.textContent.replace(/\s+/g,' ').trim().slice(0,55) : 'Slide '+(i+1);
+}
+
+let _notes = [];
+function getNotes() { return _notes; }
+function saveNote(idx, text) {
+  _notes[idx] = text;
+  deckSend({type:'note', index:idx, text});
+}
+
+function updateNotesPanel() {
+  const ta = document.getElementById('np-textarea');
+  const nn = document.getElementById('np-num');
+  const nt = document.getElementById('np-total');
+  if (nn) nn.textContent = current + 1;
+  if (nt) nt.textContent = total;
+  if (ta) ta.value = _notes[current] || '';
+}
+
+function openPresenter() {
+  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','deck-presenter','width=720,height=580,resizable=yes');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const el = document.getElementById('deck-notes-data');
+    const embedded = el ? JSON.parse(el.textContent || '[]') : [];
+    if (Array.isArray(embedded) && embedded.some(Boolean)) _notes = embedded;
+  } catch(e) {}
+
+  if (location.hash === '#presenter') {
+    document.documentElement.classList.add('presenter-mode');
+    let pIdx = 0, timerStart = Date.now();
+
+    function pGetNotes() {
+      try { const el=document.getElementById('deck-notes-data'); return el?JSON.parse(el.textContent||'[]'):[];} catch(e){return [];}
+    }
+    function pRefresh(idx) {
+      idx = Math.max(0, Math.min(total-1, idx));
+      const n=pGetNotes(); pIdx=idx;
+      const pCur=document.getElementById('p-cur');
+      const pTotal=document.getElementById('p-total');
+      const pTitle=document.getElementById('p-title');
+      const pNextT=document.getElementById('p-next-title');
+      const pNotes=document.getElementById('p-notes');
+      if(pCur) pCur.textContent=idx+1;
+      if(pTotal) pTotal.textContent=total;
+      if(pTitle) pTitle.textContent=getSlideTitle(idx);
+      if(pNextT) pNextT.textContent=getSlideTitle(idx+1);
+      if(pNotes) pNotes.value=n[idx]||'';
+    }
+
+    deckListen(d=>{ if(d.type==='nav'||d.type==='sync') pRefresh(d.index); });
+    pRefresh(0);
+    deckSend({type:'req-sync'});
+
+    const pTimer=document.getElementById('p-timer');
+    const pReset=document.getElementById('p-reset-btn');
+    setInterval(()=>{
+      if(!pTimer) return;
+      const s=Math.floor((Date.now()-timerStart)/1000);
+      pTimer.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+    },1000);
+
+    document.getElementById('p-prev-btn').onclick=()=>{ pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); };
+    document.getElementById('p-next-btn').onclick=()=>{ pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); };
+    if(pReset) pReset.onclick=()=>{ timerStart=Date.now(); };
+
+    document.addEventListener('keydown',e=>{
+      if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'||e.target.isContentEditable) return;
+      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); }
+      if(e.key==='ArrowLeft') { e.preventDefault(); pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); }
+    });
+
+  } else {
+    updateNotesPanel();
+    const npTA = document.getElementById('np-textarea');
+    if (npTA) npTA.addEventListener('input', e => saveNote(current, e.target.value));
+
+    deckListen(d=>{
+      if(d.type==='nav') {
+        goTo(d.index);
+        deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+      }
+      if(d.type==='req-sync')
+        deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+    });
+  }
+});
+</script>
+<!-- ══ Edit toolbar ══ -->
+<div class="edit-toolbar">
+  <span class="edit-badge">✏ Editing</span>
+  <button class="edit-save-btn" onclick="saveDeck()">Save ↓</button>
+</div>
+
+<!-- ── Embedded notes data (updated on every Save) ── -->
+<script id="deck-notes-data" type="application/json">[]</script>
+
+<!-- ── Notes panel: visible in edit mode ── -->
+<div id="notes-panel">
+  <div class="np-header">
+    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">15</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
+    <button onclick="openPresenter()">↗ Presenter View</button>
+  </div>
+  <textarea id="np-textarea" placeholder="Type speaker notes for this slide…"></textarea>
+</div>
+
+<!-- ── Presenter UI: shown when URL has #presenter ── -->
+<div id="presenter-ui">
+  <div class="p-header">
+    <div class="p-slide-info">
+      <div class="p-overline">Presenter View</div>
+      <div class="p-slide-num">Slide <span id="p-cur">1</span><span style="font-weight:300;opacity:0.35;"> / <span id="p-total">—</span></span></div>
+      <div class="p-slide-title" id="p-title">—</div>
+    </div>
+    <div class="p-controls">
+      <button class="p-btn" id="p-prev-btn">◀ Prev</button>
+      <button class="p-btn" id="p-next-btn">Next ▶</button>
+    </div>
+    <div class="p-timer" id="p-timer">0:00</div>
+  </div>
+  <div class="p-body">
+    <div class="p-notes-section">
+      <div class="p-label">Speaker Notes</div>
+      <textarea id="p-notes" placeholder="Click to add notes for this slide…"></textarea>
+    </div>
+    <div class="p-next-section">
+      <div class="p-label">Up Next</div>
+      <div class="p-next-title" id="p-next-title">—</div>
+      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/nav.js"></script>
+</body>
+</html>
