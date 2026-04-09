@@ -60,7 +60,7 @@ nav {
   100% { opacity: 0;    transform: scale(1.8); }
 }
 #nextBtn { position: relative; background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; box-shadow: 0 0 12px rgba(79,128,245,0.45); }
-#nextBtn::after { content: ''; position: absolute; inset: -5px; border-radius: 13px; border: 1.5px solid var(--accent); animation: arrowRingPulse 1.6s ease-out infinite; pointer-events: none; }
+#nextBtn.pulse-ring::after { content: ''; position: absolute; inset: -5px; border-radius: 13px; border: 1.5px solid var(--accent); animation: arrowRingPulse 1.6s ease-out infinite; pointer-events: none; }
 .nav-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; white-space: nowrap; pointer-events: none; }
 .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
 .theme-btn:hover { border-color: var(--border-strong); color: var(--text); }
@@ -778,7 +778,7 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
     <span class="slide-counter" id="counter">1 / 15</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
-      <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
+      <button class="arrow-btn pulse-ring" id="nextBtn" onclick="nextSlide()">→</button>
     </div>
   </div>
 </nav>
@@ -1653,9 +1653,10 @@ function goTo(i) {
   current=i; slides[current].classList.add('active'); updateNav();
 }
 
-function nextSlide(){ goTo(current+1); }
-function prevSlide(){ goTo(current-1); }
-function goToSection(n){ goTo(sections[n]); }
+function stopPulse(){ document.getElementById('nextBtn').classList.remove('pulse-ring'); }
+function nextSlide(){ stopPulse(); goTo(current+1); }
+function prevSlide(){ stopPulse(); goTo(current-1); }
+function goToSection(n){ stopPulse(); goTo(sections[n]); }
 
 // Keyboard nav
 document.addEventListener('keydown', e=>{
