@@ -24,6 +24,47 @@
     fadeIn();
   }
 
+  /* ── First-slide hint + pulse stop on first navigation ── */
+  function initNavHint() {
+    // Inject hint element
+    var hint = document.createElement('div');
+    hint.className = 'nav-hint';
+    hint.innerHTML =
+      '<span class="nav-hint-key">←</span>' +
+      '<span class="nav-hint-key">→</span>' +
+      '<span>navigate</span>';
+    document.body.appendChild(hint);
+
+    // Stop pulse + hide hint on first navigation
+    function onNavigated() {
+      document.body.classList.add('has-navigated');
+      hint.classList.add('hidden');
+      // Remove after transition
+      setTimeout(function () { hint.remove(); }, 700);
+      prevBtn && prevBtn.removeEventListener('click', onNavigated);
+      nextBtn && nextBtn.removeEventListener('click', onNavigated);
+    }
+
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    if (prevBtn) prevBtn.addEventListener('click', onNavigated);
+    if (nextBtn) nextBtn.addEventListener('click', onNavigated);
+
+    // Also stop on keyboard navigation (decks support arrow keys)
+    document.addEventListener('keydown', function onKey(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        onNavigated();
+        document.removeEventListener('keydown', onKey);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavHint);
+  } else {
+    initNavHint();
+  }
+
   /* ── Project pill click: animate then navigate ── */
   document.querySelectorAll('.nav-project-pill').forEach(function (btn) {
     btn.addEventListener('click', function () {

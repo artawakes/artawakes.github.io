@@ -78,3 +78,91 @@ html.light .nav-project-pill:hover {
   border-color: rgba(79, 128, 245, 0.35);
   color: rgba(79, 128, 245, 1);
 }
+
+/* ── Section pill active: subtle tint so the arrow stands out ── */
+.nav-btn.active {
+  background: rgba(79, 128, 245, 0.14) !important;
+  color: rgba(79, 128, 245, 0.90) !important;
+  box-shadow: none !important;
+}
+html.light .nav-btn.active {
+  background: rgba(79, 128, 245, 0.11) !important;
+  color: rgba(79, 128, 245, 0.85) !important;
+}
+
+/* ── Next arrow: accent blue ── */
+#nextBtn {
+  color: rgba(79, 128, 245, 1);
+  border-color: rgba(79, 128, 245, 0.38);
+  background: rgba(79, 128, 245, 0.12);
+  position: relative;
+  overflow: visible;
+}
+#nextBtn:hover {
+  color: #fff;
+  background: rgba(79, 128, 245, 0.30);
+  border-color: rgba(79, 128, 245, 0.60);
+}
+
+/* ── Pulse ring around next arrow ── */
+@keyframes arrowPulse {
+  0%   { opacity: 0.65; transform: scale(1);   }
+  65%  { opacity: 0;    transform: scale(1.75); }
+  100% { opacity: 0;    transform: scale(1.75); }
+}
+
+#nextBtn::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(79, 128, 245, 0.55);
+  animation: arrowPulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Pulse stops once user has navigated */
+body.has-navigated #nextBtn::after {
+  display: none;
+}
+
+/* ── First-slide hint legend ── */
+.nav-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.6s ease;
+  z-index: 9999;
+}
+.nav-hint.hidden {
+  opacity: 0;
+}
+.nav-hint-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 10px;
+  line-height: 1;
+}
+html.light .nav-hint {
+  color: rgba(0, 0, 0, 0.28);
+}
+html.light .nav-hint-key {
+  border-color: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.04);
+}
