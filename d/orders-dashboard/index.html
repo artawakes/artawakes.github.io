@@ -47,7 +47,7 @@ nav {
 .nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
 .nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
 .nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
-.nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
+.nav-btn.active { background: rgba(79,128,245,0.12); color: var(--accent); border-color: rgba(79,128,245,0.3); box-shadow: none; }
 
 .nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .slide-counter { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.05em; min-width: 44px; text-align: right; }
@@ -59,7 +59,7 @@ nav {
   0%   { opacity: 0.65; transform: scale(1); }
   100% { opacity: 0;    transform: scale(1.8); }
 }
-#nextBtn { position: relative; }
+#nextBtn { position: relative; background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; box-shadow: 0 0 12px rgba(79,128,245,0.45); }
 #nextBtn::after { content: ''; position: absolute; inset: -5px; border-radius: 13px; border: 1.5px solid var(--accent); animation: arrowRingPulse 1.6s ease-out infinite; pointer-events: none; }
 .nav-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; white-space: nowrap; pointer-events: none; }
 .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
@@ -537,8 +537,9 @@ h3 {
 html.light { --bg: #f4f6fd; --bg2: #e8ecf8; --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.15); --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8; }
 html.light nav { background: rgba(244,246,253,0.92); }
 html.light .arrow-btn, html.light .theme-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); color: var(--text-dim); }
+html.light #nextBtn { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
 html.light .nav-btn { color: var(--text-dim); }
-html.light .nav-btn.active { background: var(--accent); color: #fff; }
+html.light .nav-btn.active { background: rgba(79,128,245,0.12); color: var(--accent); border-color: rgba(79,128,245,0.3); }
 html.light .slide { background-color: var(--bg); background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px); }
 
 /* Slide 5 compact cards */
