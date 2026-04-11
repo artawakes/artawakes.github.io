@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m markitdown \"/Users/dario/New Deck/Ordersdashboad/Ordersdashboard.pptx\")",
+      "Bash(pip3 install:*)",
+      "Bash(python3 -c ':*)",
+      "Bash(npx pptxgenjs:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p \"/Users/dario/New Deck/Northstar/Orders Dashboard\")",
+      "Bash(npm init:*)",
+      "Bash(node build.js)",
+      "Bash(python3 \"/Users/dario/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/e757a85f-bf23-4feb-8a82-2a10a3440f48/b8200a3f-b10a-4c85-8e94-dc5e4c3c9331/skills/pptx/scripts/office/soffice.py\" --headless --convert-to pdf \"Orders Dashboard.pptx\")",
+      "Bash(mdfind \"LibreOffice.app\")",
+      "Bash(qlmanage -t -s 1440 -o . \"Orders Dashboard.pptx\")",
+      "Bash(brew list:*)",
+      "Bash(pip3 list:*)",
+      "Bash(python3 -)",
+      "Bash(osascript)",
+      "Bash(python3 -c \"from pdf2image import convert_from_path; print\\('ok'\\)\")",
+      "Bash(python3)",
+      "Bash(ls \"/Users/dario/New Deck/Northstar/Orders Dashboard/\"*.jpg)",
+      "Bash(cp \"/Users/dario/New Deck/Ordersdashboad/Orders Dashboard/index.html\" \"/Users/dario/New Deck/Northstar/Orders Dashboard/index.html\")",
+      "Bash(cp -r \"/Users/dario/New Deck/Ordersdashboad/Orders Dashboard/Images\" \"/Users/dario/New Deck/Northstar/Orders Dashboard/Images\")",
+      "Bash(open \"/Users/dario/New Deck/Northstar/Orders Dashboard/index.html\")"
+    ]
+  }
+}
