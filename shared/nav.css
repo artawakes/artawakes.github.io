@@ -92,16 +92,15 @@ html.light .nav-btn.active {
 
 /* ── Next arrow: accent blue ── */
 #nextBtn {
-  color: rgba(79, 128, 245, 1);
-  border-color: rgba(79, 128, 245, 0.38);
-  background: rgba(79, 128, 245, 0.12);
+  color: #fff;
+  border-color: rgba(79, 128, 245, 0.70);
+  background: rgba(79, 128, 245, 1);
   position: relative;
   overflow: visible;
 }
 #nextBtn:hover {
-  color: #fff;
-  background: rgba(79, 128, 245, 0.30);
-  border-color: rgba(79, 128, 245, 0.60);
+  background: rgba(99, 145, 255, 1);
+  border-color: rgba(99, 145, 255, 1);
 }
 
 /* ── Pulse ring around next arrow ── */

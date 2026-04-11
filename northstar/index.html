@@ -69,12 +69,16 @@ nav {
   transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden;
   background: var(--bg);
-  background-image: radial-gradient(rgba(79,128,245,0.12) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 .slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
 .slide.exit-up { opacity: 0; transform: translateY(-28px); }
 .slide > * { position: relative; z-index: 1; }
+#slide-2 .slide2-imgs { position: absolute !important; right: 300px; top: 155px; display: flex; gap: 16px; align-items: flex-start; z-index: 2; }
+#slide-3 .slide3-imgs { position: absolute !important; left: 80px; top: 100px; display: flex; gap: 12px; align-items: flex-start; z-index: 2; padding-right: 40px; }
+#slide-3 { justify-content: flex-start !important; padding-top: 100px !important; }
+#slide-4 .card { background: rgba(255,255,255,0.3); }
 
 /* light mode */
 .slide-light {
@@ -86,15 +90,22 @@ nav {
   --text-muted: #7a90a8;
   background-color: var(--bg);
   background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-size: 30px 30px;
 }
 .slide-dots { background-image: none; }
-.slide-grid {
-  background-image:
-    linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px);
-  background-size: 18px 18px;
+.slide-grid { background-image: none; }
+.slide-grid::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px); background-size: 18px 18px; pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  mask-composite: add;
+  animation: gridScan 8s ease-in-out infinite;
 }
+#slide-9.slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.22) 1px, transparent 1px); }
+#slide-10.slide-grid::after, #slide-11.slide-grid::after { background-image: linear-gradient(rgba(79,128,245,0.20) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.20) 1px, transparent 1px); }
+@keyframes gridScan { 0% { --scan: -10%; } 100% { --scan: 110%; } }
+@property --scan { syntax: '<percentage>'; inherits: false; initial-value: -10%; }
+html.light .slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px); }
 .layout-vc { justify-content: center; padding-top: 40px; }
 
 /* ─── TYPOGRAPHY ─── */
@@ -178,6 +189,8 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounceArrow { 0%, 100% { transform: translateX(0); } 55% { transform: translateX(7px); } }
+.arrow-bounce { animation: bounceArrow 1.4s ease-in-out infinite; }
 @keyframes subtlePop { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
 @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes agendaPulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.6); } }
@@ -191,11 +204,11 @@ html.light .nav-btn.active { background: var(--accent); color: #fff; }
 html.light .slide { background-color: var(--bg); background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px); }
 
 /* ─── COVER ─── */
-#slide-1 { display: grid; grid-template-columns: 46% 1fr; grid-template-rows: 1fr; padding: 0; }
-.cover-left { padding: 80px 48px 60px 80px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
-.cover-right { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 40px 40px 40px 20px; }
-.cover-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, transparent 30%); z-index: 1; }
-.cover-right img { display: block; max-height: 90%; width: auto; border-radius: 12px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); position: relative; z-index: 2; }
+#slide-1 { display: grid; grid-template-columns: 1fr 70%; grid-template-rows: 1fr; padding: 0; }
+.cover-left { padding: 80px 100px 60px 48px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+.cover-right { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 40px 16px 40px 16px; }
+.cover-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to left, var(--bg) 0%, transparent 30%); z-index: 1; }
+.cover-right img { display: block; max-height: 74.25%; max-width: 82.5%; width: auto; border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); position: relative; z-index: 2; clip-path: inset(2px 0 2px 0 round 24px); }
 .instacart-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 28px; }
 .instacart-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
 
@@ -216,7 +229,8 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
 
 /* slide-specific tweaks */
 #slide-4 .bullet-list li::before { background: #000; }
-#slide-5 { justify-content: center !important; padding-top: 40px !important; }
+#slide-4 { padding-top: 72px !important; }
+#slide-5 { justify-content: flex-start !important; padding-top: 72px !important; }
 .mobile-gate {
   display: none;
   position: fixed; inset: 0; z-index: 9999;
@@ -328,7 +342,6 @@ html.presenter-mode #presenter-ui { display:flex; }
     <!-- Shopper Northstar — expanded (active) -->
     <div class="nav-project" data-project="northstar" data-state="expanded">
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
         <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
         <button class="nav-btn" onclick="goToSection('system')">System</button>
         <button class="nav-btn" onclick="goToSection('components')">Transformation</button>
@@ -352,9 +365,13 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-1" data-section="intro">
+<div class="slide slide-dots" id="slide-1" data-section="problem">
   <canvas class="dots-canvas" id="canvas-1"></canvas>
-  <div class="cover-glow" style="top:-10%;right:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+  <div class="cover-glow" style="top:-10%;left:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+
+  <div class="cover-right">
+    <img src="images/Northstar.gif" alt="Northstar shopper app mockup">
+  </div>
 
   <div class="cover-left">
     <div class="instacart-badge">
@@ -392,59 +409,47 @@ html.presenter-mode #presenter-ui { display:flex; }
       <span class="tag green" style="margin-left:8px">2024</span>
     </div>
   </div>
-
-  <div class="cover-right">
-    <img src="images/Northstar.gif" alt="Northstar shopper app mockup">
-  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
      SLIDE 2 — CONTEXT
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-2" data-section="intro">
+<div class="slide slide-dots layout-vc" id="slide-2" data-section="problem">
   <canvas class="dots-canvas" id="canvas-2"></canvas>
   <span class="overline">Context & Goal</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:660px">
     Shoppers needed a more cohesive, human app experience
   </h2>
   <div class="divider"></div>
-  <div class="grid-2" style="margin-top:8px;flex:1;gap:28px;align-items:start">
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-          <div class="icon-box purple">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <span class="card-label purple">Goal</span>
+  <div style="margin-top:8px;max-width:520px;display:flex;flex-direction:column;gap:16px">
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
-        <div style="font-size:clamp(18px,2.2vw,26px);font-family:'Hepta Slab',serif;font-weight:400;color:var(--text);line-height:1.3;margin-bottom:14px">
-          Reduce cognitive load, improve delight
-        </div>
-        <ul class="bullet-list purple">
-          <li>Give shoppers confidence at every step of the job</li>
-          <li>Surface meaningful, actionable performance data</li>
-          <li>Celebrate milestones to drive long-term retention</li>
-          <li>Unify 3 pods' work into a single cohesive system</li>
-        </ul>
+        <span class="card-label purple">Goal</span>
       </div>
-      <div style="display:flex;gap:12px">
-        <div class="metric-card" style="flex:1;text-align:center">
-          <div class="metric-number purple">3</div>
-          <div class="metric-label">product pods unified</div>
-        </div>
-        <div class="metric-card" style="flex:1;text-align:center">
-          <div class="metric-number green">+8%</div>
-          <div class="metric-label">shopper satisfaction</div>
-        </div>
+      <div style="font-size:clamp(18px,2.2vw,26px);font-family:'Hepta Slab',serif;font-weight:400;color:var(--text);line-height:1.3;margin-bottom:14px">
+        Reduce cognitive load, improve delight
       </div>
+      <ul class="bullet-list purple">
+        <li>Give shoppers confidence at every step of the job</li>
+        <li>Surface meaningful, actionable performance data</li>
+        <li>Celebrate milestones to drive long-term retention</li>
+      </ul>
     </div>
-    <div style="display:flex;gap:16px;align-items:flex-start;justify-content:center">
-      <div class="uploaded-img-wrap" style="flex:1;max-width:200px;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
-        <img src="images/slide2_img_11.png" alt="Shopper app screen">
-      </div>
-      <div class="uploaded-img-wrap" style="flex:1;max-width:200px;margin-top:28px;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
-        <img src="images/slide2_img_12.png" alt="Shopper app screen">
-      </div>
+    <div class="metric-card" style="text-align:center">
+      <div class="metric-number green">+8%</div>
+      <div class="metric-label">shopper satisfaction</div>
+    </div>
+  </div>
+
+  <div class="slide2-imgs">
+    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+      <img src="images/39.png" alt="Shopper app screen">
+    </div>
+    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;margin-top:28px;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+      <img src="images/41.png" alt="Shopper app screen">
     </div>
   </div>
 </div>
@@ -452,13 +457,15 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 3 — CHALLENGE
 ══════════════════════════════════════════════════ -->
-<div class="slide layout-vc" id="slide-3" data-section="problem">
-  <span class="overline red">Challenge</span>
-  <h2 style="max-width:620px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Three pain points stalling shopper satisfaction
-  </h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+<div class="slide slide-dots layout-vc" id="slide-3" data-section="problem">
+  <div style="margin-left:720px;max-width:580px;min-height:420px;display:flex;flex-direction:column;justify-content:flex-end">
+    <span class="overline red">Challenge</span>
+    <h2 style="font-size:40px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+      Three pain points stalling shopper satisfaction
+    </h2>
+    <div class="divider"></div>
+  </div>
+  <div class="grid-3" style="margin-top:128px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
@@ -468,11 +475,8 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
       <h3 style="margin-bottom:10px">Fragmented app</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Multiple disconnected surfaces forced shoppers to context-switch constantly, increasing cognitive overhead on every batch.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
-        <img src="images/slide3_img_9.png" alt="Fragmented app screen" style="width:100%;height:100%;object-fit:cover">
-      </div>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -481,11 +485,8 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
       <h3 style="margin-bottom:10px">High cognitive load</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Overwhelming information density with no clear hierarchy. Shoppers — especially new ones — felt lost and made more errors.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
-        <img src="images/slide3_img_10.png" alt="High cognitive load screen" style="width:100%;height:100%;object-fit:cover">
-      </div>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -494,10 +495,12 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
       <h3 style="margin-bottom:10px">No guidance for complex tasks</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Shoppers faced complex scenarios — substitutions, multi-store batches, customer issues — with no in-app guidance or support.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;flex:1">
-        <img src="images/slide3_img_11.png" alt="No guidance screen" style="width:100%;height:100%;object-fit:cover">
-      </div>
     </div>
+  </div>
+  <div class="slide3-imgs">
+    <img src="images/0.png" style="width:204px;height:420px;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin-top:0">
+    <img src="images/1.png" style="width:204px;height:420px;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin-top:70px">
+    <img src="images/2.png" style="width:204px;height:420px;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin-top:35px">
   </div>
 </div>
 
@@ -505,14 +508,14 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 4 — INSIGHTS (light)
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-light slide-grid" id="slide-4" data-section="problem">
-  <div class="grid-2" style="gap:36px;align-items:center;flex:1">
-    <div>
-      <span class="overline">Research</span>
-      <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">What shoppers told us</h2>
-      <div class="divider"></div>
-      <p class="subtitle" style="margin-bottom:20px">Qualitative sessions, diary studies, and data analysis across thousands of active shoppers.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15)">
-        <img src="images/slide4_img_10.png" alt="Research synthesis" style="width:100%;display:block">
+  <span class="overline">Research</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:20px">What shoppers told us</h2>
+  <div class="divider" style="margin:0"></div>
+  <p class="subtitle" style="margin-top:20px;margin-bottom:-52px">Qualitative sessions, diary studies, and data analysis across thousands of active shoppers.</p>
+  <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-100px">
+    <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0">
+        <img src="images/slide4_img_10.png" alt="Research synthesis" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -551,14 +554,18 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 5 — STRATEGY
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-light" id="slide-5" data-section="problem">
+<div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
+  <canvas class="dots-canvas" id="canvas-5"></canvas>
   <span class="overline purple">Strategy</span>
-  <h2 style="max-width:680px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Three design principles that guided every decision</h2>
-  <div class="divider"></div>
-  <div class="uploaded-img-wrap" style="margin-top:12px;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.12)">
-    <img src="images/slide5_img_19.png" alt="Strategy overview" style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top">
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:80px">Three design principles that guided every decision</h2>
+  <div style="display:flex;justify-content:space-evenly;margin-top:0">
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/LFW-store info.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/shopping-to do.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/prepare to shop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/Frame 2147204126 1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
   </div>
-  <div class="grid-3" style="margin-top:16px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+  <div class="grid-3" style="margin-top:80px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
     <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box blue">
@@ -566,8 +573,8 @@ html.presenter-mode #presenter-ui { display:flex; }
         </div>
         <span class="card-label" style="font-size:10px">Principle 01</span>
       </div>
-      <h3 style="font-size:16px;margin-bottom:8px">Human touch</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Shoppers are people, not productivity metrics. Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
+      <h3 style="font-size:16px;margin-bottom:6px">Human touch</h3>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
     </div>
     <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -576,8 +583,8 @@ html.presenter-mode #presenter-ui { display:flex; }
         </div>
         <span class="card-label purple" style="font-size:10px">Principle 02</span>
       </div>
-      <h3 style="font-size:16px;margin-bottom:8px">Guidance</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Surface the right information at the right moment. Reduce decision fatigue by providing clear, contextual cues for complex tasks.</p>
+      <h3 style="font-size:16px;margin-bottom:6px">Guidance</h3>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Surface the right information at the right moment with clear, contextual cues.</p>
     </div>
     <div class="card" style="border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -586,8 +593,8 @@ html.presenter-mode #presenter-ui { display:flex; }
         </div>
         <span class="card-label green" style="font-size:10px">Principle 03</span>
       </div>
-      <h3 style="font-size:16px;margin-bottom:8px">System cohesion</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Three pods, one experience. Align cross-functional work around shared design language, patterns, and decisions to reduce redundancy.</p>
+      <h3 style="font-size:16px;margin-bottom:6px">System cohesion</h3>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Three pods, one experience. Shared design language, patterns, and decisions.</p>
     </div>
   </div>
 </div>
@@ -595,61 +602,59 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 6 — KEY CONCEPTS
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-6" data-section="system">
+<div class="slide slide-dots" id="slide-6" data-section="system">
   <span class="overline purple">Key Concepts</span>
   <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Two pillars that drive the redesign</h2>
   <div class="divider"></div>
-  <div class="grid-2" style="flex:1;margin-top:10px;gap:24px">
+  <div style="display:flex;gap:40px;margin-top:10px;align-items:start">
 
     <!-- Guidance & Education -->
-    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05);display:flex;flex-direction:row;gap:20px;align-items:flex-start">
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05);flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+      <div style="flex:1;padding:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box blue">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           </div>
           <span class="card-label">Guidance & Education</span>
         </div>
-        <h3 style="margin-bottom:12px">Shopper confidence & efficiency</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:16px">In-context education and timely prompts help shoppers make better decisions faster — reducing errors and handling time on complex batches.</p>
+        <h3 style="margin-bottom:10px">Shopper confidence & efficiency</h3>
         <ul class="bullet-list" style="gap:8px">
           <li>Contextual toasts for difficult scenarios</li>
           <li>Step-by-step substitution guidance</li>
           <li>Proactive alerts for store-specific issues</li>
         </ul>
-        <div style="margin-top:16px">
+        <div style="margin-top:12px">
           <span class="tag" style="font-size:10px">↑ Shopper confidence</span>
           <span class="tag" style="margin-left:8px;font-size:10px">↑ Efficiency</span>
         </div>
       </div>
-      <div class="uploaded-img-wrap" style="width:120px;flex-shrink:0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
-        <img src="images/slide6_img_9.png" alt="Guidance concept" style="width:100%;display:block">
+      <div style="width:260px;flex-shrink:0">
+        <img src="images/slide6_img_9.png" alt="Guidance concept" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
 
     <!-- Human Touch -->
-    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);display:flex;flex-direction:row;gap:20px;align-items:flex-start">
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.2s both">
+      <div style="flex:1;padding:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box purple">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
           <span class="card-label purple">Human Touch</span>
         </div>
-        <h3 style="margin-bottom:12px">Higher shopper motivation</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:16px">Genuine recognition and meaningful milestones make shoppers feel valued. Celebrating tenure and performance drives long-term engagement.</p>
+        <h3 style="margin-bottom:10px">Higher shopper motivation</h3>
         <ul class="bullet-list purple" style="gap:8px">
           <li>Shopping anniversary celebrations</li>
           <li>Earnings dashboard with trend insights</li>
           <li>Objective, outcome-based performance reviews</li>
         </ul>
-        <div style="margin-top:16px">
+        <div style="margin-top:12px">
           <span class="tag purple" style="font-size:10px">↑ Motivation</span>
           <span class="tag green" style="margin-left:8px;font-size:10px">↑ Retention</span>
         </div>
       </div>
-      <div class="uploaded-img-wrap" style="width:120px;flex-shrink:0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
-        <img src="images/slide6_img_10.png" alt="Human touch concept" style="width:100%;display:block">
+      <div style="width:260px;flex-shrink:0">
+        <img src="images/slide6_img_10.png" alt="Human touch concept" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
   </div>
@@ -658,12 +663,17 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 7 — DESIGN SYSTEM
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-7" data-section="system">
-  <span class="overline purple">North Star Design System</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Unified 3 pods' work into a single cohesive system</h2>
-  <div class="divider"></div>
-  <div style="display:flex;gap:28px;flex:1;margin-top:12px;align-items:flex-start">
-    <div style="display:flex;flex-direction:column;gap:14px;width:280px;flex-shrink:0">
+<div class="slide slide-dots" id="slide-7" data-section="system" style="background:#000">
+  <!-- Full-bleed right panel image -->
+  <div style="position:absolute;right:0;top:0;bottom:0;width:46%;display:flex;align-items:center;justify-content:center;animation:subtlePop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <img src="images/system.jpg" alt="North Star Design System" style="width:90%;height:auto;display:block;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+  </div>
+  <!-- Left content -->
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:600px">
+    <span class="overline purple">North Star Design System</span>
+    <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:600px">Unified 3 pods' work into a single cohesive system</h2>
+    <div class="divider"></div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:12px">
       <div class="card" style="border-color:rgba(79,128,245,0.25)">
         <div class="card-label" style="margin-bottom:8px">What we solved</div>
         <ul class="bullet-list" style="gap:8px">
@@ -681,307 +691,250 @@ html.presenter-mode #presenter-ui { display:flex; }
         </ul>
       </div>
     </div>
-    <div class="uploaded-img-wrap" style="flex:1;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:subtlePop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-      <img src="images/slide7_img_9.png" alt="North Star Design System" style="width:100%;display:block">
-    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 8 — FEATURES
-══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-8" data-section="system">
-  <span class="overline">Features</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">A cohesive suite of tools for modern shoppers</h2>
-  <div class="divider"></div>
-  <div style="display:flex;gap:20px;flex:1;margin-top:12px;align-items:stretch">
-    <!-- Left: large hero screen -->
-    <div style="flex:1.2;display:flex;flex-direction:column;gap:14px">
-      <div class="uploaded-img-wrap" style="flex:1;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.5)">
-        <img src="images/slide8_img_3.png" alt="Feature overview" style="width:100%;height:100%;object-fit:cover;display:block">
-      </div>
-    </div>
-    <!-- Right: grid of screens -->
-    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
-        <img src="images/slide8_img_4.png" alt="Feature screen" style="width:100%;display:block">
-      </div>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
-        <img src="images/slide8_img_5.png" alt="Feature screen" style="width:100%;display:block">
-      </div>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)">
-        <img src="images/slide8_img_6.png" alt="Feature screen" style="width:100%;display:block">
-      </div>
-      <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:10px">
-        <div class="card-label purple" style="font-size:10px">Live in app</div>
-        <h3 style="font-size:15px">Education, metrics & celebrations</h3>
-        <p style="font-size:12px;color:var(--text-dim);line-height:1.55">All three features shipped and live in the Instacart Shopper App.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 9 — IMPLEMENTATION
+     SLIDE 8 — IMPLEMENTATION
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-9" data-section="system">
+<div class="slide slide-dots" id="slide-8" data-section="system" style="justify-content:center">
+  <canvas class="dots-canvas" id="canvas-8"></canvas>
   <span class="overline">Implementation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three features shipped in the first sprint</h2>
   <div class="divider"></div>
-  <div class="grid-3" style="flex:1;margin-top:16px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both;align-items:stretch">
+  <div style="display:flex;gap:32px;margin-top:46px;align-items:center">
+    <!-- Circular image -->
+    <div style="display:flex;justify-content:center;align-items:center;flex-shrink:0">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0">
+        <img src="images/slide9_img_5.png" alt="Education toasts" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+    </div>
+    <div class="grid-3" style="flex:1;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both;align-items:stretch">
     <div class="card" style="border-color:rgba(79,128,245,0.25);display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="icon-box blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <span class="card-label">Education toasts</span>
         </div>
-        <span class="card-label">Education toasts</span>
+        <span class="tag green">Shipped</span>
       </div>
-      <h3 style="margin-bottom:10px;font-size:17px">Contextual guidance, live in app</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Timely toasts that surface at the right moment — during store entry, substitution scenarios, and batch completion — to reduce errors and boost confidence.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden;max-height:180px">
-        <img src="images/slide9_img_5.png" alt="Education toasts" style="width:100%;object-fit:cover">
-      </div>
-      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+      <h3 style="font-size:17px">Contextual guidance, live in app</h3>
     </div>
     <div class="card" style="border-color:rgba(124,90,245,0.25);display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="icon-box purple">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <span class="card-label purple">Dashboard refresh</span>
         </div>
-        <span class="card-label purple">Dashboard refresh</span>
+        <span class="tag green">Shipped</span>
       </div>
-      <h3 style="margin-bottom:10px;font-size:17px">Meaningful stats, surfaced clearly</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Redesigned earnings and performance dashboard that surfaces trends, streaks, and goal progress — replacing an opaque, static view with dynamic, actionable data.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
-        <div style="background:rgba(124,90,245,0.08);border:1px solid rgba(124,90,245,0.2);border-radius:8px;padding:12px;text-align:center">
-          <div style="font-size:22px;font-weight:800;color:var(--accent2)">+12%</div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">dashboard engagement</div>
-        </div>
-        <div style="background:rgba(61,186,126,0.08);border:1px solid rgba(61,186,126,0.2);border-radius:8px;padding:12px;text-align:center">
-          <div style="font-size:22px;font-weight:800;color:var(--green)">+5%</div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">batch acceptance</div>
-        </div>
-      </div>
-      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+      <h3 style="font-size:17px">Meaningful stats, surfaced clearly</h3>
     </div>
     <div class="card" style="border-color:rgba(245,166,35,0.25);display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box amber">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="icon-box amber">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="card-label amber">Shopping anniversary</span>
         </div>
-        <span class="card-label amber">Shopping anniversary</span>
+        <span class="tag green">Shipped</span>
       </div>
-      <h3 style="margin-bottom:10px;font-size:17px">Yearly milestone feature</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">A personal celebration for shopper tenure milestones — surfacing stats, highlights, and a genuine "thank you" at each anniversary. Directly addressed top-shopper churn risk.</p>
-      <div style="margin-top:16px;padding:14px;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:8px">
-        <div style="font-size:11px;color:var(--amber);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Impact</div>
-        <div style="font-size:13px;color:var(--text-dim)">Improved retention among top-tier "Diamond" shoppers</div>
-      </div>
-      <span class="tag green" style="margin-top:14px;align-self:flex-start">Shipped</span>
+      <h3 style="font-size:17px">Yearly milestone feature</h3>
     </div>
+  </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 10 — EX. TRANSFORMATION: ONBOARDING
+     SLIDE 9 — EX. TRANSFORMATION: ONBOARDING
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-10" data-section="components" style="padding-top:60px">
+<div class="slide slide-light slide-dots slide-grid" id="slide-9" data-section="components" style="padding:20px 24px 10px;justify-content:center">
   <span class="overline amber">Experience Transformation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Onboarding</h2>
   <div class="divider"></div>
-  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
-    <!-- Before -->
-    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="tag red" style="font-size:10px">Before</span>
-      </div>
+  <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
+    <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
+      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Awkward pop-ups</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Generic pop-ups displaying in untimely moments — interrupting workflows, missed by shoppers, adding friction instead of value.</p>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
-        <img src="images/slide10_img_15.png" alt="Before: awkward pop-ups" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(255,99,50,0.04)">
-      </div>
     </div>
-
-    <!-- Arrow -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <div style="width:300px;border-radius:20px;overflow:hidden;flex-shrink:0">
+      <img src="images/9/1.png" style="width:100%;display:block">
     </div>
-
-    <!-- After -->
-    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="tag green" style="font-size:10px">After</span>
-      </div>
+    <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+    <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
+      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Timely lock-screen cards</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Live Notifications surfaced on the lock screen based on geolocation — appearing at exactly the right moment, before the shopper even opens the app.</p>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
-        <img src="images/slide10_img_16.png" alt="After: timely lock-screen cards" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(61,186,126,0.04)">
-      </div>
     </div>
-
-    <!-- Full context image -->
-    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
-      <img src="images/slide10_img_3.png" alt="Onboarding transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    <div style="width:405px;border-radius:20px;overflow:hidden;flex-shrink:0">
+      <img src="images/9/2.png" style="width:100%;display:block">
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 11 — EX. TRANSFORMATION: METRICS
+     SLIDE 10 — EX. TRANSFORMATION: METRICS
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-11" data-section="components" style="padding-top:60px">
+<div class="slide slide-dots slide-grid" id="slide-10" data-section="components" style="padding:20px 24px 10px;justify-content:center">
   <span class="overline amber">Experience Transformation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Metrics</h2>
   <div class="divider"></div>
-  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
-    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
+    <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Generic celebratory toasts</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Static, one-size-fits-all congratulations with no data or context. Shoppers couldn't understand what drove their earnings or how to improve.</p>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
-        <img src="images/slide11_img_4.png" alt="Before: generic toasts" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(255,99,50,0.04)">
-      </div>
     </div>
-
-    <div style="flex-shrink:0">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <div style="width:240px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
+      <img src="images/10/1.png" style="width:100%;display:block">
     </div>
-
-    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
+    <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+    <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Dashboards tied to earnings</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A dynamic dashboard showing trends, streaks, and earnings breakdowns. Shoppers can now understand their performance and take action to improve it.</p>
-      <div class="uploaded-img-wrap" style="border-radius:10px;overflow:hidden;flex:1;max-height:220px">
-        <img src="images/slide11_img_5.png" alt="After: earnings dashboard" style="width:100%;height:100%;object-fit:contain;display:block;background:rgba(61,186,126,0.04)">
-      </div>
     </div>
-
-    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
-      <img src="images/slide11_img_3.png" alt="Metrics transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    <div style="width:300px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
+      <img src="images/10/2.png" style="width:100%;display:block">
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 12 — EX. TRANSFORMATION: FEEDBACK
+     SLIDE 11 — EX. TRANSFORMATION: FEEDBACK
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-12" data-section="components" style="padding-top:60px">
+<div class="slide slide-dots slide-grid" id="slide-11" data-section="components" style="padding:20px 24px 10px;justify-content:center">
   <span class="overline amber">Experience Transformation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Feedback</h2>
   <div class="divider"></div>
-  <div style="display:flex;gap:24px;flex:1;margin-top:16px;align-items:center">
-    <div class="ba-card ba-before" style="flex:1;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
+    <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Subjective star ratings</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A single 1–5 star rating per order, highly susceptible to customer bias. No context, no explanation — shoppers couldn't appeal or learn from feedback.</p>
-      <div style="margin-top:auto;padding:16px;background:rgba(255,99,50,0.06);border:1px solid rgba(255,99,50,0.2);border-radius:8px">
-        <div style="font-size:12px;color:var(--red);font-weight:600;margin-bottom:6px">Problem</div>
-        <div style="font-size:13px;color:var(--text-dim)">Top shoppers felt unfairly penalized by outlier reviews with no recourse</div>
-      </div>
     </div>
-
-    <div style="flex-shrink:0">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <div style="width:240px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
+      <img src="images/11/1.png" style="width:100%;display:block">
     </div>
-
-    <div class="ba-card ba-after" style="flex:1;display:flex;flex-direction:column;gap:14px">
+    <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+    <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Objective, outcome-based metrics</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Performance based on actual outcomes: on-time deliveries, substitution quality, item found rates. Fair, transparent, and actionable for every shopper.</p>
-      <div style="margin-top:auto;padding:16px;background:rgba(61,186,126,0.06);border:1px solid rgba(61,186,126,0.2);border-radius:8px">
-        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:6px">Outcome</div>
-        <div style="font-size:13px;color:var(--text-dim)">Improved trust and transparency. Reduced frustration among Diamond shoppers.</div>
-      </div>
     </div>
-
-    <div class="uploaded-img-wrap" style="flex:1.4;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-height:380px">
-      <img src="images/slide12_img_11.png" alt="Feedback transformation context" style="width:100%;height:100%;object-fit:cover;display:block">
+    <div style="width:300px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
+      <img src="images/11/2.png" style="width:100%;display:block">
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 13 — OUTCOMES
+     SLIDE 12 — OUTCOMES
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-13" data-section="impact" style="justify-content:center;padding-top:60px">
-  <canvas class="dots-canvas" id="canvas-13"></canvas>
+<div class="slide slide-dots" id="slide-12" data-section="impact" style="justify-content:center">
+  <canvas class="dots-canvas" id="canvas-12"></canvas>
   <span class="overline green">Outcomes</span>
-  <h2 style="max-width:600px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Measurable gains across satisfaction, earnings, and retention</h2>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:700px">Measurable gains across satisfaction, earnings, and retention</h2>
   <div class="divider"></div>
-  <div class="grid-3" style="margin-top:20px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="metric-card" style="text-align:center;border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
-      <div class="metric-number green" style="font-size:52px">+8%</div>
-      <div class="metric-label" style="font-size:14px;margin-top:10px">Shopper satisfaction</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Measured via post-batch surveys across 100K+ active shoppers</div>
+  <div class="grid-3" style="margin-top:20px">
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="icon-box" style="background:rgba(61,186,126,0.12)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <span class="card-label green">Satisfaction</span>
+      </div>
+      <div class="metric-number green" style="font-size:56px;line-height:1;margin-bottom:8px">+8%</div>
+      <h3 style="font-size:15px;min-height:60px">Shopper satisfaction measured via post-batch surveys across 100K+ active shoppers</h3>
     </div>
-    <div class="metric-card" style="text-align:center;border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
-      <div class="metric-number accent" style="font-size:52px">+5%</div>
-      <div class="metric-label" style="font-size:14px;margin-top:10px">Batch acceptance rate</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Shoppers accepting more batches after dashboard and guidance improvements</div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="card-label">Batch acceptance</span>
+      </div>
+      <div class="metric-number accent" style="font-size:56px;line-height:1;margin-bottom:8px">+5%</div>
+      <h3 style="font-size:15px;min-height:60px">Shoppers accepting more batches after dashboard and guidance improvements</h3>
     </div>
-    <div class="metric-card" style="text-align:center;border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
-      <div class="metric-number purple" style="font-size:52px">↑</div>
-      <div class="metric-label" style="font-size:14px;margin-top:10px">Diamond shopper retention</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4">Reduced churn among top-tier shoppers — the most impactful cohort for platform health</div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <span class="card-label purple">Diamond retention</span>
+      </div>
+      <div class="metric-number purple" style="font-size:56px;line-height:1;margin-bottom:8px">↑</div>
+      <h3 style="font-size:15px;min-height:60px">Reduced churn among top-tier shoppers — most impactful cohort for platform health</h3>
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 14 — LEARNINGS
+     SLIDE 13 — LEARNINGS
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-light slide-grid" id="slide-14" data-section="impact">
+<div class="slide slide-grid slide-dots" id="slide-13" data-section="impact" style="padding-top:56px">
+  <canvas class="dots-canvas" id="canvas-13"></canvas>
   <span class="overline">Learnings</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three lessons that changed how we work</h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="flex:1;margin-top:16px;align-items:stretch">
-    <div class="card" style="display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-        <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <span class="card-label">Alignment</span>
-      </div>
-      <h3 style="margin-bottom:12px;font-size:17px">Align early across pods and leadership</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Cross-pod alignment from day one prevented duplicated work and late-stage pivots. When leadership is involved early, decisions move faster and stick.</p>
-      <div class="uploaded-img-wrap" style="margin-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/slide14_img_12.png" alt="Alignment" style="width:100%;display:block">
+  <div class="divider" style="margin:0"></div>
+  <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-60px">
+    <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);">
+        <img src="images/slide14_img_12.png" alt="Alignment" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
-    <div class="card" style="display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-        <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <span class="overline" style="margin-bottom:0">Key Lessons</span>
+      <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <div class="icon-box blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="card-label">Alignment</span>
         </div>
-        <span class="card-label purple">Process</span>
+        <h3 style="font-size:17px">Align early across pods and leadership</h3>
       </div>
-      <h3 style="margin-bottom:12px;font-size:17px">Design with content & research from day one</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Embedding content design and research in the process from the start — not as a review at the end — produced better flows and avoided costly late-stage rewrites.</p>
-      <div style="margin-top:auto;padding:16px;background:rgba(124,90,245,0.06);border:1px solid rgba(124,90,245,0.2);border-radius:8px;margin-top:16px">
-        <p style="font-size:12px;color:var(--accent2);font-style:italic;line-height:1.5">"Content changes late in design mean layout changes, which mean engineering changes."</p>
-      </div>
-    </div>
-    <div class="card" style="display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-        <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <div class="icon-box purple">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <span class="card-label purple">Process</span>
         </div>
-        <span class="card-label green">Quality</span>
+        <h3 style="font-size:17px">Design with content & research from day one</h3>
       </div>
-      <h3 style="margin-bottom:12px;font-size:17px">Balance usability and accuracy to earn trust</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;flex:1">Simplifying the UI doesn't mean hiding complexity. Shoppers need to trust the data as much as they need it to be easy to read. Both are non-negotiable.</p>
-      <div style="margin-top:auto;padding:16px;background:rgba(61,186,126,0.06);border:1px solid rgba(61,186,126,0.2);border-radius:8px;margin-top:16px">
-        <p style="font-size:12px;color:var(--green);font-style:italic;line-height:1.5">Cross-functional input → better mental models</p>
+      <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <div class="icon-box green">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <span class="card-label green">Quality</span>
+        </div>
+        <h3 style="font-size:17px">Balance usability and accuracy to earn trust</h3>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 15 — TAKEAWAY
+     SLIDE 14 — TAKEAWAY
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-15" data-section="impact" style="display:grid;grid-template-columns:52% 1fr;padding:0">
-  <canvas class="dots-canvas" id="canvas-15"></canvas>
+<div class="slide slide-dots" id="slide-14" data-section="impact" style="display:grid;grid-template-columns:52% 1fr;padding:0">
+  <canvas class="dots-canvas" id="canvas-14"></canvas>
   <div class="cover-glow" style="top:-10%;right:40%;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.15) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
 
   <div style="padding:80px 48px 60px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
@@ -996,11 +949,6 @@ html.presenter-mode #presenter-ui { display:flex; }
     <p class="body-text" style="margin-top:14px;max-width:420px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both;line-height:1.65">
       The Northstar gave 3 pods a shared direction — translating into shipped features, measurable outcomes, and a foundation for everything the Shopper App becomes next.
     </p>
-    <ul class="bullet-list purple" style="margin-top:24px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both">
-      <li>+8% shopper satisfaction in post-launch survey</li>
-      <li>+5% batch acceptance, driven by dashboard redesign</li>
-      <li>Improved Diamond shopper retention via anniversary feature</li>
-    </ul>
     <div style="margin-top:28px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
       <span class="tag" style="margin-left:0">Product Design</span>
       <span class="tag green" style="margin-left:8px">2024</span>
@@ -1009,7 +957,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 
   <div style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:40px 60px 40px 20px;z-index:2">
     <div style="position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 25%);z-index:1;pointer-events:none"></div>
-    <img src="images/slide15_img_10.png" alt="Northstar app vision" style="display:block;max-height:88%;width:auto;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,0.65);position:relative;z-index:2">
+    <img src="images/takeaway.png" alt="Northstar app vision" style="display:block;max-height:calc(70% - 4px);max-width:calc(100% - 4px);width:auto;background:#000;border-radius:26px;box-shadow:inset 0 0 0 2px #000,0 24px 80px rgba(0,0,0,0.65);position:relative;z-index:2">
   </div>
 </div>
 
@@ -1020,52 +968,202 @@ html.presenter-mode #presenter-ui { display:flex; }
 function initDotCanvas(canvasId) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
-  const slide = canvas.parentElement;
+  const slide = canvas.closest('.slide');
   const ctx = canvas.getContext('2d');
-  function resize() { canvas.width = slide.offsetWidth; canvas.height = slide.offsetHeight; }
-  resize();
-  const spacing = 42;
-  let t = 0;
+  const SPACING = 28;
+  let w, h, t = 0, raf = null;
+  let bursts = [];
+
+  function resize() {
+    const r = slide.getBoundingClientRect();
+    canvas.width = w = r.width;
+    canvas.height = h = r.height;
+  }
+
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const cols = Math.ceil(canvas.width / spacing) + 1;
-    const rows = Math.ceil(canvas.height / spacing) + 1;
-    const bandAngle = Math.PI / 4;
-    const bandWidth = canvas.width * 0.35;
-    const bandSpeed = 0.4;
-    const bandPos = ((t * bandSpeed) % (canvas.width * 1.4)) - canvas.width * 0.2;
-    for (let r = 0; r < rows; r++) {
+    t += 0.018;
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.62, cy = h * 0.44;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+    const isLight = document.documentElement.classList.contains('light');
+
+    bursts = bursts.filter(b => b.age < b.maxAge);
+    bursts.forEach(b => b.age += 0.018);
+
+    for (let r2 = 0; r2 < rows; r2++) {
       for (let c = 0; c < cols; c++) {
-        const x = c * spacing, y = r * spacing;
-        const proj = x * Math.cos(bandAngle) + y * Math.sin(bandAngle);
-        const dist = Math.abs(proj - bandPos);
-        const wave = Math.max(0, 1 - dist / bandWidth);
-        const alpha = 0.08 + wave * 0.22;
-        const radius = 1.2 + wave * 1.4;
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r2 * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b2 = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        let wave = a * 0.45 + b2 * 0.3 + c2 * 0.25;
+        for (const burst of bursts) {
+          const burstDist = Math.abs(dist - burst.age * 420);
+          if (burstDist < 55) wave += Math.cos((burstDist / 55) * Math.PI * 0.5) * (1 - burst.age / burst.maxAge) * 0.9;
+        }
+        const falloff = Math.pow(1 - norm, 1.2);
+        const opacity = (wave * 0.42 + 0.36) * falloff;
+        if (opacity < 0.04) continue;
+        const bright = Math.max(0, wave);
+        const rc = isLight ? Math.round(40 + bright * 60) : Math.round(79  + bright * 90);
+        const gc = isLight ? Math.round(70 - bright * 30) : Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.6 + wave * 1.2) * (0.5 + falloff * 0.7);
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(79,128,245,${alpha})`;
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(isLight ? 0.65 : 0.9, Math.abs(opacity))})`;
         ctx.fill();
       }
     }
-    t += 0.5;
-    requestAnimationFrame(draw);
+    raf = requestAnimationFrame(draw);
   }
-  draw();
-  window.addEventListener('resize', resize);
+
+  function start() { resize(); if (!raf) raf = requestAnimationFrame(draw); }
+  function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  setInterval(() => { if (slide.classList.contains('active')) bursts.push({ age: 0, maxAge: 1.8 }); }, 2800);
+  new MutationObserver(() => { slide.classList.contains('active') ? start() : stop(); }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  if (slide.classList.contains('active')) start();
+  window.addEventListener('resize', () => { if (raf) resize(); });
 }
-['canvas-1','canvas-2','canvas-13','canvas-15'].forEach(initDotCanvas);
+
+['canvas-1'].forEach(initDotCanvas);
+
+function initDotWaveCanvas(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const slide = canvas.closest('.slide');
+  const ctx = canvas.getContext('2d');
+  let raf = null, t = 0, w = 0, h = 0;
+  const isLight = slide.classList.contains('slide-light');
+  function resize() {
+    const r = slide.getBoundingClientRect();
+    canvas.width = w = r.width; canvas.height = h = r.height;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const sp = 42;
+    const cols = Math.ceil(w / sp) + 2;
+    const rows = Math.ceil(h / sp) + 2;
+    const bandT = t * 0.28;
+    const bandCenter = 0.5 + Math.sin(bandT) * 0.38;
+    for (let row = 0; row <= rows; row++) {
+      for (let col = 0; col <= cols; col++) {
+        const diag = (col / cols) * 0.65 + (1 - row / rows) * 0.35;
+        const w1 = Math.sin(diag * Math.PI * 5 - t * 1.1);
+        const w2 = Math.sin((col * 0.18 - row * 0.12) + t * 0.75);
+        const w3 = Math.sin(diag * Math.PI * 1.8 + t * 0.38);
+        const wave = w1 * 0.50 + w2 * 0.30 + w3 * 0.20;
+        const bandDist = Math.abs(diag - bandCenter);
+        const band = Math.max(0, 1 - bandDist / 0.22);
+        const bandGlow = band * band;
+        const dx = Math.sin(row * 0.22 + t * 0.55) * 2.8;
+        const dy = Math.cos(col * 0.18 + t * 0.48) * 2.8;
+        const x = col * sp + dx;
+        const y = row * sp + dy;
+        const baseR = 0.42 + (wave + 1) * 0.5 * 0.65;
+        const r2 = baseR + bandGlow * 1.35;
+        const baseA = isLight ? (0.10 + (wave + 1) * 0.5 * 0.20) : (0.055 + (wave + 1) * 0.5 * 0.14);
+        const alpha = Math.min(0.75, baseA + bandGlow * 0.55);
+        if (r2 < 0.25) continue;
+        const hueShift = bandGlow * 30;
+        ctx.beginPath();
+        ctx.arc(x, y, r2, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${225 + hueShift},82%,${62 + bandGlow * 14}%,${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+    }
+    t += 0.009;
+    raf = requestAnimationFrame(draw);
+  }
+  function start() { resize(); if (!raf) draw(); }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+  new MutationObserver(() => {
+    if (slide.classList.contains('active')) start(); else stop();
+  }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('resize', () => { if (slide.classList.contains('active')) resize(); });
+  if (slide.classList.contains('active')) start();
+}
+['canvas-2','canvas-5','canvas-8','canvas-13'].forEach(initDotWaveCanvas);
+
+// ═══════ ORGANIC DOT WAVE CANVAS (all .slide-dots slides except cover) ═══════
+(function(){
+  const cvs = document.createElement('canvas');
+  cvs.id = 'dot-wave-canvas';
+  cvs.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  let raf = null, t = 0, running = false;
+
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw(){
+    const W = cvs.width, H = cvs.height;
+    ctx.clearRect(0, 0, W, H);
+    const sp = 42;
+    const cols = Math.ceil(W / sp) + 2;
+    const rows = Math.ceil(H / sp) + 2;
+    const bandT = t * 0.28;
+    const bandCenter = 0.5 + Math.sin(bandT) * 0.38;
+    for(let row = 0; row <= rows; row++){
+      for(let col = 0; col <= cols; col++){
+        const diag = (col / cols) * 0.65 + (1 - row / rows) * 0.35;
+        const w1 = Math.sin(diag * Math.PI * 5 - t * 1.1);
+        const w2 = Math.sin((col * 0.18 - row * 0.12) + t * 0.75);
+        const w3 = Math.sin(diag * Math.PI * 1.8 + t * 0.38);
+        const wave = w1 * 0.50 + w2 * 0.30 + w3 * 0.20;
+        const bandDist = Math.abs(diag - bandCenter);
+        const band = Math.max(0, 1 - bandDist / 0.22);
+        const bandGlow = band * band;
+        const dx = Math.sin(row * 0.22 + t * 0.55) * 2.8;
+        const dy = Math.cos(col * 0.18 + t * 0.48) * 2.8;
+        const x = col * sp + dx;
+        const y = row * sp + dy;
+        const baseR = 0.42 + (wave + 1) * 0.5 * 0.65;
+        const r = baseR + bandGlow * 1.35;
+        const baseA = 0.055 + (wave + 1) * 0.5 * 0.14;
+        const alpha = Math.min(0.70, baseA + bandGlow * 0.50);
+        if(r < 0.25) continue;
+        const hueShift = bandGlow * 30;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${225 + hueShift},82%,${62 + bandGlow * 14}%,${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+    }
+    t += 0.009;
+    raf = requestAnimationFrame(draw);
+  }
+
+  function start(){ running=true; cvs.style.opacity='1'; if(!raf) draw(); }
+  function stop(){  running=false; cvs.style.opacity='0'; if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  new MutationObserver(()=>{
+    const on = !!document.querySelector('.slide-dots.active:not(.slide-cover)');
+    if(on && !running) start();
+    else if(!on && running) stop();
+  }).observe(document.body, {subtree:true, attributes:true, attributeFilter:['class']});
+
+  if(document.querySelector('.slide-dots.active:not(.slide-cover)')) start();
+})();
 
 // ─── NAVIGATION ───
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0, problem:2, system:5, components:9, impact:12 };
+const sections = { problem:0, system:5, components:8, impact:11 };
 
 function updateNav() {
   const section = slides[current].dataset.section;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const map = { intro:0, problem:1, system:2, components:3, impact:4 };
+  const map = { problem:0, system:1, components:2, impact:3 };
   document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;

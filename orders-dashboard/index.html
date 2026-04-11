@@ -71,8 +71,8 @@ nav {
   transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden;
   background: var(--bg);
-  background-image: radial-gradient(rgba(79,128,245,0.12) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
+  background-size: 30px 30px;
   background-position: 0 0;
 }
 .slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
@@ -101,7 +101,7 @@ nav {
   --text-muted: #7a90a8;
   background-color: var(--bg);
   background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-size: 30px 30px;
 }
 
 /* slide-dots: canvas replaces static grid */
@@ -109,19 +109,18 @@ nav {
   background-image: none;
 }
 
-/* slide-grid: fine line grid */
-.slide-grid {
-  background-image:
-    linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px);
-  background-size: 18px 18px;
-  animation: gridSweep 6s linear infinite;
+/* slide-grid: fine line grid with scanline sweep */
+.slide-grid { background-image: none; }
+.slide-grid::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px); background-size: 18px 18px; pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  mask-composite: add;
+  animation: gridScan 8s ease-in-out infinite;
 }
-
-@keyframes gridSweep {
-  0%   { background-position: 0 0; }
-  100% { background-position: 18px 18px; }
-}
+@keyframes gridScan { 0% { --scan: -10%; } 100% { --scan: 110%; } }
+@property --scan { syntax: '<percentage>'; inherits: false; initial-value: -10%; }
+html.light .slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px); }
 
 /* cover layout */
 .slide-cover {
@@ -844,7 +843,6 @@ html.presenter-mode #presenter-ui { display:flex; }
     <!-- Orders Dashboard — expanded (active) -->
     <div class="nav-project" data-project="orders" data-state="expanded">
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
         <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
         <button class="nav-btn" onclick="goToSection('system')">System</button>
         <button class="nav-btn" onclick="goToSection('components')">Features</button>
@@ -872,7 +870,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots slide-cover" id="slide-1" data-section="intro">
+<div class="slide slide-dots slide-cover" id="slide-1" data-section="problem">
   <canvas class="dots-canvas" id="canvas-1"></canvas>
   <div class="cover-glow" style="top:-10%;left:-10%"></div>
 
@@ -921,7 +919,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 2 — CONTEXT & GOAL
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-2" data-section="intro">
+<div class="slide slide-dots" id="slide-2" data-section="problem">
   <canvas class="dots-canvas" id="canvas-2"></canvas>
   <span class="overline">Context & Goal</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:640px">
@@ -984,7 +982,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 3 — CHALLENGE
 ══════════════════════════════════════════════════ -->
-<div class="slide layout-vc" id="slide-3" data-section="problem">
+<div class="slide slide-dots layout-vc" id="slide-3" data-section="problem">
   <span class="overline red">Challenge</span>
   <h2 style="max-width:600px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Three core pain points made order support nearly impossible
@@ -1137,7 +1135,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 6 — COMPETITIVE ANALYSIS
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-6" data-section="problem" style="justify-content:center">
+<div class="slide slide-dots" id="slide-6" data-section="problem" style="justify-content:center">
   <span class="overline purple">Competitive Analysis</span>
   <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Studied leaders across food delivery & logistics
@@ -1255,7 +1253,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
   <div style="flex:0 0 auto;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-end">
-    <img src="images/Slide10first.jpg.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
+    <img src="images/slide10/slide7part1.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
   </div>
 </div>
 
@@ -1265,7 +1263,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide slide-dots" id="slide-8" data-section="system" style="background:#242529;background-image:none;padding:0;flex-direction:row;transform:none">
   <canvas class="dots-canvas" id="canvas-8"></canvas>
   <div style="flex:0 0 55%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-start">
-    <img src="images/Slide10.Imagecenter.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
+    <img src="images/slide10/slide8part2.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
   </div>
   <div style="flex:1;padding:48px 80px 32px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
     <span class="overline" style="color:#FFB856">Strategy</span>
@@ -1308,7 +1306,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 9 — M1 KEY FEATURES
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-9" data-section="components">
+<div class="slide slide-dots" id="slide-9" data-section="components">
   <span class="overline">M1 Key Features</span>
   <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Milestone 1: Mastering the data
@@ -1447,7 +1445,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 12 — IMPLEMENTATION & ROLLOUT
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-12" data-section="components">
+<div class="slide slide-dots" id="slide-12" data-section="components">
   <span class="overline green">Implementation & Rollout</span>
   <h2 style="max-width:560px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Phased delivery for continuous impact
@@ -1572,7 +1570,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 14 — WHAT WE LEARNED
 ══════════════════════════════════════════════════ -->
-<div class="slide" id="slide-14" data-section="impact" style="justify-content:center">
+<div class="slide slide-dots" id="slide-14" data-section="impact" style="justify-content:center">
   <span class="overline amber">Retrospective</span>
   <h2 style="max-width:540px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     What we learned
@@ -1653,61 +1651,145 @@ html.presenter-mode #presenter-ui { display:flex; }
 function initDotCanvas(canvasId) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
-  const slide = canvas.parentElement;
+  const slide = canvas.closest('.slide');
   const ctx = canvas.getContext('2d');
+  const SPACING = 28;
+  let w, h, t = 0, raf = null;
+  let bursts = [];
 
   function resize() {
-    canvas.width = slide.offsetWidth;
-    canvas.height = slide.offsetHeight;
+    const r = slide.getBoundingClientRect();
+    canvas.width = w = r.width;
+    canvas.height = h = r.height;
   }
-  resize();
-
-  const spacing = 42;
-  let t = 0;
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const cols = Math.ceil(canvas.width / spacing) + 1;
-    const rows = Math.ceil(canvas.height / spacing) + 1;
-    const bandAngle = Math.PI / 4;
-    const bandWidth = canvas.width * 0.35;
-    const bandSpeed = 0.4;
-    const bandPos = ((t * bandSpeed) % (canvas.width * 1.4)) - canvas.width * 0.2;
+    t += 0.018;
+    ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.62, cy = h * 0.44;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+    const isLight = document.documentElement.classList.contains('light');
 
-    for (let r = 0; r < rows; r++) {
+    bursts = bursts.filter(b => b.age < b.maxAge);
+    bursts.forEach(b => b.age += 0.018);
+
+    for (let r2 = 0; r2 < rows; r2++) {
       for (let c = 0; c < cols; c++) {
-        const x = c * spacing;
-        const y = r * spacing;
-        const proj = x * Math.cos(bandAngle) + y * Math.sin(bandAngle);
-        const dist = Math.abs(proj - bandPos);
-        const wave = Math.max(0, 1 - dist / bandWidth);
-        const alpha = 0.08 + wave * 0.22;
-        const radius = 1.2 + wave * 1.4;
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r2 * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b2 = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        let wave = a * 0.45 + b2 * 0.3 + c2 * 0.25;
+        for (const burst of bursts) {
+          const burstDist = Math.abs(dist - burst.age * 420);
+          if (burstDist < 55) wave += Math.cos((burstDist / 55) * Math.PI * 0.5) * (1 - burst.age / burst.maxAge) * 0.9;
+        }
+        const falloff = Math.pow(1 - norm, 1.2);
+        const opacity = (wave * 0.42 + 0.36) * falloff;
+        if (opacity < 0.04) continue;
+        const bright = Math.max(0, wave);
+        const rc = isLight ? Math.round(40 + bright * 60) : Math.round(79  + bright * 90);
+        const gc = isLight ? Math.round(70 - bright * 30) : Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.6 + wave * 1.2) * (0.5 + falloff * 0.7);
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(79,128,245,${alpha})`;
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(isLight ? 0.65 : 0.9, Math.abs(opacity))})`;
         ctx.fill();
       }
     }
-    t += 0.5;
-    requestAnimationFrame(draw);
+    raf = requestAnimationFrame(draw);
   }
-  draw();
-  window.addEventListener('resize', resize);
+
+  function start() { resize(); if (!raf) raf = requestAnimationFrame(draw); }
+  function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  setInterval(() => { if (slide.classList.contains('active')) bursts.push({ age: 0, maxAge: 1.8 }); }, 2800);
+  new MutationObserver(() => { slide.classList.contains('active') ? start() : stop(); }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  if (slide.classList.contains('active')) start();
+  window.addEventListener('resize', () => { if (raf) resize(); });
 }
 
-['canvas-1','canvas-2','canvas-5','canvas-7','canvas-8','canvas-10','canvas-13','canvas-15'].forEach(initDotCanvas);
+['canvas-1'].forEach(initDotCanvas);
+
+// ═══════ ORGANIC DOT WAVE CANVAS (all .slide-dots slides except cover) ═══════
+(function(){
+  const cvs = document.createElement('canvas');
+  cvs.id = 'dot-wave-canvas';
+  cvs.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  let raf = null, t = 0, running = false;
+
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw(){
+    const W = cvs.width, H = cvs.height;
+    ctx.clearRect(0, 0, W, H);
+    const sp = 42;
+    const cols = Math.ceil(W / sp) + 2;
+    const rows = Math.ceil(H / sp) + 2;
+    const bandT = t * 0.28;
+    const bandCenter = 0.5 + Math.sin(bandT) * 0.38;
+    for(let row = 0; row <= rows; row++){
+      for(let col = 0; col <= cols; col++){
+        const diag = (col / cols) * 0.65 + (1 - row / rows) * 0.35;
+        const w1 = Math.sin(diag * Math.PI * 5 - t * 1.1);
+        const w2 = Math.sin((col * 0.18 - row * 0.12) + t * 0.75);
+        const w3 = Math.sin(diag * Math.PI * 1.8 + t * 0.38);
+        const wave = w1 * 0.50 + w2 * 0.30 + w3 * 0.20;
+        const bandDist = Math.abs(diag - bandCenter);
+        const band = Math.max(0, 1 - bandDist / 0.22);
+        const bandGlow = band * band;
+        const dx = Math.sin(row * 0.22 + t * 0.55) * 2.8;
+        const dy = Math.cos(col * 0.18 + t * 0.48) * 2.8;
+        const x = col * sp + dx;
+        const y = row * sp + dy;
+        const baseR = 0.42 + (wave + 1) * 0.5 * 0.65;
+        const r = baseR + bandGlow * 1.35;
+        const baseA = 0.055 + (wave + 1) * 0.5 * 0.14;
+        const alpha = Math.min(0.70, baseA + bandGlow * 0.50);
+        if(r < 0.25) continue;
+        const hueShift = bandGlow * 30;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${225 + hueShift},82%,${62 + bandGlow * 14}%,${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+    }
+    t += 0.009;
+    raf = requestAnimationFrame(draw);
+  }
+
+  function start(){ running=true; cvs.style.opacity='1'; if(!raf) draw(); }
+  function stop(){  running=false; cvs.style.opacity='0'; if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  new MutationObserver(()=>{
+    const on = !!document.querySelector('.slide-dots.active:not(.slide-cover)');
+    if(on && !running) start();
+    else if(!on && running) stop();
+  }).observe(document.body, {subtree:true, attributes:true, attributeFilter:['class']});
+
+  if(document.querySelector('.slide-dots.active:not(.slide-cover)')) start();
+})();
 
 // ─── NAVIGATION ───
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0, problem:2, system:6, components:8, impact:12 };
+const sections = { problem:0, system:6, components:8, impact:12 };
 
 function updateNav() {
   const section = slides[current].dataset.section;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const map = { intro:0, problem:1, system:2, components:3, impact:4 };
+  const map = { problem:0, system:1, components:2, impact:3 };
   document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;
