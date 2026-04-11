@@ -4,55 +4,223 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dario Fidanza — Presentations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #07101f; color: #fff; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-  .wrap { max-width: 560px; width: 100%; padding: 60px 32px; }
-  .overline { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; display: block; }
-  h1 { font-size: 32px; font-weight: 700; margin-bottom: 48px; line-height: 1.2; }
+
+  body {
+    background: #07101f;
+    color: #fff;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Canvas dot-wave ── */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 580px;
+    width: 100%;
+    padding: 60px 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .overline {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .overline-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4f80f5;
+    box-shadow: 0 0 8px #4f80f5;
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: 'Hepta Slab', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 48px;
+  }
   h1 span { color: #4f80f5; }
-  .deck-list { display: flex; flex-direction: column; gap: 12px; }
-  .deck { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-decoration: none; color: #fff; transition: background 0.2s, border-color 0.2s; }
-  .deck:hover { background: rgba(79,128,245,0.08); border-color: rgba(79,128,245,0.3); }
-  .deck-title { font-size: 15px; font-weight: 600; }
-  .deck-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
-  .arrow { color: rgba(255,255,255,0.3); font-size: 18px; }
+
+  /* ── Deck tiles ── */
+  .deck-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .deck {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+  .deck:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+    transform: translateX(3px);
+  }
+
+  .deck-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .deck-body { flex: 1; }
+  .deck-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .deck-sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 3px; letter-spacing: 0.01em; }
+
+  .arrow { color: rgba(255,255,255,0.2); font-size: 16px; flex-shrink: 0; transition: color 0.2s; }
+  .deck:hover .arrow { color: rgba(255,255,255,0.5); }
 </style>
 </head>
 <body>
+
+<canvas id="bg-canvas"></canvas>
+
 <div class="wrap">
-  <span class="overline">Deep Dive · Presentations</span>
+  <span class="overline"><span class="overline-dot"></span>Deep Dive · Presentations</span>
   <h1>Dario <span>Fidanza</span></h1>
+
   <div class="deck-list">
-    <a class="deck" href="intro/">
-      <div>
-        <div class="deck-title">Intro</div>
-        <div class="deck-sub">Overview · Background</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+
+    <!-- TDS — purple -->
     <a class="deck" href="tooling-ds/">
-      <div>
+      <div class="deck-icon" style="background:rgba(124,90,245,0.12);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="7" height="7" rx="1"/><rect x="15" y="3" width="7" height="7" rx="1"/>
+          <rect x="2" y="14" width="7" height="7" rx="1"/><rect x="15" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </div>
+      <div class="deck-body">
         <div class="deck-title">Instacart Tooling Design System</div>
-        <div class="deck-sub">TDS · Design System · 35 slides</div>
+        <div class="deck-sub">TDS · Design System</div>
       </div>
       <span class="arrow">→</span>
     </a>
+
+    <!-- Orders — blue -->
     <a class="deck" href="orders-dashboard/">
-      <div>
+      <div class="deck-icon" style="background:rgba(79,128,245,0.12);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18M9 21V9"/>
+          <path d="M15 13h3M15 17h3M7 13h2v4H7z"/>
+        </svg>
+      </div>
+      <div class="deck-body">
         <div class="deck-title">Orders Dashboard</div>
         <div class="deck-sub">Instacart · Product Design</div>
       </div>
       <span class="arrow">→</span>
     </a>
+
+    <!-- Northstar — green -->
     <a class="deck" href="northstar/">
-      <div>
+      <div class="deck-icon" style="background:rgba(61,186,126,0.12);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div class="deck-body">
         <div class="deck-title">Shopper Northstar</div>
         <div class="deck-sub">Instacart · Vision · UX Strategy</div>
       </div>
       <span class="arrow">→</span>
     </a>
+
   </div>
 </div>
+
+<script>
+// ── Dot-wave canvas animation ──
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  const SPACING = 30;
+  let w, h, t = 0, raf = null;
+
+  function resize() {
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.65, cy = h * 0.42;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
+
+        const falloff = Math.pow(1 - norm, 1.3);
+        const opacity = (wave * 0.38 + 0.30) * falloff;
+        if (opacity < 0.04) continue;
+
+        const bright = Math.max(0, wave);
+        const rc = Math.round(79  + bright * 90);
+        const gc = Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
+        ctx.fill();
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setTimeout(() => { raf = requestAnimationFrame(draw); }, 60);
+})();
+</script>
+
 </body>
 </html>
