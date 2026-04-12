@@ -55,6 +55,15 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
   overflow: hidden; z-index: 1;
 }
+/* Override any deck CSS that sets #slides to position:fixed — in the shell
+   #slides must fill #deck-content, not the viewport independently */
+#deck-content #slides {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  right: 0 !important; bottom: 0 !important;
+  overflow: hidden;
+  width: auto; height: auto;
+}
 
 /* Content fade for deck transitions */
 #deck-content.fading-out { opacity: 0; transition: opacity 200ms ease; }
@@ -96,37 +105,85 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
    NAV TRANSITION ANIMATIONS (shell-specific overrides)
 ══════════════════════════════════════════════════ */
 
-/* Disable nav.css navPillsIn on expanded — pills already animated during expanding */
-.nav-project[data-state="expanded"] .nav-pills {
-  animation: none !important;
+/* ── The name pill is ALWAYS visible — nav.css hides it when expanded,
+      so we override that here across all states ── */
+.nav-project .nav-project-pill { display: inline-flex !important; }
+
+/* ── When expanded/expanding/collapsing: move the outline to the container,
+      so it wraps both the name label AND the section pills together ── */
+.nav-project[data-state="expanded"],
+.nav-project[data-state="expanding"],
+.nav-project[data-state="collapsing"] {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px;
+  gap: 2px;
+  transition: background 260ms ease, border-color 260ms ease;
+}
+html.light .nav-project[data-state="expanded"],
+html.light .nav-project[data-state="expanding"],
+html.light .nav-project[data-state="collapsing"] {
+  background: rgba(0,0,0,0.03);
+}
+/* Strip the border from .nav-pills itself when the container has it */
+.nav-project[data-state="expanded"] .nav-pills,
+.nav-project[data-state="expanding"] .nav-pills,
+.nav-project[data-state="collapsing"] .nav-pills {
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
-/* ── EXPANDING: project name fades, section pills unfold from it ── */
+/* ── EXPANDED (settled): name becomes a dim blue label, not a button ── */
+.nav-project[data-state="expanded"] .nav-pills {
+  animation: none !important;
+  opacity: 1;
+}
+.nav-project[data-state="expanded"] .nav-project-pill {
+  background: transparent;
+  border-color: transparent;
+  color: rgba(79,128,245,0.45);
+  cursor: pointer;
+  transition: color 260ms ease, border-color 260ms ease, background 260ms ease;
+}
+.nav-project[data-state="expanded"] .nav-project-pill:hover {
+  color: rgba(79,128,245,0.75);
+}
+html.light .nav-project[data-state="expanded"] .nav-project-pill {
+  color: rgba(79,128,245,0.5);
+}
+html.light .nav-project[data-state="expanded"] .nav-project-pill:hover {
+  color: rgba(79,128,245,0.85);
+}
+
+/* ── EXPANDING: name morphs from pill → label while sections unfold ── */
 .nav-project[data-state="expanding"] {
-  justify-content: flex-start !important; /* anchor name at left edge */
+  justify-content: flex-start !important;
 }
 .nav-project[data-state="expanding"] .nav-pills {
   display: flex !important;
 }
 .nav-project[data-state="expanding"] .nav-project-pill {
-  flex-shrink: 0;
-  animation: shellNameOut 180ms ease forwards;
+  animation: nameToLabel 200ms cubic-bezier(0.4,0,0.2,1) both;
   pointer-events: none;
+  flex-shrink: 0;
 }
+/* Pills slide in staggered — drawer opening from the name */
 .nav-project[data-state="expanding"] .nav-pills .nav-btn {
-  animation: shellPillIn 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: shellPillIn 200ms cubic-bezier(0.34, 1.1, 0.64, 1) both;
 }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(1) { animation-delay: 30ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(2) { animation-delay: 65ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 100ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 135ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 170ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 205ms; }
-.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(7) { animation-delay: 240ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(1) { animation-delay:  60ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(2) { animation-delay:  98ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 136ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 174ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 212ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 250ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(7) { animation-delay: 288ms; }
 
-/* ── COLLAPSING: section pills fold back, project name fades in ── */
+/* ── COLLAPSING: sections fold back, name re-brightens to pill ── */
 .nav-project[data-state="collapsing"] {
-  opacity: 1 !important;  /* override nav.css 0.45 — we control opacity at item level */
+  opacity: 1 !important;
   justify-content: flex-start !important;
 }
 .nav-project[data-state="collapsing"] .nav-pills {
@@ -134,22 +191,30 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   pointer-events: none;
 }
 .nav-project[data-state="collapsing"] .nav-project-pill {
-  flex-shrink: 0;
-  animation: shellNameIn 200ms 130ms ease both;
+  animation: labelToName 220ms 80ms cubic-bezier(0.4,0,0.2,1) both;
   pointer-events: none;
+  flex-shrink: 0;
 }
+/* Pills exit right-to-left, last first */
 .nav-project[data-state="collapsing"] .nav-pills .nav-btn {
-  animation: shellPillOut 160ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: shellPillOut 120ms cubic-bezier(0.4,0,1,1) both;
 }
-/* Reversed stagger: last pill exits first, toward project name */
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(7) { animation-delay: 0ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 15ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 30ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 45ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 60ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(2) { animation-delay: 75ms; }
-.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(1) { animation-delay: 90ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(7) { animation-delay:  0ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 10ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 20ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 30ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 40ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(2) { animation-delay: 50ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(1) { animation-delay: 60ms; }
 
+@keyframes nameToLabel {
+  from { color: rgba(79,128,245,0.75); background: rgba(79,128,245,0.10); border-color: rgba(79,128,245,0.22); }
+  to   { color: rgba(79,128,245,0.45); background: transparent; border-color: transparent; }
+}
+@keyframes labelToName {
+  from { color: rgba(79,128,245,0.45); background: transparent; border-color: transparent; }
+  to   { color: rgba(79,128,245,0.75); background: rgba(79,128,245,0.10); border-color: rgba(79,128,245,0.22); }
+}
 @keyframes shellPillIn {
   from { opacity: 0; transform: translateX(-10px) scale(0.9); }
   to   { opacity: 1; transform: none; }
@@ -157,14 +222,6 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
 @keyframes shellPillOut {
   from { opacity: 1; transform: none; }
   to   { opacity: 0; transform: translateX(6px) scale(0.9); }
-}
-@keyframes shellNameOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-@keyframes shellNameIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 </style>
 </head>
@@ -229,8 +286,11 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   const DECKS = {
     intro: {
       path: 'intro/index.html', base: 'intro/', label: 'Intro',
-      sections: [{ section: 'intro', label: 'Intro' }],
-      sectionMap: { intro: 0 },
+      sections: [
+        { section: 'intro',   label: 'Agenda'   },
+        { section: 'about',   label: 'About Me' },
+      ],
+      sectionMap: { intro: 0, about: 2 },
     },
     tds: {
       path: 'tooling-ds/index.html', base: 'tooling-ds/', label: 'Tooling DS',
@@ -265,6 +325,7 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   };
 
   const ANIM = 260;   // nav width transition (ms) — matches nav.css
+  const PILL_OUT_DONE = 110; // ms until collapsing pills are mostly gone (before width starts)
   const FADE = 180;   // content fade (ms)
 
   /* ── State ── */
@@ -293,13 +354,13 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
     nextBtn.disabled = deckCurrent === deckTotal - 1;
     progressBar.style.width = deckTotal > 1 ? (deckCurrent / (deckTotal - 1)) * 100 + '%' : '100%';
 
-    // Highlight the correct section pill
-    const section = deckSlides[deckCurrent]?.dataset?.section;
-    deckNavBtns.forEach(b => b.classList.remove('active'));
-    if (section) {
-      const idx = Object.keys(deckSections).indexOf(section);
-      if (idx >= 0) deckNavBtns[idx]?.classList.add('active');
+    // Highlight correct section pill by index range (works regardless of data-section value)
+    const entries = Object.entries(deckSections);
+    let activePillIdx = 0;
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i][1] <= deckCurrent) activePillIdx = i;
     }
+    deckNavBtns.forEach((b, i) => b.classList.toggle('active', i === activePillIdx));
   }
 
   function goTo(i) {
@@ -441,12 +502,72 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   /* ══════════════════════════════════════════════════════
      PROJECT SWITCHER (nav animation)
   ══════════════════════════════════════════════════════ */
+  function collapseActive() {
+    const expandedEl = document.querySelector(`.nav-project[data-project="${activeProject}"]`);
+    if (!expandedEl) return;
+
+    const bigW = expandedEl.getBoundingClientRect().width;
+    // Measure the natural collapsed width (just the pill)
+    // Temporarily set to collapsed to measure, then restore
+    expandedEl.dataset.state = 'collapsing';
+    const pillBtn = expandedEl.querySelector('.nav-project-pill');
+    const smallW = pillBtn ? pillBtn.getBoundingClientRect().width + 8 : 80; // +8 for container padding
+
+    expandedEl.style.width = bigW + 'px';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        expandedEl.style.width = smallW + 'px';
+      });
+    });
+
+    setTimeout(() => {
+      expandedEl.dataset.state = 'collapsed';
+      expandedEl.style.width = '';
+      activeProject = null;
+      history.pushState({}, '', location.pathname);
+    }, ANIM + 20);
+  }
+
   function switchToProject(newKey) {
     if (newKey === activeProject) return;
 
-    const expandedEl = document.querySelector(`.nav-project[data-project="${activeProject}"]`);
-    const targetEl   = document.querySelector(`.nav-project[data-project="${newKey}"]`);
-    if (!expandedEl || !targetEl) return;
+    const expandedEl = activeProject
+      ? document.querySelector(`.nav-project[data-project="${activeProject}"]`)
+      : null;
+    const targetEl = document.querySelector(`.nav-project[data-project="${newKey}"]`);
+    if (!targetEl) return;
+
+    // If nothing is expanded, skip the collapse phase and just expand directly
+    if (!expandedEl) {
+      const deckReady = loadDeck(newKey);
+      const smallW = targetEl.getBoundingClientRect().width;
+      targetEl.style.width = smallW + 'px';
+      requestAnimationFrame(() => {
+        targetEl.dataset.state = 'expanding';
+        requestAnimationFrame(() => {
+          // Measure expanded width by temporarily unsetting width constraint
+          targetEl.style.width = '';
+          const bigW = targetEl.scrollWidth + 8;
+          targetEl.style.width = smallW + 'px';
+          requestAnimationFrame(() => { targetEl.style.width = bigW + 'px'; });
+        });
+      });
+      content.style.transition = `opacity ${FADE}ms ease`;
+      content.style.opacity = '0';
+      setTimeout(() => {
+        targetEl.dataset.state = 'expanded';
+        targetEl.style.width = '';
+        activeProject = newKey;
+        history.pushState({ project: newKey }, '', `?p=${newKey}`);
+      }, ANIM + 20);
+      Promise.all([deckReady, new Promise(r => setTimeout(r, ANIM + 20))]).then(() => {
+        requestAnimationFrame(() => {
+          content.style.transition = `opacity ${FADE}ms cubic-bezier(0.4,0,0.2,1)`;
+          content.style.opacity = '1';
+        });
+      });
+      return;
+    }
 
     // Start fetch immediately — parallel with the nav animation
     const deckReady = loadDeck(newKey);
@@ -455,25 +576,33 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
     const bigW   = expandedEl.getBoundingClientRect().width;
     const smallW = targetEl.getBoundingClientRect().width;
 
-    // Pin both to current widths, then animate in next frames
+    // Phase 1: set collapsing state — pills start exiting immediately
     expandedEl.style.width = bigW + 'px';
     targetEl.style.width   = smallW + 'px';
 
     requestAnimationFrame(() => {
       expandedEl.dataset.state = 'collapsing';
-      targetEl.dataset.state   = 'expanding';
-
-      requestAnimationFrame(() => {
-        expandedEl.style.width = smallW + 'px';
-        targetEl.style.width   = bigW + 'px';
-      });
+      // Target shows its name (hidden via opacity:0 in expanding state later)
+      // — keep collapsed for now so it doesn't jump
     });
 
-    // Fade content out immediately — don't wait for nav to finish
+    // Phase 2: after collapse pills are mostly gone, start width animation + expanding
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        targetEl.dataset.state = 'expanding';
+        requestAnimationFrame(() => {
+          expandedEl.style.width = smallW + 'px';
+          targetEl.style.width   = bigW + 'px';
+        });
+      });
+    }, PILL_OUT_DONE);
+
+    // Fade content out in sync with collapse start
     content.style.transition = `opacity ${FADE}ms ease`;
     content.style.opacity = '0';
 
-    // After nav animation settles, update state
+    // Settle: collapse done + width animation done
+    const SETTLE = PILL_OUT_DONE + ANIM + 20;
     setTimeout(() => {
       expandedEl.dataset.state = 'collapsed';
       targetEl.dataset.state   = 'expanded';
@@ -481,10 +610,10 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
       targetEl.style.width     = '';
       activeProject = newKey;
       history.pushState({ project: newKey }, '', `?p=${newKey}`);
-    }, ANIM + 20);
+    }, SETTLE);
 
-    // Once deck is loaded AND nav has settled, fade content in
-    Promise.all([deckReady, new Promise(r => setTimeout(r, ANIM + 20))]).then(() => {
+    // Fade content in once deck loaded AND nav settled
+    Promise.all([deckReady, new Promise(r => setTimeout(r, SETTLE))]).then(() => {
       requestAnimationFrame(() => {
         content.style.transition = `opacity ${FADE}ms cubic-bezier(0.4,0,0.2,1)`;
         content.style.opacity = '1';
@@ -514,8 +643,14 @@ html.light .nav-pills { background: rgba(0,0,0,0.03); }
   document.querySelectorAll('.nav-project-pill').forEach(btn => {
     const proj = btn.closest('.nav-project')?.dataset?.project;
     if (!proj) return;
-    btn.addEventListener('click', () => switchToProject(proj));
-    // Prefetch on hover so content is likely ready before click
+    btn.addEventListener('click', () => {
+      if (proj === activeProject) {
+        // Already expanded — collapse back to pill
+        collapseActive();
+      } else {
+        switchToProject(proj);
+      }
+    });
     btn.addEventListener('mouseenter', () => prefetchDeck(proj));
   });
 
