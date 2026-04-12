@@ -127,9 +127,10 @@
     color: rgba(255,255,255,0.50);
     text-align: center;
     white-space: nowrap;
-    pointer-events: none;
     z-index: 1;
+    transition: color 0.2s;
   }
+  .site-url:hover { color: rgba(255,255,255,0.80); }
 
   .footer-note {
     position: fixed;
@@ -153,7 +154,7 @@
 <body>
 
 <canvas id="bg-canvas"></canvas>
-<p class="site-url">DARIOFIDANZA.COM</p>
+<a class="site-url" href="https://dariofidanza.com" style="text-decoration:none;">DARIOFIDANZA.COM</a>
 <p class="footer-note"><strong>Best viewed on desktop</strong> &nbsp;•&nbsp; <span>case studies are optimized for larger screens</span></p>
 
 <div class="wrap">
