@@ -71,6 +71,15 @@
   }
   h1 span { color: #4f80f5; }
 
+  .subtitle {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    margin-top: 10px;
+    margin-bottom: 40px;
+    letter-spacing: 0.01em;
+  }
+
   /* ── Deck tiles ── */
   .deck-list { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 
@@ -129,11 +138,12 @@
 <body>
 
 <canvas id="bg-canvas"></canvas>
-<p class="footer-note"><strong>Best viewed on desktop</strong> &nbsp;•&nbsp; <span>case studies are optimized for larger screens</span></p>
+<p class="footer-note"><strong>Best viewed on desktop</strong> &nbsp;•&nbsp; <span>case studies are optimized for larger screens &nbsp;·&nbsp; dariofidanza.com</span></p>
 
 <div class="wrap">
   <span class="overline"><span class="overline-dot"></span>Deep Dive · Presentations</span>
   <h1>Darío <span>Fidanza</span></h1>
+  <p class="subtitle">L6 Design Systems Designer &bull; Instacart</p>
 
   <div class="deck-list">
 
