@@ -208,3 +208,56 @@ Each deck now uses `../shared/nav.js` and `../shared/nav.css`. All data-href pat
 - macOS is case-insensitive so `northstar/` = `Northstar/` on local dev — lowercase is canonical
 - Images folders are now all lowercase `images/` (not `Images/`)
 - Old root `index.html` was the TDS deck — it has moved to `tooling-ds/index.html`
+
+---
+
+## GitHub Repo & Deployment
+
+**Remote:** `https://github.com/artawakes/artawakes.github.io`  
+**Live site:** `https://artawakes.github.io`  
+**Deployed branch:** `main` (GitHub Pages serves from root of `main`)  
+**Local working branch:** `nav-pulse`
+
+### How local ↔ remote map
+
+The local `/Users/dario/New Deck/` folder corresponds to the `l/presso/` subfolder inside the repo:
+
+| Local path | Remote path (in repo) | Live URL |
+|---|---|---|
+| `intro/index.html` | `l/presso/intro/index.html` | `artawakes.github.io/l/presso/intro/` |
+| `tooling-ds/index.html` | `l/presso/tooling-ds/index.html` | `artawakes.github.io/l/presso/tooling-ds/` |
+| `orders-dashboard/index.html` | `l/presso/orders-dashboard/index.html` | `artawakes.github.io/l/presso/orders-dashboard/` |
+| `northstar/index.html` | `l/presso/northstar/index.html` | `artawakes.github.io/l/presso/northstar/` |
+| `shared/nav.js` | `l/presso/shared/nav.js` | — |
+| `shell.html` | `l/presso/shell.html` | `artawakes.github.io/l/presso/shell.html` |
+
+**The project selector index** lives at `l/presso/index.html` in the repo (no direct local equivalent — edited via `git show` or on `deploy-shell` branch).
+
+### Branching workflow
+
+Because the local repo and the remote repo have **diverged commit histories** (same content, different hashes), do NOT use `git push origin nav-pulse:main` directly — it will fail or overwrite.
+
+**Safe deploy process:**
+1. `git checkout deploy-shell` (tracks `origin/main`)
+2. Cherry-pick or copy the file you want to deploy into the right path under `l/presso/`
+3. `git add` + `git commit` + `git push origin deploy-shell:main`
+4. `git checkout nav-pulse` to return to active work
+
+The `deploy-shell` branch is kept in sync with `origin/main` and is the only branch used for pushing to GitHub.
+
+### shell.html — Persistent Nav Shell
+
+`shell.html` is an alternative entry point that keeps the nav bar persistent across all project switches. Instead of full page reloads:
+- It `fetch()`es deck HTML, extracts `.slide` elements, injects them into a content area
+- The nav stays fixed; only slide content fades in/out
+- All 4 decks are prefetched in the background 1.5s after load
+- Hover over a project pill prefetches that deck immediately
+
+**Section maps are hardcoded in `shell.html`** (not parsed from the deck HTML) — if section slide indices change in a deck, update the `DECKS` config object in `shell.html` too:
+```js
+tds:   { sectionMap: { problem:0, system:6, components:15, impact:26 } }
+orders: { sectionMap: { problem:0, system:6, components:8,  impact:12 } }
+northstar: { sectionMap: { problem:0, system:5, components:8, impact:11 } }
+```
+
+**The project selector** (`l/presso/index.html`) links to `shell.html?p=tds`, `shell.html?p=orders`, `shell.html?p=northstar` — so all three case studies open inside the shell. The intro deck is accessible via the shell's Intro pill. Original standalone deck URLs still work unchanged.
