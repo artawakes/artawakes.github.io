@@ -640,20 +640,22 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="nav-project" data-project="intro" data-state="expanded">
       <button class="nav-project-pill" data-project="intro">Intro</button>
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
+        <button class="nav-btn" onclick="goToSection('intro')">Agenda</button>
+        <button class="nav-btn" onclick="goToSection('about')">About Me</button>
+        <button class="nav-btn" onclick="goToSection('career')">Career</button>
       </div>
     </div>
     <!-- Tooling DS — collapsed -->
     <div class="nav-project" data-project="tds" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../tooling-ds/index.html">Tooling DS</button>
+      <button class="nav-project-pill" data-href="../tooling-ds/index.html"><span>Tooling DS</span></button>
     </div>
     <!-- Orders Dashboard — collapsed -->
     <div class="nav-project" data-project="orders" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+      <button class="nav-project-pill" data-href="../orders-dashboard/index.html"><span>Orders Dashboard</span></button>
     </div>
     <!-- Shopper Northstar — collapsed -->
     <div class="nav-project" data-project="northstar" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../northstar/index.html">Shopper Northstar</button>
+      <button class="nav-project-pill" data-href="../northstar/index.html"><span>Shopper Northstar</span></button>
     </div>
   </div>
   <div class="nav-right">
@@ -882,7 +884,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0 };
+const sections = { intro:0, about:2, career:3 };
 
 function updateNav() {
   const section = slides[current].dataset.section;

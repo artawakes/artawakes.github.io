@@ -286,3 +286,42 @@ html.light .nav-project[data-state="expanded"] .nav-project-pill:hover {
   from { opacity: 1; transform: none; }
   to   { opacity: 0; transform: translateX(6px) scale(0.9); }
 }
+
+/* ── Sibling collapsed pills shrink to circles when a project is expanded ── */
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill {
+  max-width: 28px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition:
+    max-width    240ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    padding      240ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    background   200ms ease,
+    border-color 200ms ease,
+    color        200ms ease;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill span,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill span,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill span {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill:hover,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill:hover,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill:hover {
+  max-width: 200px;
+  padding: 6px 14px;
+  opacity: 1;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill:hover span,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill:hover span,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill:hover span {
+  opacity: 1;
+  transition: opacity 150ms 100ms ease;
+}
