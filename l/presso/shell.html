@@ -274,7 +274,7 @@ nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed
 </div>
 
 <nav>
-  <a class="nav-logo" href="./shell.html">Darío Fidanza</a>
+  <a class="nav-logo" href="./">Darío Fidanza</a>
   <div class="nav-center">
     <!-- Intro -->
     <div class="nav-project" data-project="intro" data-state="expanded">
@@ -328,10 +328,10 @@ nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed
     intro: {
       path: 'intro/index.html', base: 'intro/', label: 'Intro',
       sections: [
-        { section: 'intro',   label: 'Agenda'   },
         { section: 'about',   label: 'About Me' },
       ],
-      sectionMap: { intro: 0, about: 2 },
+      sectionMap: { about: 1 },
+      skipSlides: '.slide-grid[data-section="intro"]',
     },
     tds: {
       path: 'tooling-ds/index.html', base: 'tooling-ds/', label: 'Tooling DS',
@@ -479,7 +479,9 @@ nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed
     //    #slides due to div imbalances, so gather them all.
     const slidesContainer = document.createElement('div');
     slidesContainer.id = 'slides';
-    doc.querySelectorAll('.slide').forEach(slide => slidesContainer.appendChild(slide));
+    let allSlides = Array.from(doc.querySelectorAll('.slide'));
+    if (deck.skipSlides) allSlides = allSlides.filter(s => !s.matches(deck.skipSlides));
+    allSlides.forEach(slide => slidesContainer.appendChild(slide));
 
     // Rewrite relative image src paths
     slidesContainer.querySelectorAll('[src]').forEach(el => {
