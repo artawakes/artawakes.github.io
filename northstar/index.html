@@ -961,6 +961,25 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
+<!-- ══ QUESTIONS ══ -->
+<div class="slide slide-center" data-section="impact" style="overflow:hidden;">
+  <canvas id="thankyou-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.2s ease;z-index:0;"></canvas>
+  <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+  <div style="max-width:560px; position:relative; z-index:1;">
+    <span class="overline">Thank you</span>
+    <h1 style="font-size:clamp(48px,7vw,88px);">Questions</h1>
+    <div class="divider" style="margin:24px auto;"></div>
+    <p class="subtitle" style="max-width:100%;">
+      <a href="https://dariofidanza.com" style="color:var(--accent); text-decoration:none;">dariofidanza.com</a>
+    </p>
+    <div style="margin-top:36px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:24px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
+      <span style="font-size:24px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
+      <span style="font-size:24px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
+    </div>
+  </div>
+</div>
+
 </div><!-- /slides -->
 
 <script>
