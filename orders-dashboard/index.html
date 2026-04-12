@@ -2061,6 +2061,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ═══════ THANK YOU CANVAS ═══════
+(function(){
+  const canvas = document.getElementById('thankyou-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const slide = canvas.closest('.slide');
+  const SPACING = 28;
+  let w, h, t = 0, raf = null;
+  let bursts = [];
+  function resize() { const r=slide.getBoundingClientRect(); canvas.width=w=r.width; canvas.height=h=r.height; }
+  function draw() {
+    t+=0.018; ctx.clearRect(0,0,w,h);
+    const cx=w*0.72,cy=h*0.38,maxD=Math.sqrt(w*w+h*h)*0.55;
+    const cols=Math.ceil(w/SPACING)+2,rows=Math.ceil(h/SPACING)+2;
+    bursts=bursts.filter(b=>b.age<b.maxAge); bursts.forEach(b=>b.age+=0.018);
+    for(let r2=0;r2<rows;r2++){for(let c=0;c<cols;c++){
+      const x=c*SPACING-SPACING*0.5,y=r2*SPACING-SPACING*0.5;
+      const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy),norm=Math.min(1,dist/maxD);
+      let wave=Math.sin(dist*0.013-t*2.0)*0.45+Math.sin(dist*0.021-t*3.2+1.4)*0.3+Math.sin(dist*0.008-t*1.1+2.8)*0.25;
+      for(const b of bursts){const f=b.age*420,bd=Math.abs(dist-f);if(bd<55)wave+=Math.cos((bd/55)*Math.PI*0.5)*(1-b.age/b.maxAge)*0.9;}
+      const falloff=Math.pow(1-norm,1.2),opacity=(wave*0.42+0.36)*falloff;
+      if(opacity<0.04)continue;
+      const bright=Math.max(0,wave);
+      ctx.beginPath();ctx.arc(x,y,Math.max(0.5,1.6+wave*1.2)*(0.5+falloff*0.7),0,Math.PI*2);
+      ctx.fillStyle=`rgba(${Math.round(79+bright*90)},${Math.round(128-bright*60)},245,${Math.min(0.9,Math.abs(opacity))})`;ctx.fill();
+    }}
+    raf=requestAnimationFrame(draw);
+  }
+  function start(){resize();canvas.style.opacity='1';if(!raf)raf=requestAnimationFrame(draw);}
+  function stop(){canvas.style.opacity='0';if(raf){cancelAnimationFrame(raf);raf=null;}}
+  setInterval(()=>{if(slide.classList.contains('active'))bursts.push({age:0,maxAge:1.8});},2800);
+  new MutationObserver(()=>{slide.classList.contains('active')?start():stop();}).observe(slide,{attributes:true,attributeFilter:['class']});
+  if(slide.classList.contains('active'))start();
+  window.addEventListener('resize',()=>{if(raf)resize();});
+})();
 </script>
 <!-- ══ Edit toolbar ══ -->
 <div class="edit-toolbar">
