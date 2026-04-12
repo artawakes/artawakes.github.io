@@ -106,11 +106,26 @@
   @keyframes bounceArrow { 0%, 100% { transform: translateX(0); } 55% { transform: translateX(7px); } }
   .arrow { color: rgba(255,255,255,0.65); font-size: 16px; flex-shrink: 0; transition: color 0.2s; animation: bounceArrow 1.4s ease-in-out infinite; }
   .deck:hover .arrow { color: rgba(255,255,255,0.95); }
+
+  .footer-note {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.22);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
 </style>
 </head>
 <body>
 
 <canvas id="bg-canvas"></canvas>
+<p class="footer-note">Best viewed on desktop &mdash; case studies are optimized for larger screens</p>
 
 <div class="wrap">
   <span class="overline"><span class="overline-dot"></span>Deep Dive · Presentations</span>
