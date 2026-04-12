@@ -690,7 +690,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:100%;max-height:1037px;width:auto;height:auto;display:block;" src="images/cover-tds.jpg"></div>
+    <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:90%;max-height:933px;width:auto;height:auto;display:block;mix-blend-mode:screen;" src="cover-tds.png"></div>
   </div><!-- /hero-img -->
   <div class="hero-content" style="display:flex; flex-direction:column; justify-content:center; padding-top:0; padding-bottom:0; position:relative; z-index:1;">
     <span class="overline" style="color:#ffffff;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;display:inline-block;"></span>Deep Dive</span>
@@ -2211,5 +2211,10 @@ if(false)(function(){
 </div>
 
 
+<div id="tds-nav-hint" style="position:fixed; bottom:20px; left:75%; transform:translateX(-50%); z-index:9999; display:flex; align-items:center; gap:7px; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.28); pointer-events:none; white-space:nowrap; transition:opacity 0.6s ease;">
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">←</span>
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">→</span>
+  <span>navigate</span>
+</div>
 <script src="../shared/nav.js"></script>
 </body></html>
