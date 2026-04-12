@@ -26,21 +26,29 @@
 
   /* ── First-slide hint + pulse stop on first navigation ── */
   function initNavHint() {
-    // Inject hint element
-    var hint = document.createElement('div');
-    hint.className = 'nav-hint';
-    hint.innerHTML =
-      '<span class="nav-hint-key">←</span>' +
-      '<span class="nav-hint-key">→</span>' +
-      '<span>navigate</span>';
-    document.body.appendChild(hint);
+    // Use an embedded hint if the deck provides one (e.g. TDS cover),
+    // otherwise inject a fixed floating one.
+    var embedded = document.getElementById('tds-nav-hint');
+    var hint;
+    if (embedded) {
+      hint = embedded;
+    } else {
+      hint = document.createElement('div');
+      hint.className = 'nav-hint';
+      hint.innerHTML =
+        '<span class="nav-hint-key">←</span>' +
+        '<span class="nav-hint-key">→</span>' +
+        '<span>navigate</span>';
+      document.body.appendChild(hint);
+    }
 
     // Stop pulse + hide hint on first navigation
     function onNavigated() {
       document.body.classList.add('has-navigated');
-      hint.classList.add('hidden');
+      hint.style.opacity = '0';
+      hint.style.pointerEvents = 'none';
       // Remove after transition
-      setTimeout(function () { hint.remove(); }, 700);
+      setTimeout(function () { if (!embedded) hint.remove(); }, 700);
       prevBtn && prevBtn.removeEventListener('click', onNavigated);
       nextBtn && nextBtn.removeEventListener('click', onNavigated);
     }

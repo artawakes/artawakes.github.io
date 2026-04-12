@@ -463,9 +463,11 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 #slide-26 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; overflow:visible !important; }
 #slide-26 .hero-img img { position:relative !important; inset:auto !important; width:80% !important; height:auto !important; object-fit:contain !important; margin-top:20px !important; }
 #slide-08 { background: #ffffff !important; }
+#slide-11 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; background:transparent !important; }
+#slide-11 .hero-img img { position:relative !important; inset:auto !important; width:auto !important; height:auto !important; max-height:766px !important; max-width:908px !important; object-fit:contain !important; border-radius:32px !important; filter:grayscale(1) !important; display:block !important; box-shadow:inset 0 0 0 4px #ffffff !important; }
 #slide-32 { background-image: linear-gradient(135deg, #ffffff 40%, #dde6ff 100%) !important; background-color: #eef2ff !important; }
-#slide-32 .hero-img { position: relative !important; flex: 0 0 25% !important; max-width: 25% !important; display: block !important; overflow: hidden !important; }
-#slide-32 .hero-img img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: right top !important; display: block !important; }
+#slide-32::after { content: '' !important; position: absolute !important; inset: 0 !important; z-index: 5 !important; animation: gridScan 8s ease-in-out infinite !important; background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; background-size: 18px 18px !important; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; -webkit-mask-composite: source-over !important; mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; mask-composite: add !important; pointer-events: none !important; }
+#slide-32 .hero-img { flex: 0 0 25% !important; max-width: 25% !important; overflow: hidden !important; z-index: 10 !important; }
 
 /* YEAR SLIDES 12-13 — images inside timeline columns */
 .timeline .uploaded-img-wrap { height: 238px !important; border-radius: 8px; width: 100%; }
@@ -688,7 +690,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:100%;max-height:1037px;width:auto;height:auto;display:block;" src="images/cover-tds.jpg"></div>
+    <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:90%;max-height:933px;width:auto;height:auto;display:block;mix-blend-mode:screen;" src="cover-tds.png"></div>
   </div><!-- /hero-img -->
   <div class="hero-content" style="display:flex; flex-direction:column; justify-content:center; padding-top:0; padding-bottom:0; position:relative; z-index:1;">
     <span class="overline" style="color:#ffffff;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;display:inline-block;"></span>Deep Dive</span>
@@ -790,13 +792,13 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 11 · INCONSISTENCY ERODED TRUST ══ dots -->
-<div class="slide hero-right slide-light" style="background:#ffffff;" data-section="problem">
-  <div class="hero-content">
-    <span class="overline red">Audit Finding</span>
+<div id="slide-11" class="slide hero-right slide-light slide-grid" style="background:#eef2ff;" data-section="problem">
+  <div class="hero-content" style="background:linear-gradient(to right, rgba(255,255,255,0.88) 0%, rgba(238,242,255,0) 100%);">
+    <span class="overline red"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px;margin-bottom:1px;opacity:0.9;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Audit Finding</span>
     <h2>Inconsistency<br>eroded trust.</h2>
   </div>
-  <div class="hero-img img-fit" style="background:white;">
-    <div class="uploaded-img-wrap" style="height:100%;" data-edit-bound="1"><img style="width:100%;height:100%;object-fit:contain;object-position:right top;max-width:1224px;max-height:1079px;display:block;" src="images/Audit.jpg"></div>
+  <div class="hero-img">
+    <img src="images/Audit.jpg" data-edit-bound="1">
   </div>
 </div>
 
@@ -1255,7 +1257,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 32 · GOVERNANCE ══ dots -->
-<div id="slide-32" class="slide hero-left slide-light" style="background-color:#eef2ff;" data-section="impact">
+<div id="slide-32" class="slide hero-left slide-light slide-grid" style="background-color:#eef2ff;" data-section="impact">
   <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;padding-left:48px;">
     <span class="overline">Governance</span>
     <h2>Breakouts weren't failures,<br>they were signals.</h2>
@@ -1287,7 +1289,9 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
   <div class="hero-img" style="background:#ffffff;">
-    <img src="images/Governance.png" data-edit-bound="1">
+    <div class="uploaded-img-wrap" style="position:absolute;top:20px;left:0;right:0;bottom:0;border-radius:0;" data-edit-bound="1">
+      <img src="images/Governance.png" style="width:100%;height:100%;object-fit:contain;object-position:right center;display:block;">
+    </div>
   </div>
 </div>
 
@@ -2207,5 +2211,10 @@ if(false)(function(){
 </div>
 
 
+<div id="tds-nav-hint" style="position:fixed; bottom:20px; left:75%; transform:translateX(-50%); z-index:9999; display:flex; align-items:center; gap:7px; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.28); pointer-events:none; white-space:nowrap; transition:opacity 0.6s ease;">
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">←</span>
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">→</span>
+  <span>navigate</span>
+</div>
 <script src="../shared/nav.js"></script>
 </body></html>
