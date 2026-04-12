@@ -329,9 +329,10 @@ nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed
       path: 'intro/index.html', base: 'intro/', label: 'Intro',
       sections: [
         { section: 'about',   label: 'About Me' },
+        { section: 'career',  label: 'Career'   },
       ],
-      sectionMap: { about: 1 },
-      skipSlides: '.slide-grid[data-section="intro"]',
+      sectionMap: { about: 1, career: 2 },
+      skipSlides: '.slide-grid[data-section="intro"]:has(.timeline-h)',
     },
     tds: {
       path: 'tooling-ds/index.html', base: 'tooling-ds/', label: 'Tooling DS',
