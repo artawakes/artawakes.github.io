@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" style="opacity: 1; transition: opacity 380ms cubic-bezier(0.4, 0, 0.2, 1);"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orders Dashboard — Instacart Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;family=Noto+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
 <style>
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -793,36 +792,73 @@ body.edit-mode #notes-panel { display:flex; }
 html.presenter-mode body { overflow:auto; margin:0; background:#080b12; }
 html.presenter-mode .slide, html.presenter-mode nav,
 html.presenter-mode .progress-bar, html.presenter-mode .edit-toolbar,
-html.presenter-mode #notes-panel { display:none !important; }
+html.presenter-mode #notes-panel, html.presenter-mode .mobile-gate,
+html.presenter-mode #slides { display:none !important; }
 #presenter-ui { display:none; min-height:100vh; flex-direction:column;
   background:#080b12; color:#e2e8f4; font-family:inherit; }
 html.presenter-mode #presenter-ui { display:flex; }
+
 .p-header {
   display:flex; align-items:center; gap:20px; padding:16px 28px;
   border-bottom:1px solid rgba(79,128,245,0.18); background:rgba(79,128,245,0.035);
   flex-shrink:0;
 }
 .p-slide-info { flex:1; min-width:0; }
-.p-overline { font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(79,128,245,0.7); margin-bottom:2px; }
-.p-slide-num { font-size:15px; font-weight:700; color:#e2e8f4; }
-.p-slide-title { font-size:12px; color:rgba(226,232,244,0.55); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.p-overline { font-size:12px; letter-spacing:0.2em; color:#4f80f5; font-weight:700; text-transform:uppercase; }
+.p-slide-num { font-size:24px; font-weight:700; color:#e2e8f4; margin:4px 0 2px; }
+.p-slide-title { font-size:13px; color:rgba(226,232,244,0.55); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .p-controls { display:flex; gap:8px; flex-shrink:0; }
-.p-btn { padding:6px 18px; background:rgba(79,128,245,0.13); border:1px solid rgba(79,128,245,0.28); color:var(--accent); border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s; }
-.p-btn:hover { background:rgba(79,128,245,0.25); }
-.p-timer { font-size:22px; font-weight:700; letter-spacing:0.04em; color:#e2e8f4; font-variant-numeric:tabular-nums; flex-shrink:0; min-width:64px; text-align:right; }
+.p-btn {
+  background:rgba(79,128,245,0.12); border:1px solid rgba(79,128,245,0.25);
+  color:#4f80f5; border-radius:8px; padding:9px 20px; font-size:13px;
+  cursor:pointer; font-family:inherit; font-weight:600; letter-spacing:0.04em;
+  transition:background .15s;
+}
+.p-btn:hover { background:rgba(79,128,245,0.24); }
+.p-timer {
+  font-size:30px; font-weight:300; color:rgba(226,232,244,0.4);
+  font-variant-numeric:tabular-nums; letter-spacing:0.04em; min-width:72px; text-align:right; flex-shrink:0;
+}
 .p-body { display:flex; flex:1; overflow:hidden; }
 .p-notes-section { flex:1; display:flex; flex-direction:column; padding:22px 28px; min-width:0; }
-.p-next-section { width:260px; flex-shrink:0; padding:22px 24px; border-left:1px solid rgba(79,128,245,0.12); background:rgba(79,128,245,0.025); }
-.p-label { font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(79,128,245,0.6); margin-bottom:10px; }
-.p-next-title { font-size:14px; font-weight:600; color:rgba(226,232,244,0.8); line-height:1.4; }
-.p-reset-btn { background:rgba(79,128,245,0.1); border:1px solid rgba(79,128,245,0.25); color:var(--accent); border-radius:8px; padding:6px 14px; font-size:11px; cursor:pointer; font-family:inherit; font-weight:600; }
-#p-notes { flex:1; background:rgba(79,128,245,0.04); border:1px solid rgba(79,128,245,0.18); border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit; font-size:14px; line-height:1.7; resize:none; outline:none; }
+.p-next-section {
+  width:230px; flex-shrink:0; border-left:1px solid rgba(79,128,245,0.13);
+  padding:22px 22px; display:flex; flex-direction:column; background:rgba(79,128,245,0.02);
+}
+.p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
+#p-notes {
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(79,128,245,0.18);
+  border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
+  font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
+}
 #p-notes::placeholder { color:rgba(226,232,244,0.2); }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
+.p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-reset-btn {
+  margin-top:auto; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
+  cursor:pointer; font-family:inherit; transition:all .15s;
+}
+.p-reset-btn:hover { color:rgba(226,232,244,0.8); border-color:rgba(255,255,255,0.25); }
+.p-projects {
+  display:flex; gap:6px; padding:10px 28px; flex-shrink:0;
+  border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
+}
+.p-project-btn {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
+  transition:all .15s; letter-spacing:0.02em;
+}
+.p-project-btn:hover { background:rgba(79,128,245,0.15); border-color:rgba(79,128,245,0.35); color:#e2e8f4; }
+.p-project-btn--active {
+  background:rgba(79,128,245,0.18); border-color:rgba(79,128,245,0.45);
+  color:#4f80f5; cursor:default; pointer-events:none;
+}
 </style>
 <link rel="stylesheet" href="../shared/nav.css">
 </head>
-<body>
+<body class="has-navigated">
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -844,7 +880,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="nav-project" data-project="orders" data-state="expanded">
       <button class="nav-project-pill" data-project="orders">Orders Dashboard</button>
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
+        <button class="nav-btn active" onclick="goToSection('problem')">Problem</button>
         <button class="nav-btn" onclick="goToSection('system')">System</button>
         <button class="nav-btn" onclick="goToSection('components')">Features</button>
         <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
@@ -857,22 +893,22 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
-    <span class="slide-counter" id="counter">1 / 15</span>
+    <span class="slide-counter" id="counter">1 / 16</span>
     <div class="nav-arrows">
-      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
     </div>
   </div>
 </nav>
-<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
 <div id="slides">
 
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots slide-cover" id="slide-1" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-1"></canvas>
+<div class="slide slide-dots slide-cover active" id="slide-1" data-section="problem">
+  <canvas class="dots-canvas" id="canvas-1" width="1920" height="1000"></canvas>
   <div class="cover-glow" style="top:-10%;left:-10%"></div>
 
   <div class="cover-left">
@@ -922,9 +958,9 @@ html.presenter-mode #presenter-ui { display:flex; }
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots" id="slide-2" data-section="problem">
   <canvas class="dots-canvas" id="canvas-2"></canvas>
-  <span class="overline">Context & Goal</span>
+  <span class="overline">Context &amp; Goal</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:640px">
-    CX agents struggled with 4 outdated dashboards & needed a unified system
+    CX agents struggled with 4 outdated dashboards &amp; needed a unified system
   </h2>
   <div class="divider"></div>
   <div class="grid-2" style="margin-top:8px; flex:1; gap:24px">
@@ -932,7 +968,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
           <div class="icon-box red">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           </div>
           <span class="card-label red">The problem</span>
         </div>
@@ -941,18 +977,18 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
           <div class="icon-box amber">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </div>
           <span class="card-label amber">Who was affected</span>
         </div>
-        <h3>CX agents & retail partners</h3>
+        <h3>CX agents &amp; retail partners</h3>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
           <div class="icon-box blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
           </div>
           <span class="card-label">Goal</span>
         </div>
@@ -962,7 +998,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <ul class="bullet-list" style="gap:8px">
           <li>Replace 4 dashboards with one unified system</li>
           <li>Give agents full order lifecycle visibility</li>
-          <li>Enable faster search, filter & action execution</li>
+          <li>Enable faster search, filter &amp; action execution</li>
           <li>Build on a shared design system for scalability</li>
         </ul>
       </div>
@@ -993,7 +1029,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6a5 5 0 0 1 0-10h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6a5 5 0 0 1 0-10h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
         </div>
         <span class="card-label red">01</span>
       </div>
@@ -1003,7 +1039,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle><line x1="1" y1="1" x2="23" y2="23"></line></svg>
         </div>
         <span class="card-label red">02</span>
       </div>
@@ -1013,11 +1049,11 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
         </div>
         <span class="card-label red">03</span>
       </div>
-      <h3 style="margin-bottom:12px">Poor search & filtering</h3>
+      <h3 style="margin-bottom:12px">Poor search &amp; filtering</h3>
       <p style="font-size:12px;color:var(--text-dim)">No universal search — <strong style="color:var(--red)">exact IDs required</strong></p>
     </div>
   </div>
@@ -1032,7 +1068,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <span class="overline">Research</span>
       <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">What we learned in 4 weeks</h2>
       <div class="divider"></div>
-      <p class="subtitle" style="margin-bottom:20px">Methods: CX & retailer interviews, concept tests, and competitive audits of Uber Eats, DoorDash & Amazon.</p>
+      <p class="subtitle" style="margin-bottom:20px">Methods: CX &amp; retailer interviews, concept tests, and competitive audits of Uber Eats, DoorDash &amp; Amazon.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px">
         <div class="metric-card" style="text-align:center">
           <div class="metric-number accent">4wk</div>
@@ -1049,16 +1085,16 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card" style="border-left:none">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box blue">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline></svg>
           </div>
-          <span class="card-label">Speed & accuracy</span>
+          <span class="card-label">Speed &amp; accuracy</span>
         </div>
         <h3 style="font-size:15px">Agents needed speed and accuracy</h3>
       </div>
       <div class="card" style="border-left:none">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box purple">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
           </div>
           <span class="card-label purple">Status clarity</span>
         </div>
@@ -1067,7 +1103,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card" style="border-left:none">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box red">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
           </div>
           <span class="card-label red">Error risk</span>
         </div>
@@ -1139,7 +1175,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide slide-dots" id="slide-6" data-section="problem" style="justify-content:center">
   <span class="overline purple">Competitive Analysis</span>
   <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Studied leaders across food delivery & logistics
+    Studied leaders across food delivery &amp; logistics
   </h2>
   <div class="divider"></div>
   <div style="flex:1;display:flex;flex-direction:column;gap:0;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
@@ -1160,10 +1196,10 @@ html.presenter-mode #presenter-ui { display:flex; }
             <td><span class="partial">◑</span> Basic timeline</td>
             <td><span class="partial">◑</span> Basic timeline</td>
             <td><span class="check">✓</span> Highly detailed</td>
-            <td class="highlight"><span class="check">✓</span> Clear, transparent & tailored for CX</td>
+            <td class="highlight"><span class="check">✓</span> Clear, transparent &amp; tailored for CX</td>
           </tr>
           <tr>
-            <td style="color:var(--text-muted);font-weight:500">Search & filtering</td>
+            <td style="color:var(--text-muted);font-weight:500">Search &amp; filtering</td>
             <td><span class="cross">✕</span> Limited</td>
             <td><span class="cross">✕</span> Limited</td>
             <td><span class="partial">◑</span> Advanced, dense</td>
@@ -1275,7 +1311,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div style="display:flex;flex-direction:column;gap:10px">
       <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
         <div style="width:42px;height:42px;border-radius:10px;background:rgba(255,184,86,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFB856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFB856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
         </div>
         <div>
           <span class="card-label" style="color:#FFB856;margin-bottom:2px">01 · Simplify</span>
@@ -1284,7 +1320,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
       <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
         <div style="width:42px;height:42px;border-radius:10px;background:rgba(205,90,46,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CD5A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CD5A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         </div>
         <div>
           <span class="card-label" style="color:#CD5A2E;margin-bottom:2px">02 · Unify</span>
@@ -1293,7 +1329,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
       <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
         <div style="width:42px;height:42px;border-radius:10px;background:rgba(166,5,106,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6056A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6056A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
         </div>
         <div>
           <span class="card-label" style="color:#A6056A;margin-bottom:2px">03 · Ship</span>
@@ -1317,11 +1353,11 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
         <span class="card-label">Smart Search</span>
       </div>
-      <h3>Find orders & customers instantly</h3>
+      <h3>Find orders &amp; customers instantly</h3>
       <div style="padding-top:16px;border-radius:8px;overflow:hidden">
         <img src="images/Slide%209/1-Tableresults.jpg" alt="Smart search results" style="display:block;width:100%;border-radius:8px">
       </div>
@@ -1329,7 +1365,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="10" y1="18" x2="14" y2="18"></line></svg>
         </div>
         <span class="card-label purple">Advanced Filters</span>
       </div>
@@ -1341,11 +1377,11 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M3 9h18"></path><path d="M9 3v18"></path></svg>
         </div>
         <span class="card-label green">Saved Views</span>
       </div>
-      <h3>Personalized layouts & preferences</h3>
+      <h3>Personalized layouts &amp; preferences</h3>
       <div style="padding-top:16px;border-radius:8px;overflow:hidden">
         <img src="images/Slide%209/3-Saveview.jpg" alt="Saved views customization" style="display:block;width:100%;border-radius:8px">
       </div>
@@ -1360,14 +1396,14 @@ html.presenter-mode #presenter-ui { display:flex; }
   <canvas class="dots-canvas" id="canvas-10"></canvas>
   <span class="overline purple">M2 Key Features</span>
   <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Milestone 2: Depth & intelligence
+    Milestone 2: Depth &amp; intelligence
   </h2>
   <div class="divider"></div>
   <div class="grid-3" style="margin-top:8px;align-items:stretch;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
     <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         </div>
         <span class="card-label">Pizza Tracker</span>
       </div>
@@ -1381,7 +1417,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         </div>
         <span class="card-label purple">Order Details</span>
       </div>
@@ -1393,11 +1429,11 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <span class="card-label green">Predictive Dashboard</span>
       </div>
-      <h3>Trends & store-health signals</h3>
+      <h3>Trends &amp; store-health signals</h3>
       <div style="padding-top:16px;border-radius:8px;overflow:hidden">
         <img src="images/slide13_img33.png" alt="Predictive dashboard" style="display:block;width:100%;border-radius:8px">
       </div>
@@ -1447,7 +1483,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 12 — IMPLEMENTATION & ROLLOUT
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots" id="slide-12" data-section="components">
-  <span class="overline green">Implementation & Rollout</span>
+  <span class="overline green">Implementation &amp; Rollout</span>
   <h2 style="max-width:560px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Phased delivery for continuous impact
   </h2>
@@ -1544,13 +1580,13 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="display:flex;gap:14px">
         <div class="card" style="flex:1;text-align:center;border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px">
           <div class="icon-box purple" style="width:32px;height:32px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
           </div>
           <h3 style="font-size:15px;color:var(--accent2)">Fewer escalations</h3>
         </div>
         <div class="card" style="flex:1;text-align:center;border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.05);display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px">
           <div class="icon-box amber" style="width:32px;height:32px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
           </div>
           <h3 style="font-size:15px;color:var(--amber)">Faster adoption</h3>
         </div>
@@ -1561,7 +1597,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       </div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <div class="uploaded-img-wrap" style="box-shadow:0 20px 60px rgba(0,0,0,0.5);width:85%;margin-top:-100px">
+      <div class="uploaded-img-wrap" style="box-shadow:0 20px 60px rgba(0,0,0,0.5);width:85%;margin-top:-100px" data-edit-bound="1">
         <img src="images/slide13.jpg" alt="Orders dashboard predictive view" style="display:block;width:100%;border-radius:10px">
       </div>
     </div>
@@ -1581,7 +1617,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(79,128,245,0.3)">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
         </div>
         <span class="card-label blue">01</span>
       </div>
@@ -1591,17 +1627,17 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(124,90,245,0.3)">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <span class="card-label purple">02</span>
       </div>
-      <h3>Bring content & research early</h3>
+      <h3>Bring content &amp; research early</h3>
       <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Cross-functional input → <strong style="color:var(--accent2)">better mental models</strong></p>
     </div>
     <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(245,166,35,0.3)">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="icon-box amber">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
         </div>
         <span class="card-label amber">03</span>
       </div>
@@ -1647,7 +1683,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <!-- ══ QUESTIONS ══ -->
 <div class="slide slide-center" data-section="impact" style="overflow:hidden;">
-  <canvas id="thankyou-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.2s ease;z-index:0;"></canvas>
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 1; transition: opacity 1.2s; z-index: 0;" width="1920" height="1000"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div style="max-width:560px; position:relative; z-index:1;">
     <span class="overline">Thank you</span>
@@ -1807,10 +1843,13 @@ let current = 0;
 const sections = { problem:0, system:6, components:8, impact:12 };
 
 function updateNav() {
-  const section = slides[current].dataset.section;
+  const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
+  let activeIdx = 0;
+  for (let i = 0; i < entries.length; i++) {
+    if (current >= entries[i][1]) activeIdx = i;
+  }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const map = { problem:0, system:1, components:2, impact:3 };
-  document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
+  document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
@@ -1818,6 +1857,7 @@ function updateNav() {
 }
 
 function goTo(i) {
+  if (location.hash === '#presenter') return; // no-op in presenter window
   if (i<0||i>=total||i===current) return;
   const prev = slides[current];
   const isHorizontal = (current===6&&i===7)||(current===7&&i===6);
@@ -1830,7 +1870,7 @@ function goTo(i) {
   } else if (i>current) {
     prev.classList.add('exit-up'); setTimeout(()=>prev.classList.remove('exit-up'),500);
   }
-  current=i; slides[current].classList.add('active'); updateNav();
+  current=i; slides[current].classList.add('active'); updateNav(); updateNotesPanel();
   if (typeof deckSend === 'function') deckSend({type:'nav',index:current,total});
 }
 
@@ -1840,6 +1880,7 @@ function goToSection(n){ goTo(sections[n]); }
 
 // Keyboard nav
 document.addEventListener('keydown', e=>{
+  if (location.hash === '#presenter') return;
   if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
   if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();nextSlide();}
   else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevSlide();}
@@ -1939,8 +1980,9 @@ function saveDeck() {
   a.click(); URL.revokeObjectURL(a.href);
 }
 
-// Capture phase keyboard shortcuts
+// Capture phase keyboard shortcuts (main window only)
 document.addEventListener('keydown', e => {
+  if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
   if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
   if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
@@ -1953,7 +1995,7 @@ document.addEventListener('keydown', e => {
 // ═══════ NOTES + PRESENTER MODE ═══════
 let _presenterWin = null;
 let _bc = null;
-try { _bc = new BroadcastChannel('deck-sync-v1'); } catch(e) {}
+try { _bc = new BroadcastChannel('deck-sync:' + location.pathname); } catch(e) {}
 
 function deckSend(msg) {
   if (_bc) try { _bc.postMessage(msg); } catch(e) {}
@@ -1993,7 +2035,8 @@ function updateNotesPanel() {
 }
 
 function openPresenter() {
-  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','deck-presenter','width=720,height=580,resizable=yes');
+  if (_presenterWin && !_presenterWin.closed) { _presenterWin.focus(); return; }
+  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','_blank','width=1080,height=680,resizable=yes');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2037,14 +2080,40 @@ document.addEventListener('DOMContentLoaded', () => {
       pTimer.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
     },1000);
 
-    document.getElementById('p-prev-btn').onclick=()=>{ pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); };
-    document.getElementById('p-next-btn').onclick=()=>{ pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); };
+    function pNav(delta) {
+      if (delta > 0 && pIdx >= total-1) {
+        // Navigate both windows to next project
+        var pBtns = Array.from(document.querySelectorAll('.p-project-btn'));
+        var curIdx = pBtns.findIndex(function(b){ return !b.dataset.href; });
+        var nxt = pBtns[curIdx + 1];
+        var nextHref = nxt && nxt.dataset.href;
+        if (nextHref) {
+          if(window.opener&&!window.opener.closed) try{ window.opener.location.href = nextHref; }catch(e){}
+          window.location.href = nextHref + '#presenter';
+        }
+      } else {
+        pRefresh(pIdx+delta);
+        deckSend({type:'nav',index:pIdx});
+        if(window.opener&&!window.opener.closed) try{window.opener.goTo(pIdx);}catch(e){}
+      }
+    }
+    document.getElementById('p-prev-btn').onclick=()=>pNav(-1);
+    document.getElementById('p-next-btn').onclick=()=>pNav(1);
+    document.querySelectorAll('.p-project-btn[data-href]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        var href = btn.dataset.href;
+        if (window.opener && !window.opener.closed) {
+          try { window.opener.location.href = href; } catch(e) {}
+        }
+        window.location.href = href + '#presenter';
+      });
+    });
     if(pReset) pReset.onclick=()=>{ timerStart=Date.now(); };
 
     document.addEventListener('keydown',e=>{
       if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'||e.target.isContentEditable) return;
-      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); }
-      if(e.key==='ArrowLeft') { e.preventDefault(); pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); }
+      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pNav(1); }
+      if(e.key==='ArrowLeft') { e.preventDefault(); pNav(-1); }
     });
 
   } else {
@@ -2056,6 +2125,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if(d.type==='nav') {
         goTo(d.index);
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+      }
+      if(d.type==='next-project') {
+        if(typeof window._navGoNextProject==='function') window._navGoNextProject();
       }
       if(d.type==='req-sync')
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
@@ -2098,7 +2170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(slide.classList.contains('active'))start();
   window.addEventListener('resize',()=>{if(raf)resize();});
 })();
-</script>
+</script><canvas id="dot-wave-canvas" width="1920" height="1060" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas>
 <!-- ══ Edit toolbar ══ -->
 <div class="edit-toolbar">
   <span class="edit-badge">✏ Editing</span>
@@ -2106,12 +2178,12 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">[]</script>
+<script id="deck-notes-data" type="application/json">["This project reimagined Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer customer support teams use daily. We set out to reduce information overload and make order tracking clear, fast, and reliable. and lower the escalations to our CX teams.","CX agents (our internal support) teams were juggling multiple tools and calls were taking too long. Prior to launching some features for our retailers support team, the first line of support for customers ordering on our white product sites, those teams weren't able to see order information or cancel orders, or provide refunds, or even see the orders themselves. In those cases their support team would need to escalate to our CX agents.\nMy goal was simple — one place for truth, faster answers, fewer escalations","We found three main blockers — data lived everywhere, agents couldn’t see order details, and search was unreliable. That combination slowed every interaction.","We ran interviews and benchmarked tools like Amazon and Uber Eats. Agents kept saying, ‘I just need to find the order fast and trust what I see.’ That became our north star","We looked at competitor tools\nDoorDash: restaurant-facing clarity; weak agent tools\nAmazon Delivery: strong tracking & predictive logistics; too complex for CX use\nGap: no solution combined clarity + depth for retail support agents\n\nOur target: Amazon-level visibility + doordahs-like efficiency, but tailored to retail support and our CX agents.\n","Looking across leaders in the industry we try to map CX needs to unique differentiators that can give us an edge over the competition. \nFor instacart those features were clear order visibility and order history to support costumer calls concerns, smart search, predictive dashboards.","We also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nWe decided to focused on clarity over complexity."," We created a new easy to follow layout, rebuilt it on the current design system of the time, and launched in phases — starting with the most painful parts first for quick wins","Milestone one was all about data management, how to find orders and customers fast, how to navigate data to narrow results, and how to save personalized results and preferences so CX support had the ability to customize their workflows","The ‘pizza tracker’ visualized the order journey — agents instantly saw where something got stuck. order details gave agents context on customers in seconds, and the predictive dashboard started flagging issues before they became calls.","We moved quickly — just four weeks from kickoff to prototype. We tested with CX teams weekly and worked closely with engineering to make sure everything matched our design system\n\nRapid 4-week sprint\nCo-creation with CX + retailers - Cycle of reviews and feedback - presentation to Krogger, Costco, Hannafords\nEng alignment was sequenced and kickoff. We Started with Backend, move to m1 when design were able to be handed off.","We shipped in phases. The first release gave immediate time savings, and by month four we had predictive widgets in production — all on our system foundations.”\n\nM1:   New look,  + universal search foundation + Initial filters.\nM2: Pizza tracker + new actions features like: cancel, reschedule + more filters to search\nM3-M4: Predictive widgets, order history, delivery photos, chat, Shopper Location, more automation. M4 is still being deliverated on, since m3 and ai are not a big thing, which it wasn't when we started the project.","Within two months, handling time dropped forty percent. We consolidated 4 different internal dashboards into a new one, that provided managers and customer support a lot more clarity on their business and resolved customer issues faster leading to also higher costumer satisfaction with delivery.\nEscalations fell to our internal CX team fell since we empowered Retailer CX teams to handle issues themselves and faster.\nand because everything lived in the design system, new features rolled out faster across teams","Biggest lesson — ship value early and learn fast, so you can iterate. \nHaving content design and research in every review made a huge difference specially when moving that fast. We stayed close to our users mental models\nAnd clarity always beats cleverness - so balance usability and accuracy, without making the tool so complex that no-one can use it. ","This project reminded me that great internal tools aren’t about showing more data — they’re about giving people the confidence to act. We turned complexity into clarity, and that changed how our teams work\n—cutting handling time 40%, driving adoption, and lowering operational costs, lowering escalations and saving the company money. "]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
   <div class="np-header">
-    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">15</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
+    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">16</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
     <button onclick="openPresenter()">↗ Presenter View</button>
   </div>
   <textarea id="np-textarea" placeholder="Type speaker notes for this slide…"></textarea>
@@ -2119,6 +2191,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- ── Presenter UI: shown when URL has #presenter ── -->
 <div id="presenter-ui">
+  <div class="p-projects">
+    <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
+    <button class="p-project-btn" data-href="../tooling-ds/index.html">Tooling DS</button>
+    <button class="p-project-btn p-project-btn--active">Orders Dashboard</button>
+    <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
+  </div>
   <div class="p-header">
     <div class="p-slide-info">
       <div class="p-overline">Presenter View</div>
@@ -2145,5 +2223,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script src="../shared/nav.js"></script>
-</body>
-</html>
+
+
+</body></html>
