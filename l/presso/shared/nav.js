@@ -115,4 +115,77 @@
       }, ANIM + 20 + FADE_OUT + 20);
     });
   });
+
+  /* ── Auto-advance to next project on last slide (→ or Space) ── */
+  function goNextProject() {
+    // Also callable from presenter window via window._navGoNextProject
+    var projects = Array.from(document.querySelectorAll('.nav-project'));
+    var expandedIdx = projects.findIndex(function (p) {
+      return p.dataset.state === 'expanded';
+    });
+    if (expandedIdx === -1 || expandedIdx === projects.length - 1) return;
+    var nextProject = projects[expandedIdx + 1];
+    var pill = nextProject.querySelector('.nav-project-pill');
+    var href = pill && pill.dataset.href;
+    if (!href) return;
+
+    var expanded = projects[expandedIdx];
+    var bigW   = expanded.getBoundingClientRect().width;
+    var smallW = nextProject.getBoundingClientRect().width;
+
+    expanded.style.width   = bigW + 'px';
+    nextProject.style.width = smallW + 'px';
+
+    requestAnimationFrame(function () {
+      expanded.dataset.state    = 'collapsing';
+      nextProject.dataset.state = 'expanding';
+      requestAnimationFrame(function () {
+        expanded.style.width   = smallW + 'px';
+        nextProject.style.width = bigW + 'px';
+      });
+    });
+
+    setTimeout(function () {
+      document.documentElement.style.transition = 'opacity ' + FADE_OUT + 'ms ease';
+      document.documentElement.style.opacity = '0';
+    }, ANIM + 20);
+
+    setTimeout(function () {
+      window.location.href = href;
+    }, ANIM + 20 + FADE_OUT + 20);
+  }
+  window._navGoNextProject = goNextProject;
+
+  function goToProject(href) {
+    if (!href) return;
+    document.documentElement.style.transition = 'opacity ' + FADE_OUT + 'ms ease';
+    document.documentElement.style.opacity = '0';
+    setTimeout(function () { window.location.href = href; }, FADE_OUT + 20);
+  }
+  window._navGoToProject = goToProject;
+
+  // Keyboard: → or Space on last slide
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowRight' && e.key !== ' ') return;
+    var nextBtn = document.getElementById('nextBtn');
+    if (!nextBtn || !nextBtn.disabled) return; // not on last slide
+    var inText = document.activeElement &&
+      (document.activeElement.isContentEditable ||
+       document.activeElement.tagName === 'TEXTAREA' ||
+       document.activeElement.tagName === 'INPUT');
+    if (inText) return;
+    e.preventDefault();
+    goNextProject();
+  });
+
+  // Button click: disabled buttons don't fire 'click', but pointerup still bubbles
+  var navEl = document.querySelector('nav');
+  if (navEl) {
+    navEl.addEventListener('pointerup', function (e) {
+      var nextBtn = document.getElementById('nextBtn');
+      if (nextBtn && nextBtn.disabled && nextBtn.contains(e.target)) {
+        goNextProject();
+      }
+    });
+  }
 }());
