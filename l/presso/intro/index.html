@@ -562,7 +562,8 @@ body.edit-mode #notes-panel { display:flex; }
 html.presenter-mode body { overflow:auto; margin:0; background:#080b12; }
 html.presenter-mode .slide, html.presenter-mode nav,
 html.presenter-mode .progress-bar, html.presenter-mode .edit-toolbar,
-html.presenter-mode #notes-panel { display:none !important; }
+html.presenter-mode #notes-panel, html.presenter-mode .mobile-gate,
+html.presenter-mode #slides { display:none !important; }
 #presenter-ui { display:none; min-height:100vh; flex-direction:column;
   background:#080b12; color:#e2e8f4; font-family:inherit; }
 html.presenter-mode #presenter-ui { display:flex; }
@@ -609,6 +610,21 @@ html.presenter-mode #presenter-ui { display:flex; }
   cursor:pointer; font-family:inherit; transition:all .15s;
 }
 .p-reset-btn:hover { color:rgba(226,232,244,0.8); border-color:rgba(255,255,255,0.25); }
+.p-projects {
+  display:flex; gap:6px; padding:10px 28px; flex-shrink:0;
+  border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
+}
+.p-project-btn {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
+  transition:all .15s; letter-spacing:0.02em;
+}
+.p-project-btn:hover { background:rgba(79,128,245,0.15); border-color:rgba(79,128,245,0.35); color:#e2e8f4; }
+.p-project-btn--active {
+  background:rgba(79,128,245,0.18); border-color:rgba(79,128,245,0.45);
+  color:#4f80f5; cursor:default; pointer-events:none;
+}
 
 .mobile-gate {
   display: none;
@@ -638,21 +654,24 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div class="nav-center">
     <!-- Intro — expanded (active) -->
     <div class="nav-project" data-project="intro" data-state="expanded">
+      <button class="nav-project-pill" data-project="intro">Intro</button>
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
+        <button class="nav-btn" onclick="goToSection('intro')">Agenda</button>
+        <button class="nav-btn" onclick="goToSection('about')">About Me</button>
+        <button class="nav-btn" onclick="goToSection('career')">Career</button>
       </div>
     </div>
     <!-- Tooling DS — collapsed -->
     <div class="nav-project" data-project="tds" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../tooling-ds/index.html">Tooling DS</button>
+      <button class="nav-project-pill" data-href="../tooling-ds/index.html"><span>Tooling DS</span></button>
     </div>
     <!-- Orders Dashboard — collapsed -->
     <div class="nav-project" data-project="orders" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+      <button class="nav-project-pill" data-href="../orders-dashboard/index.html"><span>Orders Dashboard</span></button>
     </div>
     <!-- Shopper Northstar — collapsed -->
     <div class="nav-project" data-project="northstar" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../northstar/index.html">Shopper Northstar</button>
+      <button class="nav-project-pill" data-href="../northstar/index.html"><span>Shopper Northstar</span></button>
     </div>
   </div>
   <div class="nav-right">
@@ -881,13 +900,16 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0 };
+const sections = { intro:0, about:2, career:3 };
 
 function updateNav() {
-  const section = slides[current].dataset.section;
+  const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
+  let activeIdx = 0;
+  for (let i = 0; i < entries.length; i++) {
+    if (current >= entries[i][1]) activeIdx = i;
+  }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const map = { intro:0 };
-  document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
+  document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
@@ -1170,8 +1192,9 @@ function saveDeck() {
   a.click(); URL.revokeObjectURL(a.href);
 }
 
-// Capture phase: intercepts before slide-navigation listener
+// Capture phase: intercepts before slide-navigation listener (main window only)
 document.addEventListener('keydown', e => {
+  if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
   if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
   if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
@@ -1184,7 +1207,7 @@ document.addEventListener('keydown', e => {
 // Dual channel: BroadcastChannel (same-origin http/https) + postMessage (file://, window.open)
 let _presenterWin = null;
 let _bc = null;
-try { _bc = new BroadcastChannel('deck-sync-v1'); } catch(e) {}
+try { _bc = new BroadcastChannel('deck-sync:' + location.pathname); } catch(e) {}
 
 function deckSend(msg) {
   // BroadcastChannel — works on http/https same origin
@@ -1228,7 +1251,8 @@ function updateNotesPanel() {
 }
 
 function openPresenter() {
-  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','deck-presenter','width=720,height=580,resizable=yes');
+  if (_presenterWin && !_presenterWin.closed) { _presenterWin.focus(); return; }
+  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','_blank','width=1080,height=680,resizable=yes');
 }
 
 // All init deferred so DOM elements and hash are fully settled
@@ -1276,14 +1300,40 @@ document.addEventListener('DOMContentLoaded', () => {
       pTimer.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
     },1000);
 
-    document.getElementById('p-prev-btn').onclick=()=>{ pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); };
-    document.getElementById('p-next-btn').onclick=()=>{ pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); };
+    function pNav(delta) {
+      if (delta > 0 && pIdx >= total-1) {
+        // Navigate both windows to next project
+        var pBtns = Array.from(document.querySelectorAll('.p-project-btn'));
+        var curIdx = pBtns.findIndex(function(b){ return !b.dataset.href; });
+        var nxt = pBtns[curIdx + 1];
+        var nextHref = nxt && nxt.dataset.href;
+        if (nextHref) {
+          if(window.opener&&!window.opener.closed) try{ window.opener.location.href = nextHref; }catch(e){}
+          window.location.href = nextHref + '#presenter';
+        }
+      } else {
+        pRefresh(pIdx+delta);
+        deckSend({type:'nav',index:pIdx});
+        if(window.opener&&!window.opener.closed) try{window.opener.goTo(pIdx);}catch(e){}
+      }
+    }
+    document.getElementById('p-prev-btn').onclick=()=>pNav(-1);
+    document.getElementById('p-next-btn').onclick=()=>pNav(1);
     if(pReset) pReset.onclick=()=>{ timerStart=Date.now(); };
+    document.querySelectorAll('.p-project-btn[data-href]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        var href = btn.dataset.href;
+        if (window.opener && !window.opener.closed) {
+          try { window.opener.location.href = href; } catch(e) {}
+        }
+        window.location.href = href + '#presenter';
+      });
+    });
 
     document.addEventListener('keydown',e=>{
       if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'||e.target.isContentEditable) return;
-      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); }
-      if(e.key==='ArrowLeft') { e.preventDefault(); pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); }
+      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pNav(1); }
+      if(e.key==='ArrowLeft') { e.preventDefault(); pNav(-1); }
     });
 
   } else {
@@ -1296,6 +1346,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if(d.type==='nav') {
         goTo(d.index);
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+      }
+      if(d.type==='next-project') {
+        if(typeof window._navGoNextProject==='function') window._navGoNextProject();
       }
       if(d.type==='req-sync')
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
@@ -1532,7 +1585,7 @@ if(false)(function(){
 </script><canvas id="dot-wave-canvas" width="1920" height="1111" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["You know my name already. \n\nI'm a level 6 design systems designer at Instacart — \n\nI help teams design with more clarity and flexibility -  \nbridge \ndesign and engineer development, \nscale faster and lower costsa","For the agenda\nI'll just share a little bit about me and my career \nwe'll focus on my most current project","I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit  \n\ni'm love languages\n\ni host a board game night every month to foster community here in sf. \n\nI love connecting people through structure and storytelling\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.","I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 8 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Centered Design, User Experience Design and Graphic Design \n\ncareers like good systems and products, you have to iterate— \n\nAnd i think all my side quests added perspetive to my work.","Last 3 jobs:\n\nStarted EA in Austin TX.. \n\nEmployee Experience. \nI built two big tools a enterprise dashboard for employees, and a learning management system. \nMy first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace.\nCollision side\nPassangers - drivers - enterprise insurance group,  \nHere i was also part of a Lyft tooling design system group, w tooling designers hospitals, hotels, \nand we created a repository of reusable patterns to use across our tools \n\nAfter lyft, I joined instacart been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. We now also have a hardware division called Caper. \n\nAt first I was building building enterprise tooling for retailers and also experiences for the shopper mobile app.. \n\nI've spent the last 2.5 years leading a design system for tooling I built from 0-1\n\nCurrently serving 4 tools, with 2 more adoptions in the horizon, \nthat translate to roughly 25 designers consuming TDS. & multiple engineer across 18 teams. \n\nPAUSE: Any questions so far?","Huge project. it's been now 2.5 years. Lots of context, \nGonna try to hit on the points you are interested on, and I can answer questions at the end.\n\nMy role was Lead System Designer for tooling\n\n\n2 eng managers. \nTwo lead engs on my team. \n7 others eng on away teams.\nnew eng ad-hoc contributors weekly\nOne DPM: time line coordination and admin tasks\n2 other designers on caper and marketplace.\nI was given a design contractor resource to help get things of the ground. \n\nplus 3 directors on strategy, we just finished planning with them,. \n\nVery horizontal enablement role.","Quick overview\n\nWe have 4 platforms with multiple legacy libraries. \n\nTeams shipped independently with no shared system contract\n\n\nBottleneck for scaling.  Engineers not knowing how to build a design mock in code - ending in fragmentation with hard coded components - Resulting in High delivery cost. \n\nAll leading to inconsistent experiences especially for the portion of our users that use several of our products.","Landscape of libraries.\n\nLegacy libraries, not fully deprecated\n\ndifficult for engineers to follow design. \nIt was difficult for designers, specially new ones to onboard and learn how to build mocks.\n\nEngineers had 5 different storybooks, lots of confusion.","We'll see the full audit in a second, but here you can see some of our problem.\n\nSame pattern would look different in other platforms, or sometimes across features on the same platform. \n","From the designer perspetive, they would see tons of similar options, hundreds of colors, buttons, font styles.","a small glimpse of my audit. of over 1000+ components and patterns across our tools.\n\nInconsistency eroded trust with users\n\nour design-to-dev cycles were slow so it increased engineering overhead\n\n\nat the time we had Low design and engineer satisfaction and efficiency\n\n It wasn't just  bad UX, it was also poorly executed craft. \n\nand the real cost wasn't even aesthetics. It was coordination.","Here is a timeline of how of focus for the first & second year. \n\nvery high level, we'll zone into some these more in a second.\n\nFirst year theme was alignment. \n\nLock down tokens and primitives\nSeparate what must be consistent from what can be changed.\nDevelop structures and processes\nSupport adoption and migrations.\n\nAlso ongoing through the year was Research, audits, feedback loops, \n all that to inform the path forward.\n\nThe goal was to building the bridges with other teams for better collaboration. ","Second year, maturity milestones.\n\nit was about improving perfomance, expand the library, add self-serve \n\nGovernance to relieve bottleneck and enable innovation from designers..\n\nMore niche product team workstreams  for further quality and consistency\n• Ai principles and systems.\n• A new navigation bar strategy for all enterprise offering .\n\nWhile on the side I continue supporting migration, and component gaps, and and juggling new contributions. ","Getting a little ahead here,.\n\n you can see how we started standarizing layouts with atoms, components and pattterns.","We wennt from different ways to execute a form, \n\nto standarize layouts., with visual consistency, and predictable behavior across tools\n\nUsers learned our how to use our tools once, not 10 times","So How did we get there\n\n\nI rebuilt the hierarchy so TDS could become the single source of truth.. \n\nSome elements were centralized and locked\n\nComponents were opinionated but flexible\n\npatterns, were springboards for designers workflows serving as suggestions.\n\nI optimized for flexibility, not uniformity.","This is the reorganized structure. We have a complex ecosystem, with many different needs.\n\nWe have shared color guidelines from brand with tokens- from here we can control all vertical cascading theming. this helps with this like the current rebrand or theming.\n\nAssets is where we have shared system icons and images, some photography. That's the DNA of our brand\n\nAnd then our 3 vertical's figma libraries:\n\nPantry for consumers. \nTDS for enterprise tooling.\nCaper DS for our hardware cart tablets. \n\nscale by avoiding bloating with patterns that are not relevant to that vertical.'s designer..\n\n----------------\n\nFor example, our enteprise tools don't need a funnel, or cart pattern. Our marketplace doesn't need tables, or data viz, or modals - "," on the dev side is straight forward\n\n headless component development\n\nthat we style for each vertical via system tokens","once structure was define. \n\nI ran of explorations with stakeholders and the system consumer (Designers) \n\nWe aligned on the basics — color, type, spacing \n\nWe are now upgrading to component level tokens usage, to add theming for our white label products and dark mode.","Here is our token architecture\n\nthe Value, feeds into primtives, then to system semantics, and finally to component level tokens.\n\nThis give us flebility, We can get as  broad or granular as we need to.\n\n\n\n\n--------------\n\nFor example 1: Our brand color on tds differs from the brighter more peppy consumer app brand primary color\n\nExample 2: at the tds level where it affects everywhere it appears, if we change the brand color, it would change ctas, but say we want ctas to be orange instead of kale, while keeping the nav bar our brnd color, instead of changing the brand level, we would hcange the component level token.\n\n--------------\nOur token dictionary maps directly with Eng, and we collaborate on defining the schema that makes sense. We were just having discussion about how to name things across web, mobile ios, mobile android and figma. ","After that phase \nWe designed and developed core components. \n\nMade sure they were built with explicit anatomy\nThat the Variants were well documented (and matched to storybook)\nDefine clear extension libraries for team\n\nI made sure that design and dev aligned on intent and execution. \n\n----\n\nFor prioritization i used audit i shared earlier to find most used core components, those are the ones with highest impact\nand sequenced a foundational component migration\n\nafter that, We expanded coverage to more complex organism.. \n\nGoal: aiming for the 80% most used components. \nand requirements is that are used in multiple tools. with 3 clear use cases or more. \n\nassure  cost of building them would be an amortized ROI. ","not a lot to see here a little bit of craft: \n\nCore components\n\nButtons, links, ","Markers, pills, inputs","Expanded set secondary\n\n for avatar, tooltips, accordions.","More complex organism like cards or feature annoucements.","More complex organism like cards or feature annoucements.","Patterns and templates are to me the most powerful way to create alignment at scale, specially on platform. ","These were layouts that defined standardized pages\n\nWe had some for \n\nData visualization and items lists\nItem Details...","Single Step and multistep forms. ","Editor","Autho\n\nMore examples online or I can send appendix async.","way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need, ","way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need,","\nfor eng parity\nGoal with figma is to be 1:1 to storybook. \nboth on nomeclature, and component functionality.\n\nmy hand off documentation includes variants and props, annotated components with colors, spacing, layout and tokens. \n\nThis means we have sometimes gnarly syncs with IOS, Android, Web eng and designers to align on execution and naming, \nAnd where i learn the limitations on the code bases for the diffferent implemetnations.\n\nThis helped to\n• reduced Q&A cycles\n• Fewer Slack threads \n• Faster merges, and more reliable releases\n\nOverall just happier engineers","\nend of h2...  I began explorations on new AI styles and interactions., \n\nTop down directive to develop more ai features in product.\n\nproduct teams got out of sync quickly. \n\nSo i ran a quick alignment sprint with the leads. \n\nAnd we came up with principles of usage, a new look and feel, a mini system for anything that was ai. . \n\nEnded the year 5 components ready....","...special AI buttons, AI assistant chat drawers, insights and suggestions cards, and AI loaders. ","To Recap\n\nWe created a cohesive visual language, and a reusable library of atomics, tokens, components and patterns. \n\nDocumentation, hand off process, contribution process,  all aided on  accelerate delivery & higher satisfaction with designers, engineers, product. \n\ni think Most importantly at a reduced design and eng cost.\n\nAnd we built structures that helped scale the system, and help with flexibility and getting design and eng unblocked to build what they actually need. (built governance, support channels, crits, feedback loops)","Ton of work, we are not done.\n\nFresh from perf review recap\n\nWe are currently at 17.5% (Jan 2025) & growing (migrating old features. but any new pages are not fully bult in TDS)\n\nSeven Hundred & 86 thousand inserts across 18 \nIncrease library speed by reducing almost half a million. nodes to 200k (lots of streamlining of components)\nPositive Satisfaction hit 90% across design and eng. in the latest Dec poll.\n72% of people report faster workflows.\nAdded 52 new components, getting us to a total of 144.\n67% are available in storybook - 96 components.\nadded 47 components to our usage docs.","Some personal takeaways: \n\nGovernance and alignment beats speed, Get the stakeholders goals, design needs, and eng resourcing aligned early on.\n\nBeing non-blocking and having support channels sustains growth, and adds flexibility - \n\nand design systems are never done, they are living organism. So you have to consistently take in feedback and iterate, builds trust. \nand that helps product teams suceed.","That's all I have for today, happy to answer questions "]</script>
+<script id="deck-notes-data" type="application/json">["You know my name already. \n\nI'm a level 6 design systems designer at Instacart — \n\nI help teams design with more clarity and flexibility -  \nbridge \ndesign and engineer development, \nscale faster and lower costsa", "For the agenda\nI'll just share a little bit about me and my career \nwe'll focus on my most current project", "I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit  \n\ni'm love languages\n\ni host a board game night every month to foster community here in sf. \n\nI love connecting people through structure and storytelling\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.", "I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 8 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Centered Design, User Experience Design and Graphic Design \n\ncareers like good systems and products, you have to iterate— \n\nAnd i think all my side quests added perspetive to my work.", "Last 3 jobs:\n\nStarted EA in Austin TX.. \n\nEmployee Experience. \nI built two big tools a enterprise dashboard for employees, and a learning management system. \nMy first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace.\nCollision side\nPassangers - drivers - enterprise insurance group,  \nHere i was also part of a Lyft tooling design system group, w tooling designers hospitals, hotels, \nand we created a repository of reusable patterns to use across our tools \n\nAfter lyft, I joined instacart been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. We now also have a hardware division called Caper. \n\nAt first I was building building enterprise tooling for retailers and also experiences for the shopper mobile app.. \n\nI've spent the last 2.5 years leading a design system for tooling I built from 0-1\n\nCurrently serving 4 tools, with 2 more adoptions in the horizon, \nthat translate to roughly 25 designers consuming TDS. & multiple engineer across 18 teams. \n\nPAUSE: Any questions so far?"]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -1545,6 +1598,12 @@ if(false)(function(){
 
 <!-- ── Presenter UI: shown when URL has #presenter ── -->
 <div id="presenter-ui">
+  <div class="p-projects">
+    <button class="p-project-btn p-project-btn--active">Intro</button>
+    <button class="p-project-btn" data-href="../tooling-ds/index.html">Tooling DS</button>
+    <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+    <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
+  </div>
   <div class="p-header">
     <div class="p-slide-info">
       <div class="p-overline">Presenter View</div>

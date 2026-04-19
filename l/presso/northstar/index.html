@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" style="opacity: 1; transition: opacity 380ms cubic-bezier(0.4, 0, 0.2, 1);"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Northstar Vision — Instacart Shopper App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;family=Noto+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
 <style>
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -290,36 +289,73 @@ body.edit-mode #notes-panel { display:flex; }
 html.presenter-mode body { overflow:auto; margin:0; background:#080b12; }
 html.presenter-mode .slide, html.presenter-mode nav,
 html.presenter-mode .progress-bar, html.presenter-mode .edit-toolbar,
-html.presenter-mode #notes-panel { display:none !important; }
+html.presenter-mode #notes-panel, html.presenter-mode .mobile-gate,
+html.presenter-mode #slides { display:none !important; }
 #presenter-ui { display:none; min-height:100vh; flex-direction:column;
   background:#080b12; color:#e2e8f4; font-family:inherit; }
 html.presenter-mode #presenter-ui { display:flex; }
+
 .p-header {
   display:flex; align-items:center; gap:20px; padding:16px 28px;
   border-bottom:1px solid rgba(79,128,245,0.18); background:rgba(79,128,245,0.035);
   flex-shrink:0;
 }
 .p-slide-info { flex:1; min-width:0; }
-.p-overline { font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(79,128,245,0.7); margin-bottom:2px; }
-.p-slide-num { font-size:15px; font-weight:700; color:#e2e8f4; }
-.p-slide-title { font-size:12px; color:rgba(226,232,244,0.55); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.p-overline { font-size:12px; letter-spacing:0.2em; color:#4f80f5; font-weight:700; text-transform:uppercase; }
+.p-slide-num { font-size:24px; font-weight:700; color:#e2e8f4; margin:4px 0 2px; }
+.p-slide-title { font-size:13px; color:rgba(226,232,244,0.55); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .p-controls { display:flex; gap:8px; flex-shrink:0; }
-.p-btn { padding:6px 18px; background:rgba(79,128,245,0.13); border:1px solid rgba(79,128,245,0.28); color:var(--accent); border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s; }
-.p-btn:hover { background:rgba(79,128,245,0.25); }
-.p-timer { font-size:22px; font-weight:700; letter-spacing:0.04em; color:#e2e8f4; font-variant-numeric:tabular-nums; flex-shrink:0; min-width:64px; text-align:right; }
+.p-btn {
+  background:rgba(79,128,245,0.12); border:1px solid rgba(79,128,245,0.25);
+  color:#4f80f5; border-radius:8px; padding:9px 20px; font-size:13px;
+  cursor:pointer; font-family:inherit; font-weight:600; letter-spacing:0.04em;
+  transition:background .15s;
+}
+.p-btn:hover { background:rgba(79,128,245,0.24); }
+.p-timer {
+  font-size:30px; font-weight:300; color:rgba(226,232,244,0.4);
+  font-variant-numeric:tabular-nums; letter-spacing:0.04em; min-width:72px; text-align:right; flex-shrink:0;
+}
 .p-body { display:flex; flex:1; overflow:hidden; }
 .p-notes-section { flex:1; display:flex; flex-direction:column; padding:22px 28px; min-width:0; }
-.p-next-section { width:260px; flex-shrink:0; padding:22px 24px; border-left:1px solid rgba(79,128,245,0.12); background:rgba(79,128,245,0.025); }
-.p-label { font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(79,128,245,0.6); margin-bottom:10px; }
-.p-next-title { font-size:14px; font-weight:600; color:rgba(226,232,244,0.8); line-height:1.4; }
-.p-reset-btn { background:rgba(79,128,245,0.1); border:1px solid rgba(79,128,245,0.25); color:var(--accent); border-radius:8px; padding:6px 14px; font-size:11px; cursor:pointer; font-family:inherit; font-weight:600; }
-#p-notes { flex:1; background:rgba(79,128,245,0.04); border:1px solid rgba(79,128,245,0.18); border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit; font-size:14px; line-height:1.7; resize:none; outline:none; }
+.p-next-section {
+  width:230px; flex-shrink:0; border-left:1px solid rgba(79,128,245,0.13);
+  padding:22px 22px; display:flex; flex-direction:column; background:rgba(79,128,245,0.02);
+}
+.p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
+#p-notes {
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(79,128,245,0.18);
+  border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
+  font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
+}
 #p-notes::placeholder { color:rgba(226,232,244,0.2); }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
+.p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-reset-btn {
+  margin-top:auto; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
+  cursor:pointer; font-family:inherit; transition:all .15s;
+}
+.p-reset-btn:hover { color:rgba(226,232,244,0.8); border-color:rgba(255,255,255,0.25); }
+.p-projects {
+  display:flex; gap:6px; padding:10px 28px; flex-shrink:0;
+  border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
+}
+.p-project-btn {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
+  transition:all .15s; letter-spacing:0.02em;
+}
+.p-project-btn:hover { background:rgba(79,128,245,0.15); border-color:rgba(79,128,245,0.35); color:#e2e8f4; }
+.p-project-btn--active {
+  background:rgba(79,128,245,0.18); border-color:rgba(79,128,245,0.45);
+  color:#4f80f5; cursor:default; pointer-events:none;
+}
 </style>
 <link rel="stylesheet" href="../shared/nav.css">
 </head>
-<body>
+<body class="has-navigated">
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -330,20 +366,21 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div class="nav-center">
     <!-- Intro — collapsed -->
     <div class="nav-project" data-project="intro" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../intro/index.html">Intro</button>
+      <button class="nav-project-pill" data-href="../intro/index.html"><span>Intro</span></button>
     </div>
     <!-- Tooling DS — collapsed -->
     <div class="nav-project" data-project="tds" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../tooling-ds/index.html">Tooling DS</button>
+      <button class="nav-project-pill" data-href="../tooling-ds/index.html"><span>Tooling DS</span></button>
     </div>
     <!-- Orders Dashboard — collapsed -->
     <div class="nav-project" data-project="orders" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+      <button class="nav-project-pill" data-href="../orders-dashboard/index.html"><span>Orders Dashboard</span></button>
     </div>
     <!-- Shopper Northstar — expanded (active) -->
     <div class="nav-project" data-project="northstar" data-state="expanded">
+      <button class="nav-project-pill" data-project="northstar">Shopper Northstar</button>
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
+        <button class="nav-btn active" onclick="goToSection('problem')">Problem</button>
         <button class="nav-btn" onclick="goToSection('system')">System</button>
         <button class="nav-btn" onclick="goToSection('components')">Transformation</button>
         <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
@@ -354,20 +391,20 @@ html.presenter-mode #presenter-ui { display:flex; }
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
     <span class="slide-counter" id="counter">1 / 15</span>
     <div class="nav-arrows">
-      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
     </div>
   </div>
 </nav>
-<div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
 <div id="slides">
 
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-1" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-1"></canvas>
+<div class="slide slide-dots active" id="slide-1" data-section="problem">
+  <canvas class="dots-canvas" id="canvas-1" width="1646" height="925"></canvas>
   <div class="cover-glow" style="top:-10%;left:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
 
   <div class="cover-right">
@@ -416,8 +453,8 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 2 — CONTEXT
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots layout-vc" id="slide-2" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-2"></canvas>
-  <span class="overline">Context & Goal</span>
+  <canvas class="dots-canvas" id="canvas-2" width="1646" height="925"></canvas>
+  <span class="overline">Context &amp; Goal</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:660px">
     Shoppers needed a more cohesive, human app experience
   </h2>
@@ -426,7 +463,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <span class="card-label purple">Goal</span>
       </div>
@@ -446,10 +483,10 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 
   <div class="slide2-imgs">
-    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)" data-edit-bound="1">
       <img src="images/39.png" alt="Shopper app screen">
     </div>
-    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;margin-top:28px;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)">
+    <div class="uploaded-img-wrap" style="width:320px;flex-shrink:0;margin-top:28px;border-radius:35px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)" data-edit-bound="1">
       <img src="images/41.png" alt="Shopper app screen">
     </div>
   </div>
@@ -470,7 +507,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
         </div>
         <span class="card-label red">01</span>
       </div>
@@ -480,7 +517,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
         </div>
         <span class="card-label red">02</span>
       </div>
@@ -490,7 +527,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
         <span class="card-label red">03</span>
       </div>
@@ -515,7 +552,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <p class="subtitle" style="margin-top:20px;margin-bottom:-52px">Qualitative sessions, diary studies, and data analysis across thousands of active shoppers.</p>
   <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-100px">
     <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0" data-edit-bound="1">
         <img src="images/slide4_img_10.png" alt="Research synthesis" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
@@ -524,25 +561,25 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box blue">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline></svg>
           </div>
-          <span class="card-label">Navigation & flow</span>
+          <span class="card-label">Navigation &amp; flow</span>
         </div>
         <h3 style="font-size:15px">Shoppers frustrated with finding items and navigating stores</h3>
       </div>
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box purple">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </div>
-          <span class="card-label purple">Recognition & fairness</span>
+          <span class="card-label purple">Recognition &amp; fairness</span>
         </div>
         <h3 style="font-size:15px">Desire for fair recognition and actionable feedback</h3>
       </div>
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <div class="icon-box amber">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
           </div>
           <span class="card-label amber">Retention risk</span>
         </div>
@@ -556,21 +593,21 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 5 — STRATEGY
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-5"></canvas>
+  <canvas class="dots-canvas" id="canvas-5" width="1646" height="1065"></canvas>
   <span class="overline purple">Strategy</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:80px">Three design principles that guided every decision</h2>
   <div style="display:flex;justify-content:space-evenly;margin-top:0">
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/LFW-store info.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/shopping-to do.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/prepare to shop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/Frame 2147204126 1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/LFW-store info.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/shopping-to do.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/prepare to shop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Frame 2147204126 1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
   </div>
   <div class="grid-3" style="margin-top:80px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
     <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
         </div>
         <span class="card-label" style="font-size:10px">Principle 01</span>
       </div>
@@ -580,7 +617,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
         </div>
         <span class="card-label purple" style="font-size:10px">Principle 02</span>
       </div>
@@ -590,7 +627,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <span class="card-label green" style="font-size:10px">Principle 03</span>
       </div>
@@ -614,11 +651,11 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="flex:1;padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
           </div>
-          <span class="card-label">Guidance & Education</span>
+          <span class="card-label">Guidance &amp; Education</span>
         </div>
-        <h3 style="margin-bottom:10px">Shopper confidence & efficiency</h3>
+        <h3 style="margin-bottom:10px">Shopper confidence &amp; efficiency</h3>
         <ul class="bullet-list" style="gap:8px">
           <li>Contextual toasts for difficult scenarios</li>
           <li>Step-by-step substitution guidance</li>
@@ -639,7 +676,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="flex:1;padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box purple">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
           </div>
           <span class="card-label purple">Human Touch</span>
         </div>
@@ -679,7 +716,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card-label" style="margin-bottom:8px">What we solved</div>
         <ul class="bullet-list" style="gap:8px">
           <li style="font-size:13px">Eliminated duplicate components across pods</li>
-          <li style="font-size:13px">Established shared color, type & spacing tokens</li>
+          <li style="font-size:13px">Established shared color, type &amp; spacing tokens</li>
           <li style="font-size:13px">Documented patterns for common shopper flows</li>
         </ul>
       </div>
@@ -700,14 +737,14 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 8 — IMPLEMENTATION
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots" id="slide-8" data-section="system" style="justify-content:center">
-  <canvas class="dots-canvas" id="canvas-8"></canvas>
+  <canvas class="dots-canvas" id="canvas-8" width="1646" height="1065"></canvas>
   <span class="overline">Implementation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three features shipped in the first sprint</h2>
   <div class="divider"></div>
   <div style="display:flex;gap:32px;margin-top:46px;align-items:center">
     <!-- Circular image -->
     <div style="display:flex;justify-content:center;align-items:center;flex-shrink:0">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0" data-edit-bound="1">
         <img src="images/slide9_img_5.png" alt="Education toasts" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
@@ -716,7 +753,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="icon-box blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </div>
           <span class="card-label">Education toasts</span>
         </div>
@@ -728,7 +765,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="icon-box purple">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           </div>
           <span class="card-label purple">Dashboard refresh</span>
         </div>
@@ -740,7 +777,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="icon-box amber">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </div>
           <span class="card-label amber">Shopping anniversary</span>
         </div>
@@ -769,7 +806,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <img src="images/9/1.png" style="width:100%;display:block">
     </div>
     <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
-      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
@@ -799,7 +836,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <img src="images/10/1.png" style="width:100%;display:block">
     </div>
     <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
-      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
@@ -829,7 +866,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <img src="images/11/1.png" style="width:100%;display:block">
     </div>
     <div style="flex-shrink:0;padding:0 50px;align-self:flex-start;padding-top:4px">
-      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
       <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
@@ -854,7 +891,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <div class="icon-box" style="background:rgba(61,186,126,0.12)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         </div>
         <span class="card-label green">Satisfaction</span>
       </div>
@@ -864,7 +901,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <span class="card-label">Batch acceptance</span>
       </div>
@@ -874,7 +911,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
         </div>
         <span class="card-label purple">Diamond retention</span>
       </div>
@@ -888,13 +925,13 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 13 — LEARNINGS
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-grid slide-dots" id="slide-13" data-section="impact" style="padding-top:56px">
-  <canvas class="dots-canvas" id="canvas-13"></canvas>
+  <canvas class="dots-canvas" id="canvas-13" width="1646" height="1065"></canvas>
   <span class="overline">Learnings</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three lessons that changed how we work</h2>
   <div class="divider" style="margin:0"></div>
   <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-60px">
     <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);">
+      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);" data-edit-bound="1">
         <img src="images/slide14_img_12.png" alt="Alignment" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
@@ -903,7 +940,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
           <div class="icon-box blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </div>
           <span class="card-label">Alignment</span>
         </div>
@@ -912,16 +949,16 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
           <div class="icon-box purple">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
           </div>
           <span class="card-label purple">Process</span>
         </div>
-        <h3 style="font-size:17px">Design with content & research from day one</h3>
+        <h3 style="font-size:17px">Design with content &amp; research from day one</h3>
       </div>
       <div class="card" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.02)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
           <div class="icon-box green">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           </div>
           <span class="card-label green">Quality</span>
         </div>
@@ -964,7 +1001,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <!-- ══ QUESTIONS ══ -->
 <div class="slide slide-center" data-section="impact" style="overflow:hidden;">
-  <canvas id="thankyou-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.2s ease;z-index:0;"></canvas>
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s; z-index: 0;" width="1646" height="925"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div style="max-width:560px; position:relative; z-index:1;">
     <span class="overline">Thank you</span>
@@ -1181,10 +1218,13 @@ let current = 0;
 const sections = { problem:0, system:5, components:8, impact:11 };
 
 function updateNav() {
-  const section = slides[current].dataset.section;
+  const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
+  let activeIdx = 0;
+  for (let i = 0; i < entries.length; i++) {
+    if (current >= entries[i][1]) activeIdx = i;
+  }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const map = { problem:0, system:1, components:2, impact:3 };
-  document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
+  document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
@@ -1192,13 +1232,14 @@ function updateNav() {
 }
 
 function goTo(i) {
+  if (location.hash === '#presenter') return; // no-op in presenter window
   if (i < 0 || i >= total || i === current) return;
   const prev = slides[current];
   prev.classList.remove('active');
   if (i > current) { prev.classList.add('exit-up'); setTimeout(() => prev.classList.remove('exit-up'), 500); }
   current = i;
   slides[current].classList.add('active');
-  updateNav();
+  updateNav(); updateNotesPanel();
   if (typeof deckSend === 'function') deckSend({type:'nav',index:current,total});
 }
 
@@ -1207,6 +1248,7 @@ function prevSlide() { goTo(current-1); }
 function goToSection(n) { goTo(sections[n]); }
 
 document.addEventListener('keydown', e => {
+  if (location.hash === '#presenter') return;
   if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
   if (e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') { e.preventDefault(); nextSlide(); }
   else if (e.key==='ArrowLeft'||e.key==='ArrowUp') { e.preventDefault(); prevSlide(); }
@@ -1304,8 +1346,9 @@ function saveDeck() {
   a.click(); URL.revokeObjectURL(a.href);
 }
 
-// Capture phase keyboard shortcuts
+// Capture phase keyboard shortcuts (main window only)
 document.addEventListener('keydown', e => {
+  if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
   if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
   if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
@@ -1318,7 +1361,7 @@ document.addEventListener('keydown', e => {
 // ═══════ NOTES + PRESENTER MODE ═══════
 let _presenterWin = null;
 let _bc = null;
-try { _bc = new BroadcastChannel('deck-sync-v1'); } catch(e) {}
+try { _bc = new BroadcastChannel('deck-sync:' + location.pathname); } catch(e) {}
 
 function deckSend(msg) {
   if (_bc) try { _bc.postMessage(msg); } catch(e) {}
@@ -1358,7 +1401,8 @@ function updateNotesPanel() {
 }
 
 function openPresenter() {
-  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','deck-presenter','width=720,height=580,resizable=yes');
+  if (_presenterWin && !_presenterWin.closed) { _presenterWin.focus(); return; }
+  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','_blank','width=1080,height=680,resizable=yes');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1402,14 +1446,40 @@ document.addEventListener('DOMContentLoaded', () => {
       pTimer.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
     },1000);
 
-    document.getElementById('p-prev-btn').onclick=()=>{ pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); };
-    document.getElementById('p-next-btn').onclick=()=>{ pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); };
+    function pNav(delta) {
+      if (delta > 0 && pIdx >= total-1) {
+        // Navigate both windows to next project
+        var pBtns = Array.from(document.querySelectorAll('.p-project-btn'));
+        var curIdx = pBtns.findIndex(function(b){ return !b.dataset.href; });
+        var nxt = pBtns[curIdx + 1];
+        var nextHref = nxt && nxt.dataset.href;
+        if (nextHref) {
+          if(window.opener&&!window.opener.closed) try{ window.opener.location.href = nextHref; }catch(e){}
+          window.location.href = nextHref + '#presenter';
+        }
+      } else {
+        pRefresh(pIdx+delta);
+        deckSend({type:'nav',index:pIdx});
+        if(window.opener&&!window.opener.closed) try{window.opener.goTo(pIdx);}catch(e){}
+      }
+    }
+    document.getElementById('p-prev-btn').onclick=()=>pNav(-1);
+    document.getElementById('p-next-btn').onclick=()=>pNav(1);
     if(pReset) pReset.onclick=()=>{ timerStart=Date.now(); };
+    document.querySelectorAll('.p-project-btn[data-href]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        var href = btn.dataset.href;
+        if (window.opener && !window.opener.closed) {
+          try { window.opener.location.href = href; } catch(e) {}
+        }
+        window.location.href = href + '#presenter';
+      });
+    });
 
     document.addEventListener('keydown',e=>{
       if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'||e.target.isContentEditable) return;
-      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pRefresh(pIdx+1); deckSend({type:'nav',index:pIdx}); }
-      if(e.key==='ArrowLeft') { e.preventDefault(); pRefresh(pIdx-1); deckSend({type:'nav',index:pIdx}); }
+      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pNav(1); }
+      if(e.key==='ArrowLeft') { e.preventDefault(); pNav(-1); }
     });
 
   } else {
@@ -1421,6 +1491,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if(d.type==='nav') {
         goTo(d.index);
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+      }
+      if(d.type==='next-project') {
+        if(typeof window._navGoNextProject==='function') window._navGoNextProject();
       }
       if(d.type==='req-sync')
         deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
@@ -1463,7 +1536,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(slide.classList.contains('active'))start();
   window.addEventListener('resize',()=>{if(raf)resize();});
 })();
-</script>
+</script><canvas id="dot-wave-canvas" width="1646" height="1125" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 <!-- ══ Edit toolbar ══ -->
 <div class="edit-toolbar">
   <span class="edit-badge">✏ Editing</span>
@@ -1471,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">[]</script>
+<script id="deck-notes-data" type="application/json">["This project helped defined the five-year vision for the Instacart Shopper experience — a chance to bring clarity, trust, and a bit of delight back into one of our most complex products","Leadership wanted a clear north star for every shopper-facing team — something that could guide research, design, and engineering across multiple pods with a single language\n\nThe goal was to Reduce shopper cognitive load, improve efficiency, and add delight  across batches, in-store, and delivery.\n\n\nMy role was Horizontal Lead Designer partnered with research, PMs, data science, and leadership - worked across all pods that owned specific areas of the experience, and made sure that i focused on the human touch, delight, and also created consistent visual patterns and elevated the craft.","The Shopper app had grown fast and unevenly, specially during the pandemic where our pickup and delivery business grew 40% almost overnight .\nIt felt fragmented, stressful to use, and lacked guidance for complex in-store tasks. We needed to turn that chaos into confidence.\n\nWe needed coherence and clarity","Through interviews and benchmarking, we heard the same themes: shoppers wanted fair feedback, easier navigation, and reassurance that their work was recognized. \nMost importantly,  we wanted to keep our diamond level shoppers, and avoid churn\nThose insights shaped every decision that followed.","Our vision rested on three pillars — human touch, clear guidance, and system cohesion. Everything we built had to make the app feel more supportive, more predictable, and more connected","We designed small but powerful moments — milestone stories that celebrated progress and contextual education right where shoppers needed it. These touches made the experience feel personal, not transactional\n","Three pods were exploring different solutions, so we unified their work under one design system — a foundation that later evolved into the 2025 Shopper DS migration\n\nImplemented new Instacart’s rebrand colors,  fonts, icons, and warmth.\nIntroduced components: buttons, cards, stat cards, content rows, toasts, progress steps & more\nBecame the proof point that led to the Shopper Design System migration in 2025.","Several concepts actually shipped: education toasts, a refreshed dashboard, and milestone celebrations. Each one tested parts of the vision in production and informed future work.","Quickly I can show you some transformations\nFrom a hidden access card far down the flow to a more timely surfaced by location access card on the lock screen anticipating the user need.","From generic toasts to dashboard success metrics tied to earning and perfomance to keep users engaged and celebrating meaningful data. ","And from subjective ratings to objective metrics on their performance during that shopping trip. ","from those features that shipped early for testing, In just two months, we saw shopper satisfaction increase eight points and batch acceptance improved by five percent. Those early results proved the vision could deliver measurable impact.\n\n\n-------- For retantion. well that one we needed more time to test:\n\nDirect measurement is delayed\nRetention means tracking whether users return after weeks or months. You can’t confirm it in real time. Proxies like “engaged with milestone stories” give earlier hints.\n\n----\nOften to PMs Delight feels like a cost center\nAdding polish, storytelling features, or extra touches looks like spending without guaranteed return.\nBut it reduces hidden costs\nFewer confusing flows → fewer mistakes → fewer support tickets.\nClearer, more enjoyable experiences → less churn → higher lifetime value.\nSmall touches of delight → users trust the system more, so they self-serve instead of escalating issues.\nCP (Cost Profit) ratio improves\nProfit rises not because “delight” directly makes money, but because smoother, more trusted experiences shrink the need for support staff.\nSo the paradox: investing in “nice-to-have” design can look indulgent, but if done strategically it lowers the cost-profit ratio by cutting inefficiencies.","Alignment beats speed. Bringing content and research in early keeps teams focused, and balancing usability with accuracy is how you earn trust at scale. That’s what made this project work i think","This North Star proved the value of shopper-centric design and paved the way for scalable improvements across Instacart - Including making the case to migrate the shopper app to our design system.\n\nThe northstar also helped the three pods that worked on the e2e flow (which was divided batches, in-store, delivery a shared direction.","Happy to answer questions or do a deeper dive if we have time,"]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -1484,6 +1557,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- ── Presenter UI: shown when URL has #presenter ── -->
 <div id="presenter-ui">
+  <div class="p-projects">
+    <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
+    <button class="p-project-btn" data-href="../tooling-ds/index.html">Tooling DS</button>
+    <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+    <button class="p-project-btn p-project-btn--active">Shopper Northstar</button>
+  </div>
   <div class="p-header">
     <div class="p-slide-info">
       <div class="p-overline">Presenter View</div>
@@ -1510,5 +1589,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script src="../shared/nav.js"></script>
-</body>
-</html>
+
+
+</body></html>
