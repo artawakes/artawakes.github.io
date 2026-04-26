@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en" style="opacity: 1; transition: opacity 380ms cubic-bezier(0.4, 0, 0.2, 1);"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Darío Fidanza Design Systems</title>
@@ -462,6 +462,9 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 #slide-17::before { display: none !important; }
 #slide-26 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; overflow:visible !important; }
 #slide-26 .hero-img img { position:relative !important; inset:auto !important; width:80% !important; height:auto !important; object-fit:contain !important; margin-top:20px !important; }
+#slide-27.slide-grid::after { background-image: linear-gradient(rgba(79,128,245,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.18) 1px, transparent 1px) !important; }
+#slide-27 .hero-img { display:flex !important; align-items:center !important; padding-right:100px !important; overflow:hidden !important; }
+#slide-27 .hero-img img { position:relative !important; inset:auto !important; width:100% !important; height:auto !important; object-fit:contain !important; transform:scale(1.02) !important; transform-origin:left center !important; }
 #slide-08 { background: #ffffff !important; }
 #slide-11 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; background:transparent !important; }
 #slide-11 .hero-img img { position:relative !important; inset:auto !important; width:auto !important; height:auto !important; max-height:766px !important; max-width:908px !important; object-fit:contain !important; border-radius:32px !important; filter:grayscale(1) !important; display:block !important; box-shadow:inset 0 0 0 4px #ffffff !important; }
@@ -657,7 +660,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;600;700;800&amp;family=Noto+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
 </head>
-<body class="">
+<body class="has-navigated">
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -674,7 +677,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="nav-project" data-project="tds" data-state="expanded">
       <button class="nav-project-pill" data-project="tds">Tooling DS</button>
       <div class="nav-pills">
-        <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
+        <button class="nav-btn active" onclick="goToSection('problem')">Problem</button>
         <button class="nav-btn" onclick="goToSection('system')">System</button>
         <button class="nav-btn" onclick="goToSection('components')">Components</button>
         <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
@@ -691,9 +694,9 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
-    <span class="slide-counter" id="counter">1 / 35</span>
+    <span class="slide-counter" id="counter">1 / 36</span>
     <div class="nav-arrows">
-      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
     </div>
   </div>
@@ -702,9 +705,9 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <div id="slides">
 
-<!-- ══ 06 · TDS TITLE ══ pure -->
-<div id="slide-01" class="slide slide-cover hero-left" data-section="problem">
-  <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+<!-- ══ 01 · TDS TITLE ══ pure -->
+<div id="slide-01" class="slide slide-cover hero-left active" data-section="problem">
+  <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;" width="1920" height="1050"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div class="hero-img">
     <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:90%;max-height:933px;width:auto;height:auto;display:block;mix-blend-mode:screen;" src="cover-tds.png"></div>
@@ -732,7 +735,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div><!-- /hero-content -->
 </div>
 
-<!-- ══ 07 · PROBLEMS ══ dots -->
+<!-- ══ 02 · PROBLEMS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="problem">
   <div style="width:100%;">
     <span class="overline red">Problems</span>
@@ -761,7 +764,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 08 · PLATFORMS LANDSCAPE ══ grid -->
+<!-- ══ 03 · PLATFORMS LANDSCAPE ══ grid -->
 <div id="slide-08" class="slide hero-full slide-light" data-section="problem">
   <div class="hero-img" style="display:flex;align-items:flex-start;justify-content:center;">
     <img src="images/old-libraries.jpg" style="width:73%;height:auto;display:block;object-fit:contain;margin-top:60px;">
@@ -772,13 +775,13 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div style="display:flex; gap:12px; flex-wrap:wrap;">
       <div class="card" style="flex:1; min-width:200px; border-color:rgba(255,99,50,0.2); background:transparent; display:flex; align-items:center; gap:12px; padding:16px 20px;">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
         </div>
         <div class="card-label" style="color:#07101f; margin-bottom:0;">Multiple legacy libraries</div>
       </div>
       <div class="card" style="flex:1; min-width:200px; border-color:rgba(255,99,50,0.2); background:transparent; display:flex; align-items:center; gap:12px; padding:16px 20px;">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div class="card-label" style="color:#07101f; margin-bottom:0;">Hard to onboard, easy to drift</div>
       </div>
@@ -786,7 +789,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 09 · SAME PATTERNS DIFFERENT EXECUTIONS ══ pure -->
+<!-- ══ 04 · SAME PATTERNS DIFFERENT EXECUTIONS ══ pure -->
 <div class="slide layout-vc" data-section="problem">
   <div style="width:100%;">
     <span class="overline red">The Audit</span>
@@ -797,7 +800,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 10 · NO SOURCE OF TRUTH ══ pure -->
+<!-- ══ 05 · NO SOURCE OF TRUTH ══ pure -->
 <div class="slide hero-right slide-light slide-grid" data-section="problem">
   <div class="hero-content">
     <span class="overline red">Designer Perspective</span>
@@ -808,10 +811,10 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 11 · INCONSISTENCY ERODED TRUST ══ dots -->
+<!-- ══ 06 · INCONSISTENCY ERODED TRUST ══ dots -->
 <div id="slide-11" class="slide hero-right slide-light slide-grid" style="background:#eef2ff;" data-section="problem">
   <div class="hero-content" style="background:linear-gradient(to right, rgba(255,255,255,0.88) 0%, rgba(238,242,255,0) 100%);">
-    <span class="overline red"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px;margin-bottom:1px;opacity:0.9;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Audit Finding</span>
+    <span class="overline red"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px;margin-bottom:1px;opacity:0.9;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Audit Finding</span>
     <h2>Inconsistency<br>eroded trust.</h2>
   </div>
   <div class="hero-img">
@@ -819,7 +822,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 12 · YEAR 1 ══ grid -->
+<!-- ══ 07 · YEAR 1 ══ grid -->
 <div id="slide-12" class="slide slide-grid layout-vc" data-section="system">
   <span class="overline">First Year · Strategy</span>
   <h2>Foundation first alignment over speed</h2>
@@ -850,7 +853,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
 </div>
-<!-- ══ 13 · YEAR 2 ══ grid -->
+<!-- ══ 08 · YEAR 2 ══ grid -->
 <div class="slide slide-grid layout-vc" data-section="system">
   <span class="overline">Second Year · Maturity</span>
   <h2>Governance, docs &amp; growth</h2>
@@ -881,7 +884,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
 </div>
-<!-- ══ 14 · BEFORE & AFTER DOMAIN ══ pure -->
+<!-- ══ 09 · BEFORE & AFTER DOMAIN ══ pure -->
 <div class="slide" data-section="system" style="padding:40px 80px; flex-direction:column; gap:16px;">
   <span class="overline">Before &amp; After · Domain Migration</span>
   <h2>From fragmented to unified</h2>
@@ -903,7 +906,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 15 · COHERENCE ACROSS PRODUCTS ══ dots -->
+<!-- ══ 10 · COHERENCE ACROSS PRODUCTS ══ dots -->
 <div class="slide slide-dots" data-section="system" style="padding-top:40px; flex-direction:column; gap:16px;">
   <span class="overline">Coherence Across Products</span>
   <h2>Many tools,<br>one platform experience.</h2>
@@ -925,7 +928,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 16 · ARCHITECTURE ══ grid -->
+<!-- ══ 11 · ARCHITECTURE ══ grid -->
 <div class="slide slide-dots layout-vc" data-section="system">
   <div style="display:flex; gap:52px; align-items:center;">
     <div style="flex-shrink:0;">
@@ -939,19 +942,19 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="grid-3" style="margin-top:28px;">
         <div class="card">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path></svg>
           </div>
           <h3>Tokens, Spacing, Typography = Centralized</h3>
         </div>
         <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04);">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
           </div>
           <h3>Opinionated components but flexible</h3>
         </div>
         <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
           </div>
           <h3>Product Workflows = Patterns, not prescriptions</h3>
         </div>
@@ -960,9 +963,9 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
   </div>
-</div>
 
-<!-- ══ 17 · FIGMA LIBRARIES ══ grid -->
+
+<!-- ══ 12 · FIGMA LIBRARIES ══ grid -->
 <div id="slide-17" class="slide hero-right slide-light" style="background:#ffffff;" data-section="system">
   <div class="hero-content">
     <span class="overline">Figma Libraries</span>
@@ -973,7 +976,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 18 · DEV SIDE ══ grid -->
+<!-- ══ 13 · DEV SIDE ══ grid -->
 <div class="slide slide-grid slide-light layout-vc" data-section="system">
   <span class="overline">Dev side</span>
   <h2>Headless components,<br>styled via tokens.</h2>
@@ -1030,7 +1033,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 19 · VISUAL LANGUAGE ══ dots -->
+<!-- ══ 14 · VISUAL LANGUAGE ══ dots -->
 <div class="slide hero-right" data-section="system">
   <div class="hero-content">
     <span class="overline">Visual Language Foundations</span>
@@ -1052,7 +1055,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 20 · TOKEN ARCHITECTURE ══ grid -->
+<!-- ══ 15 · TOKEN ARCHITECTURE ══ grid -->
 <div class="slide slide-grid layout-vc" data-section="system">
   <span class="overline">Token Architecture</span>
   <h2>Flexibility through structure</h2>
@@ -1118,7 +1121,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
 </div>
 </div>
-<!-- ══ 21 · COMPONENTS AS CONTRACTS ══ dots -->
+<!-- ══ 16 · COMPONENTS AS CONTRACTS ══ dots -->
 <div class="slide" data-section="components" style="flex-direction:row; padding:0; align-items:center; background:var(--bg);">
   <div style="flex:0 0 42%; display:flex; flex-direction:column; justify-content:center; padding:40px 48px 40px 80px;">
     <span class="overline">Component Library</span>
@@ -1126,14 +1129,14 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div style="display:flex; flex-direction:column; gap:14px; margin-top:24px;">
       <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
         </div>
         <div class="card-label" style="color:var(--accent);">Prioritization Method</div>
         <h3>80% most-used, 3+ use cases</h3>
       </div>
       <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
         </div>
         <div class="card-label" style="color:var(--accent);">Goal</div>
         <h3>Design and dev aligned on intent</h3>
@@ -1145,7 +1148,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 22 · CORE COMPONENTS: BUTTONS & LINKS ══ pure -->
+<!-- ══ 17 · CORE COMPONENTS: BUTTONS & LINKS ══ pure -->
 <div class="slide layout-vc" data-section="components">
   <div style="width:100%;">
     <span class="overline">Core Components · Craft</span>
@@ -1156,7 +1159,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 23 · CORE COMPONENTS: INPUTS ══ pure -->
+<!-- ══ 18 · CORE COMPONENTS: INPUTS ══ pure -->
 <div class="slide layout-vc" data-section="components">
   <div style="width:100%;">
     <span class="overline">Core Components · Craft</span>
@@ -1167,7 +1170,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 24 · COMPONENTS: OVERLAY ══ pure -->
+<!-- ══ 19 · COMPONENTS: OVERLAY ══ pure -->
 <div class="slide layout-vc" data-section="components">
   <div style="width:100%;">
     <span class="overline">Expanded Components · Craft</span>
@@ -1178,7 +1181,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 25 · COMPLEX ORGANISMS ══ pure -->
+<!-- ══ 20 · COMPLEX ORGANISMS ══ pure -->
 <div class="slide layout-vc" data-section="components">
   <div style="width:100%;">
     <span class="overline">Complex Organisms · Craft</span>
@@ -1189,7 +1192,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 26 · BEFORE & AFTER: COLORS & BUTTONS ══ pure -->
+<!-- ══ 21 · BEFORE & AFTER: COLORS & BUTTONS ══ pure -->
 <div id="slide-26" class="slide hero-right slide-light" style="background:#ffffff;" data-section="components">
   <div class="hero-content" style="padding-right:5px;">
     <span class="overline">Before &amp; After · Colors &amp; Buttons</span>
@@ -1200,28 +1203,28 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 27 · PATTERNS ══ dots -->
+<!-- ══ 22 · PATTERNS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="components">
   <span class="overline">Patterns</span>
   <h2 style="font-size:clamp(32px,5vw,72px); max-width:700px; line-height:1.05;">Alignment at scale.</h2>
   <div class="grid-3" style="margin-top:32px;">
     <div class="card">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       </div>
       <div class="card-label" style="color:var(--accent);">Shared ownership</div>
       <h3>System + product teams co-own</h3>
     </div>
     <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       </div>
       <div class="card-label" style="color:var(--accent2);">Coverage</div>
       <h3>High-frequency page types first</h3>
     </div>
     <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </div>
       <div class="card-label" style="color:var(--red);">Result</div>
       <h3>New pages ship in hours, not days</h3>
@@ -1229,7 +1232,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 28 · TEMPLATES: ITEM LIST ══ grid -->
+<!-- ══ 23 · TEMPLATES: ITEM LIST ══ grid -->
 <div class="slide hero-right" data-section="components">
   <div class="hero-content" style="padding-right:5px;">
     <span class="overline">Templates · Layout</span>
@@ -1240,7 +1243,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 29 · TEMPLATES: FORMS ══ grid -->
+<!-- ══ 24 · TEMPLATES: FORMS ══ grid -->
 <div class="slide hero-right" data-section="components">
   <div class="hero-content" style="padding-right:5px;">
     <span class="overline">Templates · Layout</span>
@@ -1251,7 +1254,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 30 · TEMPLATES: EDITOR ══ grid -->
+<!-- ══ 25 · TEMPLATES: EDITOR ══ grid -->
 <div class="slide hero-right" data-section="components">
   <div class="hero-content" style="padding-right:5px;">
     <span class="overline">Templates · Layout</span>
@@ -1262,7 +1265,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 31 · TEMPLATES: AUTH ══ grid -->
+<!-- ══ 26 · TEMPLATES: AUTH ══ grid -->
 <div class="slide hero-right" data-section="components">
   <div class="hero-content" style="padding-right:5px;">
     <span class="overline">Templates · Layout</span>
@@ -1273,7 +1276,27 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 32 · GOVERNANCE ══ dots -->
+<!-- ══ 27 · ENGINEERING HANDOFF ══ hero -->
+<div id="slide-27" class="slide hero-right slide-grid" data-section="components">
+  <div class="hero-content" style="padding-right:5px;">
+    <span class="overline green">Design to code</span>
+    <h2>From spec to scaffold<br>in seconds.</h2>
+    <div class="divider"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.08s both">
+      <p class="body-text" style="max-width:360px">Each component mapped to its molecule or organism in the system.</p>
+      <p class="body-text" style="max-width:360px">Engineers ran a script to auto-generate the layout with the right base components and configuration.</p>
+      <p class="body-text" style="max-width:360px">A working foundation, ready in under 30 seconds.</p>
+    </div>
+    <div style="margin-top:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.16s both">
+      <span class="tag green">Under 30 seconds</span>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="images/Handy.png" alt="Engineering handoff template">
+  </div>
+</div>
+
+<!-- ══ 28 · GOVERNANCE ══ dots -->
 <div id="slide-32" class="slide hero-left slide-light slide-grid" style="background-color:#eef2ff;" data-section="impact">
   <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;padding-left:48px;">
     <span class="overline">Governance</span>
@@ -1282,7 +1305,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
           <div class="card-label" style="margin-bottom:0;">Contribution Path</div>
         </div>
@@ -1290,7 +1313,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
           </div>
           <div class="card-label" style="margin-bottom:0;">Feedback Loop</div>
         </div>
@@ -1298,7 +1321,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           </div>
           <div class="card-label" style="margin-bottom:0;">Non-blocking = adoption</div>
         </div>
@@ -1312,7 +1335,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 33 · DOCS + SELF-SERVE ══ dots -->
+<!-- ══ 29 · DOCS + SELF-SERVE ══ dots -->
 <div class="slide slide-dots layout-vc" style="background:#202020 !important;" data-section="impact">
   <span class="overline">Docs · Self-Serve · Education</span>
   <h2>Self-serving drives adoption.</h2>
@@ -1321,19 +1344,19 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div style="flex:0 0 auto; display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
       <div class="card" style="width:368px;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-end;">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         </div>
         <div class="card-label" style="text-align:right;">Documentation</div>
       </div>
       <div class="card" style="width:368px;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-end;">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         </div>
         <div class="card-label" style="text-align:right;">Feedback</div>
       </div>
       <div class="card" style="width:368px;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-end;">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
         </div>
         <div class="card-label" style="text-align:right;">AI aiding on workflows</div>
       </div>
@@ -1344,7 +1367,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
 </div>
-<!-- ══ 34 · ENG PARTNERSHIPS ══ grid -->
+<!-- ══ 30 · ENG PARTNERSHIPS ══ grid -->
 <div class="slide slide-grid layout-vc" data-section="impact" style="background:#001810 !important;">
   <div style="display:flex; gap:16px; align-items:center;">
     <!-- Left: image hero -->
@@ -1367,7 +1390,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
 </div>
-<!-- ══ 35 · AI WORKSTREAM ══ grid -->
+<!-- ══ 31 · AI WORKSTREAM ══ grid -->
 <div class="slide hero-right" style="background:#000000;" data-section="impact">
   <div class="hero-content">
     <span class="overline" style="color:#22BF90;">AI Workstream</span>
@@ -1389,7 +1412,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 36 · AI COMPONENTS ══ dots -->
+<!-- ══ 32 · AI COMPONENTS ══ dots -->
 <div class="slide hero-right" data-section="impact">
   <div class="hero-content">
     <span class="overline">AI Workstream · Components</span>
@@ -1400,35 +1423,35 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 37 · KEY WINS ══ dots -->
+<!-- ══ 33 · KEY WINS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="impact">
   <span class="overline">Key Wins · Recap</span>
   <h2>Measurable impact</h2>
   <div class="grid-3" style="margin-top:32px;">
     <div class="card">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </div>
       <div class="card-label" style="color:var(--accent);">Cohesion</div>
       <h3>A unified visual language</h3>
     </div>
     <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </div>
       <div class="card-label" style="color:var(--accent2);">Velocity</div>
       <h3>Faster onboarding for designers &amp; devs</h3>
     </div>
     <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
       </div>
       <div class="card-label" style="color:var(--red);">Most importantly</div>
       <h3>Reduced design and development cost</h3>
     </div>
   </div>
 </div>
-<!-- ══ 38 · HIGHLIGHTS + OUTCOMES ══ grid -->
+<!-- ══ 34 · HIGHLIGHTS + OUTCOMES ══ grid -->
 <div class="slide slide-grid layout-vc" data-section="impact" style="background:#1F1F21 !important;">
   <span class="overline">&nbsp;2025 Recap</span>
   <h2 style="margin-bottom:0; margin-top:2px;">Highlights + outcomes</h2>
@@ -1475,28 +1498,28 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 39 · TAKEAWAYS ══ dots -->
+<!-- ══ 35 · TAKEAWAYS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="impact">
   <span class="overline">Personal Takeaways</span>
   <h2>What I'd carry into<br>the next system.</h2>
   <div class="grid-3" style="margin-top:32px;">
     <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       </div>
       <div class="card-label" style="color:var(--accent);">Takeaway 01</div>
       <h3>Governance matters more than components</h3>
     </div>
     <div class="card" style="border-color:rgba(100,50,220,0.35); background:rgba(100,50,220,0.08);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(100,50,220,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7832DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7832DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       </div>
       <div class="card-label" style="color:#7832DC;">Takeaway 02</div>
       <h3>Support + self-service drives adoption</h3>
     </div>
     <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
       <div class="card-label" style="color:var(--red);">Takeaway 03</div>
       <h3>Systems succeed when teams trust them</h3>
@@ -1504,9 +1527,9 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 40 · THANK YOU ══ pure -->
+<!-- ══ 36 · THANK YOU ══ pure -->
 <div class="slide slide-center" data-section="impact" style="overflow:hidden;">
-  <canvas id="thankyou-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.2s ease;z-index:0;"></canvas>
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s; z-index: 0;" width="1920" height="1110"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div style="max-width:560px; position:relative; z-index:1;">
     <span class="overline">Thank you</span>
@@ -1523,9 +1546,9 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-</div><!-- /#slides -->
+<!-- /#slides -->
 
-<div class="hint" id="hint" style="display:none;"><kbd>←</kbd><kbd>→</kbd> or click arrows to navigate</div>
+<div class="hint" id="hint" style="display: none; opacity: 0;"><kbd>←</kbd><kbd>→</kbd> or click arrows to navigate</div>
 
 <div class="edit-toolbar">
   <span class="edit-badge">✏ Editing</span>
@@ -1536,7 +1559,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { problem:0, system:6, components:15, impact:26 };
+const sections = { problem:0, system:6, components:15, impact:27 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
@@ -1810,7 +1833,7 @@ function saveDeck() {
 
   // Reset to slide 1 so saved file always opens cleanly
   const savedSlide = current;
-  goSlide(0);
+  goTo(0);
 
   const wasEdit = editMode;
   document.body.classList.remove('edit-mode');
@@ -1823,11 +1846,11 @@ function saveDeck() {
     document.body.classList.add('edit-mode');
     savedCE.forEach(el => el.setAttribute('contenteditable', 'true'));
   }
-  goSlide(savedSlide);
+  goTo(savedSlide);
 
   const blob = new Blob([html], { type: 'text/html' });
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'deck.html' });
-  a.click(); URL.revokeObjectURL(a.href);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 
 // Capture phase: intercepts before slide-navigation listener (main window only)
@@ -2220,15 +2243,15 @@ if(false)(function(){
   if(document.querySelector('.slide-grid.active')) start();
 })();
 
-</script><canvas id="dot-wave-canvas" width="1920" height="1111" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
+</script><canvas id="dot-wave-canvas" width="1920" height="1110" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1110" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1115" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1114" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1111" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["Huge project. it's been now 2.5 years. Lots of context, \nGonna try to hit on the points you are interested on, and I can answer questions at the end.\n\nMy role was Lead System Designer for tooling\n\n\n2 eng managers. \nTwo lead engs on my team. \n7 others eng on away teams.\nnew eng ad-hoc contributors weekly\nOne DPM: time line coordination and admin tasks\n2 other designers on caper and marketplace.\nI was given a design contractor resource to help get things of the ground. \n\nplus 3 directors on strategy, we just finished planning with them,. \n\nVery horizontal enablement role.", "Quick overview\n\nWe have 4 platforms with multiple legacy libraries. \n\nTeams shipped independently with no shared system contract\n\n\nBottleneck for scaling.  Engineers not knowing how to build a design mock in code - ending in fragmentation with hard coded components - Resulting in High delivery cost. \n\nAll leading to inconsistent experiences especially for the portion of our users that use several of our products.", "Landscape of libraries.\n\nLegacy libraries, not fully deprecated\n\ndifficult for engineers to follow design. \nIt was difficult for designers, specially new ones to onboard and learn how to build mocks.\n\nEngineers had 5 different storybooks, lots of confusion.", "We'll see the full audit in a second, but here you can see some of our problem.\n\nSame pattern would look different in other platforms, or sometimes across features on the same platform. \n", "From the designer perspetive, they would see tons of similar options, hundreds of colors, buttons, font styles.", "a small glimpse of my audit. of over 1000+ components and patterns across our tools.\n\nInconsistency eroded trust with users\n\nour design-to-dev cycles were slow so it increased engineering overhead\n\n\nat the time we had Low design and engineer satisfaction and efficiency\n\n It wasn't just  bad UX, it was also poorly executed craft. \n\nand the real cost wasn't even aesthetics. It was coordination.", "Here is a timeline of how of focus for the first & second year. \n\nvery high level, we'll zone into some these more in a second.\n\nFirst year theme was alignment. \n\nLock down tokens and primitives\nSeparate what must be consistent from what can be changed.\nDevelop structures and processes\nSupport adoption and migrations.\n\nAlso ongoing through the year was Research, audits, feedback loops, \n all that to inform the path forward.\n\nThe goal was to building the bridges with other teams for better collaboration. ", "Second year, maturity milestones.\n\nit was about improving perfomance, expand the library, add self-serve \n\nGovernance to relieve bottleneck and enable innovation from designers..\n\nMore niche product team workstreams  for further quality and consistency\n• Ai principles and systems.\n• A new navigation bar strategy for all enterprise offering .\n\nWhile on the side I continue supporting migration, and component gaps, and and juggling new contributions. ", "Getting a little ahead here,.\n\n you can see how we started standarizing layouts with atoms, components and pattterns.", "We wennt from different ways to execute a form, \n\nto standarize layouts., with visual consistency, and predictable behavior across tools\n\nUsers learned our how to use our tools once, not 10 times", "So How did we get there\n\n\nI rebuilt the hierarchy so TDS could become the single source of truth.. \n\nSome elements were centralized and locked\n\nComponents were opinionated but flexible\n\npatterns, were springboards for designers workflows serving as suggestions.\n\nI optimized for flexibility, not uniformity.", "This is the reorganized structure. We have a complex ecosystem, with many different needs.\n\nWe have shared color guidelines from brand with tokens- from here we can control all vertical cascading theming. this helps with this like the current rebrand or theming.\n\nAssets is where we have shared system icons and images, some photography. That's the DNA of our brand\n\nAnd then our 3 vertical's figma libraries:\n\nPantry for consumers. \nTDS for enterprise tooling.\nCaper DS for our hardware cart tablets. \n\nscale by avoiding bloating with patterns that are not relevant to that vertical.'s designer..\n\n----------------\n\nFor example, our enteprise tools don't need a funnel, or cart pattern. Our marketplace doesn't need tables, or data viz, or modals - ", " on the dev side is straight forward\n\n headless component development\n\nthat we style for each vertical via system tokens", "once structure was define. \n\nI ran of explorations with stakeholders and the system consumer (Designers) \n\nWe aligned on the basics — color, type, spacing \n\nWe are now upgrading to component level tokens usage, to add theming for our white label products and dark mode.", "Here is our token architecture\n\nthe Value, feeds into primtives, then to system semantics, and finally to component level tokens.\n\nThis give us flebility, We can get as  broad or granular as we need to.\n\n\n\n\n--------------\n\nFor example 1: Our brand color on tds differs from the brighter more peppy consumer app brand primary color\n\nExample 2: at the tds level where it affects everywhere it appears, if we change the brand color, it would change ctas, but say we want ctas to be orange instead of kale, while keeping the nav bar our brnd color, instead of changing the brand level, we would hcange the component level token.\n\n--------------\nOur token dictionary maps directly with Eng, and we collaborate on defining the schema that makes sense. We were just having discussion about how to name things across web, mobile ios, mobile android and figma. ", "After that phase \nWe designed and developed core components. \n\nMade sure they were built with explicit anatomy\nThat the Variants were well documented (and matched to storybook)\nDefine clear extension libraries for team\n\nI made sure that design and dev aligned on intent and execution. \n\n----\n\nFor prioritization i used audit i shared earlier to find most used core components, those are the ones with highest impact\nand sequenced a foundational component migration\n\nafter that, We expanded coverage to more complex organism.. \n\nGoal: aiming for the 80% most used components. \nand requirements is that are used in multiple tools. with 3 clear use cases or more. \n\nassure  cost of building them would be an amortized ROI. ", "not a lot to see here a little bit of craft: \n\nCore components\n\nButtons, links, ", "Markers, pills, inputs", "Expanded set secondary\n\n for avatar, tooltips, accordions.", "More complex organism like cards or feature annoucements.", "More complex organism like cards or feature annoucements.", "Patterns and templates are to me the most powerful way to create alignment at scale, specially on platform. ", "These were layouts that defined standardized pages\n\nWe had some for \n\nData visualization and items lists\nItem Details...", "Single Step and multistep forms. ", "Editor", "Autho\n\nMore examples online or I can send appendix async.", "way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need, ", "way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need,", "\nfor eng parity\nGoal with figma is to be 1:1 to storybook. \nboth on nomeclature, and component functionality.\n\nmy hand off documentation includes variants and props, annotated components with colors, spacing, layout and tokens. \n\nThis means we have sometimes gnarly syncs with IOS, Android, Web eng and designers to align on execution and naming, \nAnd where i learn the limitations on the code bases for the diffferent implemetnations.\n\nThis helped to\n• reduced Q&A cycles\n• Fewer Slack threads \n• Faster merges, and more reliable releases\n\nOverall just happier engineers", "\nend of h2...  I began explorations on new AI styles and interactions., \n\nTop down directive to develop more ai features in product.\n\nproduct teams got out of sync quickly. \n\nSo i ran a quick alignment sprint with the leads. \n\nAnd we came up with principles of usage, a new look and feel, a mini system for anything that was ai. . \n\nEnded the year 5 components ready....", "...special AI buttons, AI assistant chat drawers, insights and suggestions cards, and AI loaders. ", "To Recap\n\nWe created a cohesive visual language, and a reusable library of atomics, tokens, components and patterns. \n\nDocumentation, hand off process, contribution process,  all aided on  accelerate delivery & higher satisfaction with designers, engineers, product. \n\ni think Most importantly at a reduced design and eng cost.\n\nAnd we built structures that helped scale the system, and help with flexibility and getting design and eng unblocked to build what they actually need. (built governance, support channels, crits, feedback loops)", "Ton of work, we are not done.\n\nFresh from perf review recap\n\nWe are currently at 17.5% (Jan 2025) & growing (migrating old features. but any new pages are not fully bult in TDS)\n\nSeven Hundred & 86 thousand inserts across 18 \nIncrease library speed by reducing almost half a million. nodes to 200k (lots of streamlining of components)\nPositive Satisfaction hit 90% across design and eng. in the latest Dec poll.\n72% of people report faster workflows.\nAdded 52 new components, getting us to a total of 144.\n67% are available in storybook - 96 components.\nadded 47 components to our usage docs.", "Some personal takeaways: \n\nGovernance and alignment beats speed, Get the stakeholders goals, design needs, and eng resourcing aligned early on.\n\nBeing non-blocking and having support channels sustains growth, and adds flexibility - \n\nand design systems are never done, they are living organism. So you have to consistently take in feedback and iterate, builds trust. \nand that helps product teams suceed.", "That's all I have for today, happy to answer questions "]</script>
+<script id="deck-notes-data" type="application/json">["I hope I can cover all the points you are interested on, but Ill be happy to answer questions at the end.\n\nMy role for this project was as a Lead System Designer for the tooling design system\n\nDay to day I Work closely with one Design Technologist and many engineers across multiple teams. \nThere are 2 other designers on the team focused on other systems. converged for crits.\n\nFor planning and strategy I work with the director of platform and 2 design and 2 eng managers. \n\nVery horizontal enablement role. and expands 4 verticals. So I do support and enablement for many more people daily.\n\nThe initial goal for launch timeline was 6 months. But we now continue expanding on the project.","Quick overview\n\nWe have 4 platforms using multiple legacy libraries. \n\nTeams shipped independently with no shared system contracts\n\n\nBottleneck for scaling.  Engineers not knowing how to build a design mock in code - ending in fragmentation with hard coded components - Resulting in High delivery cost. \n\nAll leading to inconsistent experiences especially for the portion of our users that use several of our products.","Landscape of libraries.\n\nLegacy libraries, not fully deprecated\n\ndifficult for engineers to follow design. \nIt was difficult for designers, specially new ones to onboard and learn how to build mocks.\n\nSimilar for Engineers they had 5 different storybooks (Storybook is where we host our code documentation), lots of confusion.","We'll see the full audit in a second, but here you can see some of our problem.\n\nSame pattern would look different in other platforms, or sometimes across features on the same platform. \n","From the designer perspetive, they would see tons of similar options, hundreds of colors, buttons, font styles.","a small glimpse of my audit. of over 1000+ components and patterns across our tools.\n\nInconsistency eroded trust with users\n\nour design-to-dev cycles were slow so it increased engineering overhead\n\n\nat the time we had Low design and engineer satisfaction and efficiency\n\n It wasn't just  bad UX, it was also poorly executed craft. \n\nand the real cost wasn't even aesthetics. It was coordination.","Here is a timeline of how of focus for the first & second year. \n\nvery high level, we'll zone into some these more in a second.\n\nFirst year theme was alignment. \n\nLock down tokens and primitives\nSeparate what must be consistent from what can be changed.\nDevelop structures and processes\nSupport adoption and migrations.\n\nAlso ongoing through the year was Research, audits, feedback loops, \n all that to inform the path forward.\n\nThe goal was to building the bridges with other teams for better collaboration. ","Second year, maturity milestones.\n\nit was about improving perfomance, expand the library, add self-serve \n\nGovernance to relieve bottleneck and enable innovation from designers..\n\nMore niche product team workstreams  for further quality and consistency\n• Ai principles and systems.\n• A new navigation bar strategy for all enterprise offering .\n\nWhile on the side I continue supporting migration, and component gaps, and and juggling new contributions. ","Getting a little ahead here,.\n\n you can see how we started standarizing layouts with atoms, components and pattterns.","We wennt from different ways to execute a form, \n\nto standarize layouts., with visual consistency, and predictable behavior across tools\n\nUsers learned our how to use our tools once, not 10 times","So How did we get there\n\n\nI rebuilt the hierarchy so TDS could become the single source of truth.. \n\nSome elements were centralized and locked\n\nComponents were opinionated but flexible\n\npatterns, were springboards for designers workflows serving as suggestions.\n\nI optimized for flexibility, not uniformity.","This is what I proposed in terms of the reorganized structure for and how to align with the other systems. We have a complex ecosystem, with many different needs. But we shifted as the assets from pantry to a global library.\n\nIn that way we can have a shared color guidelines from brand with tokens- from here we can control all vertical cascading theming. this helps with this like the current rebrand or theming.\n\nAssets is where we have shared system icons and images, some photography. That's the DNA of our brand\n\nAnd then our 3 vertical's figma libraries:\n\nPantry for consumers. \nTDS for enterprise tooling.\nCaper DS for our hardware cart tablets. \n\nscale by avoiding bloating with patterns that are not relevant to that vertical.'s designer..\n\n----------------\n\nFor example, our enteprise tools don't need a funnel, or cart pattern. Our marketplace doesn't need tables, or data viz, or modals - "," on the dev side is straight forward\n\n headless component development\n\nthat we style for each vertical via system tokens","once structure was define. \n\nI ran of explorations with stakeholders and the system consumer (Designers) \n\nWe aligned on the basics — color, type, spacing \n\nWe are now upgrading to component level tokens usage, to add theming for our white label products and dark mode.","Here is our token architecture\n\nthe Value, feeds into primtives, then to system semantics, and finally to component level tokens.\n\nThis give us flebility, We can get as  broad or granular as we need to.\n\n\n\n\n--------------\n\nFor example 1: Our brand color on tds differs from the brighter more peppy consumer app brand primary color\n\nExample 2: at the tds level where it affects everywhere it appears, if we change the brand color, it would change ctas, but say we want ctas to be orange instead of kale, while keeping the nav bar our brnd color, instead of changing the brand level, we would hcange the component level token.\n\n--------------\nOur token dictionary maps directly with Eng, and we collaborate on defining the schema that makes sense. We were just having discussion about how to name things across web, mobile ios, mobile android and figma. ","After that phase \nWe designed and developed core components. \n\nMade sure they were built with explicit anatomy\nThat the Variants were well documented (and matched to storybook)\nDefine clear extension libraries for team\n\nI made sure that design and dev aligned on intent and execution. \n\n----\n\nFor prioritization i used audit i shared earlier to find most used core components, those are the ones with highest impact\nand sequenced a foundational component migration\n\nafter that, We expanded coverage to more complex organism.. \n\nGoal: aiming for the 80% most used components. \nand requirements is that are used in multiple tools. with 3 clear use cases or more. \n\nassure  cost of building them would be an amortized ROI. ","not a lot to see here a little bit of craft: \n\nCore components\n\nButtons, links, ","Markers, pills, inputs","Expanded set secondary\n\n for avatar, tooltips, accordions.","More complex organism like cards or feature annoucements.","Here you can see side by side on how much more. \nStreamlined - More simplified, \n\n\nSemantically organized - so clearer for designers to understand usage.","Patterns and templates are to me the most powerful way to create alignment at scale, specially on platform. ","These were layouts that defined standardized pages\n\nWe had some for \n\nData visualization and items lists\nItem Details...","Single Step and multistep forms. ","Editor","Autho\n\nMore examples online or I can send appendix async.","This was a cool project I worked with one of the engs\nHe buit a script that allowed each tooling platform to scaffold each template quickly, in less than 30 seconds.\nIn order to build them, we map the layout, and the spec of the layout, and how the default components for that layout were configured.\nThis accelarated eng time, and allowed us to maintain consistency across different feature teams when building new features. ","way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need, ","Self serving drives adoption.\n\nI document usage clearly - so teams can move fast finding what they need. \nnow we have a slack with AI answers.\n\nFeedback we have quarterly survey — to keep a pulse on satisfaction and how we were doing meeting needs. \n\nEDUCATION. I have onboarding deck for new employees, and i'm finishing a 4-week course for Staff level design on design system literacy to train them as ambassadors of the system\n\n\n\n\n--------\n\nOur design tech created a status plugin manager... \nIt automatically updates status legend on figma from our status spreadsheet tracker. Designers can see at a glance component readiness.","\nfor eng parity\nGoal with figma is to be 1:1 to storybook. \nboth on nomeclature, and component functionality.\n\nmy hand off documentation includes variants and props, annotated components with colors, spacing, layout and tokens. \n\nThis means we have sometimes gnarly syncs with IOS, Android, Web eng and designers to align on execution and naming, \nAnd where i learn the limitations on the code bases for the diffferent implemetnations.\n\nThis helped to\n• reduced Q&A cycles\n• Fewer Slack threads \n• Faster merges, and more reliable releases\n\nOverall just happier engineers","\nend of h2...  I began explorations on new AI styles and interactions., \n\nTop down directive to develop more ai features in product.\n\nproduct teams got out of sync quickly. \n\nSo i ran a quick alignment sprint with the leads. \n\nAnd we came up with principles of usage, a new look and feel, a mini system for anything that was ai. . \n\nEnded the year 5 components ready....","...special AI buttons, AI assistant chat drawers, insights and suggestions cards, and AI loaders. ","To Recap\n\nWe created a cohesive visual language, and a reusable library of atomics, tokens, components and patterns. \n\nDocumentation, hand off process, contribution process,  all aided on  accelerate delivery & higher satisfaction with designers, engineers, product. \n\ni think Most importantly at a reduced design and eng cost.\n\nAnd we built structures that helped scale the system, and help with flexibility and getting design and eng unblocked to build what they actually need. (built governance, support channels, crits, feedback loops)","Ton of work, we are not done.\n\nFresh from perf review recap\n\nWe are currently at 17.5% (Jan 2025) & growing (migrating old features. but any new pages are not fully bult in TDS)\n\nSeven Hundred & 86 thousand inserts across 18 \nIncrease library speed by reducing almost half a million. nodes to 200k (lots of streamlining of components)\nPositive Satisfaction hit 90% across design and eng. in the latest Dec poll.\n72% of people report faster workflows.\nAdded 52 new components, getting us to a total of 144.\n67% are available in storybook - 96 components.\nadded 47 components to our usage docs.","Some personal takeaways: \n\nGovernance and alignment beats speed, Get the stakeholders goals, design needs, and eng resourcing aligned early on.\n\nBeing non-blocking and having support channels sustains growth, and adds flexibility - \n\nand design systems are never done, they are living organism. So you have to consistently take in feedback and iterate, builds trust. \nand that helps product teams suceed.","That's all I have for today, happy to answer questions "]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
   <div class="np-header">
-    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">40</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
+    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">36</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
     <button onclick="openPresenter()">↗ Presenter View</button>
   </div>
   <textarea id="np-textarea" placeholder="Type speaker notes for this slide…"></textarea>
@@ -2268,7 +2291,7 @@ if(false)(function(){
 </div>
 
 
-<div id="tds-nav-hint" style="position:fixed; bottom:20px; left:75%; transform:translateX(-50%); z-index:9999; display:flex; align-items:center; gap:7px; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.28); pointer-events:none; white-space:nowrap; transition:opacity 0.6s ease;">
+<div id="tds-nav-hint" style="position: fixed; bottom: 20px; left: 75%; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255, 255, 255, 0.28); pointer-events: none; white-space: nowrap; transition: opacity 0.6s; opacity: 0;">
   <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">←</span>
   <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">→</span>
   <span>navigate</span>
