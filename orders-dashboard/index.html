@@ -893,7 +893,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
-    <span class="slide-counter" id="counter">1 / 16</span>
+    <span class="slide-counter" id="counter">1 / 18</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
@@ -908,7 +908,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots slide-cover active" id="slide-1" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-1" width="1920" height="1000"></canvas>
+  <canvas class="dots-canvas" id="canvas-1" width="1920" height="1050"></canvas>
   <div class="cover-glow" style="top:-10%;left:-10%"></div>
 
   <div class="cover-left">
@@ -1405,11 +1405,11 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="icon-box blue">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         </div>
-        <span class="card-label">Pizza Tracker</span>
+        <span class="card-label">Status Tracker</span>
       </div>
       <h3>Clear order journey visualization</h3>
       <div style="padding-top:16px;display:flex;flex-direction:column;justify-content:space-between;border-radius:8px;overflow:hidden;flex:1;min-height:0">
-        <img src="images/slide10_img22.png" alt="Pizza tracker order journey" style="display:block;width:100%;border-radius:6px">
+        <img src="images/slide10_img22.png" alt="Status tracker order journey" style="display:block;width:100%;border-radius:6px">
         <img src="images/slide10/Timeline.png" alt="Timeline" style="display:block;width:100%;border-radius:6px">
         <img src="images/slide10/Timeline-1.png" alt="Timeline alternate" style="display:block;width:100%;border-radius:6px">
       </div>
@@ -1480,9 +1480,55 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 12 — IMPLEMENTATION & ROLLOUT
+     SLIDE 12 — DESIGN PROGRESSION (ITERATIONS 1–3)
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-12" data-section="components">
+<div class="slide slide-dots" id="slide-12" data-section="components" style="padding-top:60px">
+  <span class="overline">Iteration</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Shaping the design</h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;align-items:start;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-dim)">Current</span>
+      <img src="images/Progression/1.png" alt="Current design" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent)">First iteration</span>
+      <img src="images/Progression/2.png" alt="First iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent2)">Second iteration</span>
+      <img src="images/Progression/3.png" alt="Second iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13 — DESIGN PROGRESSION (ITERATIONS 4–6)
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-13" data-section="components" style="padding-top:60px">
+  <span class="overline purple">Visual Design</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Dialing the visual style</h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;align-items:start;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent2)">Third iteration</span>
+      <img src="images/Progression/4.png" alt="Third iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber)">Fourth iteration</span>
+      <img src="images/Progression/5.png" alt="Fourth iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--green)">Final direction</span>
+      <img src="images/Progression/6.png" alt="Final direction" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14 — IMPLEMENTATION & ROLLOUT
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-14" data-section="components">
   <span class="overline green">Implementation &amp; Rollout</span>
   <h2 style="max-width:560px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Phased delivery for continuous impact
@@ -1502,7 +1548,7 @@ html.presenter-mode #presenter-ui { display:flex; }
           <div class="phase-num purple">M2</div>
           <div style="text-align:center">
             <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Intelligence</div>
-            <div style="font-size:11px;color:var(--text-dim)">Pizza tracker + New actions</div>
+            <div style="font-size:11px;color:var(--text-dim)">Status tracker + New actions</div>
           </div>
         </div>
         <div class="phase-item">
@@ -1531,7 +1577,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:10px">
             <span class="tag purple">M2</span>
-            <span style="font-size:13px;color:var(--text)">Pizza tracker + New actions</span>
+            <span style="font-size:13px;color:var(--text)">Status tracker + New actions</span>
           </div>
           <span class="tag green">Shipped</span>
         </div>
@@ -1555,10 +1601,10 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 13 — IMPACT
+     SLIDE 15 — IMPACT
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-13" data-section="impact" style="justify-content:center">
-  <canvas class="dots-canvas" id="canvas-13"></canvas>
+<div class="slide slide-dots" id="slide-15" data-section="impact" style="justify-content:center">
+  <canvas class="dots-canvas" id="canvas-15"></canvas>
   <div class="cover-glow" style="top:20%;right:-10%;left:auto;background:radial-gradient(circle, rgba(61,186,126,0.2) 0%, transparent 70%)"></div>
   <span class="overline green" style="margin-bottom:6px">Impact</span>
   <h2 style="max-width:600px;margin:0;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
@@ -1605,9 +1651,9 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 14 — WHAT WE LEARNED
+     SLIDE 16 — WHAT WE LEARNED
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-14" data-section="impact" style="justify-content:center">
+<div class="slide slide-dots" id="slide-16" data-section="impact" style="justify-content:center">
   <span class="overline amber">Retrospective</span>
   <h2 style="max-width:540px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     What we learned
@@ -1648,10 +1694,10 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     SLIDE 15 — TAKEAWAY
+     SLIDE 17 — TAKEAWAY
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots slide-cover" id="slide-15" data-section="impact">
-  <canvas class="dots-canvas" id="canvas-15"></canvas>
+<div class="slide slide-dots slide-cover" id="slide-17" data-section="impact">
+  <canvas class="dots-canvas" id="canvas-17"></canvas>
   <div class="cover-glow" style="top:10%;left:20%;background:radial-gradient(circle, rgba(124,90,245,0.25) 0%, transparent 70%)"></div>
   <div style="display:grid;grid-template-columns:50% 1fr;height:100%">
     <div style="padding:80px 48px 60px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
@@ -1683,7 +1729,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <!-- ══ QUESTIONS ══ -->
 <div class="slide slide-center" data-section="impact" style="overflow:hidden;">
-  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 1; transition: opacity 1.2s; z-index: 0;" width="1920" height="1000"></canvas>
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 1; transition: opacity 1.2s; z-index: 0;" width="1920" height="1050"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div style="max-width:560px; position:relative; z-index:1;">
     <span class="overline">Thank you</span>
@@ -1840,7 +1886,7 @@ function initDotCanvas(canvasId) {
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { problem:0, system:6, components:8, impact:12 };
+const sections = { problem:0, system:6, components:8, impact:14 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
@@ -1977,7 +2023,7 @@ function saveDeck() {
   goTo(savedSlide);
   const blob = new Blob([html], { type: 'text/html' });
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'deck.html' });
-  a.click(); URL.revokeObjectURL(a.href);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 
 // Capture phase keyboard shortcuts (main window only)
@@ -2170,7 +2216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(slide.classList.contains('active'))start();
   window.addEventListener('resize',()=>{if(raf)resize();});
 })();
-</script><canvas id="dot-wave-canvas" width="1920" height="1060" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas>
+</script><canvas id="dot-wave-canvas" width="1920" height="1110" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1114" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1060" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas>
 <!-- ══ Edit toolbar ══ -->
 <div class="edit-toolbar">
   <span class="edit-badge">✏ Editing</span>
@@ -2178,12 +2224,12 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["This project reimagined Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer customer support teams use daily. We set out to reduce information overload and make order tracking clear, fast, and reliable. and lower the escalations to our CX teams.","CX agents (our internal support) teams were juggling multiple tools and calls were taking too long. Prior to launching some features for our retailers support team, the first line of support for customers ordering on our white product sites, those teams weren't able to see order information or cancel orders, or provide refunds, or even see the orders themselves. In those cases their support team would need to escalate to our CX agents.\nMy goal was simple — one place for truth, faster answers, fewer escalations","We found three main blockers — data lived everywhere, agents couldn’t see order details, and search was unreliable. That combination slowed every interaction.","We ran interviews and benchmarked tools like Amazon and Uber Eats. Agents kept saying, ‘I just need to find the order fast and trust what I see.’ That became our north star","We looked at competitor tools\nDoorDash: restaurant-facing clarity; weak agent tools\nAmazon Delivery: strong tracking & predictive logistics; too complex for CX use\nGap: no solution combined clarity + depth for retail support agents\n\nOur target: Amazon-level visibility + doordahs-like efficiency, but tailored to retail support and our CX agents.\n","Looking across leaders in the industry we try to map CX needs to unique differentiators that can give us an edge over the competition. \nFor instacart those features were clear order visibility and order history to support costumer calls concerns, smart search, predictive dashboards.","We also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nWe decided to focused on clarity over complexity."," We created a new easy to follow layout, rebuilt it on the current design system of the time, and launched in phases — starting with the most painful parts first for quick wins","Milestone one was all about data management, how to find orders and customers fast, how to navigate data to narrow results, and how to save personalized results and preferences so CX support had the ability to customize their workflows","The ‘pizza tracker’ visualized the order journey — agents instantly saw where something got stuck. order details gave agents context on customers in seconds, and the predictive dashboard started flagging issues before they became calls.","We moved quickly — just four weeks from kickoff to prototype. We tested with CX teams weekly and worked closely with engineering to make sure everything matched our design system\n\nRapid 4-week sprint\nCo-creation with CX + retailers - Cycle of reviews and feedback - presentation to Krogger, Costco, Hannafords\nEng alignment was sequenced and kickoff. We Started with Backend, move to m1 when design were able to be handed off.","We shipped in phases. The first release gave immediate time savings, and by month four we had predictive widgets in production — all on our system foundations.”\n\nM1:   New look,  + universal search foundation + Initial filters.\nM2: Pizza tracker + new actions features like: cancel, reschedule + more filters to search\nM3-M4: Predictive widgets, order history, delivery photos, chat, Shopper Location, more automation. M4 is still being deliverated on, since m3 and ai are not a big thing, which it wasn't when we started the project.","Within two months, handling time dropped forty percent. We consolidated 4 different internal dashboards into a new one, that provided managers and customer support a lot more clarity on their business and resolved customer issues faster leading to also higher costumer satisfaction with delivery.\nEscalations fell to our internal CX team fell since we empowered Retailer CX teams to handle issues themselves and faster.\nand because everything lived in the design system, new features rolled out faster across teams","Biggest lesson — ship value early and learn fast, so you can iterate. \nHaving content design and research in every review made a huge difference specially when moving that fast. We stayed close to our users mental models\nAnd clarity always beats cleverness - so balance usability and accuracy, without making the tool so complex that no-one can use it. ","This project reminded me that great internal tools aren’t about showing more data — they’re about giving people the confidence to act. We turned complexity into clarity, and that changed how our teams work\n—cutting handling time 40%, driving adoption, and lowering operational costs, lowering escalations and saving the company money. "]</script>
+<script id="deck-notes-data" type="application/json">["This project imagined a new Instacart’s Orders Dashboard — \n\na tool that our CX Support agents and retailer customer support teams use daily. \n\nthe goal was to make order tracking clear, fast, and reliable. and lower the escalations from retailer support to our own CX teams.","For context, \nInstacart powers multiple retailers e-commerce website. throughout our white label products.\n\nsome terminology that would be helpful for this project:\nCX agents (that's what we call our internal instacart support) \nRetailer support (are the retailers front line, the ones customer call when they have a problem with an order.\n\nRetailer support weren't able to see order information, cancel orders, or provide refunds in some cases. \nTo resolve some of those customer problems, retailer support team would need to escalate to our CX agents.\n\nOn outside, Our CX agents teams were juggling multiple tools and those calls from retailer support were taking too long.\n\nMy goal was simple — one unified dashboard with more visibility of order status, more execution power for retailers, faster answers, fewer escalations.\n\n\n-------\nParallel, we were also updating the design system on Platform, so we wanted the dashboard to begin consuming the new styles (this was pre TDS tho) ","We found three main problems to address — \n\ndata lived in many places, different tools for different information, \n\norder number would pull up a receipt, but not itemized list or order status for cs agents. \n\nOrder status would show successful handling and customer information for Retailer support, but no errors or costs. \n\nNobody had a clear picture of orders end to end.\n\nfor all of them search was unreliable. That combination slowed every interaction.","We run a pretty intensive research sprint\nand 4 weeks we were able to learn the current workflows, \n\nWe heard from interviews with retailer, customers and benchmarked our competitors. \n\nwe learned that our agents kept saying, ‘I just need to find the order fast and trust the information I see.’ or other common phrase 'I can't see that on my dashboard, so I need to escalate to instacart '\nHelping with those issues became our Northstar.\n\nWe buckets focused on 3 main buckets.\nSpeed and accuracy for both support teams\nOrder status visibility and clarity\nand lastly reduction of errors based on layout inconsistencies across tools.","When we looked at competitor tools\n\nDoorDash: restaurant-facing, very clear; weak agent tools so no smart search, predictive insights\nAmazon Delivery: strong tracking & predictive logistics; was the other extreme, very complex for CX use\n\nGap: no solution combined clarity + the right depth of actions for the retail support teams\nOur target: Amazon-level visibility + doordash's-like efficiency, but tailored to retail support and our CX agents needs.\n","Looking across leaders in the industry we try to map CX needs to unique differentiators that can give us an edge over the competition from the retailer side. \n\nFor instacart those features were clear order visibility and order history to support costumer calls concerns, smart search, predictive dashboards for retailers.","We also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nWe decided to focused on clarity over complexity.","The design principles became\n\nSimplify: Complexity, data sources, \n\nUnify: information, and users, we had some boundaries but for the most part both our cx and retailer support both were aiming to create good support experiences for our customers. \n\n and ship: the project was very large, and we wanted to gain momentum, so we committed to delivering in phased for quick wins that kept the teams engaged in the long term but supported in the short term. \n","This very first iteration was taking our most trusty table dashboard, and adding data management tools\n\nThis was our Milestone one.\n\nIt focused on accelerating the finding of orders and customer information, \nhow to navigate data to narrow results, through optional and customizable filters\nand adding the ability to save personalized results and preferences so the support agents had the ability to customize their workflows and jump right back Into their preferences over different sessions. ","The addition of the ‘status tracker’ was the second milestone\n\nwe wanted visualized the order journey — agents could easily see where something got stuck. \nWe also began adding missing functionality, with guardrails like permissioning, which allowed retailers to re-schedule, re-order, or refund without scaling to CX.\n\nWe added order details and customer informatio which allowed support to understand context in seconds, \n\nand we began tracking and displaying data and education cards that helped flag potential issues before they became loses. So if appeasements increased, a manager would take note and diagnose potential issues in the store. \n\nWe also started experimenting with educational and upselling features in line to offer more support and help to retailers as they grew in size. ","We moved quickly — just four weeks from kickoff to prototype. We tested with CX teams weekly and worked closely with engineering to make sure everything matched our design system\n\nRapid 4-week sprint\nCo-creation with CX + retailers - Cycle of reviews and feedback - presentation to Krogger, Costco, Hannafords to check the temperature of the designs, the new actions and order powers that were given to retailers \n\nEng alignment was sequenced and kickedoff shortly after design, and we iterated in parallel. We Started with Backend, move to m1 when designs were able to be handed off.","We shipped in phases.\nYou can see the progression of a rough mock, focused around search and  some metrics\nto a more refined dashboard, with more focused on metrics cards and graphs. Still pretty much centered around a table.\n\n\nThe first release gave immediate time savings via the New look,  + universal search + Initial filters.\n\nM2: Status tracker + new actions features like: refund, reschedule + customer details and data tracking and education which empowered retailers to be more self-served.\n\nHere is where I off boarded from the project, but we had two more milestones planned:\n\nM3: was for adding data that we collect from shopper app, that could help develop predictive issues widgets, add delivery photos, chat, shopper Location\n\nand M4 is still being deliverated on, since now we are considering scaling by adding in-store orders tracking (via caper carts) and also understanding what automations we can cover with ai agent support. ","But we started hearing that table may not be as important in all use cases. So we ended up having it as an optional customization.\nWe catered around insights, workflows, and upselling other services when the metrics show that a business could benefit from them\nWe kept metrics cards and polished the designs.","We shipped In phases\nM1 was focused on providing quick wins on time savings with data management.\nM2 to give more clarity and visibility, plus added superpowers to retailer support to lower escalation.\nM3 is in progress last time I checked. (Chat with shoppers, shopper location, focused on data that can be retrieved from shopper app)\nM4 was planned for later this year, but I'm going assumed with the AI push company wide some of the features planed for it may change. ","Within two months, handling time dropped forty percent. \n\nWe consolidated 4 different internal dashboards into a new one, that provided managers and customer support a lot more clarity on their support metrics, costs, and resolved customer issues faster leading to also higher costumer satisfaction with delivery.\n\nEscalations to our internal CX team also fell 21% since we empowered Retailer support to handle issues themselves and faster.\n\nand because everything was now on a design system, new features were able to be designer and ultimately tolled out faster to our users.","some lessons: — ship value early and learn fast, so you can iterate. \n\nHaving content design and research in every review made a huge difference specially when moving that fast. We stayed close to our users mental models. We were able to iterate on the status tracker stepper nomenclature very quickly and get feedback from real users.\n\nAnd clarity always beats cleverness - so balance usability and accuracy, without making the tool so complex that no-one can understand them.","My biggest take away\n\nThis project reminded me that great internal tools aren’t about showing more data. they’re about giving people the confidence to act. \n\nWe turned complexity into clarity, and that changed how our teams work\n\ncutting handling time 40%, and call scalation, we drove adoption by providing a better more centralized tool, and lowering operational costs saving the company money. "]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
   <div class="np-header">
-    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">16</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
+    <span>📝&nbsp; Slide <span id="np-num">1</span>&nbsp;/&nbsp;<span id="np-total">18</span>&nbsp;&nbsp;·&nbsp;&nbsp;Notes</span>
     <button onclick="openPresenter()">↗ Presenter View</button>
   </div>
   <textarea id="np-textarea" placeholder="Type speaker notes for this slide…"></textarea>
