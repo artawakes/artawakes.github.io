@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders Dashboard — Instacart Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+/* ─── CSS VARIABLES ─── */
+:root {
+  --bg: #07101f;
+  --bg2: #0d1a2e;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --text: #f0f4ff;
+  --text-dim: #8fa8c4;
+  --text-muted: #b8cce0;
+  --accent: #4f80f5;
+  --accent2: #7c5af5;
+  --green: #3dba7e;
+  --amber: #f5a623;
+  --red: #FF6332;
+  --pink: #e0459a;
+}
+
+/* ─── LAYOUT ─── */
+html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+:root { --nav-h: 60px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+  background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); text-decoration: none; opacity: 0.85; text-shadow: 0 0 18px rgba(79,128,245,0.28); flex-shrink: 0; }
+
+/* PILL NAV */
+.nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-btn.active { background: rgba(79,128,245,0.12); color: var(--accent); border-color: rgba(79,128,245,0.3); box-shadow: none; }
+
+.nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.slide-counter { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.05em; min-width: 44px; text-align: right; }
+.nav-arrows { display: flex; gap: 4px; }
+.arrow-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
+.arrow-btn:hover { border-color: var(--border-strong); color: var(--text); }
+.arrow-btn:disabled { opacity: 0.3; cursor: default; }
+@keyframes arrowRingPulse {
+  0%   { opacity: 0.65; transform: scale(1); }
+  100% { opacity: 0;    transform: scale(1.8); }
+}
+#nextBtn { position: relative; background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; box-shadow: 0 0 12px rgba(79,128,245,0.45); }
+#nextBtn.pulse-ring::after { content: ''; position: absolute; inset: -5px; border-radius: 13px; border: 1.5px solid var(--accent); animation: arrowRingPulse 1.6s ease-out infinite; pointer-events: none; }
+.nav-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; white-space: nowrap; pointer-events: none; }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
+.theme-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+/* PROGRESS */
+.progress-bar { position: fixed; top: var(--nav-h); left: 0; height: 2px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent) 100%); background-size: 200% auto; animation: progressShimmer 3s linear infinite; z-index: 99; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+/* SLIDES */
+#slides { position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 96px 80px 40px;
+  opacity: 0; transform: translateY(28px); pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+  background: var(--bg);
+  background-image: radial-gradient(rgba(79,128,245,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0;
+}
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide.exit-left { opacity: 0; transform: translateX(-100%); }
+.slide.exit-right { opacity: 0; transform: translateX(100%); }
+.slide.enter-right { animation: slideFromRight 0.5s cubic-bezier(0.4,0,0.2,1) both; }
+.slide.enter-left { animation: slideFromLeft 0.5s cubic-bezier(0.4,0,0.2,1) both; }
+@keyframes slideFromRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slideFromLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+#slide-7, #slide-8 { transform: none !important; }
+#slide-7.active, #slide-8.active { opacity: 1; pointer-events: all; }
+#slide-7.exit-left, #slide-8.exit-left { opacity: 0; transform: translateX(-100%) !important; }
+#slide-7.exit-right, #slide-8.exit-right { opacity: 0; transform: translateX(100%) !important; }
+#slide-7.exit-up, #slide-8.exit-up { opacity: 0; transform: none !important; }
+.slide > * { position: relative; z-index: 1; }
+
+
+/* light mode */
+.slide-light {
+  --bg: #f4f6fd;
+  --surface: rgba(255,255,255,0.75);
+  --border: rgba(0,0,0,0.09);
+  --text: #07101f;
+  --text-dim: #3a5070;
+  --text-muted: #7a90a8;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* slide-dots: canvas replaces static grid */
+.slide-dots {
+  background-image: none;
+}
+
+/* slide-grid: fine line grid */
+.slide-grid {
+  background-image:
+    linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+  animation: gridSweep 6s linear infinite;
+}
+
+@keyframes gridSweep {
+  0%   { background-position: 0 0; }
+  100% { background-position: 18px 18px; }
+}
+
+/* cover layout */
+.slide-cover {
+  padding: 0;
+}
+.slide-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.layout-vc {
+  justify-content: center;
+  padding-top: 40px;
+}
+.layout-bl {
+  justify-content: flex-end;
+}
+
+@keyframes progressShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1 {
+  font-family: 'Hepta Slab', serif;
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+}
+h2 {
+  font-family: 'Hepta Slab', serif;
+  font-size: clamp(26px, 3.2vw, 50px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--text);
+}
+h3 {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--text);
+}
+.overline {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+.overline.green { color: var(--green); }
+.overline.purple { color: var(--accent2); }
+.overline.amber { color: var(--amber); }
+.overline.red { color: var(--red); }
+
+.subtitle {
+  font-size: clamp(16px, 1.6vw, 21px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.body-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+.card-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.card-label.green { color: var(--green); }
+.card-label.purple { color: var(--accent2); }
+.card-label.amber { color: var(--amber); }
+.card-label.red { color: var(--red); }
+
+/* ─── DIVIDER ─── */
+.divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 2px;
+  margin: 20px 0;
+  animation: shimmerLine 2.5s linear infinite, glowPulse 2.5s ease-in-out infinite;
+  background-size: 200% 100%;
+}
+@keyframes shimmerLine {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(79,128,245,0.4); }
+  50%       { box-shadow: 0 0 12px rgba(79,128,245,0.8); }
+}
+
+/* cover line */
+.cover-line {
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+  border-radius: 2px;
+  margin: 24px 0;
+  animation: shimmerLine 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.card:hover {
+  border-color: var(--border-strong);
+  background: rgba(255,255,255,0.06);
+}
+
+.metric-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  transition: all 0.2s;
+}
+.metric-card:hover {
+  border-color: rgba(79,128,245,0.3);
+  box-shadow: 0 0 20px rgba(79,128,245,0.07);
+}
+.metric-number {
+  font-size: clamp(24px, 2.6vw, 42px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text);
+}
+.metric-number.green { color: var(--green); }
+.metric-number.accent { color: var(--accent); }
+.metric-number.purple { color: var(--accent2); }
+.metric-number.amber { color: var(--amber); }
+.metric-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ─── TAGS ─── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(79,128,245,0.3);
+  background: rgba(79,128,245,0.08);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.tag.green { border-color: rgba(61,186,126,0.3); background: rgba(61,186,126,0.08); color: var(--green); }
+.tag.purple { border-color: rgba(124,90,245,0.3); background: rgba(124,90,245,0.08); color: var(--accent2); }
+.tag.amber { border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.08); color: var(--amber); }
+.tag.red { border-color: rgba(255,99,50,0.3); background: rgba(255,99,50,0.08); color: var(--red); }
+
+/* ─── BULLET LIST ─── */
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bullet-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.bullet-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.bullet-list.green li::before { background: var(--green); }
+.bullet-list.purple li::before { background: var(--accent2); }
+#slide-5 .bullet-list li::before { background: #000; }
+
+/* ─── GRIDS ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* auto-tint grid-3 */
+
+/* ─── ICON BOX ─── */
+.icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon-box.blue { background: rgba(79,128,245,0.13); }
+.icon-box.green { background: rgba(61,186,126,0.13); }
+.icon-box.purple { background: rgba(124,90,245,0.13); }
+.icon-box.amber { background: rgba(245,166,35,0.13); }
+.icon-box.red { background: rgba(255,99,50,0.13); }
+
+/* ─── HERO LAYOUTS ─── */
+.slide.hero-right,
+.slide.hero-left,
+.slide.hero-full {
+  padding: 0;
+  flex-direction: row;
+}
+.hero-content {
+  padding: 96px 48px 40px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  flex: 0 0 42%;
+}
+.hero-img {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.hero-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-img.img-fit img { object-fit: contain; }
+
+.slide.hero-left { flex-direction: row-reverse; }
+.slide.hero-left .hero-content { padding: 96px 80px 40px 48px; }
+.slide.hero-left .hero-img img { object-fit: contain; object-position: left center; }
+
+.slide.hero-full { position: relative; }
+.slide.hero-full .hero-img {
+  position: absolute;
+  inset: 0;
+  flex: none;
+}
+.slide.hero-full .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+.slide.hero-full .hero-content {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  width: 100%;
+  padding: 96px 80px 40px;
+  background: linear-gradient(to right, rgba(7,16,31,0.95) 50%, transparent);
+}
+
+/* ─── BEFORE/AFTER ─── */
+.ba-card {
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid;
+}
+.ba-before {
+  border-color: rgba(255,99,50,0.3);
+  background: rgba(255,99,50,0.05);
+}
+.ba-after {
+  border-color: rgba(61,186,126,0.3);
+  background: rgba(61,186,126,0.05);
+}
+
+/* ─── TIMELINE ─── */
+.timeline-h {
+  display: flex;
+  gap: 0;
+  position: relative;
+  align-items: flex-start;
+}
+.timeline-h::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0.4;
+}
+.timeline-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+}
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(79,128,245,0.4);
+  animation: agendaPulse 9s ease-in-out infinite;
+}
+.timeline-item:nth-child(2) .timeline-dot::after { animation-delay: 3s; }
+.timeline-item:nth-child(3) .timeline-dot::after { animation-delay: 6s; }
+.timeline-item:nth-child(4) .timeline-dot::after { animation-delay: 1.5s; }
+@keyframes agendaPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.6); }
+}
+.timeline-card {
+  background: rgba(255,255,255,0.75);
+  color: #07101f;
+  border: 1px solid rgba(0,0,0,0.09);
+  border-radius: 14px;
+  padding: 14px 16px;
+  width: 100%;
+  text-align: center;
+}
+.timeline-card h3 { font-size: 13px; color: #07101f; }
+.timeline-card p { font-size: 12px; color: #3a5070; margin-top: 4px; }
+
+/* ─── IMAGE WRAPPER ─── */
+.uploaded-img-wrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.uploaded-img-wrap img { display: block; width: 100%; }
+
+/* ─── GLOW EFFECTS ─── */
+.cover-glow {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,128,245,0.2) 0%, transparent 70%);
+  pointer-events: none;
+  animation: coverGlowPulse 6s ease-in-out infinite;
+}
+@keyframes coverGlowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%       { transform: scale(1.07); opacity: 0.8; }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes subtlePop {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes timelinePing {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* LIGHT THEME */
+html.light { --bg: #f4f6fd; --bg2: #e8ecf8; --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.15); --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8; }
+html.light nav { background: rgba(244,246,253,0.92); }
+html.light .arrow-btn, html.light .theme-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); color: var(--text-dim); }
+html.light #nextBtn { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+html.light .nav-btn { color: var(--text-dim); }
+html.light .nav-btn.active { background: rgba(79,128,245,0.12); color: var(--accent); border-color: rgba(79,128,245,0.3); }
+html.light .slide { background-color: var(--bg); background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px); }
+
+/* Slide 5 compact cards */
+#slide-5 { justify-content: center !important; padding-top: 40px !important; }
+#slide-5 .card { padding: 16px; }
+#slide-5 .bullet-list { gap: 6px !important; }
+#slide-5 .bullet-list li { font-size: 14px; }
+#slide-5 .overline { margin-bottom: 8px; }
+#slide-5 .divider { margin: 12px 0; }
+
+/* Marquee scroll */
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ─── CANVAS ─── */
+.dots-canvas {
+  position: absolute !important;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.cover-glow {
+  position: absolute !important;
+}
+
+/* ─── COVER SLIDE SPECIFICS ─── */
+#slide-1 {
+  display: grid;
+  grid-template-columns: 46% 1fr;
+  grid-template-rows: 1fr;
+  padding: 0;
+}
+.cover-left {
+  padding: 80px 48px 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+.cover-right {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 40px 40px 20px;
+}
+.cover-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 30%);
+  z-index: 1;
+}
+.cover-right img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 2;
+}
+.instacart-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.instacart-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+/* ─── COMPARISON TABLE ─── */
+.comp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.comp-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+}
+.comp-table th.highlight { color: var(--accent); }
+.comp-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.comp-table td.highlight {
+  color: var(--text);
+  font-weight: 500;
+}
+.comp-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.025); }
+.comp-table tbody tr:nth-child(even) td { background: transparent; }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr:hover td { background: rgba(255,255,255,0.05); }
+
+.check { color: var(--green); font-size: 14px; }
+.cross { color: var(--red); font-size: 14px; }
+.partial { color: var(--amber); font-size: 14px; }
+
+/* ─── PHASE CARDS ─── */
+.phase-track {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+.phase-track::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--green));
+  opacity: 0.5;
+  z-index: 0;
+}
+.phase-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.phase-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  border: 2px solid;
+  background: var(--bg);
+}
+.phase-num.blue { color: var(--accent); border-color: var(--accent); }
+.phase-num.purple { color: var(--accent2); border-color: var(--accent2); }
+.phase-num.green { color: var(--green); border-color: var(--green); }
+.phase-num.amber { color: var(--amber); border-color: var(--amber); }
+
+/* ─── STAT CALLOUT ─── */
+.stat-callout {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-number {
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ─── SPECTRUM BAR ─── */
+.spectrum-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--red) 100%);
+  position: relative;
+  margin: 20px 0;
+}
+.spectrum-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 12px rgba(79,128,245,0.6);
+}
+
+.mobile-gate {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 40px;
+}
+@media (max-width: 900px) {
+  .mobile-gate { display: flex; }
+  .slide, .top-nav, .progress { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="mobile-gate">
+  <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
+  <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Darío Fidanza</a>
+  <div class="nav-pills">
+    <button class="nav-btn" onclick="goToSection('intro')">Intro</button>
+    <button class="nav-btn" onclick="goToSection('problem')">Problem</button>
+    <button class="nav-btn" onclick="goToSection('system')">System</button>
+    <button class="nav-btn" onclick="goToSection('components')">Features</button>
+    <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
+  </div>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
+    <span class="slide-counter" id="counter">1 / 15</span>
+    <div class="nav-arrows">
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn pulse-ring" id="nextBtn" onclick="nextSlide()">→</button>
+    </div>
+  </div>
+</nav>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<div id="slides">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots slide-cover" id="slide-1" data-section="intro">
+  <canvas class="dots-canvas" id="canvas-1"></canvas>
+  <div class="cover-glow" style="top:-10%;left:-10%"></div>
+
+  <div class="cover-left">
+    <div class="instacart-badge">
+      <span class="instacart-dot"></span>
+      Instacart Platform
+    </div>
+    <h1 style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) both">
+      Orders<br>Dashboard
+    </h1>
+    <div class="cover-line"></div>
+    <p class="subtitle" style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; max-width:440px">
+      Rebuilding Order Support — from Overload to Clarity
+    </p>
+    <p class="body-text" style="margin-top:12px; max-width:400px; animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both">
+      A redesigned dashboard that reduced CX handling time by 40% in just two months.
+    </p>
+    <div style="display:flex;gap:20px;margin-top:36px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both">
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--green)">40%</div>
+        <div class="stat-label">handling time reduction</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--accent)">4</div>
+        <div class="stat-label">dashboards → unified</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div class="stat-callout">
+        <div class="stat-number" style="color:var(--accent2)">2mo</div>
+        <div class="stat-label">to measurable impact</div>
+      </div>
+    </div>
+    <div style="margin-top:40px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
+      <span class="tag" style="margin-left:8px">Product Design</span>
+      <span class="tag purple" style="margin-left:8px">2023</span>
+    </div>
+  </div>
+
+  <div class="cover-right">
+    <img src="Images/slide1_img0.jpg" alt="Orders Dashboard screenshot">
+  </div>
+  <p class="nav-hint">Use ← → arrow keys or click the buttons to navigate</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — CONTEXT & GOAL
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-2" data-section="intro">
+  <canvas class="dots-canvas" id="canvas-2"></canvas>
+  <span class="overline">Context & Goal</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:640px">
+    CX agents struggled with 4 outdated dashboards & needed a unified system
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-2" style="margin-top:8px; flex:1; gap:24px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="icon-box red">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <span class="card-label red">The problem</span>
+        </div>
+        <h3>Four fragmented tools, zero unified view</h3>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="icon-box amber">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="card-label amber">Who was affected</span>
+        </div>
+        <h3>CX agents & retail partners</h3>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div class="icon-box blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="card-label">Goal</span>
+        </div>
+        <div style="font-size:clamp(18px,2.2vw,28px);font-family:'Hepta Slab',serif;font-weight:400;color:var(--text);line-height:1.3;margin-bottom:16px">
+          Cut handling time and improve accuracy
+        </div>
+        <ul class="bullet-list" style="gap:8px">
+          <li>Replace 4 dashboards with one unified system</li>
+          <li>Give agents full order lifecycle visibility</li>
+          <li>Enable faster search, filter & action execution</li>
+          <li>Build on a shared design system for scalability</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px">
+        <div class="metric-card" style="flex:1;text-align:center">
+          <div class="metric-number accent">4→1</div>
+          <div class="metric-label">dashboards unified</div>
+        </div>
+        <div class="metric-card" style="flex:1;text-align:center">
+          <div class="metric-number green">↓ 40%</div>
+          <div class="metric-label">handling time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — CHALLENGE
+══════════════════════════════════════════════════ -->
+<div class="slide layout-vc" id="slide-3" data-section="problem">
+  <span class="overline red">Challenge</span>
+  <h2 style="max-width:600px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Three core pain points made order support nearly impossible
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6a5 5 0 0 1 0-10h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <span class="card-label red">01</span>
+      </div>
+      <h3 style="margin-bottom:12px">Disconnected data sources</h3>
+      <p style="font-size:12px;color:var(--text-dim)">Agents averaged <strong style="color:var(--red)">3–4 tab switches</strong> per order resolution</p>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </div>
+        <span class="card-label red">02</span>
+      </div>
+      <h3 style="margin-bottom:12px">No order details visibility</h3>
+      <p style="font-size:12px;color:var(--text-dim)">Order lifecycle was <strong style="color:var(--red)">invisible</strong> from a single dashboard</p>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="icon-box red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <span class="card-label red">03</span>
+      </div>
+      <h3 style="margin-bottom:12px">Poor search & filtering</h3>
+      <p style="font-size:12px;color:var(--text-dim)">No universal search — <strong style="color:var(--red)">exact IDs required</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — RESEARCH / KEY INSIGHTS
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light slide-grid" id="slide-4" data-section="problem">
+  <div class="grid-2" style="gap:32px;align-items:center;flex:1">
+    <div>
+      <span class="overline">Research</span>
+      <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">What we learned in 4 weeks</h2>
+      <div class="divider"></div>
+      <p class="subtitle" style="margin-bottom:20px">Methods: CX & retailer interviews, concept tests, and competitive audits of Uber Eats, DoorDash & Amazon.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px">
+        <div class="metric-card" style="text-align:center">
+          <div class="metric-number accent">4wk</div>
+          <div class="metric-label">research sprint</div>
+        </div>
+        <div class="metric-card" style="text-align:center">
+          <div class="metric-number purple">3</div>
+          <div class="metric-label">competitors audited</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <span class="overline" style="margin-bottom:0">Key Insights</span>
+      <div class="card" style="border-left:none">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <span class="card-label">Speed & accuracy</span>
+        </div>
+        <h3 style="font-size:15px">Agents needed speed and accuracy</h3>
+      </div>
+      <div class="card" style="border-left:none">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box purple">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <span class="card-label purple">Status clarity</span>
+        </div>
+        <h3 style="font-size:15px">Retailers need clear order status</h3>
+      </div>
+      <div class="card" style="border-left:none">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="icon-box red">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <span class="card-label red">Error risk</span>
+        </div>
+        <h3 style="font-size:15px">Layout inconsistency caused errors</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — BENCHMARKS
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
+  <canvas class="dots-canvas" id="canvas-5"></canvas>
+  <span class="overline purple">Benchmarks</span>
+  <h2 style="max-width:680px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Benchmarks that shaped our approach
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;align-items:stretch;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="display:flex;flex-direction:column;border-color:rgba(255,99,50,0.3);background:rgba(255,99,50,0.05)">
+      <div style="margin-bottom:16px">
+        <span class="tag red">Weak agent tools</span>
+      </div>
+      <div style="margin-bottom:12px"><img src="Images/DD.png" alt="DoorDash" style="display:block;max-width:225px;border-radius:6px"></div>
+      <ul class="bullet-list" style="gap:8px">
+        <li>Strong restaurant-facing UX</li>
+        <li>Basic order status visibility</li>
+        <li style="color:var(--red)">No smart search or filtering</li>
+        <li style="color:var(--red)">No predictive insights for agents</li>
+        <li style="color:var(--red)">Weak support-specific tooling</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.05);display:flex;flex-direction:column">
+      <div style="margin-bottom:16px">
+        <span class="tag amber">Too complex for CX</span>
+      </div>
+      <div style="margin-bottom:12px"><img src="Images/AF.png" alt="Amazon Fulfillment" style="display:block;max-width:225px;border-radius:6px"></div>
+      <ul class="bullet-list purple" style="gap:8px">
+        <li>Highly detailed order tracking</li>
+        <li>Strong predictive logistics</li>
+        <li style="color:var(--amber)">Overly complex for CX use</li>
+        <li>Advanced search capabilities</li>
+        <li style="color:var(--amber)">Dense information architecture</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(79,128,245,0.4);background:rgba(79,128,245,0.06);display:flex;flex-direction:column">
+      <div style="margin-bottom:16px">
+        <span class="tag">Our target</span>
+      </div>
+      <div style="margin-bottom:12px"><img src="Images/IC.png" alt="Instacart" style="display:block;max-width:225px;border-radius:6px"></div>
+      <ul class="bullet-list green" style="gap:8px">
+        <li>Amazon-level order visibility</li>
+        <li>Uber-like flow efficiency</li>
+        <li>Smart search + custom filters</li>
+        <li>Predictive dashboards for store health</li>
+        <li>Tailored for retail CX workflows</li>
+      </ul>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+        <p style="font-size:12px;color:var(--accent);font-weight:500">Gap: no solution combined clarity + depth for retail support agents</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — COMPETITIVE ANALYSIS
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-6" data-section="problem" style="justify-content:center">
+  <span class="overline purple">Competitive Analysis</span>
+  <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Studied leaders across food delivery & logistics
+  </h2>
+  <div class="divider"></div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:0;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th style="width:22%">Feature / Tool</th>
+            <th>Uber Eats</th>
+            <th>DoorDash</th>
+            <th>Amazon Delivery</th>
+            <th class="highlight">Instacart Partner Portal (Target)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:500">Order status visibility</td>
+            <td><span class="partial">◑</span> Basic timeline</td>
+            <td><span class="partial">◑</span> Basic timeline</td>
+            <td><span class="check">✓</span> Highly detailed</td>
+            <td class="highlight"><span class="check">✓</span> Clear, transparent & tailored for CX</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:500">Search & filtering</td>
+            <td><span class="cross">✕</span> Limited</td>
+            <td><span class="cross">✕</span> Limited</td>
+            <td><span class="partial">◑</span> Advanced, dense</td>
+            <td class="highlight"><span class="check">✓</span> Smart search + customizable filters</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:500">Predictive insights</td>
+            <td><span class="cross">✕</span> None</td>
+            <td><span class="cross">✕</span> None</td>
+            <td><span class="partial">◑</span> Strong logistics</td>
+            <td class="highlight"><span class="check">✓</span> Predictive dashboards for store health</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:500">Ease of use</td>
+            <td><span class="check">✓</span> Restaurant-friendly</td>
+            <td><span class="check">✓</span> Restaurant-friendly</td>
+            <td><span class="cross">✕</span> Overly complex</td>
+            <td class="highlight"><span class="check">✓</span> Balanced clarity + depth</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:500">Customer history</td>
+            <td><span class="cross">✕</span> Not exposed</td>
+            <td><span class="cross">✕</span> Not exposed</td>
+            <td><span class="partial">◑</span> Full but heavy</td>
+            <td class="highlight"><span class="check">✓</span> Streamlined customer profiles</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:14px">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
+        <span class="check">✓</span> Strong
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
+        <span class="partial">◑</span> Partial
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
+        <span class="cross">✕</span> Absent
+      </div>
+    </div>
+    <!-- Competitor screenshots marquee — edge to edge -->
+    <div style="margin-top:48px;margin-left:-80px;margin-right:-80px;overflow:hidden">
+      <div style="display:flex;gap:16px;animation:marqueeScroll 30s linear infinite;width:max-content">
+        <img src="Images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+        <img src="Images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — STRATEGY (split-image left half)
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-7" data-section="system" style="background:#242529;background-image:none;padding:0;flex-direction:row;transform:none">
+  <canvas class="dots-canvas" id="canvas-7"></canvas>
+  <div style="flex:1;padding:48px 48px 32px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+    <span class="overline" style="color:#CD5A2E">System Design</span>
+    <h2 style="max-width:480px;font-size:clamp(32px,4vw,44px)">From complex to clear</h2>
+    <div style="width:56px;height:3px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);border-radius:2px;margin:20px 0"></div>
+    <p class="subtitle" style="margin-bottom:24px">We mapped the spectrum of internal tools to find our <strong style="color:#FFB856">balanced middle ground</strong>.</p>
+    <div style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px">
+        <span>Simple consumer UIs</span>
+        <span>Over-engineered</span>
+      </div>
+      <div style="height:8px;border-radius:4px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);position:relative;margin:20px 0">
+        <div style="position:absolute;top:50%;left:52%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#242529;border:3px solid #FFB856;box-shadow:0 0 12px rgba(255,184,86,0.6)"></div>
+      </div>
+      <div style="display:flex;justify-content:center;font-size:11px;color:#FFB856;margin-top:10px;letter-spacing:0.1em;font-weight:600;text-transform:uppercase">↑ Our target</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <span class="tag" style="border-color:rgba(255,184,86,0.3);background:rgba(255,184,86,0.1);color:#FFB856">Balanced UX</span>
+      <span class="tag" style="border-color:rgba(166,5,106,0.3);background:rgba(166,5,106,0.1);color:#A6056A">Power user tools</span>
+      <span class="tag" style="border-color:rgba(41,23,109,0.3);background:rgba(41,23,109,0.15);color:#8a7cc8">Efficiency-first</span>
+    </div>
+  </div>
+  <div style="flex:0 0 auto;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-end">
+    <img src="Images/slide10/slide7part1.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — STRATEGY (split-image right half)
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-8" data-section="system" style="background:#242529;background-image:none;padding:0;flex-direction:row;transform:none">
+  <canvas class="dots-canvas" id="canvas-8"></canvas>
+  <div style="flex:0 0 55%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-start">
+    <img src="Images/slide10/slide8part2.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
+  </div>
+  <div style="flex:1;padding:48px 80px 32px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+    <span class="overline" style="color:#FFB856">Strategy</span>
+    <h2 style="max-width:480px;font-size:clamp(32px,4vw,44px)">
+      Three pillars to guide every decision
+    </h2>
+    <div style="width:56px;height:3px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);border-radius:2px;margin:12px 0"></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(255,184,86,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFB856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div>
+          <span class="card-label" style="color:#FFB856;margin-bottom:2px">01 · Simplify</span>
+          <h3 style="font-size:15px">Simplify the experience</h3>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(205,90,46,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CD5A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div>
+          <span class="card-label" style="color:#CD5A2E;margin-bottom:2px">02 · Unify</span>
+          <h3 style="font-size:15px">Unify design system foundations</h3>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(166,5,106,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6056A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <span class="card-label" style="color:#A6056A;margin-bottom:2px">03 · Ship</span>
+          <h3 style="font-size:15px">Deliver in phases for quick wins</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9 — M1 KEY FEATURES
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-9" data-section="components">
+  <span class="overline">M1 Key Features</span>
+  <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Milestone 1: Mastering the data
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;align-items:stretch;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <span class="card-label">Smart Search</span>
+      </div>
+      <h3>Find orders & customers instantly</h3>
+      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
+        <img src="Images/Slide%209/1-Tableresults.jpg" alt="Smart search results" style="display:block;width:100%;border-radius:8px">
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+        </div>
+        <span class="card-label purple">Advanced Filters</span>
+      </div>
+      <h3>Narrow results with precision</h3>
+      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
+        <img src="Images/Slide%209/2-Filters-to-narrow.jpg" alt="Advanced filters" style="display:block;width:100%;border-radius:8px">
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box green">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+        </div>
+        <span class="card-label green">Saved Views</span>
+      </div>
+      <h3>Personalized layouts & preferences</h3>
+      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
+        <img src="Images/Slide%209/3-Saveview.jpg" alt="Saved views customization" style="display:block;width:100%;border-radius:8px">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10 — M2 KEY FEATURES
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-10" data-section="components" style="padding-top:60px">
+  <canvas class="dots-canvas" id="canvas-10"></canvas>
+  <span class="overline purple">M2 Key Features</span>
+  <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Milestone 2: Depth & intelligence
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;align-items:stretch;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span class="card-label">Pizza Tracker</span>
+      </div>
+      <h3>Clear order journey visualization</h3>
+      <div style="padding-top:16px;display:flex;flex-direction:column;justify-content:space-between;border-radius:8px;overflow:hidden;flex:1;min-height:0">
+        <img src="Images/slide10_img22.png" alt="Pizza tracker order journey" style="display:block;width:100%;border-radius:6px">
+        <img src="Images/slide10/Timeline.png" alt="Timeline" style="display:block;width:100%;border-radius:6px">
+        <img src="Images/slide10/Timeline-1.png" alt="Timeline alternate" style="display:block;width:100%;border-radius:6px">
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <span class="card-label purple">Order Details</span>
+      </div>
+      <h3>Complete order context at a glance</h3>
+      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
+        <img src="Images/slide10/Orderdetails.png" alt="Order details view" style="display:block;width:100%;border-radius:8px">
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box green">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="card-label green">Predictive Dashboard</span>
+      </div>
+      <h3>Trends & store-health signals</h3>
+      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
+        <img src="Images/slide13_img33.png" alt="Predictive dashboard" style="display:block;width:100%;border-radius:8px">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11 — DESIGN PROCESS
+══════════════════════════════════════════════════ -->
+<div class="slide slide-light slide-grid" id="slide-11" data-section="components" style="justify-content:center;padding-top:40px">
+  <span class="overline amber">Design Process</span>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">4-week design sprint</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:8px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--accent)">1</span>
+      </div>
+      <h3 style="font-size:14px">Discovery</h3>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:8px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--accent2)">2</span>
+      </div>
+      <h3 style="font-size:14px">Synthesis</h3>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:8px;background:rgba(245,166,35,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--amber)">3</span>
+      </div>
+      <h3 style="font-size:14px">Design</h3>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:8px;background:rgba(61,186,126,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--green)">4</span>
+      </div>
+      <h3 style="font-size:14px">Handoff</h3>
+    </div>
+  </div>
+  <p class="subtitle" style="max-width:640px;margin-top:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.15s both">
+    To ship at this pace, we sequenced workstreams to run in parallel. While research was testing prototypes, design was handing off component structures to engineering for back-end scaffolding. Each research cycle fed directly into the next design iteration — keeping momentum high and rework low.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 12 — IMPLEMENTATION & ROLLOUT
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-12" data-section="components">
+  <span class="overline green">Implementation & Rollout</span>
+  <h2 style="max-width:560px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Phased delivery for continuous impact
+  </h2>
+  <div class="divider" style="margin-bottom:40px"></div>
+  <div style="display:flex;flex-direction:column;gap:14px;flex:1;max-width:1100px;width:100%;margin:0 auto;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="phase-track" style="margin-bottom:40px">
+        <div class="phase-item">
+          <div class="phase-num blue">M1</div>
+          <div style="text-align:center">
+            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Foundation</div>
+            <div style="font-size:11px;color:var(--text-dim)">New look + Search + Filters</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num purple">M2</div>
+          <div style="text-align:center">
+            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Intelligence</div>
+            <div style="font-size:11px;color:var(--text-dim)">Pizza tracker + New actions</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num green">M3</div>
+          <div style="text-align:center">
+            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">History</div>
+            <div style="font-size:11px;color:var(--text-dim)">Order history + Chat</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num amber">M4</div>
+          <div style="text-align:center">
+            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Scale</div>
+            <div style="font-size:11px;color:var(--text-dim)">More automations...</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="tag">M1</span>
+            <span style="font-size:13px;color:var(--text)">New look + Search + Filters</span>
+          </div>
+          <span class="tag green">Shipped</span>
+        </div>
+        <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="tag purple">M2</span>
+            <span style="font-size:13px;color:var(--text)">Pizza tracker + New actions</span>
+          </div>
+          <span class="tag green">Shipped</span>
+        </div>
+        <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="tag green">M3</span>
+            <span style="font-size:13px;color:var(--text)">Order history + Chat</span>
+          </div>
+          <span class="tag amber">In progress</span>
+        </div>
+        <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="tag amber">M4</span>
+            <span style="font-size:13px;color:var(--text)">More automations...</span>
+          </div>
+          <span class="tag" style="color:var(--text-muted);border-color:var(--border)">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13 — IMPACT
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots" id="slide-13" data-section="impact" style="justify-content:center">
+  <canvas class="dots-canvas" id="canvas-13"></canvas>
+  <div class="cover-glow" style="top:20%;right:-10%;left:auto;background:radial-gradient(circle, rgba(61,186,126,0.2) 0%, transparent 70%)"></div>
+  <span class="overline green" style="margin-bottom:6px">Impact</span>
+  <h2 style="max-width:600px;margin:0;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    Measurable results in just two months
+  </h2>
+  <div class="divider" style="margin:10px 0 6px"></div>
+  <div style="display:flex;gap:24px;align-items:center;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="metric-card" style="text-align:center;border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.06)">
+          <div class="metric-number" style="font-size:clamp(36px,4vw,60px);color:var(--green)">↓40%</div>
+          <div class="metric-label" style="margin-top:8px">CX handling time<br>in 2 months</div>
+        </div>
+        <div class="metric-card" style="text-align:center;border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.06)">
+          <div class="metric-number" style="font-size:clamp(36px,4vw,60px);color:var(--accent)">4→1</div>
+          <div class="metric-label" style="margin-top:8px">Dashboards<br>consolidated</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px">
+        <div class="card" style="flex:1;text-align:center;border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px">
+          <div class="icon-box purple" style="width:32px;height:32px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </div>
+          <h3 style="font-size:15px;color:var(--accent2)">Fewer escalations</h3>
+        </div>
+        <div class="card" style="flex:1;text-align:center;border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.05);display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px">
+          <div class="icon-box amber" style="width:32px;height:32px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 style="font-size:15px;color:var(--amber)">Faster adoption</h3>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;margin-top:0">
+        <span class="tag green" style="flex:1;justify-content:center">✓ Features shipped on schedule</span>
+        <span class="tag green" style="flex:1;justify-content:center">✓ Agent adoption within weeks</span>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div class="uploaded-img-wrap" style="box-shadow:0 20px 60px rgba(0,0,0,0.5);width:85%;margin-top:-100px">
+        <img src="Images/slide13.jpg" alt="Orders dashboard predictive view" style="display:block;width:100%;border-radius:10px">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14 — WHAT WE LEARNED
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-14" data-section="impact" style="justify-content:center">
+  <span class="overline amber">Retrospective</span>
+  <h2 style="max-width:540px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    What we learned
+  </h2>
+  <div class="divider"></div>
+  <div class="grid-3" style="margin-top:8px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(79,128,245,0.3)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box blue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <span class="card-label blue">01</span>
+      </div>
+      <h3>Ship in phases, not perfection</h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Early shipping → <strong style="color:var(--accent)">real feedback loop</strong></p>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(124,90,245,0.3)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box purple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="card-label purple">02</span>
+      </div>
+      <h3>Bring content & research early</h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Cross-functional input → <strong style="color:var(--accent2)">better mental models</strong></p>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(245,166,35,0.3)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="icon-box amber">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+        </div>
+        <span class="card-label amber">03</span>
+      </div>
+      <h3>Balance usability with accuracy</h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Tested every shortcut → <strong style="color:var(--amber)">zero regression in accuracy</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 15 — TAKEAWAY
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots slide-cover" id="slide-15" data-section="impact">
+  <canvas class="dots-canvas" id="canvas-15"></canvas>
+  <div class="cover-glow" style="top:10%;left:20%;background:radial-gradient(circle, rgba(124,90,245,0.25) 0%, transparent 70%)"></div>
+  <div style="display:grid;grid-template-columns:50% 1fr;height:100%">
+    <div style="padding:80px 48px 60px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+      <span class="overline purple" style="margin-bottom:20px">Takeaway</span>
+      <h1 style="animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) both;font-size:clamp(32px,4vw,58px)">
+        Make complexity<br>actionable
+      </h1>
+      <div class="cover-line"></div>
+      <p class="subtitle" style="margin-bottom:20px;max-width:440px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+        Introducing the new Orders Dashboard — a command center for all orders and customers.
+      </p>
+      <p class="body-text" style="max-width:420px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both">
+        Search and find any order regardless of fulfillment method, and use the new layout and actions to troubleshoot and solve order issues with confidence.
+      </p>
+      <div style="display:flex;gap:12px;margin-top:36px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both;flex-wrap:wrap">
+        <span class="tag green">↓ 40% handling time</span>
+        <span class="tag">4 dashboards → 1</span>
+        <span class="tag purple">2 months to impact</span>
+      </div>
+      <div style="margin-top:40px;padding-top:28px;border-top:1px solid var(--border);animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
+        <p style="font-size:12px;color:var(--text-muted)">Instacart Platform · 2023</p>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:40px 48px 40px 20px">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right, var(--bg) 0%, transparent 30%);z-index:1"></div>
+      <div style="position:relative;z-index:2;border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.6)">
+        <img src="Images/slide1_img0.png" alt="Orders Dashboard" style="display:block;width:100%">
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slides -->
+
+<script>
+// ─── DOT WAVE CANVAS ───
+function initDotCanvas(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const slide = canvas.parentElement;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = slide.offsetWidth;
+    canvas.height = slide.offsetHeight;
+  }
+  resize();
+
+  const spacing = 42;
+  let t = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cols = Math.ceil(canvas.width / spacing) + 1;
+    const rows = Math.ceil(canvas.height / spacing) + 1;
+    const bandAngle = Math.PI / 4;
+    const bandWidth = canvas.width * 0.35;
+    const bandSpeed = 0.4;
+    const bandPos = ((t * bandSpeed) % (canvas.width * 1.4)) - canvas.width * 0.2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * spacing;
+        const y = r * spacing;
+        const proj = x * Math.cos(bandAngle) + y * Math.sin(bandAngle);
+        const dist = Math.abs(proj - bandPos);
+        const wave = Math.max(0, 1 - dist / bandWidth);
+        const alpha = 0.08 + wave * 0.22;
+        const radius = 1.2 + wave * 1.4;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(79,128,245,${alpha})`;
+        ctx.fill();
+      }
+    }
+    t += 0.5;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', resize);
+}
+
+['canvas-1','canvas-2','canvas-5','canvas-7','canvas-8','canvas-10','canvas-13','canvas-15'].forEach(initDotCanvas);
+
+// ─── NAVIGATION ───
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const sections = { intro:0, problem:2, system:6, components:8, impact:12 };
+
+function updateNav() {
+  const section = slides[current].dataset.section;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const map = { intro:0, problem:1, system:2, components:3, impact:4 };
+  document.querySelectorAll('.nav-btn')[map[section]]?.classList.add('active');
+  document.getElementById('counter').textContent = `${current+1} / ${total}`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total-1;
+  document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
+}
+
+function goTo(i) {
+  if (i<0||i>=total||i===current) return;
+  const prev = slides[current];
+  const isHorizontal = (current===6&&i===7)||(current===7&&i===6);
+  prev.classList.remove('active');
+  if (isHorizontal) {
+    const dir = i>current ? 'exit-left' : 'exit-right';
+    prev.classList.add(dir);
+    slides[i].classList.add(i>current ? 'enter-right' : 'enter-left');
+    setTimeout(()=>{ prev.classList.remove(dir); slides[i].classList.remove('enter-right','enter-left'); },500);
+  } else if (i>current) {
+    prev.classList.add('exit-up'); setTimeout(()=>prev.classList.remove('exit-up'),500);
+  }
+  current=i; slides[current].classList.add('active'); updateNav();
+}
+
+function stopPulse(){ document.getElementById('nextBtn').classList.remove('pulse-ring'); }
+function nextSlide(){ stopPulse(); goTo(current+1); }
+function prevSlide(){ stopPulse(); goTo(current-1); }
+function goToSection(n){ stopPulse(); goTo(sections[n]); }
+
+// Keyboard nav
+document.addEventListener('keydown', e=>{
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();nextSlide();}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevSlide();}
+});
+
+// Touch nav
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?nextSlide():prevSlide();}});
+
+// Init first slide
+slides[0].classList.add('active');
+updateNav();
+
+// ═══════ THEME TOGGLE ═══════
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀';
+  localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
+}
+if (localStorage.getItem('deck-theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('themeBtn').textContent = '🌙';
+}
+
+// ═══════ EDIT MODE ═══════
+let editMode = false;
+const EDITABLE_SEL = 'h1,h2,h3,h4,.overline,.card-label,.metric-number,.metric-label,.tag';
+
+function toggleEditMode() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  if (editMode) {
+    document.querySelectorAll('#slides ' + EDITABLE_SEL).forEach(el => {
+      if (!el.closest('nav')) el.setAttribute('contenteditable', 'true');
+    });
+  } else {
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  }
+}
+
+function saveDeck() {
+  const savedSlide = current;
+  goTo(0);
+  const wasEdit = editMode;
+  document.body.classList.remove('edit-mode');
+  const savedCE = [];
+  document.querySelectorAll('[contenteditable]').forEach(el => { savedCE.push(el); el.removeAttribute('contenteditable'); });
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  if (wasEdit) { document.body.classList.add('edit-mode'); savedCE.forEach(el => el.setAttribute('contenteditable', 'true')); }
+  goTo(savedSlide);
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'orders-dashboard.html' });
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+// Capture phase: edit mode toggle + save shortcut
+document.addEventListener('keydown', e => {
+  const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
+  if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveDeck(); return; }
+  if (inText && (e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'||e.key===' ')) {
+    e.stopImmediatePropagation();
+  }
+}, true);
+</script>
+</body>
+</html>

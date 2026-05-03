@@ -1,0 +1,327 @@
+/* ── Shared Project-Switcher Nav ── */
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-project {
+  overflow: hidden;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width is animated via JS; opacity for collapsing fade */
+  transition: width 260ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Animating states ── */
+.nav-project[data-state="collapsing"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.nav-project[data-state="expanding"] {
+  pointer-events: none;
+}
+
+/* ── Show / hide pill vs section pills by state ── */
+.nav-project[data-state="collapsed"]  .nav-pills { display: none; }
+.nav-project[data-state="collapsing"] .nav-pills { display: none; }
+.nav-project[data-state="expanded"]   .nav-project-pill { display: none; }
+/* expanding: keep pill label visible so the container visibly grows */
+.nav-project[data-state="expanding"]  .nav-pills { display: none; }
+
+/* ── Incoming page: expanded nav "settles in" on load ── */
+@keyframes navPillsIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.nav-project[data-state="expanded"] .nav-pills {
+  animation: navPillsIn 300ms 160ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ── Collapsed project-label pill ── */
+.nav-project-pill {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: rgba(79, 128, 245, 0.75);
+  background: rgba(79, 128, 245, 0.10);
+  border: 1px solid rgba(79, 128, 245, 0.22);
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+  display: block;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.nav-project-pill:hover {
+  color: rgba(79, 128, 245, 1);
+  background: rgba(79, 128, 245, 0.18);
+  border-color: rgba(79, 128, 245, 0.40);
+}
+
+/* ── Light mode overrides ── */
+html.light .nav-project-pill {
+  background: rgba(79, 128, 245, 0.08);
+  border-color: rgba(79, 128, 245, 0.20);
+  color: rgba(79, 128, 245, 0.80);
+}
+html.light .nav-project-pill:hover {
+  background: rgba(79, 128, 245, 0.14);
+  border-color: rgba(79, 128, 245, 0.35);
+  color: rgba(79, 128, 245, 1);
+}
+
+/* ── Section pill active: subtle tint so the arrow stands out ── */
+.nav-btn.active {
+  background: rgba(79, 128, 245, 0.14) !important;
+  color: rgba(79, 128, 245, 0.90) !important;
+  box-shadow: none !important;
+}
+html.light .nav-btn.active {
+  background: rgba(79, 128, 245, 0.11) !important;
+  color: rgba(79, 128, 245, 0.85) !important;
+}
+
+/* ── Next arrow: accent blue ── */
+#nextBtn {
+  color: #fff;
+  border-color: rgba(79, 128, 245, 0.70);
+  background: rgba(79, 128, 245, 1);
+  position: relative;
+  overflow: visible;
+}
+#nextBtn:hover {
+  background: rgba(99, 145, 255, 1);
+  border-color: rgba(99, 145, 255, 1);
+}
+
+/* ── Pulse ring around next arrow ── */
+@keyframes arrowPulse {
+  0%   { opacity: 0.65; transform: scale(1);   }
+  65%  { opacity: 0;    transform: scale(1.75); }
+  100% { opacity: 0;    transform: scale(1.75); }
+}
+
+#nextBtn::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(79, 128, 245, 0.55);
+  animation: arrowPulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Pulse stops once user has navigated */
+body.has-navigated #nextBtn::after {
+  display: none;
+}
+
+/* ── First-slide hint legend ── */
+.nav-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.6s ease;
+  z-index: 9999;
+}
+.nav-hint.hidden {
+  opacity: 0;
+}
+.nav-hint-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 10px;
+  line-height: 1;
+}
+html.light .nav-hint {
+  color: rgba(0, 0, 0, 0.28);
+}
+html.light .nav-hint-key {
+  border-color: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ══════════════════════════════════════════════════
+   NAV TRANSITION ANIMATIONS
+   (name stays visible, drawer expand, unified outline)
+══════════════════════════════════════════════════ */
+
+/* ── Name pill is ALWAYS visible — override the hide rule above ── */
+.nav-project .nav-project-pill { display: inline-flex !important; }
+
+/* ── When expanded/expanding/collapsing: unified outline wraps
+      the name label AND the section pills together ── */
+.nav-project[data-state="expanded"],
+.nav-project[data-state="expanding"],
+.nav-project[data-state="collapsing"] {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 4px;
+  gap: 2px;
+  transition: background 260ms ease, border-color 260ms ease;
+}
+html.light .nav-project[data-state="expanded"],
+html.light .nav-project[data-state="expanding"],
+html.light .nav-project[data-state="collapsing"] {
+  background: rgba(0,0,0,0.03);
+}
+/* Strip the inner .nav-pills border when container has it */
+.nav-project[data-state="expanded"] .nav-pills,
+.nav-project[data-state="expanding"] .nav-pills,
+.nav-project[data-state="collapsing"] .nav-pills {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* ── EXPANDED (settled): name becomes dim blue label ── */
+.nav-project[data-state="expanded"] .nav-pills {
+  animation: none !important;
+  opacity: 1;
+}
+.nav-project[data-state="expanded"] .nav-project-pill {
+  background: transparent;
+  border-color: transparent;
+  color: rgba(79,128,245,0.45);
+  cursor: pointer;
+  transition: color 260ms ease, border-color 260ms ease, background 260ms ease;
+}
+.nav-project[data-state="expanded"] .nav-project-pill:hover {
+  color: rgba(79,128,245,0.75);
+}
+html.light .nav-project[data-state="expanded"] .nav-project-pill {
+  color: rgba(79,128,245,0.5);
+}
+html.light .nav-project[data-state="expanded"] .nav-project-pill:hover {
+  color: rgba(79,128,245,0.85);
+}
+
+/* ── EXPANDING: name morphs to label, sections unfold ── */
+.nav-project[data-state="expanding"] {
+  justify-content: flex-start !important;
+}
+.nav-project[data-state="expanding"] .nav-pills {
+  display: flex !important;
+}
+.nav-project[data-state="expanding"] .nav-project-pill {
+  animation: nameToLabel 200ms cubic-bezier(0.4,0,0.2,1) both;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.nav-project[data-state="expanding"] .nav-pills .nav-btn {
+  animation: shellPillIn 200ms cubic-bezier(0.34,1.1,0.64,1) both;
+}
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(1) { animation-delay:  60ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(2) { animation-delay:  98ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 136ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 174ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 212ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 250ms; }
+.nav-project[data-state="expanding"] .nav-pills .nav-btn:nth-child(7) { animation-delay: 288ms; }
+
+/* ── COLLAPSING: sections fold back, name re-brightens ── */
+.nav-project[data-state="collapsing"] {
+  opacity: 1 !important;
+  justify-content: flex-start !important;
+}
+.nav-project[data-state="collapsing"] .nav-pills {
+  display: flex !important;
+  pointer-events: none;
+}
+.nav-project[data-state="collapsing"] .nav-project-pill {
+  animation: labelToName 220ms 80ms cubic-bezier(0.4,0,0.2,1) both;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn {
+  animation: shellPillOut 120ms cubic-bezier(0.4,0,1,1) both;
+}
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(7) { animation-delay:  0ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(6) { animation-delay: 10ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(5) { animation-delay: 20ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(4) { animation-delay: 30ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(3) { animation-delay: 40ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(2) { animation-delay: 50ms; }
+.nav-project[data-state="collapsing"] .nav-pills .nav-btn:nth-child(1) { animation-delay: 60ms; }
+
+@keyframes nameToLabel {
+  from { color: rgba(79,128,245,0.75); background: rgba(79,128,245,0.10); border-color: rgba(79,128,245,0.22); }
+  to   { color: rgba(79,128,245,0.45); background: transparent; border-color: transparent; }
+}
+@keyframes labelToName {
+  from { color: rgba(79,128,245,0.45); background: transparent; border-color: transparent; }
+  to   { color: rgba(79,128,245,0.75); background: rgba(79,128,245,0.10); border-color: rgba(79,128,245,0.22); }
+}
+@keyframes shellPillIn {
+  from { opacity: 0; transform: translateX(-10px) scale(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes shellPillOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateX(6px) scale(0.9); }
+}
+
+/* ── Sibling collapsed pills shrink to circles when a project is expanded ── */
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill {
+  max-width: 28px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition:
+    max-width    240ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    padding      240ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    background   200ms ease,
+    border-color 200ms ease,
+    color        200ms ease;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill span,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill span,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill span {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill:hover,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill:hover,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill:hover {
+  max-width: 200px;
+  padding: 6px 14px;
+  opacity: 1;
+}
+nav:has(.nav-project[data-state="expanded"])  .nav-project[data-state="collapsed"] .nav-project-pill:hover span,
+nav:has(.nav-project[data-state="expanding"]) .nav-project[data-state="collapsed"] .nav-project-pill:hover span,
+nav:has(.nav-project[data-state="collapsing"]).nav-project[data-state="collapsed"] .nav-project-pill:hover span {
+  opacity: 1;
+  transition: opacity 150ms 100ms ease;
+}

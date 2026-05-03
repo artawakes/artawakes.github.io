@@ -404,7 +404,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots active" id="slide-1" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-1" width="1920" height="1145"></canvas>
+  <canvas class="dots-canvas" id="canvas-1" width="1646" height="925"></canvas>
   <div class="cover-glow" style="top:-10%;left:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
 
   <div class="cover-right">
@@ -444,7 +444,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
     <div style="margin-top:32px;animation:fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.34s both">
       <span class="tag" style="margin-left:0">Product Design</span>
-      <span class="tag green" style="margin-left:8px">2024e</span>
+      <span class="tag green" style="margin-left:8px">2024</span>
     </div>
   </div>
 </div>
@@ -453,7 +453,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 2 — CONTEXT
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots layout-vc" id="slide-2" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-2" width="1920" height="1145"></canvas>
+  <canvas class="dots-canvas" id="canvas-2" width="1646" height="925"></canvas>
   <span class="overline">Context &amp; Goal</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:660px">
     Shoppers needed a more cohesive, human app experience
@@ -593,7 +593,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 5 — STRATEGY
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-5" width="1920" height="1145"></canvas>
+  <canvas class="dots-canvas" id="canvas-5" width="1646" height="1065"></canvas>
   <span class="overline purple">Strategy</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:80px">Three design principles that guided every decision</h2>
   <div style="display:flex;justify-content:space-evenly;margin-top:0">
@@ -737,7 +737,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 8 — IMPLEMENTATION
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-dots" id="slide-8" data-section="system" style="justify-content:center">
-  <canvas class="dots-canvas" id="canvas-8" width="1920" height="1145"></canvas>
+  <canvas class="dots-canvas" id="canvas-8" width="1646" height="1065"></canvas>
   <span class="overline">Implementation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three features shipped in the first sprint</h2>
   <div class="divider"></div>
@@ -925,7 +925,7 @@ html.presenter-mode #presenter-ui { display:flex; }
      SLIDE 13 — LEARNINGS
 ══════════════════════════════════════════════════ -->
 <div class="slide slide-grid slide-dots" id="slide-13" data-section="impact" style="padding-top:56px">
-  <canvas class="dots-canvas" id="canvas-13" width="1920" height="1145"></canvas>
+  <canvas class="dots-canvas" id="canvas-13" width="1646" height="1065"></canvas>
   <span class="overline">Learnings</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three lessons that changed how we work</h2>
   <div class="divider" style="margin:0"></div>
@@ -1343,7 +1343,7 @@ function saveDeck() {
   goTo(savedSlide);
   const blob = new Blob([html], { type: 'text/html' });
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'deck.html' });
-  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
+  a.click(); URL.revokeObjectURL(a.href);
 }
 
 // Capture phase keyboard shortcuts (main window only)
@@ -1536,7 +1536,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(slide.classList.contains('active'))start();
   window.addEventListener('resize',()=>{if(raf)resize();});
 })();
-</script><canvas id="dot-wave-canvas" width="1920" height="1205" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1646" height="1125" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
+</script><canvas id="dot-wave-canvas" width="1646" height="1125" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 <!-- ══ Edit toolbar ══ -->
 <div class="edit-toolbar">
   <span class="edit-badge">✏ Editing</span>
@@ -1544,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["This project helped defined the five-year vision for the Instacart Shopper experience.\n\n and gave us a chance to bring clarity, trust, and a bit of delight back into one of our most complex products", "Leadership wanted a clear north star for every shopper-facing team — something that could guide research, design, and engineering across the shopper app's multiple pods with a single language\n\nThe goal was to Reduce shopper cognitive load, improve efficiency, and add delight  across all three pods that owned specific areas of the experience: batches, in-store, and delivery.\n\nI acted as a horizontal design  partnered to research, PMs, data science, and leadership - worked across all 3 pods, and made sure that I focused on the human touch, delight, and also created consistent visual patterns and elevated the craft.", "The Shopper app had grown fast and unevenly, specially during the pandemic where our pickup and delivery businesses grew 40% almost overnight.\nIt felt fragmented, stressful to use to shoppers, and lacked guidance for complex in-store tasks. We needed to turn that chaos into confidence.\n\nWe needed coherence and clarity", "Through interviews and benchmarking, we heard the same themes: \n\nshoppers wanted fair feedback and visibility to it, \neasier navigation, \nand reassurance that their work was recognized. \n\nMost importantly,  we wanted to keep our diamond level shoppers happy and engaged, and avoid churn\n\nThose insights shaped every decision that followed.", "Our vision rested on three pillars \nhuman touch, clear guidance, and system cohesion. \n\nEverything we built had to make the app feel more supportive, more predictable, and more connected", "We designed small but powerful moments — \ncontextual education right where shoppers needed it \nand milestone stories that celebrated progress. \n\nThese touches made the experience feel personal, not transactional", "Since all 3 pods were exploring different solutions, we had about 5 designers contributing ideas. \n\nIn order to unified their work under one design language — a built a mini system that servers as a cohesion glue for the vision and later became the  foundation that evolved into the Shopper DS migration initiative\n\nImplemented new Instacart’s rebrand colors,  fonts, icons, and warmth.\nIntroduced components: buttons, cards, stat cards, content rows, toasts, progress steps & pills, and more (not shown here)", "What was cool about this project was that it was based in real shopper data collected over the years. \n\nso as the vision ended a lot of those ideas became projects that actually shipped: e\n\neducation toasts, a refreshed dashboard, and the milestone celebrations.\n\n We accomplished the goal of the vision being tested in production and informing future work.", "Here I can show you some transformations\n\nOnboarding, and Access to a store like Costco, \nWhere prior a hidden access card was far down the flow, we now move that onto the lock screen anticipating the user need, and in a more timely manner, based on geofencing", "For the metrics page, we went from a generic toasts \n\nto a success metrics dashboard that was directly tied to earning and perfomance to keep users engaged and celebrating meaningful data. ", "And for feedback we went from  subjective ratings \n\nto objective metrics on their performance during that shopping trip. ", "from those features that shipped early for testing, In just two months, we saw shopper satisfaction increase eight points and batch acceptance improved by five percent. Those early results proved the vision could deliver measurable impact.\n\nIn terms of retention, we have about 600 thousand shoppers, of which 82% were diamond, and we saw a 2% increase to 84% — when we checked after 6 months, and again after 1 year, so effectively maintaining our numbers.", "Alignment beats speed. Bringing content and research in early keeps teams focused, and balancing usability with accuracy is how you earn trust at scale. That’s what made this project work i think", "This North Star showed all xfn teams the value of shopper-centric design. It also helped me change my understanding around delight, and how to pitch Delight to PMs.\n\nWe had a culture at the time where PMs often rejected investment in polish, extra touches, educational features, claiming that they were frivolous. What these feature upgrades did is that they highlighted the way to improve CP (Cost Prof) ratio.\n\nMore clear flows led to fewer mistakes → faster delivery, higher satisfaction.\nMore educational moments and incentives → improvement on shopper performance.\n\nSo investing in \"nice-to-have\" may look indulgent at first, but if done strategically it lowers the cost-profit ratio by cutting a lot of inefficiencies.", "Happy to answer questions or do a deeper dive if we have time,"]</script>
+<script id="deck-notes-data" type="application/json">["This project helped defined the five-year vision for the Instacart Shopper experience — a chance to bring clarity, trust, and a bit of delight back into one of our most complex products","Leadership wanted a clear north star for every shopper-facing team — something that could guide research, design, and engineering across multiple pods with a single language\n\nThe goal was to Reduce shopper cognitive load, improve efficiency, and add delight  across batches, in-store, and delivery.\n\n\nMy role was Horizontal Lead Designer partnered with research, PMs, data science, and leadership - worked across all pods that owned specific areas of the experience, and made sure that i focused on the human touch, delight, and also created consistent visual patterns and elevated the craft.","The Shopper app had grown fast and unevenly, specially during the pandemic where our pickup and delivery business grew 40% almost overnight .\nIt felt fragmented, stressful to use, and lacked guidance for complex in-store tasks. We needed to turn that chaos into confidence.\n\nWe needed coherence and clarity","Through interviews and benchmarking, we heard the same themes: shoppers wanted fair feedback, easier navigation, and reassurance that their work was recognized. \nMost importantly,  we wanted to keep our diamond level shoppers, and avoid churn\nThose insights shaped every decision that followed.","Our vision rested on three pillars — human touch, clear guidance, and system cohesion. Everything we built had to make the app feel more supportive, more predictable, and more connected","We designed small but powerful moments — milestone stories that celebrated progress and contextual education right where shoppers needed it. These touches made the experience feel personal, not transactional\n","Three pods were exploring different solutions, so we unified their work under one design system — a foundation that later evolved into the 2025 Shopper DS migration\n\nImplemented new Instacart’s rebrand colors,  fonts, icons, and warmth.\nIntroduced components: buttons, cards, stat cards, content rows, toasts, progress steps & more\nBecame the proof point that led to the Shopper Design System migration in 2025.","Several concepts actually shipped: education toasts, a refreshed dashboard, and milestone celebrations. Each one tested parts of the vision in production and informed future work.","Quickly I can show you some transformations\nFrom a hidden access card far down the flow to a more timely surfaced by location access card on the lock screen anticipating the user need.","From generic toasts to dashboard success metrics tied to earning and perfomance to keep users engaged and celebrating meaningful data. ","And from subjective ratings to objective metrics on their performance during that shopping trip. ","from those features that shipped early for testing, In just two months, we saw shopper satisfaction increase eight points and batch acceptance improved by five percent. Those early results proved the vision could deliver measurable impact.\n\n\n-------- For retantion. well that one we needed more time to test:\n\nDirect measurement is delayed\nRetention means tracking whether users return after weeks or months. You can’t confirm it in real time. Proxies like “engaged with milestone stories” give earlier hints.\n\n----\nOften to PMs Delight feels like a cost center\nAdding polish, storytelling features, or extra touches looks like spending without guaranteed return.\nBut it reduces hidden costs\nFewer confusing flows → fewer mistakes → fewer support tickets.\nClearer, more enjoyable experiences → less churn → higher lifetime value.\nSmall touches of delight → users trust the system more, so they self-serve instead of escalating issues.\nCP (Cost Profit) ratio improves\nProfit rises not because “delight” directly makes money, but because smoother, more trusted experiences shrink the need for support staff.\nSo the paradox: investing in “nice-to-have” design can look indulgent, but if done strategically it lowers the cost-profit ratio by cutting inefficiencies.","Alignment beats speed. Bringing content and research in early keeps teams focused, and balancing usability with accuracy is how you earn trust at scale. That’s what made this project work i think","This North Star proved the value of shopper-centric design and paved the way for scalable improvements across Instacart - Including making the case to migrate the shopper app to our design system.\n\nThe northstar also helped the three pods that worked on the e2e flow (which was divided batches, in-store, delivery a shared direction.","Happy to answer questions or do a deeper dive if we have time,"]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -1591,4 +1591,4 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="../shared/nav.js"></script>
 
 
-<div class="nav-hint"><span class="nav-hint-key">←</span><span class="nav-hint-key">→</span><span>navigate</span></div></body></html>
+</body></html>

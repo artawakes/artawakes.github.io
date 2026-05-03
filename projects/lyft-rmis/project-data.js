@@ -1,0 +1,305 @@
+// Sample project data structure
+const projectData = {
+    // Basic info
+    title: "Lyft RMIS",
+    subtitle: "Lowering Lyft's costs through better predictions and more efficient claim handling process",
+    description: "MVP Features to launch + New Scalable Navigation Framework for v2.0",
+    keywords: ["RMIS", "Risk Management", "UX Design", "Insurance Technology", "Claims Handling"],
+    
+    // Tags display on the project page
+    tags: ["Risk Management", "Claims Handling", "UX Design"],
+    
+    // Overview text
+    overview: [
+        "Lyft needed a way to better handle accident claims in-house to achieve better financial predictions and lower claim resolution time rates by making more efficient tools for claim handlers.",
+        "RMIS (Risk Management Information System) is the claim handling back-end system for Lyft. The Drive Accident Reporting Tool app allows drivers to submit claims after they have had an accident. On the Lyft side, our users, Lyft employees and insurance partners, receive the first notice of loss via our software RMIS."
+    ],
+    
+    // Project details
+    details: {
+        client: "Lyft",
+        timeline: "2019-2020",
+        role: "Lead Product Designer",
+        deliverables: "MVP Features, Navigation Framework, User Interface Design, Integration Guidelines"
+    },
+    
+    // Feature image with caption
+    featureImage: {
+        src: "./Images/1.jpg",
+        alt: "RMIS Dashboard Interface",
+        caption: ""
+    },
+    
+    // Process steps
+    process: [
+        {
+            title: "Research & Discovery",
+            content: [
+                "Conducted user interviews with claim handlers to understand their workflow and pain points",
+                "Performed comprehensive analysis of the current RMIS system to identify optimization opportunities",
+                "Collected user needs assessment and interview insights to guide development",
+                "Conducted competitive analysis to identify industry best practices",
+                "QUOTE_START:How might we improve RMIS' navigation, information architecture and layout to help users become more efficient at their jobs.QUOTE_END"
+            ],
+            images: [
+                {
+                    src: "./Images/20.png",
+                    alt: "Research & Discovery Analysis"
+                }
+            ],
+            outcomes: [
+                "Identified key pain points in the current system",
+                "Established clear user requirements",
+                "Defined project scope and priorities"
+            ]
+        },
+        {
+            title: "User Roles & Responsibilities",
+            content: [
+                "Our research identified several key user types with distinct needs and workflows:",
+                "FNOL Associates process accident reports, document case details, and manage vehicle deactivation",
+                "Claim Advocates guide high-value claims through the entire lifecycle with precision and accuracy",
+                "Claim Managers monitor claim cycle health, track resolution velocity, and evaluate staff performance metrics",
+                "Claims Operations handle specialized cases, manage exceptions, and resolve complex edge cases",
+                "Future expansion plans include extending access to Legal teams, Drivers, Riders, and Insurance Partner Adjusters"
+            ],
+            outcomes: [
+                "Established distinct user personas with specific needs and permissions",
+                "Created user journey maps for each role's primary workflows",
+                "Determined critical features for each user type"
+            ]
+        },
+        {
+            title: "System Architecture Analysis",
+            content: [
+                "Examined the existing system structure to identify optimization opportunities",
+                "Mapped current user interaction patterns across three major categories:",
+                "Data Entry & Documentation: Claim intake, information gathering, notation and minor data corrections",
+                "Decision Making & Authorization: Claim budget forecasting, status updates, and elevated system permissions",
+                "Analysis & Oversight: Performance dashboards, cycle time visualization, and workload distribution management"
+            ],
+            images: [
+                {
+                    src: "./Images/3a.jpg",
+                    alt: "Current RMIS System"
+                },
+                {
+                    src: "./Images/3b.jpg",
+                    alt: "Current RMIS System - Detail View"
+                }
+            ],
+            outcomes: [
+                "Created comprehensive architecture blueprint",
+                "Identified system bottlenecks and inefficiencies",
+                "Developed structured approach to system redesign"
+            ]
+        },
+        {
+            title: "User Needs Assessment",
+            content: [
+                "Analyzed user feedback to identify key requirements",
+                "Prioritized features based on user needs",
+                "Documented insights from user interviews",
+                "Created user personas to guide design decisions"
+            ],
+            images: [
+                {
+                    src: "./Images/4a.png",
+                    alt: "User Needs Assessment - Part 1"
+                },
+                {
+                    src: "./Images/4b.png",
+                    alt: "User Needs Assessment - Part 2"
+                }
+            ],
+            outcomes: [
+                "Developed comprehensive user requirement documentation",
+                "Created prioritized feature list",
+                "Established user success metrics"
+            ]
+        },
+        {
+            title: "Information Architecture & User Flows",
+            content: [
+                "Developed comprehensive information architecture for the new system",
+                "Created detailed user flow maps to streamline claims processing workflow",
+                "Designed initial wireframes to establish core functionality",
+                "Conducted user testing to validate early concepts"
+            ],
+            images: [
+                {
+                    src: "./Images/7.png",
+                    alt: "Information Architecture"
+                },
+                {
+                    src: "./Images/9.jpeg",
+                    alt: "User Flow Mapping"
+                },
+                {
+                    src: "./Images/11.png",
+                    alt: "User Testing Setup"
+                }
+            ],
+            outcomes: [
+                "Established logical information structure",
+                "Improved navigation framework for v2.0",
+                "Validated core concepts with users early in the process"
+            ]
+        },
+        {
+            title: "Design System & Visual Design",
+            content: [
+                "Created comprehensive design system with consistent components",
+                "Developed color palette and typography guidelines",
+                "Built component library for efficient implementation",
+                "Implemented visual design explorations to align with Lyft's brand"
+            ],
+            images: [
+                {
+                    src: "./Images/21b.png",
+                    alt: "Design System Components"
+                },
+                {
+                    src: "./Images/21c.png",
+                    alt: "Visual Design Elements"
+                },
+                {
+                    src: "./Images/21d.png",
+                    alt: "Design System Implementation"
+                },
+                {
+                    src: "./Images/18a.png",
+                    alt: "Color Palette"
+                },
+                {
+                    src: "./Images/19a.png",
+                    alt: "Component Library"
+                },
+                {
+                    src: "./Images/23a.png",
+                    alt: "Design System Overview"
+                }
+            ],
+            outcomes: [
+                "Consistent visual language across the platform",
+                "Efficient handoff to development team",
+                "Scalable design system for future enhancements"
+            ]
+        },
+        {
+            title: "Prototyping & Refinement",
+            content: [
+                "Developed high-fidelity prototypes for key user flows",
+                "Iterated based on user feedback and testing",
+                "Refined interaction design for optimal usability",
+                "Implemented accessibility considerations throughout"
+            ],
+            images: [
+                {
+                    src: "./Images/24b.png",
+                    alt: "Prototyping User Flow 1"
+                },
+                {
+                    src: "./Images/24c.png",
+                    alt: "Prototyping User Flow 2"
+                },
+                {
+                    src: "./Images/23b.png",
+                    alt: "Prototyping User Flow 3"
+                },
+                {
+                    src: "./Images/24d.png",
+                    alt: "Prototyping User Flow 4"
+                },
+                {
+                    src: "./Images/24e.png",
+                    alt: "Prototyping User Flow 5"
+                },
+                {
+                    src: "./Images/25b.png",
+                    alt: "Prototyping User Flow 6"
+                },
+                {
+                    src: "./Images/25c.png",
+                    alt: "Prototyping User Flow 7"
+                },
+                {
+                    src: "./Images/25d.png",
+                    alt: "Prototyping User Flow 8"
+                },
+                {
+                    src: "./Images/25e.png",
+                    alt: "Prototyping User Flow 9"
+                },
+                {
+                    src: "./Images/28.png",
+                    alt: "Implementation Guidelines"
+                },
+                {
+                    src: "./Images/29.png",
+                    alt: "Project Outcome & Metrics"
+                }
+            ],
+            outcomes: [
+                "Improved user experience based on direct feedback",
+                "Addressed accessibility requirements",
+                "Finalized interaction patterns for development"
+            ]
+        },
+        {
+            title: "Implementation & Results",
+            content: [
+                "Delivered final design specifications and documentation",
+                "Provided implementation guidelines for development team",
+                "Supported launch and measured project outcomes",
+                "Established metrics for ongoing evaluation"
+            ],
+            images: [
+                {
+                    src: "./Images/26a.png",
+                    alt: "Implementation Overview"
+                },
+                {
+                    src: "./Images/26b.png",
+                    alt: "Implementation Details"
+                },
+                {
+                    src: "./Images/26c.png",
+                    alt: "Implementation Process"
+                },
+                {
+                    src: "./Images/26d.png",
+                    alt: "Implementation Results"
+                }
+            ],
+            outcomes: [
+                "Successfully launched RMIS 2.0 with improved features",
+                "Reduced claim resolution time by 28%",
+                "Improved financial prediction accuracy by 40%",
+                "Enhanced user efficiency for claim handlers",
+                "Seamless integration with DART system"
+            ]
+        }
+    ],
+    
+    // Reflections section
+    reflections: [
+        "The RMIS project successfully transformed Lyft's claim handling process, creating a more efficient system for both claim handlers and insurance partners. The implementation of enhanced financial prediction tools and streamlined workflows significantly improved operational efficiency.",
+        "The development of a scalable navigation framework for v2.0 ensured the system's ability to grow with Lyft's needs, while the seamless integration with DART created a cohesive experience for all users involved in the claims process."
+    ],
+    
+    // Navigation to other projects
+    navigation: {
+        prev: {
+            title: "Lyft Home Search",
+            url: "../lyft-home-search/index.html"
+        },
+        next: {
+            title: "EA Design System",
+            url: "../ea-design-system/index.html"
+        }
+    }
+};
+
+// Make projectData available globally
+window.projectData = projectData; 

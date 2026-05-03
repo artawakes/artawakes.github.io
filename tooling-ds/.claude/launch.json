@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "TDS deck",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "/Users/dario/New Deck/tooling-ds"],
+      "port": 3000
+    },
+    {
+      "name": "New Deck (all decks)",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "/Users/dario/New Deck"],
+      "port": 3000
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax with Light/Dark Mode</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --text-color: #212529;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #0d6efd;
+            --text-color: #f8f9fa;
+            --bg-color: #212529;
+            --card-bg: #343a40;
+            --border-color: #495057;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Parallax container */
+        .parallax {
+            height: 100vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        /* Content sections */
+        .content-section {
+            min-height: 100vh;
+            padding: 4rem 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Toggle switch */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.7);
+            padding: 10px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: white;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-icons {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switch -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+        <div class="toggle-icons">
+            <i class="bi bi-sun-fill me-2"></i>
+            <i class="bi bi-moon-fill"></i>
+        </div>
+    </div>
+
+    <!-- Parallax Section -->
+    <div class="parallax" id="parallax-bg"></div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 mb-4">Welcome to Parallax Demo</h1>
+                    <p class="lead mb-5">Scroll down to experience the parallax effect. Toggle between light and dark mode using the switch in the top-right corner.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Parallax Effect</h5>
+                            <p class="card-text">The parallax effect creates an illusion of depth by moving background images slower than foreground content when scrolling.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Light/Dark Mode</h5>
+                            <p class="card-text">Switch between light and dark themes with a simple toggle. The background image and UI elements adjust automatically.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Responsive Design</h5>
+                            <p class="card-text">This page is fully responsive and works seamlessly across different screen sizes and devices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Parallax Section -->
+    <div class="parallax" id="parallax-bg-2"></div>
+
+    <!-- Second Content Section -->
+    <div class="content-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-5 mb-4">How It Works</h2>
+                    <p class="lead">This demo uses CSS for the parallax effect and JavaScript to handle the theme switching functionality.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">The Parallax Effect</h5>
+                            <p class="card-text">The parallax effect is achieved using CSS's <code>background-attachment: fixed</code> property. This makes the background image stay in place while the content scrolls over it.</p>
+                            <p class="card-text">For the best effect, use high-resolution images and ensure there's enough contrast between the background and text.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Theme Switching</h5>
+                            <p class="card-text">The theme switching is handled using CSS variables and a small JavaScript function that toggles a <code>data-theme</code> attribute on the document element.</p>
+                            <p class="card-text">When the dark theme is active, we change the background image and update all the color variables for a cohesive look.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the theme toggle input
+            const toggleSwitch = document.querySelector('#checkbox');
+            
+            // Function to set the theme
+            function setTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    document.getElementById('parallax-bg').style.backgroundImage = "url('../Assets/backgrounds/bg-dark.png')";
+                    document.getElementById('parallax-bg-2').style.backgroundImage = "url('../Assets/backgrounds/bg-light.png')";
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    document.getElementById('parallax-bg').style.backgroundImage = "url('../Assets/backgrounds/bg-light.png')";
+                    document.getElementById('parallax-bg-2').style.backgroundImage = "url('../Assets/backgrounds/bg-dark.png')";
+                }
+            }
+            
+            // Event listener for theme switch
+            toggleSwitch.addEventListener('change', function(e) {
+                setTheme(e.target.checked);
+            });
+            
+            // Check for saved theme preference or prefer-color-scheme
+            const currentTheme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            // Set initial theme
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
+            
+            // Initially set background images
+            document.getElementById('parallax-bg').style.backgroundImage = toggleSwitch.checked ? 
+                "url('../Assets/backgrounds/bg-dark.png')" : "url('../Assets/backgrounds/bg-dark.png')";
+            document.getElementById('parallax-bg-2').style.backgroundImage = toggleSwitch.checked ? 
+                "url('../Assets/backgrounds/bg-light.png')" : "url('../Assets/backgrounds/bg-light.png')";
+        });
+    </script>
+</body>
+</html>
