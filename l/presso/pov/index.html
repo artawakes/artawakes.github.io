@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darío Fidanza — AI and the Future of Design Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07101f; --bg2: #0d1a2e;
+    --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+    --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
+    --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e;
+    --nav-h: 60px;
+  }
+
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; position: relative;
+  }
+
+  /* ── Dot-wave canvas background (matches landing page) ── */
+  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  /* ── Top nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+    background: rgba(7,16,31,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text); text-decoration: none; opacity: 0.85;
+    text-shadow: 0 0 18px rgba(79,128,245,0.28);
+  }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
+    color: var(--text-dim); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-back svg { transition: transform 0.2s; }
+  .nav-back:hover svg { transform: translateX(-3px); }
+
+  /* ── Reading column ── */
+  .page {
+    position: relative; z-index: 1;
+    max-width: 760px; margin: 0 auto;
+    padding: calc(var(--nav-h) + 72px) 32px 120px;
+  }
+
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 9px var(--accent2); }
+
+  h1 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(32px, 4.6vw, 54px); line-height: 1.08; letter-spacing: -0.025em;
+    color: var(--text); margin-bottom: 14px;
+  }
+
+  .subhead {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(18px, 2.2vw, 26px); line-height: 1.25; letter-spacing: -0.015em;
+    color: var(--text-dim); margin-bottom: 24px; max-width: 60ch;
+  }
+
+  .cover-line {
+    width: 56px; height: 3px; border-radius: 2px; margin-bottom: 26px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 70%, transparent 100%);
+    box-shadow: 0 0 12px rgba(79,128,245,0.5);
+  }
+
+  .dek { font-size: clamp(17px, 1.8vw, 21px); color: var(--text-muted); line-height: 1.6; margin-bottom: 40px; max-width: 60ch; }
+
+  h2 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(22px, 2.4vw, 30px); line-height: 1.18; letter-spacing: -0.02em;
+    color: var(--text); margin: 52px 0 16px;
+  }
+
+  p { font-size: 16px; color: var(--text-dim); line-height: 1.75; margin-bottom: 18px; max-width: 68ch; }
+  p strong, .dek strong { color: var(--text); font-weight: 600; }
+  p.lede { font-size: 17px; color: var(--text-muted); }
+
+  /* ── Pull quote ── */
+  .pull {
+    border-left: 3px solid var(--accent2);
+    background: linear-gradient(90deg, rgba(124,90,245,0.10), rgba(124,90,245,0.02));
+    padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 30px 0;
+    font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: none;
+  }
+  .pull strong { color: var(--text); font-weight: 600; }
+
+  /* ── Figure ── */
+  .fig { margin: 40px 0 12px; }
+  .fig-head { text-align: center; margin-bottom: 22px; }
+  .fig-title { font-size: 15px; font-weight: 600; color: var(--text); margin: 0 0 14px; max-width: none; line-height: 1.4; }
+  .fig-legend { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .fig-legend .lg { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
+  .fig-legend .sw { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+  .fig-legend .sw-truth { background: rgba(124,90,245,0.16); border: 1.5px solid #7c5af5; }
+  .fig-legend .sw-view { background: transparent; border: 1.5px dashed rgba(255,255,255,0.18); }
+  .fig-panel {
+    padding: 22px 24px 18px; margin-bottom: 16px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  }
+  .fig-panel svg { width: 100%; height: auto; display: block; }
+  .caption { font-size: 12.5px; color: var(--text-dim); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+  /* ── Footer ── */
+  .rule { height: 1px; background: var(--border); border: 0; margin: 56px 0 26px; }
+  .foot { font-size: 13px; color: var(--text-dim); margin: 0; }
+  .foot strong { color: var(--text-muted); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .page { padding: calc(var(--nav-h) + 48px) 22px 90px; }
+    nav { padding: 0 20px; }
+    .nav-back span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="../">Darío Fidanza</a>
+  <a class="nav-back" href="../">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span>All presentations</span>
+  </a>
+</nav>
+
+<main class="page">
+
+  <p class="eyebrow"><span class="eyebrow-dot"></span>Point of view</p>
+  <h1>AI and the future of design systems</h1>
+  <p class="subhead">The source of truth is moving from design to code</p>
+  <div class="cover-line"></div>
+  <p class="dek">In an AI-native workflow, running code becomes the canonical artifact. Design files still play an important role, but more as a space to align on intent and gather feedback, rather than the thing everyone builds against.</p>
+
+  <p class="lede">For years, the default assumption was that <strong>the design file was the source of truth</strong>. Figma held the canonical screens, engineering implemented them, and if the build didn't match the file, the build was considered wrong. The artifact led, and code followed. Yet the file was only ever treated as the source of truth, and never actually was.</p>
+
+  <p>In an <strong>AI-native workflow</strong>, that dynamic changes. Intent can now move almost directly into working software: agents generate and maintain the code, and the running system is what users actually experience. <strong>The design file is no longer where the truth lives. It becomes a proposal for the truth</strong>, useful right up until the code exists.</p>
+
+  <div class="pull">The shift is not that design stops mattering. It is that the <strong>drawn artifact stops being the contract</strong> and becomes the conversation. The designer's role remains essential: guiding decisions, advocating for the user, and ensuring the product reflects the right intent. The function of design does not change at its core; only the medium does.</div>
+
+  <div class="fig">
+
+    <div class="fig-head">
+      <p class="fig-title">Where tokens, the design system &amp; component specs live</p>
+      <div class="fig-legend">
+        <span class="lg"><span class="sw sw-truth"></span>source of truth</span>
+        <span class="lg"><span class="sw sw-view"></span>a view we discuss, not canonical</span>
+      </div>
+    </div>
+
+    <!-- ── BEFORE panel ── -->
+    <div class="fig-panel">
+      <svg viewBox="0 0 680 158" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>Before: a design-led workflow</title>
+        <desc>Intent flows to a Figma file that is the source of truth and holds the design system as tokens, components and specs; code is a built copy made by hand.</desc>
+        <style>
+          .v-truth-fill{ fill:rgba(124,90,245,0.16); } .v-truth-stroke{ stroke:#7c5af5; }
+          .v-neu-fill{ fill:rgba(255,255,255,0.04); } .v-neu-stroke{ stroke:rgba(255,255,255,0.18); }
+          text{ font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
+          .sect{ font-size:11.5px; font-weight:700; letter-spacing:.06em; fill:#8fa8c4; }
+          .btitle{ font-size:14px; font-weight:600; fill:#f0f4ff; }
+          .bsub{ font-size:11px; fill:#8fa8c4; }
+          .bsub3{ font-size:10px; fill:#8fa8c4; }
+          .cap{ font-size:11.5px; fill:#8fa8c4; }
+          .alab{ font-size:10px; fill:#8fa8c4; }
+          .crown{ font-size:12.5px; font-weight:700; fill:#a78bfa; }
+        </style>
+        <defs>
+          <marker id="b-ar" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#8fa8c4"/></marker>
+        </defs>
+
+        <text class="sect" x="40" y="24">BEFORE  ·  DESIGN-LED</text>
+
+        <rect x="39" y="40" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
+        <text class="btitle" x="114" y="66" text-anchor="middle">Intent</text>
+        <text class="bsub" x="114" y="84" text-anchor="middle">brief + mockups</text>
+
+        <rect x="245" y="31" width="200" height="76" rx="10" class="v-truth-fill v-truth-stroke" stroke-width="2"/>
+        <text class="crown" x="261" y="57">★</text>
+        <text class="btitle" x="280" y="57">Figma file</text>
+        <text class="bsub" x="261" y="76">the canonical artifact</text>
+        <text class="bsub3" x="261" y="94">holds tokens · components · specs</text>
+
+        <rect x="501" y="40" width="140" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
+        <text class="btitle" x="571" y="66" text-anchor="middle">Code</text>
+        <text class="bsub" x="571" y="84" text-anchor="middle">a built copy</text>
+
+        <line x1="189" y1="69" x2="241" y2="69" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#b-ar)"/>
+        <line x1="445" y1="69" x2="497" y2="69" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#b-ar)"/>
+        <text class="alab" x="471" y="62" text-anchor="middle">handoff</text>
+
+        <text class="cap" x="39" y="138">The file is canonical. The design system lives inside it, as pictures to copy.</text>
+      </svg>
+    </div>
+
+    <!-- ── NOW panel ── -->
+    <div class="fig-panel">
+      <svg viewBox="0 0 680 365" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>Now: a code-led, AI-native workflow</title>
+        <desc>A locked design-system contract of tokens, component specs and rules sits above the AI agents and feeds them. Intent also flows into the agents. The agents generate the code that ships, which is the source of truth, and render a visual layer down into Figma. Humans discuss the rendered visual layer and feedback flows back up to the agents.</desc>
+        <style>
+          .v-truth-fill{ fill:rgba(124,90,245,0.16); } .v-truth-stroke{ stroke:#7c5af5; } .v-truth-bd{ stroke:#a78bfa; }
+          .v-neu-fill{ fill:rgba(255,255,255,0.04); } .v-neu-stroke{ stroke:rgba(255,255,255,0.18); }
+          text{ font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
+          .sect{ font-size:11.5px; font-weight:700; letter-spacing:.06em; fill:#8fa8c4; }
+          .btitle{ font-size:14px; font-weight:600; fill:#f0f4ff; }
+          .bsub{ font-size:11px; fill:#8fa8c4; }
+          .cap{ font-size:11.5px; fill:#8fa8c4; }
+          .alab{ font-size:10px; fill:#8fa8c4; }
+          .crown{ font-size:12.5px; font-weight:700; fill:#a78bfa; }
+          .tag{ font-size:9.5px; font-weight:700; letter-spacing:.05em; fill:#a78bfa; }
+        </style>
+        <defs>
+          <marker id="n-ar" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#8fa8c4"/></marker>
+          <marker id="n-arp" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#a78bfa"/></marker>
+        </defs>
+
+        <text class="sect" x="40" y="24">NOW  ·  CODE-LED, AI-NATIVE</text>
+
+        <rect x="198" y="44" width="260" height="60" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
+        <text class="tag" x="328" y="64" text-anchor="middle">LOCKED · ENFORCED IN CODE</text>
+        <text class="btitle" x="328" y="83" text-anchor="middle">Design system contract</text>
+        <text class="bsub" x="328" y="99" text-anchor="middle">tokens · component specs · rules</text>
+        <line x1="328" y1="104" x2="328" y2="134" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="338" y="123">agents build from it</text>
+
+        <rect x="49" y="138" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
+        <text class="btitle" x="124" y="164" text-anchor="middle">Intent</text>
+        <text class="bsub" x="124" y="182" text-anchor="middle">goals + taste</text>
+
+        <rect x="253" y="138" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
+        <text class="btitle" x="328" y="164" text-anchor="middle">AI agents</text>
+        <text class="bsub" x="328" y="182" text-anchor="middle">generate + render</text>
+
+        <rect x="459" y="134" width="170" height="66" rx="10" class="v-truth-fill v-truth-stroke" stroke-width="2"/>
+        <text class="crown" x="475" y="162">★</text>
+        <text class="btitle" x="494" y="162">Code that ships</text>
+        <text class="bsub" x="475" y="181">the running system</text>
+
+        <line x1="199" y1="167" x2="251" y2="167" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <line x1="403" y1="167" x2="455" y2="167" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="430" y="160" text-anchor="middle">generates</text>
+
+        <line x1="315" y1="196" x2="315" y2="236" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="305" y="219" text-anchor="end">visual layer</text>
+        <line x1="341" y1="240" x2="341" y2="198" class="v-truth-bd" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#n-arp)"/>
+        <text class="alab" x="351" y="219">feedback</text>
+
+        <rect x="208" y="240" width="240" height="70" rx="10" fill="none" class="v-neu-stroke" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="btitle" x="328" y="266" text-anchor="middle">Figma / visual layer</text>
+        <text class="bsub" x="328" y="285" text-anchor="middle">rendered by AI · we discuss it</text>
+        <text class="bsub" x="328" y="302" text-anchor="middle">a lens, not the law</text>
+
+        <text class="cap" x="340" y="338" text-anchor="middle">The agents work from the locked contract: they generate the code and render the</text>
+        <text class="cap" x="340" y="355" text-anchor="middle">visual layer. We discuss the render, and feedback flows back up.</text>
+      </svg>
+    </div>
+
+    <p class="caption">The source of truth moves to code. AI agents build from a locked design-system contract, then render a visual layer we can discuss.</p>
+  </div>
+
+  <h2>And what happens to the design system?</h2>
+  <p>In the old model, the design system lived in Figma as a library of styles and component specs that engineers re-created by hand. In the new model, it becomes <strong>a locked contract in code</strong>: tokens, component specs, and rules that are typed, linted, and tested.</p>
+  <p>It also explains why translating Figma straight to code with AI keeps misfiring. Pixels under-specify intent, so any picture-to-code path is lossy and the model fills the gaps by guessing, no matter how capable it gets. A contract removes the ambiguity: the agent builds from defined rules instead of inferring them.</p>
+  <p>AI agents use that contract to generate the running code and render the visual layer, so the picture and the product come from the same source. A design system that exists only in Figma becomes a suggestion the generator can ignore.</p>
+
+  <h2>Why render it into Figma at all?</h2>
+  <p>If the app is built from the same contract, why not just review the running code? Because Figma gives us something the app does not: <strong>a frozen, annotatable, side-by-side surface built for discussion</strong>.</p>
+  <p>Over time, that surface may not be Figma at all. Designers might choose a quick HTML render, Figma, or another visual tool depending on the conversation they need to have.</p>
+
+  <h2>Why the visual layer still matters</h2>
+  <p>None of this makes the visual layer irrelevant. It simply changes its role. Instead of being drawn by hand as the source of truth, it becomes a way to review, compare, and discuss what the system is producing.</p>
+  <p>The designer's role remains essential: guiding decisions, advocating for the user, exploring options, debating hierarchy and motion, and feeding that judgment back into the next build. <strong>The function of design does not change at its core.</strong> The drawn artifact just stops being the contract and becomes the conversation.</p>
+
+  <h2>Where this goes next</h2>
+  <p>This is a point of view, not a plan. The natural next step is a pilot: pick one surface, encode its design system as a contract in code, and let agents build from it end to end. The questions worth answering there are about strategy, trade-offs, and the migration path, and they deserve their own piece.</p>
+
+  <hr class="rule">
+  <p class="foot">A working point of view by <strong>Darío Fidanza</strong>.</p>
+
+</main>
+
+<script>
+// ── Dot-wave canvas animation (matches landing page) ──
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  const SPACING = 30;
+  let w, h, t = 0;
+
+  function resize() {
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.65, cy = h * 0.42;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
+
+        const falloff = Math.pow(1 - norm, 1.3);
+        const opacity = (wave * 0.38 + 0.30) * falloff;
+        if (opacity < 0.04) continue;
+
+        const bright = Math.max(0, wave);
+        const rc = Math.round(79  + bright * 90);
+        const gc = Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setTimeout(() => { requestAnimationFrame(draw); }, 60);
+})();
+</script>
+
+</body>
+</html>
