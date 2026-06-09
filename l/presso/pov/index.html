@@ -85,21 +85,51 @@
   h2 {
     font-family: 'Hepta Slab', serif; font-weight: 400;
     font-size: clamp(22px, 2.4vw, 30px); line-height: 1.18; letter-spacing: -0.02em;
-    color: var(--text); margin: 52px 0 16px;
+    color: var(--text); margin: 0 0 18px;
   }
 
   p { font-size: 16px; color: var(--text-dim); line-height: 1.75; margin-bottom: 18px; max-width: 68ch; }
   p strong, .dek strong { color: var(--text); font-weight: 600; }
   p.lede { font-size: 17px; color: var(--text-muted); }
 
-  /* ── Pull quote ── */
-  .pull {
-    border-left: 3px solid var(--accent2);
-    background: linear-gradient(90deg, rgba(124,90,245,0.10), rgba(124,90,245,0.02));
-    padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 30px 0;
-    font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: none;
+  /* ── Numbered step labels ── */
+  .step {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin: 48px 0 4px;
   }
-  .pull strong { color: var(--text); font-weight: 600; }
+
+  /* ── Definition box ── */
+  .defbox {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+    padding: 2px 22px; margin: 20px 0 8px;
+  }
+  .defrow { padding: 15px 0; border-bottom: 1px solid var(--border); }
+  .defrow:last-child { border-bottom: 0; }
+  .defrow .k { font-size: 15px; font-weight: 600; color: var(--text); }
+  .defrow .k .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--accent2); background: rgba(124,90,245,0.14); border: 1px solid rgba(124,90,245,0.22);
+    padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
+  }
+  .defrow .d { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin: 5px 0 0; max-width: none; }
+
+  /* ── Capability chips ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; margin: 14px 0 6px; }
+  .chip {
+    font-size: 13px; font-weight: 600; color: var(--green);
+    background: rgba(61,186,126,0.12); border: 1px solid rgba(61,186,126,0.22);
+    border-radius: 20px; padding: 6px 14px;
+  }
+
+  /* ── Was / Now roles ── */
+  .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 6px; }
+  .role { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 18px 20px; }
+  .role h3 { font-size: 14px; font-weight: 600; letter-spacing: 0.01em; color: var(--text); margin-bottom: 12px; }
+  .role .ba { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; margin: 0 0 12px; max-width: none; }
+  .role .ba:last-child { margin-bottom: 0; }
+  .role .ba .l { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #6f879f; margin-bottom: 3px; }
+  .role .now { color: var(--text-muted); }
+  .role .now .l { color: var(--accent2); }
 
   /* ── Figure ── */
   .fig { margin: 40px 0 12px; }
@@ -126,6 +156,7 @@
     .page { padding: calc(var(--nav-h) + 48px) 22px 90px; }
     nav { padding: 0 20px; }
     .nav-back span { display: none; }
+    .roles { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -147,13 +178,28 @@
   <h1>AI and the future of design systems</h1>
   <p class="subhead">The source of truth is moving from design to code</p>
   <div class="cover-line"></div>
-  <p class="dek">In an AI-native workflow, running code becomes the canonical artifact. Design files still play an important role, but more as a space to align on intent and gather feedback, rather than the thing everyone builds against.</p>
+  <p class="dek">For years we treated the design file as the source of truth. In an AI-native workflow that no longer holds, and the shift is already underway in the tools we use. This lays out why the mock was never really the truth, what replaces it, and what changes for designers.</p>
 
-  <p class="lede">For years, the default assumption was that <strong>the design file was the source of truth</strong>. Figma held the canonical screens, engineering implemented them, and if the build didn't match the file, the build was considered wrong. The artifact led, and code followed. Yet the file was only ever treated as the source of truth, and never actually was.</p>
+  <p class="step">1 &middot; The problem</p>
+  <h2>The mock was never really the source of truth</h2>
+  <p class="lede">We said <strong>the design file was the source of truth</strong>: Figma held the canonical screens, engineering implemented them, and if the build did not match the file, the build was wrong. But a picture under-specifies intent. It cannot fully express logic, states, data, or behavior, so every handoff is lossy and engineers end up reverse-engineering what we meant. The file drifts from the build, and the thing everyone trusts is never the thing the user actually experiences. The file was treated as the source of truth. It never quite was.</p>
 
-  <p>In an <strong>AI-native workflow</strong>, that dynamic changes. Intent can now move almost directly into working software: agents generate and maintain the code, and the running system is what users actually experience. <strong>The design file is no longer where the truth lives. It becomes a proposal for the truth</strong>, useful right up until the code exists.</p>
+  <p class="step">2 &middot; Why it bites hardest for the design system</p>
+  <h2>A design system trapped in Figma cannot enforce anything</h2>
+  <p>A design system that lives only in Figma is a library of pictures. It is not typed, linted, or tested, engineers re-create it by hand, and parity quietly drifts. Worst of all, a generator can ignore it: a design system that exists only as a drawing is a suggestion, not a rule.</p>
+  <p>The pattern is already here. Ask today's AI tools to build a UI and they reach for a code-first component system by default, chosen by the tool, not by us. (shadcn is the current example, but the point is the pattern, not the project.) If our system is a Figma library, the machine now building most interfaces is already skipping it.</p>
 
-  <div class="pull">The shift is not that design stops mattering. It is that the <strong>drawn artifact stops being the contract</strong> and becomes the conversation. The designer's role remains essential: guiding decisions, advocating for the user, and ensuring the product reflects the right intent. The function of design does not change at its core; only the medium does.</div>
+  <p class="step">3 &middot; The shift</p>
+  <h2>The truth becomes executable, not drawn</h2>
+  <p>Picture the source of truth living in code, and by extension the design system living there too: tokens, component specs, and rules that are typed, linted, and tested. The source of truth is not one artifact but three, each answering a different question:</p>
+
+  <div class="defbox">
+    <div class="defrow"><div class="k">Intent <span class="tag">what &amp; why</span></div><div class="d">Lo-fi sketches, flows, and the conceptual model. The proposal: what we are building and why.</div></div>
+    <div class="defrow"><div class="k">The contract <span class="tag">how it is built</span></div><div class="d">Tokens, component specs, and rules, enforced in code. This is the design system, and it is what removes the ambiguity a picture leaves behind.</div></div>
+    <div class="defrow"><div class="k">Running code <span class="tag">what ships</span></div><div class="d">The system users actually experience. The source of truth for what currently exists.</div></div>
+  </div>
+
+  <p>Two things that are not the truth: the <strong>visual layer</strong> (Figma or a quick HTML render) is the conversation, a surface to review and discuss, never the contract. The <strong>continuity layer</strong> (a shared git and branching system) is the mechanism that keeps intent, contract, and code in sync over time and across teams. It is plumbing, not truth.</p>
 
   <div class="fig">
 
@@ -212,7 +258,7 @@
 
     <!-- ── NOW panel ── -->
     <div class="fig-panel">
-      <svg viewBox="0 0 680 365" xmlns="http://www.w3.org/2000/svg" role="img">
+      <svg viewBox="0 0 680 322" xmlns="http://www.w3.org/2000/svg" role="img">
         <title>Now: a code-led, AI-native workflow</title>
         <desc>A locked design-system contract of tokens, component specs and rules sits above the AI agents and feeds them. Intent also flows into the agents. The agents generate the code that ships, which is the source of truth, and render a visual layer down into Figma. Humans discuss the rendered visual layer and feedback flows back up to the agents.</desc>
         <style>
@@ -267,30 +313,48 @@
         <text class="btitle" x="328" y="266" text-anchor="middle">Figma / visual layer</text>
         <text class="bsub" x="328" y="285" text-anchor="middle">rendered by AI · we discuss it</text>
         <text class="bsub" x="328" y="302" text-anchor="middle">a lens, not the law</text>
-
-        <text class="cap" x="340" y="338" text-anchor="middle">The agents work from the locked contract: they generate the code and render the</text>
-        <text class="cap" x="340" y="355" text-anchor="middle">visual layer. We discuss the render, and feedback flows back up.</text>
       </svg>
     </div>
 
-    <p class="caption">The source of truth moves to code. AI agents build from a locked design-system contract, then render a visual layer we can discuss.</p>
+    <p class="caption">The source of truth moves from a drawn file to an enforced contract and the running code. The visual layer becomes the conversation.</p>
   </div>
 
-  <h2>And what happens to the design system?</h2>
-  <p>In the old model, the design system lived in Figma as a library of styles and component specs that engineers re-created by hand. In the new model, it becomes <strong>a locked contract in code</strong>: tokens, component specs, and rules that are typed, linted, and tested.</p>
-  <p>It also explains why translating Figma straight to code with AI keeps misfiring. Pixels under-specify intent, so any picture-to-code path is lossy and the model fills the gaps by guessing, no matter how capable it gets. A contract removes the ambiguity: the agent builds from defined rules instead of inferring them.</p>
-  <p>AI agents use that contract to generate the running code and render the visual layer, so the picture and the product come from the same source. A design system that exists only in Figma becomes a suggestion the generator can ignore.</p>
+  <p class="step">4 &middot; What this unlocks</p>
+  <h2>Ambiguity out, leverage in</h2>
+  <p>Putting the contract in code removes the lossiness from step 1 and the no-enforcement problem from step 2 in one move. The spec is the handoff, so nothing is reverse-engineered. Change one token and it cascades to every screen. The generator produces on-spec UI instead of guessing. And because the prototype is real code, we test actual logic with users from day one rather than testing a picture of it.</p>
+  <p>Rebuilding on a real contract also opens flexibility that was painful to maintain by hand. These stop being per-screen chores and become capabilities we define once and get everywhere:</p>
+  <div class="chips">
+    <span class="chip">Dark mode</span>
+    <span class="chip">Theming</span>
+    <span class="chip">Localization</span>
+    <span class="chip">Responsiveness</span>
+    <span class="chip">Density layouts</span>
+    <span class="chip">Motion &amp; animation</span>
+  </div>
 
-  <h2>Why render it into Figma at all?</h2>
-  <p>If the app is built from the same contract, why not just review the running code? Because Figma gives us something the app does not: <strong>a frozen, annotatable, side-by-side surface built for discussion</strong>.</p>
-  <p>Over time, that surface may not be Figma at all. Designers might choose a quick HTML render, Figma, or another visual tool depending on the conversation they need to have.</p>
+  <p class="step">5 &middot; What it means for designers</p>
+  <h2>The function of design does not change. The medium does.</h2>
+  <div class="roles">
+    <div class="role">
+      <h3>Product designer</h3>
+      <div class="ba"><span class="l">Was</span>Drew hi-fi mockups in Figma as the contract. Redrew every state, fought drift, and watched intent get lost in handoff.</div>
+      <div class="ba now"><span class="l">Now</span>Expresses intent (lo-fi, flows, conceptual model), then curates and tests the running product, debating hierarchy and motion on the real thing.</div>
+    </div>
+    <div class="role">
+      <h3>Design system designer</h3>
+      <div class="ba"><span class="l">Was</span>Maintained a Figma library engineers re-created by hand, with no way to enforce it.</div>
+      <div class="ba now"><span class="l">Now</span>Authors the contract in code, tokens, specs, and rules that are enforced and that the generator actually builds from. The system becomes infrastructure.</div>
+    </div>
+  </div>
+  <p>Judgment, advocacy for the user, exploration, and craft all stay. Only the medium changes. Still, this changes how most product designers work day to day, and it can feel threatening, so it needs care and empathy. The answer is a dual path: run the old and new models side by side and let people cross over when the new way earns their trust, rather than forcing the switch.</p>
 
-  <h2>Why the visual layer still matters</h2>
-  <p>None of this makes the visual layer irrelevant. It simply changes its role. Instead of being drawn by hand as the source of truth, it becomes a way to review, compare, and discuss what the system is producing.</p>
-  <p>The designer's role remains essential: guiding decisions, advocating for the user, exploring options, debating hierarchy and motion, and feeding that judgment back into the next build. <strong>The function of design does not change at its core.</strong> The drawn artifact just stops being the contract and becomes the conversation.</p>
+  <p class="step">The cost</p>
+  <h2>A strong default quietly narrows variety</h2>
+  <p>The trade-off of a contract this strong is sameness. When everything is generated from one foundation, products drift toward looking alike and the long tail of variety gets quieter. The answer is not to weaken the contract but to be deliberate about where novelty lives: divergent, off-contract exploration (lo-fi, throwaway, where taste roams) matters more, not less. The contract governs production, not exploration.</p>
 
-  <h2>Where this goes next</h2>
-  <p>This is a point of view, not a plan. The natural next step is a pilot: pick one surface, encode its design system as a contract in code, and let agents build from it end to end. The questions worth answering there are about strategy, trade-offs, and the migration path, and they deserve their own piece.</p>
+  <p class="step">Next steps</p>
+  <h2>From point of view to pilot</h2>
+  <p>This is a point of view, not a plan. The natural next step is a pilot, run as a dual path so the new model can prove itself next to the old one rather than replacing it overnight. The first concrete experiment I want to run is Claude to Figma: closing the loop from generated code back into the visual layer we discuss.</p>
 
   <hr class="rule">
   <p class="foot">My evolving AI posture &middot; <strong>Darío Fidanza</strong></p>
