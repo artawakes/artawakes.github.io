@@ -288,11 +288,11 @@
         <!-- gap zone (behind, wraps intent + engine + visual layer) -->
         <rect x="22" y="116" width="474" height="300" rx="14" fill="rgba(255,255,255,0.028)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
 
-        <!-- design system contract canopy (neutral, spans full width) -->
-        <rect x="36" y="38" width="608" height="58" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-        <text class="ctag" x="340" y="58" text-anchor="middle">LOCKED · ENFORCED IN CODE</text>
-        <text class="ctitle" x="340" y="77" text-anchor="middle">Design System Contract</text>
-        <text class="csub" x="340" y="92" text-anchor="middle">tokens · component specs · rules · governs everything</text>
+        <!-- design system contract canopy (neutral, spans visual layer → code; intent stays free) -->
+        <rect x="250" y="38" width="420" height="66" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+        <text class="ctag" x="460" y="58" text-anchor="middle">LOCKED · ENFORCED IN CODE</text>
+        <text class="ctitle" x="460" y="77" text-anchor="middle">Design System Contract</text>
+        <text class="csub" x="460" y="93" text-anchor="middle">tokens · component specs · rules · governs everything</text>
 
         <!-- intent (left, green) -->
         <rect x="42" y="150" width="160" height="76" rx="10" fill="rgba(61,186,126,0.14)" stroke="#3dba7e" stroke-width="2"/>
@@ -318,8 +318,8 @@
         <text class="bsub3" x="350" y="354" text-anchor="middle">a lens, not the law</text>
 
         <!-- arrows -->
-        <line x1="350" y1="96" x2="350" y2="154" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
-        <text class="alab" x="360" y="128">agents build from it</text>
+        <line x1="350" y1="104" x2="350" y2="154" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="360" y="131">agents build from it</text>
 
         <line x1="204" y1="188" x2="286" y2="188" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
 
@@ -328,6 +328,7 @@
 
         <line x1="350" y1="222" x2="350" y2="298" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
         <text class="alab" x="360" y="264">renders</text>
+        <path d="M590,226 V280 H352" fill="none" stroke="#8fa8c4" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#n-ar)"/>
 
         <path d="M250,331 H122 V230" fill="none" stroke="#8fa8c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#n-ar)"/>
         <text class="alab" x="185" y="325" text-anchor="middle">feedback · intent updates</text>
@@ -371,11 +372,11 @@
 
   <p class="step">The cost</p>
   <h2>A strong default quietly narrows variety</h2>
-  <p>The trade-off of a contract this strong is sameness. When everything is generated from one foundation, products drift toward looking alike and the long tail of variety gets quieter. The answer is not to weaken the contract but to be deliberate about where novelty lives: divergent, off-contract exploration (lo-fi, throwaway, where taste roams) matters more, not less. The contract governs production, not exploration.</p>
+  <p>The trade-off of a contract this strong is sameness. When everything is generated from one foundation, products drift toward looking alike and the long tail of variety gets quieter. The answer is not to weaken the contract but to be deliberate about where novelty lives: divergent, off-contract exploration (lo-fi, throwaway, where taste roams) matters more. The contract governs production, while intent exploration can still happen outside via lo-fi mocks.</p>
 
   <p class="step">Next steps</p>
   <h2>From point of view to pilot</h2>
-  <p>This is a point of view, not a plan. The natural next step is a pilot, run as a dual path so the new model can prove itself next to the old one rather than replacing it overnight. The first concrete experiment I want to run is Claude to Figma: closing the loop from generated code back into the visual layer we discuss.</p>
+  <p>This is a point of view, not a plan. The natural next step is a pilot, run as a dual path so the new model can prove itself next to the old one rather than replacing it overnight. After running a concrete experiment from code back to Figma, the early results are promising, since the visual layer is re-created with utmost fidelity to what exists in code, and allows for a discussion and deliberate rendering and correction of visual bugs.</p>
 
   <hr class="rule">
   <p class="foot">My evolving AI posture V3 &middot; <strong>Darío Fidanza</strong></p>
