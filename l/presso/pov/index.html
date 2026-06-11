@@ -111,6 +111,9 @@
     color: var(--accent2); background: rgba(124,90,245,0.14); border: 1px solid rgba(124,90,245,0.22);
     padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
   }
+  .defrow .k .tag.tg { color: var(--green); background: rgba(61,186,126,0.14); border-color: rgba(61,186,126,0.24); }
+  .defrow .k .tag.tp { color: var(--accent2); background: rgba(124,90,245,0.14); border-color: rgba(124,90,245,0.24); }
+  .defrow .k .tag.tn { color: var(--text-dim); background: rgba(255,255,255,0.06); border-color: var(--border-strong); }
   .defrow .d { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin: 5px 0 0; max-width: none; }
 
   /* ── Capability chips ── */
@@ -139,7 +142,9 @@
   .fig-legend .lg { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .fig-legend .sw { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
   .fig-legend .sw-truth { background: rgba(124,90,245,0.16); border: 1.5px solid #7c5af5; }
-  .fig-legend .sw-view { background: transparent; border: 1.5px dashed rgba(255,255,255,0.18); }
+  .fig-legend .sw-intent { background: rgba(61,186,126,0.16); border: 1.5px solid #3dba7e; }
+  .fig-legend .sw-code { background: rgba(124,90,245,0.16); border: 1.5px solid #7c5af5; }
+  .fig-legend .sw-view { background: transparent; border: 1.5px dashed rgba(255,255,255,0.30); }
   .fig-panel {
     padding: 22px 24px 18px; margin-bottom: 16px;
     background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
@@ -175,8 +180,8 @@
 <main class="page">
 
   <p class="eyebrow"><span class="eyebrow-dot"></span>Point of view</p>
-  <h1>AI and the future of design systems</h1>
-  <p class="subhead">The source of truth is moving from design to code</p>
+  <h1>Is the source of truth moving from design to code?</h1>
+  <p class="subhead">AI and the future of design systems</p>
   <div class="cover-line"></div>
   <p class="dek">For years we treated the design file as the source of truth. In an AI-native workflow that no longer holds, and the shift is already underway in the tools we use. This lays out why the mock was never really the truth, what replaces it, and what changes for designers.</p>
 
@@ -190,40 +195,39 @@
   <p>The pattern is already here. Ask today's AI tools to build a UI and they reach for a code-first component system by default, chosen by the tool, not by us. (shadcn is the current example, but the point is the pattern, not the project.) If our system is a Figma library, the machine now building most interfaces is already skipping it.</p>
 
   <p class="step">3 &middot; The shift</p>
-  <h2>The truth becomes executable, not drawn</h2>
-  <p>Picture the source of truth living in code, and by extension the design system living there too: tokens, component specs, and rules that are typed, linted, and tested. The source of truth is not one artifact but three, each answering a different question:</p>
+  <h2>The truth did not move. It untangled.</h2>
+  <p>We say the source of truth is moving from design to code. That is close, but not quite it. The truth never lived in one place, we just kept it tangled inside a single file. Pull it apart and it becomes a relationship between two truths, held together by a contract. Each answers a different question:</p>
 
   <div class="defbox">
-    <div class="defrow"><div class="k">Intent <span class="tag">what &amp; why</span></div><div class="d">Lo-fi sketches, flows, and the conceptual model. The proposal: what we are building and why.</div></div>
-    <div class="defrow"><div class="k">The contract <span class="tag">how it is built</span></div><div class="d">Tokens, component specs, and rules, enforced in code. This is the design system, and it is what removes the ambiguity a picture leaves behind.</div></div>
-    <div class="defrow"><div class="k">Running code <span class="tag">what ships</span></div><div class="d">The system users actually experience. The source of truth for what currently exists.</div></div>
+    <div class="defrow"><div class="k">Intent <span class="tag tg">what &amp; why</span></div><div class="d">Lo-fi sketches, flows, and the conceptual model: goals and taste. The intended truth, what it should be. True by aim.</div></div>
+    <div class="defrow"><div class="k">Code <span class="tag tp">what ships</span></div><div class="d">The running system people actually experience. The real truth, what exists. True by existence.</div></div>
+    <div class="defrow"><div class="k">Design system contract <span class="tag tn">what holds</span></div><div class="d">Tokens, component specs, and rules, enforced in code. Intent made precise enough that code cannot quietly drift from it. The agents build from it, and it governs everything.</div></div>
   </div>
 
-  <p>Two things that are not the truth: the <strong>visual layer</strong> (Figma or a quick HTML render) is the conversation, a surface to review and discuss, never the contract. The <strong>continuity layer</strong> (a shared git and branching system) is the mechanism that keeps intent, contract, and code in sync over time and across teams. It is plumbing, not truth.</p>
+  <p>The work lives in the gap between intent and code, where <strong>AI agents</strong> build from the contract: they generate the code and render what we look at. Two things are never the truth: the <strong>visual layer</strong> (Figma or a quick HTML render) is how we see the gap, a surface to discuss, never the contract. The <strong>continuity layer</strong> (a shared git and branching system) keeps intent, contract, and code in sync over time and across teams. It is plumbing, not truth.</p>
 
   <div class="fig">
 
     <div class="fig-head">
-      <p class="fig-title">Where tokens, the design system &amp; component specs live</p>
+      <p class="fig-title">Truth is a relationship, not a place</p>
       <div class="fig-legend">
-        <span class="lg"><span class="sw sw-truth"></span>source of truth</span>
-        <span class="lg"><span class="sw sw-view"></span>a view we discuss, not canonical</span>
+        <span class="lg"><span class="sw sw-intent"></span>intent</span>
+        <span class="lg"><span class="sw sw-code"></span>code &middot; the real truth</span>
+        <span class="lg"><span class="sw sw-view"></span>visual layer &middot; we discuss</span>
       </div>
     </div>
 
     <!-- ── BEFORE panel ── -->
     <div class="fig-panel">
-      <svg viewBox="0 0 680 158" xmlns="http://www.w3.org/2000/svg" role="img">
+      <svg viewBox="0 0 680 172" xmlns="http://www.w3.org/2000/svg" role="img">
         <title>Before: a design-led workflow</title>
-        <desc>Intent flows to a Figma file that is the source of truth and holds the design system as tokens, components and specs; code is a built copy made by hand.</desc>
+        <desc>One purple box labelled Intent and Figma file carries a star and is treated as the single source of truth, collapsing intent, the artifact and the truth into one. Code is a plain built copy made by hand from a lossy handoff.</desc>
         <style>
-          .v-truth-fill{ fill:rgba(124,90,245,0.16); } .v-truth-stroke{ stroke:#7c5af5; }
-          .v-neu-fill{ fill:rgba(255,255,255,0.04); } .v-neu-stroke{ stroke:rgba(255,255,255,0.18); }
           text{ font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
           .sect{ font-size:11.5px; font-weight:700; letter-spacing:.06em; fill:#8fa8c4; }
           .btitle{ font-size:14px; font-weight:600; fill:#f0f4ff; }
           .bsub{ font-size:11px; fill:#8fa8c4; }
-          .bsub3{ font-size:10px; fill:#8fa8c4; }
+          .bsub3{ font-size:9.5px; fill:#8fa8c4; }
           .cap{ font-size:11.5px; fill:#8fa8c4; }
           .alab{ font-size:10px; fill:#8fa8c4; }
           .crown{ font-size:12.5px; font-weight:700; fill:#a78bfa; }
@@ -232,97 +236,113 @@
           <marker id="b-ar" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#8fa8c4"/></marker>
         </defs>
 
-        <text class="sect" x="40" y="24">BEFORE  ·  DESIGN-LED</text>
+        <text class="sect" x="36" y="24">BEFORE  ·  DESIGN-LED</text>
 
-        <rect x="39" y="40" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
-        <text class="btitle" x="114" y="66" text-anchor="middle">Intent</text>
-        <text class="bsub" x="114" y="84" text-anchor="middle">brief + mockups</text>
+        <rect x="36" y="40" width="300" height="86" rx="10" fill="rgba(124,90,245,0.16)" stroke="#7c5af5" stroke-width="2"/>
+        <text class="crown" x="52" y="70">★</text>
+        <text class="btitle" x="74" y="70">Intent + Figma file</text>
+        <text class="bsub" x="52" y="91">treated as the one source of truth</text>
+        <text class="bsub3" x="52" y="110">intent + artifact + 'truth', collapsed into one</text>
 
-        <rect x="245" y="31" width="200" height="76" rx="10" class="v-truth-fill v-truth-stroke" stroke-width="2"/>
-        <text class="crown" x="261" y="57">★</text>
-        <text class="btitle" x="280" y="57">Figma file</text>
-        <text class="bsub" x="261" y="76">the canonical artifact</text>
-        <text class="bsub3" x="261" y="94">holds tokens · components · specs</text>
+        <line x1="336" y1="83" x2="392" y2="83" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#b-ar)"/>
+        <text class="alab" x="364" y="76" text-anchor="middle">handoff</text>
 
-        <rect x="501" y="40" width="140" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
-        <text class="btitle" x="571" y="66" text-anchor="middle">Code</text>
-        <text class="bsub" x="571" y="84" text-anchor="middle">a built copy</text>
+        <rect x="396" y="52" width="150" height="62" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+        <text class="btitle" x="471" y="80" text-anchor="middle">Code</text>
+        <text class="bsub" x="471" y="98" text-anchor="middle">a built copy</text>
 
-        <line x1="189" y1="69" x2="241" y2="69" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#b-ar)"/>
-        <line x1="445" y1="69" x2="497" y2="69" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#b-ar)"/>
-        <text class="alab" x="471" y="62" text-anchor="middle">handoff</text>
-
-        <text class="cap" x="39" y="138">The file is canonical. The design system lives inside it, as pictures to copy.</text>
+        <text class="cap" x="36" y="155">One file plays every role. That overload is the tangle we pull apart below.</text>
       </svg>
     </div>
 
     <!-- ── NOW panel ── -->
     <div class="fig-panel">
-      <svg viewBox="0 0 680 362" xmlns="http://www.w3.org/2000/svg" role="img">
-        <title>Now: a code-led, AI-native workflow</title>
-        <desc>A locked design-system contract of tokens, component specs and rules sits above the AI agents and feeds them. Intent also flows into the agents. The agents generate the code that ships, which is the source of truth, and render a visual layer down into Figma. Humans discuss the rendered visual layer and feedback flows back up to the agents.</desc>
+      <svg viewBox="0 0 680 462" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>Now: truth as a relationship between intent and code</title>
+        <desc>A neutral design-system contract of tokens, specs and rules, enforced in code, spans the whole panel and governs everything. The AI agents, a neutral engine, build from it. The two truths are intent on the left, a green box for what it should be, and code on the right, a purple box carrying the star for the real truth, what exists. A tinted gap zone, where the design work lives, wraps intent, the AI agents engine and the visual layer. The agents generate the code and, separately, render the visual layer; feedback from the visual layer loops back to intent. Code sits just outside the gap as the real artifact the work produces.</desc>
         <style>
-          .v-truth-fill{ fill:rgba(124,90,245,0.16); } .v-truth-stroke{ stroke:#7c5af5; } .v-truth-bd{ stroke:#a78bfa; }
-          .v-neu-fill{ fill:rgba(255,255,255,0.04); } .v-neu-stroke{ stroke:rgba(255,255,255,0.18); }
           text{ font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
           .sect{ font-size:11.5px; font-weight:700; letter-spacing:.06em; fill:#8fa8c4; }
+          .ctag{ font-size:9.5px; font-weight:700; letter-spacing:.07em; fill:#8fa8c4; }
+          .ctitle{ font-size:13.5px; font-weight:700; fill:#f0f4ff; }
+          .csub{ font-size:10px; fill:#8fa8c4; }
           .btitle{ font-size:14px; font-weight:600; fill:#f0f4ff; }
           .bsub{ font-size:11px; fill:#8fa8c4; }
+          .bsub3{ font-size:9.5px; fill:#8fa8c4; }
+          .etitle{ font-size:13px; font-weight:700; fill:#f0f4ff; }
+          .esub{ font-size:9.5px; fill:#8fa8c4; }
+          .esub3{ font-size:9px; fill:#a0b4c8; }
+          .crown{ font-size:12.5px; font-weight:700; fill:#a78bfa; }
+          .gaplab{ font-size:10.5px; font-weight:700; letter-spacing:.06em; fill:#6f879f; }
           .cap{ font-size:11.5px; fill:#8fa8c4; }
           .alab{ font-size:10px; fill:#8fa8c4; }
-          .crown{ font-size:12.5px; font-weight:700; fill:#a78bfa; }
-          .tag{ font-size:9.5px; font-weight:700; letter-spacing:.05em; fill:#a78bfa; }
+          .tgreen{ fill:#3dba7e; }
+          .tview{ fill:#9fb3c8; }
         </style>
         <defs>
           <marker id="n-ar" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#8fa8c4"/></marker>
-          <marker id="n-arp" orient="auto-start-reverse" markerWidth="9" markerHeight="9" refX="7" refY="4"><path d="M0,0 L8,4 L0,8 Z" fill="#a78bfa"/></marker>
         </defs>
 
-        <text class="sect" x="40" y="24">NOW  ·  CODE-LED, AI-NATIVE</text>
+        <text class="sect" x="36" y="24">NOW  ·  CODE-LED, AI-NATIVE</text>
 
-        <rect x="198" y="44" width="260" height="60" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
-        <text class="tag" x="328" y="64" text-anchor="middle">LOCKED · ENFORCED IN CODE</text>
-        <text class="btitle" x="328" y="83" text-anchor="middle">Design system contract</text>
-        <text class="bsub" x="328" y="99" text-anchor="middle">tokens · component specs · rules</text>
-        <line x1="328" y1="104" x2="328" y2="134" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
-        <text class="alab" x="338" y="123">agents build from it</text>
+        <!-- gap zone (behind, wraps intent + engine + visual layer) -->
+        <rect x="22" y="116" width="474" height="300" rx="14" fill="rgba(255,255,255,0.028)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
 
-        <rect x="49" y="138" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
-        <text class="btitle" x="124" y="164" text-anchor="middle">Intent</text>
-        <text class="bsub" x="124" y="182" text-anchor="middle">goals + taste</text>
+        <!-- design system contract canopy (neutral, spans full width) -->
+        <rect x="36" y="38" width="608" height="58" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+        <text class="ctag" x="340" y="58" text-anchor="middle">LOCKED · ENFORCED IN CODE</text>
+        <text class="ctitle" x="340" y="77" text-anchor="middle">Design System Contract</text>
+        <text class="csub" x="340" y="92" text-anchor="middle">tokens · component specs · rules · governs everything</text>
 
-        <rect x="253" y="138" width="150" height="58" rx="10" class="v-neu-fill v-neu-stroke" stroke-width="1.5"/>
-        <text class="btitle" x="328" y="164" text-anchor="middle">AI agents</text>
-        <text class="bsub" x="328" y="182" text-anchor="middle">generate + render</text>
+        <!-- intent (left, green) -->
+        <rect x="42" y="150" width="160" height="76" rx="10" fill="rgba(61,186,126,0.14)" stroke="#3dba7e" stroke-width="2"/>
+        <text class="btitle tgreen" x="122" y="180" text-anchor="middle">Intent</text>
+        <text class="bsub" x="122" y="199" text-anchor="middle">goals + taste</text>
+        <text class="bsub3" x="122" y="216" text-anchor="middle">intended truth: what it should be</text>
 
-        <rect x="459" y="134" width="170" height="66" rx="10" class="v-truth-fill v-truth-stroke" stroke-width="2"/>
-        <text class="crown" x="475" y="162">★</text>
-        <text class="btitle" x="494" y="162">Code that ships</text>
-        <text class="bsub" x="475" y="181">the running system</text>
+        <!-- AI agents (center, the engine) -->
+        <rect x="288" y="156" width="124" height="64" rx="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.38)" stroke-width="2"/>
+        <text class="etitle" x="350" y="181" text-anchor="middle">AI agents</text>
+        <text class="esub" x="350" y="197" text-anchor="middle">generate + render</text>
+        <text class="esub3" x="350" y="212" text-anchor="middle">the engine</text>
 
-        <line x1="199" y1="167" x2="251" y2="167" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
-        <line x1="403" y1="167" x2="455" y2="167" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
-        <text class="alab" x="430" y="160" text-anchor="middle">generates</text>
+        <!-- code (right, purple, the real truth, outside the gap) -->
+        <rect x="510" y="150" width="160" height="76" rx="10" fill="rgba(124,90,245,0.16)" stroke="#7c5af5" stroke-width="2"/>
+        <text class="btitle" x="590" y="184" text-anchor="middle"><tspan fill="#a78bfa">★ </tspan>Code</text>
+        <text class="bsub" x="590" y="205" text-anchor="middle">the real truth · what exists</text>
 
-        <line x1="315" y1="196" x2="315" y2="236" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
-        <text class="alab" x="305" y="219" text-anchor="end">visual layer</text>
-        <line x1="341" y1="240" x2="341" y2="198" class="v-truth-bd" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#n-arp)"/>
-        <text class="alab" x="351" y="219">feedback</text>
+        <!-- visual layer (dashed, inside gap, below the engine) -->
+        <rect x="250" y="300" width="200" height="62" rx="10" fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="btitle tview" x="350" y="322" text-anchor="middle">Figma / visual layer</text>
+        <text class="bsub" x="350" y="339" text-anchor="middle">for discussion and feedback</text>
+        <text class="bsub3" x="350" y="354" text-anchor="middle">a lens, not the law</text>
 
-        <rect x="208" y="240" width="240" height="70" rx="10" fill="none" class="v-neu-stroke" stroke-width="1.5" stroke-dasharray="5 4"/>
-        <text class="btitle" x="328" y="266" text-anchor="middle">Figma / visual layer</text>
-        <text class="bsub" x="328" y="285" text-anchor="middle">rendered by AI · we discuss it</text>
-        <text class="bsub" x="328" y="302" text-anchor="middle">a lens, not the law</text>
+        <!-- arrows -->
+        <line x1="350" y1="96" x2="350" y2="154" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="360" y="128">agents build from it</text>
 
-        <text class="cap" x="40" y="336">The source of truth moves from a drawn file to an enforced contract</text>
-        <text class="cap" x="40" y="352">and the running code. The visual layer becomes the conversation.</text>
+        <line x1="204" y1="188" x2="286" y2="188" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+
+        <line x1="414" y1="188" x2="508" y2="188" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="461" y="180" text-anchor="middle">generates</text>
+
+        <line x1="350" y1="222" x2="350" y2="298" stroke="#8fa8c4" stroke-width="1.5" marker-end="url(#n-ar)"/>
+        <text class="alab" x="360" y="264">renders</text>
+
+        <path d="M250,331 H122 V230" fill="none" stroke="#8fa8c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#n-ar)"/>
+        <text class="alab" x="185" y="325" text-anchor="middle">feedback · intent updates</text>
+
+        <text class="gaplab" x="259" y="400" text-anchor="middle">THE GAP · WHERE THE DESIGN WORK LIVES</text>
+
+        <text class="cap" x="36" y="438">Truth didn't move from design to code. We untangled it from a file</text>
+        <text class="cap" x="36" y="454">into what it always was: a relationship between intent and code.</text>
       </svg>
     </div>
   </div>
 
   <p class="step">4 &middot; What this unlocks</p>
   <h2>Ambiguity out, leverage in</h2>
-  <p>Putting the contract in code removes the lossiness from step 1 and the no-enforcement problem from step 2 in one move. The spec is the handoff, so nothing is reverse-engineered. Change one token and it cascades to every screen. The generator produces on-spec UI instead of guessing. And because the prototype is real code, we test actual logic with users from day one rather than testing a picture of it.</p>
+  <p>Putting the contract in code removes the lossiness from step 1 and the no-enforcement problem from step 2 in one move. The spec is the handoff, so nothing is reverse-engineered. Change one token and it cascades to every screen. The agents produce on-spec UI instead of guessing. And because the prototype is real code, we test actual logic with users from day one rather than testing a picture of it.</p>
   <p>Rebuilding on a real contract also opens flexibility that was painful to maintain by hand. These stop being per-screen chores and become capabilities we define once and get everywhere:</p>
   <div class="chips">
     <span class="chip">Dark mode</span>
@@ -344,7 +364,7 @@
     <div class="role">
       <h3>Design system designer</h3>
       <div class="ba"><span class="l">Was</span>Maintained a Figma library engineers re-created by hand, with no way to enforce it.</div>
-      <div class="ba now"><span class="l">Now</span>Authors the contract in code, tokens, specs, and rules that are enforced and that the generator actually builds from. The system becomes infrastructure.</div>
+      <div class="ba now"><span class="l">Now</span>Authors the contract in code, tokens, specs, and rules that are enforced and that the agents actually build from. The system becomes infrastructure.</div>
     </div>
   </div>
   <p>Judgment, advocacy for the user, exploration, and craft all stay. Only the medium changes. Still, this changes how most product designers work day to day, and it can feel threatening, so it needs care and empathy. The answer is a dual path: run the old and new models side by side and let people cross over when the new way earns their trust, rather than forcing the switch.</p>
@@ -358,7 +378,7 @@
   <p>This is a point of view, not a plan. The natural next step is a pilot, run as a dual path so the new model can prove itself next to the old one rather than replacing it overnight. The first concrete experiment I want to run is Claude to Figma: closing the loop from generated code back into the visual layer we discuss.</p>
 
   <hr class="rule">
-  <p class="foot">My evolving AI posture V2 &middot; <strong>Darío Fidanza</strong></p>
+  <p class="foot">My evolving AI posture V3 &middot; <strong>Darío Fidanza</strong></p>
 
 </main>
 
