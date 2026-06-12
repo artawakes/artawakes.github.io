@@ -171,10 +171,10 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <a class="nav-logo" href="../">Darío Fidanza</a>
-  <a class="nav-back" href="../">
+  <a class="nav-logo" id="navLogo" href="/">Darío Fidanza</a>
+  <a class="nav-back" id="navBack" href="/">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    <span>All presentations</span>
+    <span id="navBackLabel">Back to dariofidanza.com</span>
   </a>
 </nav>
 
@@ -449,6 +449,23 @@
   window.addEventListener('resize', resize);
   setTimeout(() => { requestAnimationFrame(draw); }, 60);
 })();
+</script>
+
+<script>
+  /* Dynamic back link: return people to wherever they came from.
+     - From the projects area (l/presso) → back to the presentations.
+     - From dariofidanza.com or direct → back to the site home. */
+  (function () {
+    var back = document.getElementById('navBack');
+    var label = document.getElementById('navBackLabel');
+    var logo = document.getElementById('navLogo');
+    var ref = document.referrer || '';
+    var fromProjects = ref.indexOf('/l/presso/') !== -1 && ref.indexOf('/pov') === -1;
+    var target = fromProjects ? '../' : '/';
+    if (back) back.setAttribute('href', target);
+    if (logo) logo.setAttribute('href', target);
+    if (label) label.textContent = fromProjects ? 'All presentations' : 'Back to dariofidanza.com';
+  })();
 </script>
 
 </body>

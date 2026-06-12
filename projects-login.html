@@ -8,8 +8,10 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Inter (body) + Hepta Slab (headings), matches the deck -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -22,6 +24,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        serif: ['Hepta Slab', 'serif'],
                     },
                     colors: {
                         border: "hsl(var(--border))",
@@ -48,35 +51,58 @@
     </script>
     
     <style>
-        /* Copy the CSS variables from Index.html */
+        /* Deck-matched tokens (same mapping as the homepage) */
         :root {
-            --background: 0 0% 100%;
-            --foreground: 222.2 84% 4.9%;
+            --background: 228 60% 97%;
+            --foreground: 218 64% 7%;
             --card: 0 0% 100%;
-            --card-foreground: 222.2 84% 4.9%;
-            --primary: 222.2 47.4% 11.2%;
-            --primary-foreground: 210 40% 98%;
-            --secondary: 210 40% 96.1%;
-            --secondary-foreground: 222.2 47.4% 11.2%;
-            --border: 214.3 31.8% 91.4%;
-            --input: 214.3 31.8% 91.4%;
-            --ring: 222.2 84% 4.9%;
+            --card-foreground: 218 64% 7%;
+            --primary: 222 89% 60%;
+            --primary-foreground: 0 0% 100%;
+            --secondary: 228 40% 92%;
+            --secondary-foreground: 218 64% 7%;
+            --muted-foreground: 216 32% 38%;
+            --border: 220 24% 86%;
+            --input: 220 24% 86%;
+            --ring: 222 89% 60%;
             --radius: 0.5rem;
         }
 
         .dark {
-            --background: 222.2 84% 4.9%;
-            --foreground: 210 40% 98%;
-            --card: 222.2 84% 4.9%;
-            --card-foreground: 210 40% 98%;
-            --primary: 210 40% 98%;
-            --primary-foreground: 222.2 47.4% 11.2%;
-            --secondary: 217.2 32.6% 17.5%;
-            --secondary-foreground: 210 40% 98%;
-            --border: 217.2 32.6% 17.5%;
-            --input: 217.2 32.6% 17.5%;
-            --ring: 212.7 26.8% 83.9%;
+            --background: 218 64% 7%;
+            --foreground: 225 100% 97%;
+            --card: 214 56% 11%;
+            --card-foreground: 225 100% 97%;
+            --primary: 222 89% 64%;
+            --primary-foreground: 0 0% 100%;
+            --secondary: 214 35% 16%;
+            --secondary-foreground: 225 100% 97%;
+            --muted-foreground: 212 31% 66%;
+            --border: 213 30% 18%;
+            --input: 213 30% 18%;
+            --ring: 222 89% 64%;
         }
+
+        h1, h2, h3 { font-family: 'Hepta Slab', serif; font-weight: 500; letter-spacing: -0.02em; }
+        h1.font-bold { font-weight: 500; }
+
+        /* Subtle dot-grid backdrop, calmer cousin of the deck cover */
+        body { position: relative; }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(79,128,245,0.14) 1px, transparent 1px);
+            background-size: 30px 30px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 0%, transparent 75%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 0%, transparent 75%);
+        }
+        html:not(.dark) body::before {
+            background-image: radial-gradient(circle, rgba(50,90,210,0.16) 1px, transparent 1px);
+        }
+        body > * { position: relative; z-index: 1; }
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen flex items-center justify-center">
@@ -136,7 +162,8 @@
     <script>
         // Check for saved dark mode preference when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const stored = localStorage.getItem('darkMode');
+            const darkMode = stored === null ? true : stored === 'true';
             if (darkMode) {
                 document.documentElement.classList.add('dark');
             } else {

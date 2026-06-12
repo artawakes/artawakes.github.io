@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Ratio Palette Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07101f; --bg2: #0d1a2e;
+    --surface: rgba(255,255,255,0.04); --surface-2: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+    --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
+    --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e;
+    --nav-h: 60px;
+    /* aliases used throughout this tool */
+    --panel: var(--surface); --panel-2: var(--surface-2);
+    --line: var(--border); --muted: var(--text-dim);
+  }
+
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; position: relative;
+    padding: calc(var(--nav-h) + 56px) 24px 110px;
+  }
+
+  /* ── Dot-wave canvas background (matches l/presso) ── */
+  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+
+  /* ── Top nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+    background: rgba(7,16,31,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text); text-decoration: none; opacity: 0.85;
+    text-shadow: 0 0 18px rgba(79,128,245,0.28);
+  }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
+    color: var(--text-dim); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-back svg { transition: transform 0.2s; }
+  .nav-back:hover svg { transform: translateX(-3px); }
+
+  /* ── Header ── */
+  header { margin-bottom: 42px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 9px var(--accent2); }
+  h1 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -0.025em;
+    color: var(--text); margin-bottom: 18px;
+  }
+  .cover-line {
+    width: 56px; height: 3px; border-radius: 2px; margin: 0 0 22px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 70%, transparent 100%);
+    box-shadow: 0 0 12px rgba(79,128,245,0.5);
+  }
+  .sub { color: var(--text-muted); font-size: clamp(15px, 1.5vw, 17px); line-height: 1.65; max-width: 64ch; }
+  .sub b { color: var(--text); font-weight: 600; }
+
+  /* ── Input ── */
+  .input-row {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 18px 20px; margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .input-label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);
+  }
+  .hex-field {
+    display: flex; align-items: center;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 0 14px; transition: border-color .15s;
+  }
+  .hex-field:focus-within { border-color: var(--accent); }
+  .hex-field .hash { color: var(--text-dim); font-size: 20px; font-weight: 600; }
+  #hexInput {
+    background: transparent; border: none; outline: none; color: var(--text);
+    font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 12px 6px; width: 130px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  input[type="color"] {
+    -webkit-appearance: none; appearance: none;
+    width: 48px; height: 48px; border: none; border-radius: 10px;
+    background: none; cursor: pointer; padding: 0;
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border-strong); border-radius: 10px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 999px; padding: 7px 13px; font-size: 13px; cursor: pointer;
+    font-family: ui-monospace, monospace; transition: all .15s;
+  }
+  .chip:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ── Mode selector ── */
+  .mode-row { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; flex-wrap: wrap; }
+  .mode-btns {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    background: var(--surface-2); border: 1px solid var(--border); padding: 4px; border-radius: 12px;
+  }
+  .mode-btn {
+    background: transparent; border: none; color: var(--text-dim);
+    padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .15s; white-space: nowrap;
+  }
+  .mode-btn:hover { color: var(--text); }
+  .mode-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 16px rgba(79,128,245,0.42); }
+
+  /* ── Palette ── */
+  .palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 48px; }
+  .swatch {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--surface);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .swatch .fill {
+    height: 150px; display: flex; align-items: flex-end; padding: 14px; cursor: pointer; position: relative;
+  }
+  .swatch .role {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 3px 9px; border-radius: 6px; backdrop-filter: blur(2px);
+  }
+  .swatch .meta { padding: 14px; }
+  .swatch .hexval { font-family: ui-monospace, monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.04em; }
+  .swatch .hsl { color: var(--text-dim); font-size: 12px; font-family: ui-monospace, monospace; margin-top: 4px; }
+  .swatch .copy-hint {
+    position: absolute; top: 12px; right: 12px; font-size: 11px; opacity: 0;
+    background: rgba(0,0,0,.4); color: #fff; padding: 3px 8px; border-radius: 6px; transition: opacity .15s;
+  }
+  .swatch .fill:hover .copy-hint { opacity: 1; }
+
+  /* ── Section heading ── */
+  .section-h {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-h::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Wheel ── */
+  .viz-grid {
+    display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 28px; margin-bottom: 48px;
+  }
+  .wheel-wrap { position: relative; width: 240px; height: 240px; margin: 0 auto; }
+  svg { display: block; overflow: visible; }
+  .angle-note { text-align: center; color: var(--text-dim); font-size: 13px; margin-top: 14px; }
+  .angle-note b { color: var(--accent); }
+  .formula-list { display: flex; flex-direction: column; gap: 18px; }
+  .formula-item { display: flex; gap: 14px; align-items: flex-start; }
+  .formula-dot { width: 16px; height: 16px; border-radius: 5px; flex-shrink: 0; margin-top: 3px; border: 1px solid rgba(255,255,255,.15); }
+  .formula-item .t { font-size: 14px; color: var(--text); }
+  .formula-item .t b { font-weight: 600; }
+  .formula-item .t span { color: var(--text-dim); font-family: ui-monospace, monospace; }
+
+  /* ── Balance ── */
+  .balance-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 28px;
+  }
+  .ratio-controls { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+  .ratio-btn {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 10px; padding: 9px 16px; font-size: 13px; cursor: pointer; font-weight: 600; transition: all .15s;
+  }
+  .ratio-btn:hover { color: var(--text); }
+  .ratio-btn.active { border-color: var(--accent); color: var(--text); background: rgba(79,128,245,0.14); }
+  .ratio-btn small { display: block; font-weight: 400; font-size: 11px; opacity: .7; }
+
+  .balance-bar { display: flex; height: 90px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .balance-seg {
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    transition: flex .4s cubic-bezier(.4,0,.2,1); font-size: 13px; font-weight: 700; overflow: hidden; white-space: nowrap;
+  }
+  .balance-seg .pct { font-size: 11px; font-weight: 500; opacity: .8; }
+
+  .mock-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .mock-bar-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+  .theme-toggle {
+    display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border); padding: 4px; border-radius: 10px;
+  }
+  .theme-toggle button {
+    background: transparent; border: none; color: var(--text-dim);
+    padding: 7px 15px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s;
+  }
+  .theme-toggle button:hover { color: var(--text); }
+  .theme-toggle button.active { background: var(--accent); color: #fff; }
+
+  .mock { margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mock-inner { padding: 34px; transition: background .3s; }
+  .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
+  .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
+  .mock .btn { display: inline-block; padding: 11px 22px; border-radius: 9px; font-size: 14px; font-weight: 700; transition: all .3s; }
+  .mock .tag {
+    display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    padding: 4px 10px; border-radius: 6px; margin-bottom: 16px; transition: all .3s;
+  }
+  .ratio-explain { color: var(--text-dim); font-size: 13px; margin-top: 16px; }
+  .ratio-explain b { color: var(--text); }
+
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px); z-index: 200;
+    background: var(--accent); color: #fff; font-weight: 700; font-size: 14px;
+    padding: 11px 20px; border-radius: 10px; box-shadow: 0 8px 30px rgba(79,128,245,0.4);
+    opacity: 0; pointer-events: none; transition: all .25s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 720px) {
+    .viz-grid { grid-template-columns: 1fr; }
+    .palette { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .nav-back span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="/">Darío Fidanza</a>
+  <a class="nav-back" href="/">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span>Back to dariofidanza.com</span>
+  </a>
+</nav>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow"><span class="eyebrow-dot"></span>Color tool</p>
+    <h1>Golden Ratio Palette Builder</h1>
+    <div class="cover-line"></div>
+    <p class="sub">Pick one color. The accent is found by rotating <b>137.5°</b> (the golden angle, 360 ÷ 1.618) around the hue wheel; the support color drops saturation by ~60%. Then test how the three balance against each other.</p>
+  </header>
+
+  <div class="input-row">
+    <span class="input-label">Main color</span>
+    <div class="hex-field">
+      <span class="hash">#</span>
+      <input id="hexInput" value="008CBB" maxlength="6" spellcheck="false" autocomplete="off">
+    </div>
+    <input type="color" id="colorPicker" value="#008CBB">
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="mode-row">
+    <span class="input-label">Formula</span>
+    <div class="mode-btns" id="modeBtns"></div>
+  </div>
+
+  <div class="palette" id="palette"></div>
+
+  <div class="section-h">The formula, visualized</div>
+  <div class="viz-grid">
+    <div>
+      <div class="wheel-wrap">
+        <svg viewBox="0 0 240 240" width="240" height="240" id="wheel"></svg>
+      </div>
+      <div class="angle-note" id="angleNote">Accent sits <b>137.5°</b> clockwise from your main hue</div>
+    </div>
+    <div class="formula-list" id="formulaList"></div>
+  </div>
+
+  <div class="section-h">Balance &amp; ratio</div>
+  <div class="balance-card">
+    <div class="ratio-controls" id="ratioControls"></div>
+    <div class="balance-bar" id="balanceBar"></div>
+    <p class="ratio-explain" id="ratioExplain"></p>
+
+    <div class="mock-bar">
+      <span class="mock-bar-label">Preview</span>
+      <div class="theme-toggle" id="themeToggle">
+        <button data-theme="light" class="active">Light</button>
+        <button data-theme="dark">Dark</button>
+      </div>
+    </div>
+
+    <div class="mock" id="mock">
+      <div class="mock-inner" id="mockInner">
+        <span class="tag" id="mockTag">Accent</span>
+        <h3 id="mockTitle">See the balance in context</h3>
+        <p id="mockText">Support color carries the secondary surface, the primary anchors the brand, and a small dose of accent draws the eye exactly where you want it.</p>
+        <span class="btn" id="mockBtn">Primary action</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+// ── Dot-wave canvas animation (matches l/presso landing) ──
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  const SPACING = 30;
+  let w, h, t = 0;
+
+  function resize() {
+    w = canvas.width  = window.innerWidth  || document.documentElement.clientWidth  || 1280;
+    h = canvas.height = window.innerHeight || document.documentElement.clientHeight || 800;
+  }
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.65, cy = h * 0.42;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
+
+        const falloff = Math.pow(1 - norm, 1.3);
+        const opacity = (wave * 0.38 + 0.30) * falloff;
+        if (opacity < 0.04) continue;
+
+        const bright = Math.max(0, wave);
+        const rc = Math.round(79  + bright * 90);
+        const gc = Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setTimeout(() => { requestAnimationFrame(draw); }, 60);
+})();
+
+// ---------- Color math ----------
+function hexToRgb(hex){
+  hex = hex.replace('#','');
+  if(hex.length===3) hex = hex.split('').map(c=>c+c).join('');
+  const n = parseInt(hex,16);
+  return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
+}
+function rgbToHex(r,g,b){
+  const h = x => x.toString(16).padStart(2,'0');
+  return (h(Math.round(r))+h(Math.round(g))+h(Math.round(b))).toUpperCase();
+}
+function rgbToHsl(r,g,b){
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){ h=s=0; }
+  else {
+    const d=max-min;
+    s = l>0.5 ? d/(2-max-min) : d/(max+min);
+    switch(max){
+      case r: h=(g-b)/d+(g<b?6:0); break;
+      case g: h=(b-r)/d+2; break;
+      case b: h=(r-g)/d+4; break;
+    }
+    h/=6;
+  }
+  return { h:h*360, s:s*100, l:l*100 };
+}
+function hslToRgb(h,s,l){
+  h/=360; s/=100; l/=100;
+  let r,g,b;
+  if(s===0){ r=g=b=l; }
+  else {
+    const hue2rgb=(p,q,t)=>{
+      if(t<0)t+=1; if(t>1)t-=1;
+      if(t<1/6)return p+(q-p)*6*t;
+      if(t<1/2)return q;
+      if(t<2/3)return p+(q-p)*(2/3-t)*6;
+      return p;
+    };
+    const q = l<0.5 ? l*(1+s) : l+s-l*s;
+    const p = 2*l-q;
+    r=hue2rgb(p,q,h+1/3); g=hue2rgb(p,q,h); b=hue2rgb(p,q,h-1/3);
+  }
+  return { r:r*255, g:g*255, b:b*255 };
+}
+function hslToHex(h,s,l){ const {r,g,b}=hslToRgb(h,s,l); return rgbToHex(r,g,b); }
+
+// Relative luminance -> pick readable text color
+function textOn(hex){
+  const {r,g,b}=hexToRgb(hex);
+  const lum = (0.299*r + 0.587*g + 0.114*b);
+  return lum > 150 ? '#101418' : '#ffffff';
+}
+
+// ---- WCAG contrast helpers ----
+function relLuminance(hex){
+  const {r,g,b} = hexToRgb(hex);
+  const f = c => { c/=255; return c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); };
+  return 0.2126*f(r) + 0.7152*f(g) + 0.0722*f(b);
+}
+function contrastRatio(h1,h2){
+  const a = relLuminance(h1), b = relLuminance(h2);
+  const hi = Math.max(a,b), lo = Math.min(a,b);
+  return (hi + 0.05) / (lo + 0.05);
+}
+function hexToRgba(hex, alpha){
+  const {r,g,b} = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+// Keep a color's hue/saturation but nudge its lightness until it reads on bgHex.
+function ensureReadable(hsl, bgHex, minRatio){
+  minRatio = minRatio || 4.5;
+  let { h, s, l } = hsl;
+  let hex = hslToHex(h, s, l);
+  if(contrastRatio(hex, bgHex) >= minRatio) return hex;
+  const goLighter = relLuminance(bgHex) < 0.5;   // dark bg -> lighten the copy
+  let best = hex, bestRatio = contrastRatio(hex, bgHex);
+  for(let i=0;i<100;i++){
+    l += goLighter ? 1 : -1;
+    l = clamp(l, 0, 100);
+    hex = hslToHex(h, s, l);
+    const cr = contrastRatio(hex, bgHex);
+    if(cr > bestRatio){ best = hex; bestRatio = cr; }
+    if(cr >= minRatio) return hex;
+    if(l <= 0 || l >= 100) break;
+  }
+  return best; // best effort if perfect contrast is unreachable at this hue
+}
+// A dark-mode background tinted toward the primary hue, dark enough for copy to read.
+function darkBgFor(hsl){
+  return hslToHex(hsl.h, Math.min(hsl.s, 22), 11);
+}
+
+// ---------- The formula ----------
+const clamp = (v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+
+const MODES = {
+  golden: {
+    label: 'Golden Ratio',
+    accentHueShift: 137.5, accentSatMul: 1,    accentLightShift: 0,
+    supportHueShift: 0,    supportSatMul: 0.4, supportLightShift: 0,
+  },
+  alt: {
+    label: 'Alternative',
+    accentHueShift: 210, accentSatMul: 1,     accentLightShift: 16,
+    supportHueShift: 0,  supportSatMul: 0.343, supportLightShift: 36,
+  },
+  negative: {
+    label: 'Negative Golden Ratio',
+    accentHueShift: -137.5, accentSatMul: 1,    accentLightShift: 0,
+    supportHueShift: 0,     supportSatMul: 0.4, supportLightShift: 0,
+  },
+  triad: {
+    label: 'Triadic',
+    accentHueShift: 120,  accentSatMul: 1,    accentLightShift: 4,
+    supportHueShift: 240, supportSatMul: 0.5, supportLightShift: 10,
+  }
+};
+
+function buildPalette(hex, modeKey){
+  const m = MODES[modeKey];
+  const {r,g,b} = hexToRgb(hex);
+  const hsl = rgbToHsl(r,g,b);
+
+  const accentHsl = {
+    h: (hsl.h + m.accentHueShift) % 360,
+    s: clamp(hsl.s * m.accentSatMul, 0, 100),
+    l: clamp(hsl.l + m.accentLightShift, 0, 100)
+  };
+  const supportHsl = {
+    h: (hsl.h + m.supportHueShift) % 360,
+    s: clamp(hsl.s * m.supportSatMul, 0, 100),
+    l: clamp(hsl.l + m.supportLightShift, 0, 100)
+  };
+
+  return {
+    primary: { hex, hsl, role:'Primary' },
+    support: { hex: hslToHex(supportHsl.h, supportHsl.s, supportHsl.l), hsl: supportHsl, role:'Support' },
+    accent:  { hex: hslToHex(accentHsl.h, accentHsl.s, accentHsl.l),    hsl: accentHsl,  role:'Accent' }
+  };
+}
+
+// ---------- Rendering ----------
+const hexInput = document.getElementById('hexInput');
+const colorPicker = document.getElementById('colorPicker');
+const paletteEl = document.getElementById('palette');
+const formulaList = document.getElementById('formulaList');
+const wheel = document.getElementById('wheel');
+const balanceBar = document.getElementById('balanceBar');
+const ratioExplain = document.getElementById('ratioExplain');
+const toast = document.getElementById('toast');
+
+const PRESETS = ['008CBB','E63946','6A4C93','2A9D8F','F4A261','1D3557'];
+let current = null;
+let activeRatio = 'classic';
+let activeMode = 'golden';
+let mockTheme = 'light';
+
+const RATIOS = {
+  classic: { label:'Balanced', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5 },
+  support: { label:'Support-led', sub:'2 : 4 : .5', primary:2, support:4, accent:0.5 },
+  punch:   { label:'High accent', sub:'4 : .5 : 2', primary:4, support:0.5, accent:2 }
+};
+
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>toast.classList.remove('show'), 1200);
+}
+function copy(text){
+  navigator.clipboard?.writeText(text);
+  showToast('Copied #'+text);
+}
+
+function renderPresets(){
+  const c = document.getElementById('chips');
+  c.innerHTML = '';
+  PRESETS.forEach(p=>{
+    const b = document.createElement('button');
+    b.className='chip';
+    b.innerHTML = `<span style="display:inline-block;width:9px;height:9px;border-radius:3px;background:#${p};margin-right:6px;vertical-align:middle"></span>${p}`;
+    b.onclick = ()=>setHex(p);
+    c.appendChild(b);
+  });
+}
+
+function renderPalette(p){
+  const order = [p.primary, p.support, p.accent];
+  paletteEl.innerHTML = '';
+  order.forEach(c=>{
+    const tc = textOn(c.hex);
+    const el = document.createElement('div');
+    el.className='swatch';
+    el.innerHTML = `
+      <div class="fill" style="background:#${c.hex}" data-hex="${c.hex}">
+        <span class="copy-hint">click to copy</span>
+        <span class="role" style="background:${tc==='#ffffff'?'rgba(0,0,0,.25)':'rgba(255,255,255,.35)'};color:${tc}">${c.role}</span>
+      </div>
+      <div class="meta">
+        <div class="hexval">#${c.hex}</div>
+        <div class="hsl">H ${Math.round(c.hsl.h)}°  S ${Math.round(c.hsl.s)}%  L ${Math.round(c.hsl.l)}%</div>
+      </div>`;
+    el.querySelector('.fill').onclick = ()=>copy(c.hex);
+    paletteEl.appendChild(el);
+  });
+}
+
+function renderFormula(p){
+  const items = [
+    { c:p.primary.hex, t:`<b>Primary</b> <span>#${p.primary.hex}</span>` },
+    { c:p.accent.hex,  t:`<b>Accent</b> <span>#${p.accent.hex}</span>` },
+    { c:p.support.hex, t:`<b>Support</b> <span>#${p.support.hex}</span>` },
+  ];
+  formulaList.innerHTML = '';
+  items.forEach(it=>{
+    const row = document.createElement('div');
+    row.className='formula-item';
+    row.innerHTML = `<div class="formula-dot" style="background:#${it.c}"></div><div class="t">${it.t}</div>`;
+    formulaList.appendChild(row);
+  });
+}
+
+function renderWheel(p){
+  const cx=120, cy=120, R=104;
+  // hue ring as conic segments
+  let seg = '';
+  const steps = 60;
+  for(let i=0;i<steps;i++){
+    const a0 = (i/steps)*360, a1=((i+1)/steps)*360;
+    const x0=cx+R*Math.cos((a0-90)*Math.PI/180), y0=cy+R*Math.sin((a0-90)*Math.PI/180);
+    const x1=cx+R*Math.cos((a1-90)*Math.PI/180), y1=cy+R*Math.sin((a1-90)*Math.PI/180);
+    const ir=78;
+    const xi0=cx+ir*Math.cos((a0-90)*Math.PI/180), yi0=cy+ir*Math.sin((a0-90)*Math.PI/180);
+    const xi1=cx+ir*Math.cos((a1-90)*Math.PI/180), yi1=cy+ir*Math.sin((a1-90)*Math.PI/180);
+    seg += `<path d="M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} L${xi1} ${yi1} A${ir} ${ir} 0 0 0 ${xi0} ${yi0} Z" fill="hsl(${a0},75%,55%)"/>`;
+  }
+  const marker = (hue, color, label, big) => {
+    const ang=(hue-90)*Math.PI/180;
+    const mr=91;
+    const x=cx+mr*Math.cos(ang), y=cy+mr*Math.sin(ang);
+    const rad = big?13:10;
+    return `<circle cx="${x}" cy="${y}" r="${rad+3}" fill="#07101f"/>
+            <circle cx="${x}" cy="${y}" r="${rad}" fill="#${color}" stroke="#fff" stroke-width="2"/>`;
+  };
+  // arc from primary to accent showing the mode's hue shift
+  const shift = MODES[activeMode].accentHueShift;
+  const ph = p.primary.hsl.h, ah = p.accent.hsl.h;
+  const arcR=58;
+  const a0=(ph-90)*Math.PI/180, a1=(ph+shift-90)*Math.PI/180;
+  const ax0=cx+arcR*Math.cos(a0), ay0=cy+arcR*Math.sin(a0);
+  const ax1=cx+arcR*Math.cos(a1), ay1=cy+arcR*Math.sin(a1);
+  const sweep = shift >= 0 ? 1 : 0;
+  const largeArc = (Math.abs(shift)%360)>180?1:0;
+  const arc = `<path d="M${ax0} ${ay0} A${arcR} ${arcR} 0 ${largeArc} ${sweep} ${ax1} ${ay1}" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 3" opacity=".7"/>`;
+  const midAng = (ph+shift/2-90)*Math.PI/180;
+  const lx=cx+38*Math.cos(midAng), ly=cy+38*Math.sin(midAng);
+
+  wheel.innerHTML = seg + arc
+    + `<text x="${lx}" y="${ly}" fill="#fff" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle">${Math.abs(shift)}°</text>`
+    + marker(ph, p.primary.hex, 'P', true)
+    + marker(ah, p.accent.hex, 'A', true)
+    + marker(p.support.hsl.h, p.support.hex, 'S', false);
+
+  const dir = shift >= 0 ? 'clockwise' : 'counter-clockwise';
+  document.getElementById('angleNote').innerHTML = `Accent sits <b>${Math.abs(shift)}°</b> ${dir} from your main hue`;
+}
+
+function renderModeControls(){
+  const wrap = document.getElementById('modeBtns');
+  wrap.innerHTML = '';
+  Object.entries(MODES).forEach(([key,m])=>{
+    const b=document.createElement('button');
+    b.className='mode-btn'+(key===activeMode?' active':'');
+    b.textContent = m.label;
+    b.onclick = ()=>{ if(activeMode===key) return; activeMode=key; renderAll(current.primary.hex); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderRatioControls(){
+  const wrap = document.getElementById('ratioControls');
+  wrap.innerHTML = '';
+  Object.entries(RATIOS).forEach(([key,r])=>{
+    const b=document.createElement('button');
+    b.className='ratio-btn'+(key===activeRatio?' active':'');
+    b.innerHTML = `${r.label}<small>${r.sub}</small>`;
+    b.onclick = ()=>{ activeRatio=key; renderRatioControls(); renderBalance(current); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderBalance(p){
+  const r = RATIOS[activeRatio];
+  const total = r.primary + r.support + r.accent;
+  const parts = [
+    { c:p.primary.hex, w:r.primary, label:'Primary' },
+    { c:p.support.hex, w:r.support, label:'Support' },
+    { c:p.accent.hex,  w:r.accent,  label:'Accent' },
+  ];
+  balanceBar.innerHTML = '';
+  parts.forEach(pt=>{
+    const seg=document.createElement('div');
+    seg.className='balance-seg';
+    seg.style.flex = pt.w;
+    seg.style.background = '#'+pt.c;
+    seg.style.color = textOn(pt.c);
+    const pct = Math.round(pt.w/total*100);
+    seg.innerHTML = `${pt.label}<span class="pct">${pct}%</span>`;
+    balanceBar.appendChild(seg);
+  });
+  ratioExplain.innerHTML = `Ratio <b>${r.sub}</b> — ${r.primary} parts primary, ${r.support} parts support, ${r.accent} part accent. The small accent share is what keeps it from feeling loud.`;
+
+  // Role mapping:
+  //  - background: white in light mode; a calculated dark tint in dark mode
+  //  - copy (title + body): the primary color, nudged for readability if needed
+  //  - label (tag): the support color
+  //  - CTA (button): the accent color
+  const inner = document.getElementById('mockInner');
+  const bg = mockTheme === 'dark' ? darkBgFor(p.primary.hsl) : 'FFFFFF';
+  const copy = ensureReadable(p.primary.hsl, bg);   // stays primary's hue, readable on bg
+  inner.style.background = '#'+bg;
+
+  document.getElementById('mockTitle').style.color = '#'+copy;
+  document.getElementById('mockText').style.color = hexToRgba(copy, 0.72);
+
+  const tag = document.getElementById('mockTag');
+  tag.textContent = 'Label';
+  tag.style.background = '#'+p.support.hex;
+  tag.style.color = textOn(p.support.hex);
+
+  const btn = document.getElementById('mockBtn');
+  btn.style.background = '#'+p.accent.hex;
+  btn.style.color = textOn(p.accent.hex);
+}
+
+function renderAll(hex){
+  current = buildPalette(hex, activeMode);
+  renderModeControls();
+  renderPalette(current);
+  renderFormula(current);
+  renderWheel(current);
+  renderRatioControls();
+  renderBalance(current);
+}
+
+function isValidHex(h){ return /^[0-9a-fA-F]{6}$/.test(h); }
+
+function setHex(hex){
+  hex = hex.replace('#','').toUpperCase();
+  hexInput.value = hex;
+  if(isValidHex(hex)){
+    colorPicker.value = '#'+hex;
+    renderAll(hex);
+  }
+}
+
+hexInput.addEventListener('input', e=>{
+  let v = e.target.value.replace(/[^0-9a-fA-F]/g,'').toUpperCase();
+  e.target.value = v;
+  if(isValidHex(v)){ colorPicker.value='#'+v; renderAll(v); }
+});
+colorPicker.addEventListener('input', e=>{
+  setHex(e.target.value);
+});
+
+renderPresets();
+
+document.querySelectorAll('#themeToggle button').forEach(b=>{
+  b.onclick = ()=>{
+    mockTheme = b.dataset.theme;
+    document.querySelectorAll('#themeToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    if(current) renderBalance(current);
+  };
+});
+
+setHex('008CBB');
+</script>
+</body>
+</html>

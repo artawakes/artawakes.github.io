@@ -12,8 +12,10 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Inter (body) + Hepta Slab (headings), matches l/presso deck -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -25,6 +27,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        serif: ['Hepta Slab', 'serif'],
                     },
                     colors: {
                         border: "hsl(var(--border))",
@@ -57,48 +60,50 @@
     
     <style>
         :root {
-            --background: 0 0% 100%;
-            --foreground: 222.2 84% 4.9%;
+            /* LIGHT: maps to deck html.light tokens (#f4f6fd bg, #07101f text) */
+            --background: 228 60% 97%;        /* #f4f6fd */
+            --foreground: 218 64% 7%;         /* #07101f */
             --card: 0 0% 100%;
-            --card-foreground: 222.2 84% 4.9%;
+            --card-foreground: 218 64% 7%;
             --popover: 0 0% 100%;
-            --popover-foreground: 222.2 84% 4.9%;
-            --primary: 222.2 47.4% 11.2%;
-            --primary-foreground: 210 40% 98%;
-            --secondary: 210 40% 96.1%;
-            --secondary-foreground: 222.2 47.4% 11.2%;
-            --muted: 210 40% 96.1%;
-            --muted-foreground: 215.4 16.3% 46.9%;
-            --accent: 210 40% 96.1%;
-            --accent-foreground: 222.2 47.4% 11.2%;
-            --destructive: 0 84.2% 60.2%;
-            --destructive-foreground: 210 40% 98%;
-            --border: 214.3 31.8% 91.4%;
-            --input: 214.3 31.8% 91.4%;
-            --ring: 222.2 84% 4.9%;
+            --popover-foreground: 218 64% 7%;
+            --primary: 222 89% 60%;           /* accent #4f80f5 (CTA) */
+            --primary-foreground: 0 0% 100%;
+            --secondary: 228 40% 92%;
+            --secondary-foreground: 218 64% 7%;
+            --muted: 228 40% 92%;
+            --muted-foreground: 216 32% 38%;  /* #3a5070 text-dim */
+            --accent: 228 40% 92%;
+            --accent-foreground: 218 64% 7%;
+            --destructive: 13 100% 60%;       /* deck red #FF6332 */
+            --destructive-foreground: 0 0% 100%;
+            --border: 220 24% 86%;
+            --input: 220 24% 86%;
+            --ring: 222 89% 60%;
             --radius: 0.5rem;
         }
 
         .dark {
-            --background: 222.2 84% 4.9%;
-            --foreground: 210 40% 98%;
-            --card: 222.2 84% 4.9%;
-            --card-foreground: 210 40% 98%;
-            --popover: 222.2 84% 4.9%;
-            --popover-foreground: 210 40% 98%;
-            --primary: 210 40% 98%;
-            --primary-foreground: 222.2 47.4% 11.2%;
-            --secondary: 217.2 32.6% 17.5%;
-            --secondary-foreground: 210 40% 98%;
-            --muted: 217.2 32.6% 17.5%;
-            --muted-foreground: 215 20.2% 65.1%;
-            --accent: 217.2 32.6% 17.5%;
-            --accent-foreground: 210 40% 98%;
-            --destructive: 0 62.8% 30.6%;
-            --destructive-foreground: 210 40% 98%;
-            --border: 217.2 32.6% 17.5%;
-            --input: 217.2 32.6% 17.5%;
-            --ring: 212.7 26.8% 83.9%;
+            /* DARK (default): maps to deck :root tokens (#07101f bg, #f0f4ff text) */
+            --background: 218 64% 7%;         /* #07101f */
+            --foreground: 225 100% 97%;       /* #f0f4ff */
+            --card: 214 56% 11%;              /* #0d1a2e bg2 */
+            --card-foreground: 225 100% 97%;
+            --popover: 214 56% 11%;
+            --popover-foreground: 225 100% 97%;
+            --primary: 222 89% 64%;           /* accent #4f80f5 (CTA) */
+            --primary-foreground: 0 0% 100%;
+            --secondary: 214 35% 16%;
+            --secondary-foreground: 225 100% 97%;
+            --muted: 214 35% 16%;
+            --muted-foreground: 212 31% 66%;  /* #8fa8c4 text-dim */
+            --accent: 214 35% 16%;
+            --accent-foreground: 225 100% 97%;
+            --destructive: 13 100% 60%;       /* deck red #FF6332 */
+            --destructive-foreground: 0 0% 100%;
+            --border: 213 30% 18%;
+            --input: 213 30% 18%;
+            --ring: 222 89% 64%;
         }
 
         .project-card {
@@ -205,6 +210,34 @@
         html.dark .project-card .overlay {
             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
         }
+
+        /* ── l/presso deck styling ────────────────────────────────── */
+
+        /* Headings use Hepta Slab serif at the lighter display weight, like the deck tagline */
+        h1, h2, h3, .font-serif {
+            font-family: 'Hepta Slab', serif;
+            font-weight: 500 !important;
+            letter-spacing: -0.02em;
+        }
+        #hero-title { letter-spacing: -0.03em; }
+
+        /* Deck accent gradient for emphasis text */
+        .ai-gradient {
+            background: linear-gradient(135deg, #4f80f5, #7c5af5, #c55af5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero ripple canvas, ported from the deck cover slide */
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-background text-foreground min-h-screen">
@@ -215,6 +248,7 @@
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
                 <a href="#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                <a href="#ai" class="text-sm font-medium transition-colors hover:text-primary">AI</a>
                 <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
                 <a href="#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
             </div>
@@ -272,6 +306,7 @@
                 <div class="flex flex-col space-y-4 mb-6">
                     <a href="#about" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
                     <a href="#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
+                    <a href="#ai" class="text-sm font-medium transition-colors hover:text-primary">AI</a>
                     <a href="projects-login.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
                     <a href="#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
                 </div>
@@ -313,8 +348,9 @@
 
     <!-- Hero Section -->
     <section id="about" class="hero-section min-h-screen flex items-center justify-center relative overflow-hidden">
-        
-        <div class="site-container">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+        <div class="site-container relative z-10">
             <div class="max-w-3xl mx-auto text-center">
                 <!-- Modified image styling with rounded corners -->
                 <div class="mb-8">
@@ -325,12 +361,12 @@
                     >
                 </div>
                 <h1 id="hero-title" class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                    L6 Product + Design System
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">Designer</span>
+                    I design products, and the
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">design systems that scale them</span>
                 </h1>
-                <div class="max-w-[500px] mx-auto">
-                    <p class="text-sm mb-8 leading-relaxed" style="color: #8C8C8C;">
-                        I design and scale systems that bridge design, engineering, and business. Over the last decade at Instacart, Lyft, and EA, I've delivered design systems and product strategies that improved adoption, accelerated launches, and aligned organizations around a shared vision.
+                <div class="max-w-[560px] mx-auto">
+                    <p class="text-sm mb-8 leading-relaxed text-muted-foreground">
+                        Nine+ years as a product designer at EA, Lyft, and Instacart, and along the way I kept building the design system for them too. My current role at Instacart evolved from product designer to systems designer, most recently I founded the Tooling Design System and scaled it from zero to 144+ components, now used 786K+ times across 18 teams in the last 2 years at 90.9% satisfaction. Lately I use AI to close the gap between design and engineering.
                     </p>
                 </div>
                 <div id="hero-subtitle" class="text-xl text-muted-foreground mb-8">
@@ -375,19 +411,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
                     <div class="space-y-4 text-muted-foreground">
                         <p>
-                            I started in Buenos Aires with architecture and technical drawing before moving to the U.S., where I transitioned into tech. Since then, I've built systems at scale—redesigning EA's global intranet, defining Lyft's digital workspace, and scaling Instacart's Tooling Design System across four enterprise platforms in under a year.
+                            I started in Buenos Aires with architecture and technical drawing, then moved to LA and spent 15 years in graphic design and marketing before moving into product design. For nine years I've designed enterprise products at EA, Lyft, and Instacart, from a global intranet to a unified digital workspace to order and fulfillment tools. Somewhere along the way I kept building the design systems behind them, and at Instacart that became the whole job: founding the Tooling Design System and scaling it across four platforms in under a year.
                         </p>
                         <p>
-                            I thrive at the intersection of systems, strategy, and scale—turning ambiguity into frameworks that accelerate launches, improve adoption, and create long-term organizational alignment.
+                            What keeps me going is making complicated things feel simple and human, whether that's helping a shopper find their groceries faster or helping a team build tools with less friction.
                         </p>
                     </div>
                     <div class="space-y-4 text-muted-foreground">
                         <h3 class="text-xl font-semibold text-foreground mb-4">Beyond the desk</h3>
                         <p>
-                            I expand my practice through code, AI prototyping, and creative outlets. I'm tackling a 100-day React/JS challenge, co-host a podcast on mental health and queer dating, and published a digital short story.
+                            I expand my practice through code, AI prototyping, and creative outlets. I'm tackling a 100-day React/JS challenge, co-host a podcast on mental health and gay dating, and love to draw as a form of artistic expression.
                         </p>
                         <p>
-                            I balance intensity with yoga, dance, and illustration—practices that sharpen resilience, creativity, and perspective. I also host monthly board game nights, a small but steady practice in community building.
+                            I balance intensity with yoga, dance, and illustration. These practices sharpen resilience, creativity, and perspective. I also host monthly board game nights, a small but steady practice in community building.
                         </p>
                     </div>
                 </div>
@@ -401,6 +437,70 @@
                             <polyline points="15 3 21 3 21 9"></polyline>
                             <line x1="10" y1="14" x2="21" y2="3"></line>
                         </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI / Design Engineering Section -->
+    <!-- AI / Design Engineering + side-project tile -->
+    <section id="ai" class="py-16 bg-muted/30">
+        <div class="site-container">
+            <div class="max-w-6xl mx-auto">
+                <p class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-3">AI &amp; Design Engineering</p>
+                <h2 class="text-3xl mb-8">Closing the gap between design and code</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    <!-- left: working posture / professional AI work -->
+                    <div class="space-y-5 text-muted-foreground">
+                        <p>
+                            Lately my work lives in the space between design and engineering. Design systems have traditionally lived as two copies, one in Figma and one in code, and over time they drift apart. Closing that gap is the part of the work I care about most right now: token systems that line up one to one with code, with AI handling the slow parts like migration and catching drift while still enabling flexibility and creative exploration for product designers. The future is design and engineering working from the same source of truth.
+                        </p>
+                        <a href="l/presso/pov/" target="_blank" rel="noopener"
+                           class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+                            Read my POV on AI and the future of design systems
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1.5">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Token architecture</span>
+                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Figma MCP</span>
+                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Code Connect</span>
+                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Claude Code</span>
+                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Figma plugins</span>
+                        </div>
+                    </div>
+
+                    <!-- right: personal side-project tile -->
+                    <a href="golden-ratio-palette/" target="_blank" rel="noopener"
+                       class="group block rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-semibold tracking-[0.16em] uppercase text-muted-foreground">Personal side project</span>
+                            <span class="inline-flex items-center text-sm font-medium text-primary group-hover:underline">
+                                Open the tool
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1.5">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </span>
+                        </div>
+                        <h3 class="text-xl mb-2">Golden Ratio Palette Builder</h3>
+                        <p class="text-sm text-muted-foreground mb-5">
+                            Something I vibe-coded for fun on my own time, not client work. It spaces hue, saturation, and lightness along the golden ratio to build balanced palettes, previews them in light and dark, checks contrast, and copies the tokens out. Free for anyone to use.
+                        </p>
+                        <div class="flex gap-1.5" aria-hidden="true">
+                            <span class="h-9 flex-1 rounded-md" style="background:#0d1a2e"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#23406b"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#4f80f5"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#7c5af5"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#3dba7e"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#f5a623"></span>
+                            <span class="h-9 flex-1 rounded-md" style="background:#ffc20f"></span>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -548,7 +648,7 @@
                             <h3 class="text-2xl font-semibold">Fresh2Design Community Meetup</h3>
                         </div>
                         <p class="text-muted-foreground">As Branding & Operations Director for fresh2design (2015-2019), I helped grow our Austin-based meetup to over 3,500 members. I led brand strategy, defined scaling processes, and hosted various events including software education panels and storytelling events.</p>
-                        <div class="bg-card p-6 rounded-lg border">
+                        <div class="bg-card p-6 rounded-xl border border-border">
                             <h4 class="font-semibold mb-3">Notable Events:</h4>
                             <ul class="list-disc list-inside space-y-2 text-muted-foreground">
                                 <li>SXSW: Adobe XD on "Design Evolution"</li>
@@ -570,7 +670,7 @@
                             <h3 class="text-2xl font-semibold">AIGA Austin: Small Talks Series Chair</h3>
                         </div>
                         <p class="text-muted-foreground">As the AIGA Austin Chair for Small Talks, I elevated the program through industry partnerships and fresh content focusing on emerging design trends.</p>
-                        <div class="bg-card p-6 rounded-lg border">
+                        <div class="bg-card p-6 rounded-xl border border-border">
                             <h4 class="font-semibold mb-3">UX for New Tech Series:</h4>
                             <ul class="list-disc list-inside space-y-2 text-muted-foreground">
                                 <li>"Wearables" at Under Armor</li>
@@ -675,9 +775,10 @@
             localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
         }
 
-        // Check for saved dark mode preference
+        // Check for saved dark mode preference (default to dark, like the deck)
         document.addEventListener('DOMContentLoaded', () => {
-            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const stored = localStorage.getItem('darkMode');
+            const darkMode = stored === null ? true : stored === 'true';
             if (darkMode) {
                 document.documentElement.classList.add('dark');
             } else {
@@ -744,6 +845,91 @@
                 document.getElementById('mobile-menu').classList.add('hidden');
             }
         });
+    </script>
+
+    <!-- Hero ripple canvas (ported from the deck cover slide) -->
+    <script>
+    (function () {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const host = document.getElementById('about');
+        const SPACING = 28;
+        let w, h, t = 0, raf = null;
+        let bursts = [];
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function resize() {
+            const r = host.getBoundingClientRect();
+            canvas.width = w = r.width;
+            canvas.height = h = r.height;
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, w, h);
+            const cx = w * 0.62, cy = h * 0.44;
+            const maxD = Math.sqrt(w * w + h * h) * 0.55;
+            const cols = Math.ceil(w / SPACING) + 2;
+            const rows = Math.ceil(h / SPACING) + 2;
+            const isLight = !document.documentElement.classList.contains('dark');
+
+            bursts = bursts.filter(b => b.age < b.maxAge);
+            bursts.forEach(b => b.age += 0.018);
+
+            for (let r2 = 0; r2 < rows; r2++) {
+                for (let c = 0; c < cols; c++) {
+                    const x = c * SPACING - SPACING * 0.5;
+                    const y = r2 * SPACING - SPACING * 0.5;
+                    const dx = x - cx, dy = y - cy;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const norm = Math.min(1, dist / maxD);
+
+                    const a = Math.sin(dist * 0.013 - t * 2.0);
+                    const b2 = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+                    const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+                    let wave = a * 0.45 + b2 * 0.3 + c2 * 0.25;
+
+                    for (const burst of bursts) {
+                        const front = burst.age * 420;
+                        const bd = Math.abs(dist - front);
+                        if (bd < 55) {
+                            const bStr = Math.cos((bd / 55) * Math.PI * 0.5) * (1 - burst.age / burst.maxAge);
+                            wave += bStr * 0.9;
+                        }
+                    }
+
+                    const falloff = Math.pow(1 - norm, 1.2);
+                    const opacity = (wave * 0.42 + 0.36) * falloff;
+                    if (opacity < 0.04) continue;
+
+                    const bright = Math.max(0, wave);
+                    const rc = isLight ? Math.round(40 + bright * 60) : Math.round(79 + bright * 90);
+                    const gc = isLight ? Math.round(70 - bright * 30) : Math.round(128 - bright * 60);
+                    const bc = 245;
+                    const radius = Math.max(0.5, 1.6 + wave * 1.2) * (0.5 + falloff * 0.7);
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${rc},${gc},${bc},${Math.min(isLight ? 0.65 : 0.9, Math.abs(opacity))})`;
+                    ctx.fill();
+                }
+            }
+        }
+
+        function loop() {
+            t += 0.018;
+            render();
+            raf = requestAnimationFrame(loop);
+        }
+
+        function burst() { if (!reduce) bursts.push({ age: 0, maxAge: 2.2 }); }
+
+        window.addEventListener('resize', () => { resize(); if (reduce) render(); });
+        host.addEventListener('click', burst);
+
+        resize();
+        if (reduce) { render(); } else { raf = requestAnimationFrame(loop); }
+    })();
     </script>
 </body>
 </html> 
