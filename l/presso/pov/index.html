@@ -136,17 +136,18 @@
 
   /* ── Figure ── */
   .fig { margin: 40px 0 12px; }
-  .fig-head { text-align: center; margin-bottom: 22px; }
-  .fig-title { font-size: 15px; font-weight: 600; color: var(--text); margin: 0 0 14px; max-width: none; line-height: 1.4; }
-  .fig-legend { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .fig-head { text-align: center; margin-bottom: 18px; }
+  .fig-title { font-size: 15px; font-weight: 600; color: var(--text); margin: 0; max-width: none; line-height: 1.4; }
+  .fig-legend { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin: 0 0 10px; }
   .fig-legend .lg { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .fig-legend .sw { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
   .fig-legend .sw-truth { background: rgba(124,90,245,0.16); border: 1.5px solid #7c5af5; }
   .fig-legend .sw-intent { background: rgba(61,186,126,0.16); border: 1.5px solid #3dba7e; }
   .fig-legend .sw-code { background: rgba(124,90,245,0.16); border: 1.5px solid #7c5af5; }
   .fig-legend .sw-view { background: transparent; border: 1.5px dashed rgba(255,255,255,0.30); }
+  .fig-legend .sw-neu { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.28); }
   .fig-panel {
-    padding: 22px 24px 18px; margin-bottom: 16px;
+    padding: 22px 24px 18px; margin-bottom: 22px;
     background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   }
   .fig-panel svg { width: 100%; height: auto; display: block; }
@@ -210,11 +211,12 @@
 
     <div class="fig-head">
       <p class="fig-title">Truth is a relationship, not a place</p>
-      <div class="fig-legend">
-        <span class="lg"><span class="sw sw-intent"></span>Intent</span>
-        <span class="lg"><span class="sw sw-code"></span>Code &middot; the real truth</span>
-        <span class="lg"><span class="sw sw-view"></span>Visual layer &middot; we discuss</span>
-      </div>
+    </div>
+
+    <!-- BEFORE legend -->
+    <div class="fig-legend">
+      <span class="lg"><span class="sw sw-truth"></span>Source of truth</span>
+      <span class="lg"><span class="sw sw-neu"></span>Built copy</span>
     </div>
 
     <!-- ── BEFORE panel ── -->
@@ -253,6 +255,13 @@
 
         <text class="cap" x="36" y="168">One file plays every role. That overload is the tangle we pull apart below.</text>
       </svg>
+    </div>
+
+    <!-- NOW legend -->
+    <div class="fig-legend">
+      <span class="lg"><span class="sw sw-intent"></span>Intent</span>
+      <span class="lg"><span class="sw sw-code"></span>Code &middot; the real truth</span>
+      <span class="lg"><span class="sw sw-view"></span>Visual layer &middot; we discuss</span>
     </div>
 
     <!-- ── NOW panel ── -->
