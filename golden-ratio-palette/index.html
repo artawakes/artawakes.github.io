@@ -528,21 +528,21 @@ let activeMode = 'golden';
 let mockTheme = 'light';
 
 const RATIOS = {
-  classic: { label:'Balanced', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5,
-    roles: { copy:'primary', label:'support', cta:'accent' },
-    copy: {
-      tag: 'Overview',
-      title: 'A balanced, even split',
-      body: 'Primary anchors the page, support carries the secondary surfaces, and a small dose of accent draws the eye. The default most interfaces reach for.',
-      btn: 'Primary action'
-    } },
-  support: { label:'Support-led', sub:'2 : 4 : .5', primary:2, support:4, accent:0.5,
-    roles: { copy:'support', label:'accent', cta:'primary' },
+  classic: { label:'Balanced', sub:'2 : 4 : .5', primary:2, support:4, accent:0.5,
+    roles: { copy:'support', label:'primary', cta:'accent' },
     copy: {
       tag: 'Section',
       title: 'Support carries the layout',
       body: 'When the secondary color does most of the work, the page reads calm and editorial. Backgrounds, panels, and dividers lean on support while the primary steps back to headers and key marks. Accent stays rare, so nothing competes for attention and long-form content stays easy to scan.',
       btn: 'Read more'
+    } },
+  support: { label:'Support-led', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5,
+    roles: { copy:'primary', label:'accent', cta:'support' },
+    copy: {
+      tag: 'Overview',
+      title: 'A balanced, even split',
+      body: 'Primary anchors the page, support carries the secondary surfaces, and a small dose of accent draws the eye. The default most interfaces reach for.',
+      btn: 'Primary action'
     } },
   punch:   { label:'High accent', sub:'4 : .5 : 2', primary:4, support:0.5, accent:2,
     roles: { copy:'accent', label:'primary', cta:'support' },
