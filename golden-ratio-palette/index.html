@@ -209,9 +209,8 @@
   .theme-toggle button:hover { color: var(--text); }
   .theme-toggle button.active { background: var(--accent); color: #fff; }
 
-  .mock { margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); display: flex; }
-  .mock-rail { flex-shrink: 0; width: 0; align-self: stretch; transition: width .4s cubic-bezier(.4,0,.2,1), background .3s; }
-  .mock-inner { flex: 1; padding: 34px; transition: background .3s; }
+  .mock { margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mock-inner { padding: 34px; transition: background .3s; }
   .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
   .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
   .mock .btn { display: inline-block; padding: 11px 22px; border-radius: 9px; font-size: 14px; font-weight: 700; transition: all .3s; }
@@ -300,7 +299,6 @@
     </div>
 
     <div class="mock" id="mock">
-      <div class="mock-rail" id="mockRail"></div>
       <div class="mock-inner" id="mockInner">
         <span class="tag" id="mockTag">Accent</span>
         <h3 id="mockTitle">See the balance in context</h3>
@@ -531,6 +529,7 @@ let mockTheme = 'light';
 
 const RATIOS = {
   classic: { label:'Balanced', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5,
+    roles: { copy:'primary', label:'support', cta:'accent' },
     copy: {
       tag: 'Overview',
       title: 'A balanced, even split',
@@ -538,6 +537,7 @@ const RATIOS = {
       btn: 'Primary action'
     } },
   support: { label:'Support-led', sub:'2 : 4 : .5', primary:2, support:4, accent:0.5,
+    roles: { copy:'support', label:'accent', cta:'primary' },
     copy: {
       tag: 'Section',
       title: 'Support carries the layout',
@@ -545,6 +545,7 @@ const RATIOS = {
       btn: 'Read more'
     } },
   punch:   { label:'High accent', sub:'4 : .5 : 2', primary:4, support:0.5, accent:2,
+    roles: { copy:'accent', label:'primary', cta:'support' },
     copy: {
       tag: 'New',
       title: 'Lead with the action',
@@ -701,44 +702,33 @@ function renderBalance(p){
     balanceBar.appendChild(seg);
   });
 
-  // Role mapping:
-  //  - background: white in light mode; a calculated dark tint in dark mode
-  //  - copy (title + body): the primary color, nudged for readability if needed
-  //  - label (tag): the support color
-  //  - CTA (button): the accent color
-  const inner = document.getElementById('mockInner');
-  const bg = mockTheme === 'dark' ? darkBgFor(p.primary.hsl) : 'FFFFFF';
-  const copy = ensureReadable(p.primary.hsl, bg);   // stays primary's hue, readable on bg
-  inner.style.background = '#'+bg;
+  // The three palette colors cycle through the card's elements as you move
+  // through the ratios. Each ratio rotates which color lands on the copy,
+  // the label, and the CTA. Background stays white (light) / calculated dark.
+  const roles = r.roles;
+  const copyColor = p[roles.copy], labelColor = p[roles.label], ctaColor = p[roles.cta];
 
-  // The card rebalances with the selected ratio: each color's prominence
-  // scales with its share, so the preview actually demonstrates the proportion.
-  const totalShare = r.primary + r.support + r.accent;
-  const pShare = r.primary / totalShare, sShare = r.support / totalShare, aShare = r.accent / totalShare;
+  const inner = document.getElementById('mockInner');
+  const bg = mockTheme === 'dark' ? darkBgFor(copyColor.hsl) : 'FFFFFF';
+  const copy = ensureReadable(copyColor.hsl, bg);   // copy color, nudged readable on bg
+  inner.style.background = '#'+bg;
 
   const title = document.getElementById('mockTitle');
   title.textContent = r.copy.title;
   title.style.color = '#'+copy;
-  title.style.fontSize = Math.round(18 + pShare * 26) + 'px';        // primary share -> headline size
   const body = document.getElementById('mockText');
   body.textContent = r.copy.body;
   body.style.color = hexToRgba(copy, 0.72);
 
-  const rail = document.getElementById('mockRail');                   // support share -> side-panel width
-  rail.style.background = '#'+p.support.hex;
-  rail.style.width = Math.round(10 + sShare * 150) + 'px';
-
   const tag = document.getElementById('mockTag');
   tag.textContent = r.copy.tag;
-  tag.style.background = '#'+p.support.hex;
-  tag.style.color = textOn(p.support.hex);
+  tag.style.background = '#'+labelColor.hex;
+  tag.style.color = textOn(labelColor.hex);
 
-  const btn = document.getElementById('mockBtn');                     // accent share -> CTA size
+  const btn = document.getElementById('mockBtn');
   btn.textContent = r.copy.btn;
-  btn.style.background = '#'+p.accent.hex;
-  btn.style.color = textOn(p.accent.hex);
-  btn.style.fontSize = Math.round(12 + aShare * 26) + 'px';
-  btn.style.padding = Math.round(8 + aShare * 16) + 'px ' + Math.round(16 + aShare * 26) + 'px';
+  btn.style.background = '#'+ctaColor.hex;
+  btn.style.color = textOn(ctaColor.hex);
 }
 
 function renderAll(hex){
