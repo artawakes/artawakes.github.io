@@ -261,9 +261,9 @@
     <span class="input-label">Main color</span>
     <div class="hex-field">
       <span class="hash">#</span>
-      <input id="hexInput" value="008CBB" maxlength="6" spellcheck="false" autocomplete="off">
+      <input id="hexInput" value="4F80F5" maxlength="6" spellcheck="false" autocomplete="off">
     </div>
-    <input type="color" id="colorPicker" value="#008CBB">
+    <input type="color" id="colorPicker" value="#4F80F5">
     <div class="chips" id="chips"></div>
   </div>
 
@@ -289,7 +289,6 @@
   <div class="balance-card">
     <div class="ratio-controls" id="ratioControls"></div>
     <div class="balance-bar" id="balanceBar"></div>
-    <p class="ratio-explain" id="ratioExplain"></p>
 
     <div class="mock-bar">
       <span class="mock-bar-label">Preview</span>
@@ -520,10 +519,9 @@ const paletteEl = document.getElementById('palette');
 const formulaList = document.getElementById('formulaList');
 const wheel = document.getElementById('wheel');
 const balanceBar = document.getElementById('balanceBar');
-const ratioExplain = document.getElementById('ratioExplain');
 const toast = document.getElementById('toast');
 
-const PRESETS = ['008CBB','E63946','6A4C93','2A9D8F','F4A261','1D3557'];
+const PRESETS = ['4F80F5','7C5AF5','5BB87E','E89B3C','F4C84C'];
 let current = null;
 let activeRatio = 'classic';
 let activeMode = 'golden';
@@ -682,7 +680,6 @@ function renderBalance(p){
     seg.innerHTML = `${pt.label}<span class="pct">${pct}%</span>`;
     balanceBar.appendChild(seg);
   });
-  ratioExplain.innerHTML = `Ratio <b>${r.sub}</b> — ${r.primary} parts primary, ${r.support} parts support, ${r.accent} part accent. The small accent share is what keeps it from feeling loud.`;
 
   // Role mapping:
   //  - background: white in light mode; a calculated dark tint in dark mode
@@ -747,7 +744,7 @@ document.querySelectorAll('#themeToggle button').forEach(b=>{
   };
 });
 
-setHex('008CBB');
+setHex('4F80F5');
 </script>
 </body>
 </html>
