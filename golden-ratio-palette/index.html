@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golden Ratio Palette Builder</title>
+<title>Palette Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -157,6 +157,9 @@
     color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
   }
   .section-h::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .section-toggle { cursor: pointer; user-select: none; margin-bottom: 32px; }
+  .section-toggle .caret { display: inline-flex; align-items: center; transition: transform .2s; transform: rotate(-90deg); }
+  .section-toggle.open .caret { transform: rotate(0deg); }
 
   /* ── Wheel ── */
   .viz-grid {
@@ -197,7 +200,7 @@
   }
   .balance-seg .pct { font-size: 11px; font-weight: 500; opacity: .8; }
 
-  .mock-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .mock-bar { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
   .mock-bar-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
   .theme-toggle {
     display: flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--border); padding: 4px; border-radius: 10px;
@@ -208,9 +211,22 @@
   }
   .theme-toggle button:hover { color: var(--text); }
   .theme-toggle button.active { background: var(--accent); color: #fff; }
+  .mock-toggles { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+  .toggle-group { display: flex; flex-direction: column; gap: 6px; }
+  .toggle-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+  .image-select {
+    -webkit-appearance: none; appearance: none;
+    background: var(--surface-2) url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='10'%20height='6'%20viewBox='0%200%2010%206'%20fill='none'%20stroke='%238fa8c4'%20stroke-width='1.6'%3E%3Cpath%20d='M1%201l4%204%204-4'/%3E%3C/svg%3E") no-repeat right 14px center;
+    border: 1px solid var(--border); color: var(--text);
+    border-radius: 9px; padding: 0 34px 0 12px; height: 39px; font-size: 13px; font-weight: 600;
+    font-family: inherit; cursor: pointer; color-scheme: dark;
+  }
 
-  .mock { margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-  .mock-inner { padding: 34px; transition: background .3s; }
+  .mock { display: flex; margin-top: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mock-inner { flex: 1; min-width: 0; padding: 34px; transition: background .3s; }
+  .mock-image { flex: 0 0 38%; }
+  .mock-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 640px) { .mock { flex-direction: column; } .mock-image { flex: none; height: 200px; } }
   .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
   .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
   .mock .btn { display: inline-block; padding: 11px 22px; border-radius: 9px; font-size: 14px; font-weight: 700; transition: all .3s; }
@@ -252,9 +268,9 @@
 <div class="wrap">
   <header>
     <p class="eyebrow"><span class="eyebrow-dot"></span>Color tool</p>
-    <h1>Golden Ratio Palette Builder</h1>
+    <h1>Palette Builder</h1>
     <div class="cover-line"></div>
-    <p class="sub">Pick one color. The accent is found by rotating <b>137.5°</b> (the golden angle, 360 ÷ 1.618) around the hue wheel; the support color drops saturation by ~60%. Then test how the three balance against each other.</p>
+    <p class="sub">Pick one color and build a balanced three-color palette from it. Switch between formulas, preview it in light and dark modes, with colored or neutral text, and find a solid palette for your UI.</p>
   </header>
 
   <div class="input-row">
@@ -268,14 +284,16 @@
   </div>
 
   <div class="mode-row">
-    <span class="input-label">Formula</span>
-    <div class="mode-btns" id="modeBtns"></div>
+    <div class="toggle-group">
+      <span class="toggle-label">Formula</span>
+      <div class="mode-btns" id="modeBtns"></div>
+    </div>
   </div>
 
   <div class="palette" id="palette"></div>
 
-  <div class="section-h">The formula, visualized</div>
-  <div class="viz-grid">
+  <div class="section-h section-toggle" id="vizToggle"><span class="caret"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8fa8c4" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span>The formula, visualized</div>
+  <div class="viz-grid" id="vizGrid" style="display:none">
     <div>
       <div class="wheel-wrap">
         <svg viewBox="0 0 240 240" width="240" height="240" id="wheel"></svg>
@@ -285,16 +303,38 @@
     <div class="formula-list" id="formulaList"></div>
   </div>
 
-  <div class="section-h">Balance &amp; ratio</div>
+  <div class="section-h">Ratio preview</div>
   <div class="balance-card">
     <div class="ratio-controls" id="ratioControls"></div>
     <div class="balance-bar" id="balanceBar"></div>
 
     <div class="mock-bar">
-      <span class="mock-bar-label">Preview</span>
-      <div class="theme-toggle" id="themeToggle">
-        <button data-theme="light" class="active">Light</button>
-        <button data-theme="dark">Dark</button>
+      <div class="mock-toggles">
+        <div class="toggle-group">
+          <span class="toggle-label">Text</span>
+          <div class="theme-toggle" id="textToggle">
+            <button data-text="neutral" class="active">Neutral</button>
+            <button data-text="colored">Colored</button>
+          </div>
+        </div>
+        <div class="toggle-group">
+          <span class="toggle-label">Mode</span>
+          <div class="theme-toggle" id="themeToggle">
+            <button data-theme="light" class="active">Light</button>
+            <button data-theme="dark">Dark</button>
+          </div>
+        </div>
+        <div class="toggle-group">
+          <span class="toggle-label">Image</span>
+          <div class="theme-toggle" id="imageToggle">
+            <button data-image="off">Off</button>
+            <button data-image="on" class="active">On</button>
+          </div>
+        </div>
+        <div class="toggle-group" id="imageSelectGroup" style="display:none">
+          <span class="toggle-label">Picture</span>
+          <select class="image-select" id="imageSelect"></select>
+        </div>
       </div>
     </div>
 
@@ -304,6 +344,9 @@
         <h3 id="mockTitle">See the balance in context</h3>
         <p id="mockText">Support color carries the secondary surface, the primary anchors the brand, and a small dose of accent draws the eye exactly where you want it.</p>
         <span class="btn" id="mockBtn">Primary action</span>
+      </div>
+      <div class="mock-image" id="mockImage" style="display:none">
+        <img id="mockImageImg" alt="">
       </div>
     </div>
   </div>
@@ -467,20 +510,25 @@ function darkBgFor(hsl){
 const clamp = (v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 
 const MODES = {
+  brand: {
+    label: 'Brand',
+    brand: true,
+    accentHueShift: 171,     // primary (blue) -> accent (amber) for the wheel arc
+  },
   golden: {
     label: 'Golden Ratio',
     accentHueShift: 137.5, accentSatMul: 1,    accentLightShift: 0,
     supportHueShift: 0,    supportSatMul: 0.4, supportLightShift: 0,
   },
-  alt: {
-    label: 'Alternative',
-    accentHueShift: 210, accentSatMul: 1,     accentLightShift: 16,
-    supportHueShift: 0,  supportSatMul: 0.343, supportLightShift: 36,
-  },
   negative: {
     label: 'Negative Golden Ratio',
     accentHueShift: -137.5, accentSatMul: 1,    accentLightShift: 0,
     supportHueShift: 0,     supportSatMul: 0.4, supportLightShift: 0,
+  },
+  alt: {
+    label: 'Soft',
+    accentHueShift: 210, accentSatMul: 1,     accentLightShift: 16,
+    supportHueShift: 0,  supportSatMul: 0.343, supportLightShift: 36,
   },
   triad: {
     label: 'Triadic',
@@ -489,10 +537,36 @@ const MODES = {
   }
 };
 
+// Brand palette, simplified to 3 values, all as fixed HSL offsets from the
+// entered (blue) seed:
+//   Primary = the blue seed
+//   Support = purple
+//   Accent  = the amber/gold midpoint (one warm tile)
+// In dark mode the mock sits on the page background, not a tile.
+const BRAND_OFFSETS = [
+  { role:'Primary', dh:0,     sm:1,      dl:0    },  // Blue (seed)
+  { role:'Support', dh:31,    sm:0.99,   dl:2    },  // Purple
+  { role:'Accent',  dh:170.6, sm:0.888,  dl:-6.1 }   // Amber E89B3C (exact, punchy orange)
+];
+const BRAND_DARK_BG = '07101F';                       // page background -> dark-mode background
+
 function buildPalette(hex, modeKey){
   const m = MODES[modeKey];
   const {r,g,b} = hexToRgb(hex);
   const hsl = rgbToHsl(r,g,b);
+
+  if(m.brand){
+    const off = o => {
+      const c = { h: ((hsl.h + o.dh) % 360 + 360) % 360, s: clamp(hsl.s * o.sm, 0, 100), l: clamp(hsl.l + o.dl, 0, 100) };
+      return { hex: hslToHex(c.h, c.s, c.l), hsl: c };
+    };
+    return {
+      primary: { ...off(BRAND_OFFSETS[0]), role:'Primary' },
+      support: { ...off(BRAND_OFFSETS[1]), role:'Support' },
+      accent:  { ...off(BRAND_OFFSETS[2]), role:'Accent' },
+      darkBg:  BRAND_DARK_BG                // page background, used as the dark-mode background
+    };
+  }
 
   const accentHsl = {
     h: (hsl.h + m.accentHueShift) % 360,
@@ -524,8 +598,12 @@ const toast = document.getElementById('toast');
 const PRESETS = ['4F80F5','7C5AF5','5BB87E','E89B3C','F4C84C'];
 let current = null;
 let activeRatio = 'classic';
-let activeMode = 'golden';
+let activeMode = 'brand';
 let mockTheme = 'light';
+let neutralText = true;
+let imageOn = true;
+const IMAGES = ['Animal','Architecture','Floral','Food','Madrid','Nature','Object','Palermo','Pattern','Portrait','Sculpture','Sicily','Urban'];
+let selectedImage = IMAGES[0];
 
 const RATIOS = {
   classic: { label:'Balanced', sub:'2 : 4 : .5', primary:2, support:4, accent:0.5,
@@ -536,7 +614,7 @@ const RATIOS = {
       body: 'When the secondary color does most of the work, the page reads calm and editorial. Backgrounds, panels, and dividers lean on support while the primary steps back to headers and key marks. Accent stays rare, so nothing competes for attention and long-form content stays easy to scan.',
       btn: 'Read more'
     } },
-  support: { label:'Support-led', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5,
+  support: { label:'Support', sub:'4 : 2 : .5', primary:4, support:2, accent:0.5,
     roles: { copy:'primary', label:'accent', cta:'support' },
     copy: {
       tag: 'Overview',
@@ -544,13 +622,37 @@ const RATIOS = {
       body: 'Primary anchors the page, support carries the secondary surfaces, and a small dose of accent draws the eye. The default most interfaces reach for.',
       btn: 'Primary action'
     } },
-  punch:   { label:'High accent', sub:'4 : .5 : 2', primary:4, support:0.5, accent:2,
+  punch:   { label:'Accent', sub:'4 : .5 : 2', primary:4, support:0.5, accent:2,
     roles: { copy:'accent', label:'primary', cta:'support' },
     copy: {
       tag: 'New',
       title: 'Lead with the action',
       body: 'Minimal copy. One loud, unmistakable call to action.',
       btn: 'Get started'
+    } },
+  supportAccent: { label:'Support + accent', sub:'2 : 5 : 4', primary:2, support:5, accent:4,
+    roles: { copy:'support', label:'primary', cta:'accent' },
+    copy: {
+      tag: 'Section',
+      title: 'Support sets the tone, accent punches',
+      body: 'Support does the heavy lifting across surfaces and copy for a calm base, the accent stays bright for the moments that matter, and primary appears just enough to anchor the brand.',
+      btn: 'Explore'
+    } },
+  primaryAccent: { label:'Primary + accent', sub:'5 : 2 : 4', primary:5, support:2, accent:4,
+    roles: { copy:'primary', label:'support', cta:'accent' },
+    copy: {
+      tag: 'Highlight',
+      title: 'Primary with a strong accent',
+      body: 'Primary still leads, but the accent earns a bigger role on calls to action and highlights. Support stays minimal so the contrast between the two stays sharp.',
+      btn: 'Get started'
+    } },
+  primaryLed: { label:'Primary', sub:'5 : 4 : 2', primary:5, support:4, accent:2,
+    roles: { copy:'primary', label:'accent', cta:'support' },
+    copy: {
+      tag: 'Featured',
+      title: 'Primary takes the lead',
+      body: 'The primary color carries the headline and most of the page, support fills the calmer surfaces behind it, and the accent shows up just once so it still feels special.',
+      btn: 'Learn more'
     } }
 };
 
@@ -578,7 +680,7 @@ function renderPresets(){
 }
 
 function renderPalette(p){
-  const order = [p.primary, p.support, p.accent];
+  const order = p.colors || [p.primary, p.support, p.accent];
   paletteEl.innerHTML = '';
   order.forEach(c=>{
     const tc = textOn(c.hex);
@@ -636,7 +738,7 @@ function renderWheel(p){
             <circle cx="${x}" cy="${y}" r="${rad}" fill="#${color}" stroke="#fff" stroke-width="2"/>`;
   };
   // arc from primary to accent showing the mode's hue shift
-  const shift = MODES[activeMode].accentHueShift;
+  const shift = MODES[activeMode].accentHueShift || 0;
   const ph = p.primary.hsl.h, ah = p.accent.hsl.h;
   const arcR=58;
   const a0=(ph-90)*Math.PI/180, a1=(ph+shift-90)*Math.PI/180;
@@ -709,9 +811,13 @@ function renderBalance(p){
   const copyColor = p[roles.copy], labelColor = p[roles.label], ctaColor = p[roles.cta];
 
   const inner = document.getElementById('mockInner');
-  const bg = mockTheme === 'dark' ? darkBgFor(copyColor.hsl) : 'FFFFFF';
-  const copy = ensureReadable(copyColor.hsl, bg);   // copy color, nudged readable on bg
+  const bg = mockTheme === 'dark' ? (p.darkBg || darkBgFor(copyColor.hsl)) : 'FFFFFF';
   inner.style.background = '#'+bg;
+
+  // Lead + copy text: the cycled palette color (readable), or pure white / black
+  // when the Neutral toggle is on (white in dark mode, black in light mode).
+  const copy = neutralText ? (mockTheme === 'dark' ? 'FFFFFF' : '000000')
+                           : ensureReadable(copyColor.hsl, bg);
 
   const title = document.getElementById('mockTitle');
   title.textContent = r.copy.title;
@@ -770,6 +876,56 @@ document.querySelectorAll('#themeToggle button').forEach(b=>{
     if(current) renderBalance(current);
   };
 });
+
+document.querySelectorAll('#textToggle button').forEach(b=>{
+  b.onclick = ()=>{
+    neutralText = b.dataset.text === 'neutral';
+    document.querySelectorAll('#textToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    if(current) renderBalance(current);
+  };
+});
+
+// ---- Image preview ----
+function renderImage(){
+  const group = document.getElementById('imageSelectGroup');
+  const panel = document.getElementById('mockImage');
+  if(imageOn){
+    group.style.display = '';
+    panel.style.display = '';
+    document.getElementById('mockImageImg').src = 'palette/' + selectedImage + '.png';
+    document.getElementById('mockImageImg').alt = selectedImage;
+  } else {
+    group.style.display = 'none';
+    panel.style.display = 'none';
+  }
+}
+
+const imageSelect = document.getElementById('imageSelect');
+IMAGES.forEach(name=>{
+  const o = document.createElement('option');
+  o.value = name; o.textContent = name;
+  imageSelect.appendChild(o);
+});
+imageSelect.value = selectedImage;
+imageSelect.addEventListener('change', ()=>{ selectedImage = imageSelect.value; renderImage(); });
+
+document.querySelectorAll('#imageToggle button').forEach(b=>{
+  b.onclick = ()=>{
+    imageOn = b.dataset.image === 'on';
+    document.querySelectorAll('#imageToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    renderImage();
+  };
+});
+renderImage();
+
+// ---- Formula section accordion (closed by default) ----
+const vizToggle = document.getElementById('vizToggle');
+vizToggle.onclick = ()=>{
+  const grid = document.getElementById('vizGrid');
+  const open = grid.style.display !== 'none';
+  grid.style.display = open ? 'none' : '';
+  vizToggle.classList.toggle('open', !open);
+};
 
 setHex('4F80F5');
 </script>
