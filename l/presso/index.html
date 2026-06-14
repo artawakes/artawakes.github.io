@@ -83,6 +83,10 @@
   /* ── Deck tiles ── */
   .deck-list { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 
+  /* Two non-project tiles, side by side */
+  .deck-row { display: flex; gap: 10px; width: 100%; }
+  .deck-row .deck { flex: 1; min-width: 0; }
+
   .deck {
     display: flex;
     align-items: center;
@@ -100,6 +104,16 @@
     border-color: rgba(255,255,255,0.15);
     transform: translateX(3px);
   }
+
+  /* Compact variant for the side-by-side non-project tiles */
+  .deck--compact { padding: 12px 16px; gap: 12px; }
+  .deck--compact .deck-icon { width: 32px; height: 32px; border-radius: 8px; }
+  .deck--compact .deck-icon svg { width: 17px; height: 17px; }
+  .deck--compact .deck-title { font-size: 13px; }
+  .deck--compact .deck-sub { font-size: 10px; margin-top: 2px; }
+  .deck--compact .deck-body { min-width: 0; }
+  .deck--compact .deck-title,
+  .deck--compact .deck-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
   .deck-icon {
     width: 40px; height: 40px;
@@ -164,33 +178,36 @@
 
   <div class="deck-list">
 
-    <!-- Intro — teal -->
-    <a class="deck" href="intro/">
-      <div class="deck-icon" style="background:rgba(61,186,180,0.12);">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3dbab4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-        </svg>
-      </div>
-      <div class="deck-body">
-        <div class="deck-title">About Me</div>
-        <div class="deck-sub">Darío Fidanza · Introduction</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+    <!-- Non-project tiles, side by side -->
+    <div class="deck-row">
 
-    <!-- POV — purple -->
-    <a class="deck" href="pov/">
-      <div class="deck-icon" style="background:rgba(124,90,245,0.12);">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 7h6M5 12h4"/><path d="M14 4l6 6-8 8-6 1 1-6 7-9z"/>
-        </svg>
-      </div>
-      <div class="deck-body">
-        <div class="deck-title">AI &amp; Design Systems</div>
-        <div class="deck-sub">My Evolving AI Posture</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+      <!-- Intro — teal -->
+      <a class="deck deck--compact" href="intro/">
+        <div class="deck-icon" style="background:rgba(61,186,180,0.12);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3dbab4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="deck-body">
+          <div class="deck-title">About Me</div>
+          <div class="deck-sub">Darío Fidanza · Introduction</div>
+        </div>
+      </a>
+
+      <!-- POV — purple -->
+      <a class="deck deck--compact" href="pov/">
+        <div class="deck-icon" style="background:rgba(124,90,245,0.12);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 7h6M5 12h4"/><path d="M14 4l6 6-8 8-6 1 1-6 7-9z"/>
+          </svg>
+        </div>
+        <div class="deck-body">
+          <div class="deck-title">AI &amp; Design Systems</div>
+          <div class="deck-sub">My Evolving AI Posture</div>
+        </div>
+      </a>
+
+    </div>
 
     <!-- TDS — purple -->
     <a class="deck" href="tooling-ds/">
