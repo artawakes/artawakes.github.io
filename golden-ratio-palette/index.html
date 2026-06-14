@@ -531,7 +531,7 @@ const MODES = {
   brand: {
     label: 'Brand',
     brand: true,
-    accentHueShift: 171,     // primary (blue) -> accent (amber) for the wheel arc
+    accentHueShift: 173,     // primary (blue) -> accent (orange) for the wheel arc
   },
   golden: {
     label: 'Golden Ratio',
@@ -562,9 +562,9 @@ const MODES = {
 //   Accent  = the amber/gold midpoint (one warm tile)
 // In dark mode the mock sits on the page background, not a tile.
 const BRAND_OFFSETS = [
-  { role:'Primary', dh:0,     sm:1,      dl:0    },  // Blue (seed)
-  { role:'Support', dh:31,    sm:0.99,   dl:2    },  // Purple
-  { role:'Accent',  dh:170.6, sm:0.888,  dl:-6.1 }   // Amber E89B3C (exact, punchy orange)
+  { role:'Primary', dh:0,     sm:1,    dl:0    },  // Blue (seed) 4F80F5
+  { role:'Support', dh:30.6,  sm:0.99, dl:2.2  },  // Purple 7C5AF5
+  { role:'Accent',  dh:173.3, sm:1.12, dl:-6.6 }   // Orange FFA623
 ];
 const BRAND_DARK_BG = '07101F';                       // page background -> dark-mode background
 
@@ -628,7 +628,7 @@ const wheel = document.getElementById('wheel');
 const balanceBar = document.getElementById('balanceBar');
 const toast = document.getElementById('toast');
 
-const PRESETS = ['4F80F5','7C5AF5','5BB87E','E89B3C','F4C84C'];
+const PRESETS = ['4F80F5','7C5AF5','3DBA7E','FFA623','FFC20F'];
 let current = null;
 let activeRatio = 'classic';
 let activeMode = 'brand';
