@@ -229,7 +229,14 @@
   @media (max-width: 640px) { .mock { flex-direction: column; } .mock-image { flex: none; height: 200px; } }
   .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
   .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
-  .mock .btn { display: inline-block; padding: 11px 22px; border-radius: 9px; font-size: 14px; font-weight: 700; transition: all .3s; }
+  .mock-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .mock .btn { display: inline-block; padding: 11px 22px; border-radius: 9px; font-size: 14px; font-weight: 700; border: 1.5px solid transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+  .mock .btn-primary { background: var(--btn-c); color: var(--btn-on); }
+  .mock .btn-primary:hover { background: var(--btn-hover); }
+  .mock .btn-secondary { background: transparent; border-color: var(--btn-fg); color: var(--btn-fg); }
+  .mock .btn-secondary:hover { background: var(--btn-tint); }
+  .mock .btn-tertiary { background: transparent; color: var(--btn-fg); }
+  .mock .btn-tertiary:hover { background: var(--btn-tint); }
   .mock .tag {
     display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
     padding: 4px 10px; border-radius: 6px; margin-bottom: 16px; transition: all .3s;
@@ -325,6 +332,13 @@
           </div>
         </div>
         <div class="toggle-group">
+          <span class="toggle-label">Buttons</span>
+          <div class="theme-toggle" id="buttonsToggle">
+            <button data-buttons="off" class="active">Off</button>
+            <button data-buttons="on">On</button>
+          </div>
+        </div>
+        <div class="toggle-group">
           <span class="toggle-label">Image</span>
           <div class="theme-toggle" id="imageToggle">
             <button data-image="off">Off</button>
@@ -343,7 +357,11 @@
         <span class="tag" id="mockTag">Accent</span>
         <h3 id="mockTitle">See the balance in context</h3>
         <p id="mockText">Support color carries the secondary surface, the primary anchors the brand, and a small dose of accent draws the eye exactly where you want it.</p>
-        <span class="btn" id="mockBtn">Primary action</span>
+        <div class="mock-actions">
+          <span class="btn btn-primary" id="mockBtn">Primary action</span>
+          <span class="btn btn-secondary" id="mockBtn2" style="display:none">Secondary</span>
+          <span class="btn btn-tertiary" id="mockBtn3" style="display:none">Tertiary</span>
+        </div>
       </div>
       <div class="mock-image" id="mockImage" style="display:none">
         <img id="mockImageImg" alt="">
@@ -550,16 +568,30 @@ const BRAND_OFFSETS = [
 ];
 const BRAND_DARK_BG = '07101F';                       // page background -> dark-mode background
 
+// Guardrail: keep every generated color clearly off-white so a pill or button
+// using it still has a visible background on a light surface. Caps lightness
+// and keeps a touch of saturation once the color gets light.
+function guardColor(hsl){
+  let { h, s, l } = hsl;
+  if(l > 90) l = 90;            // never approach white
+  if(l > 82 && s < 15) s = 15;  // keep some color when light
+  return { h, s, l };
+}
+
+// Shift a hex color's lightness by dl (used for button hover states).
+function shade(hex, dl){
+  const {r,g,b} = hexToRgb(hex); const c = rgbToHsl(r,g,b);
+  return hslToHex(c.h, c.s, clamp(c.l + dl, 0, 100));
+}
+
 function buildPalette(hex, modeKey){
   const m = MODES[modeKey];
   const {r,g,b} = hexToRgb(hex);
   const hsl = rgbToHsl(r,g,b);
+  const mk = c => ({ hex: hslToHex(c.h, c.s, c.l), hsl: c });
 
   if(m.brand){
-    const off = o => {
-      const c = { h: ((hsl.h + o.dh) % 360 + 360) % 360, s: clamp(hsl.s * o.sm, 0, 100), l: clamp(hsl.l + o.dl, 0, 100) };
-      return { hex: hslToHex(c.h, c.s, c.l), hsl: c };
-    };
+    const off = o => mk(guardColor({ h: ((hsl.h + o.dh) % 360 + 360) % 360, s: clamp(hsl.s * o.sm, 0, 100), l: clamp(hsl.l + o.dl, 0, 100) }));
     return {
       primary: { ...off(BRAND_OFFSETS[0]), role:'Primary' },
       support: { ...off(BRAND_OFFSETS[1]), role:'Support' },
@@ -568,21 +600,22 @@ function buildPalette(hex, modeKey){
     };
   }
 
-  const accentHsl = {
+  const accentHsl = guardColor({
     h: (hsl.h + m.accentHueShift) % 360,
     s: clamp(hsl.s * m.accentSatMul, 0, 100),
     l: clamp(hsl.l + m.accentLightShift, 0, 100)
-  };
-  const supportHsl = {
+  });
+  const supportHsl = guardColor({
     h: (hsl.h + m.supportHueShift) % 360,
     s: clamp(hsl.s * m.supportSatMul, 0, 100),
     l: clamp(hsl.l + m.supportLightShift, 0, 100)
-  };
+  });
+  const primaryHsl = guardColor(hsl);
 
   return {
-    primary: { hex, hsl, role:'Primary' },
-    support: { hex: hslToHex(supportHsl.h, supportHsl.s, supportHsl.l), hsl: supportHsl, role:'Support' },
-    accent:  { hex: hslToHex(accentHsl.h, accentHsl.s, accentHsl.l),    hsl: accentHsl,  role:'Accent' }
+    primary: { ...mk(primaryHsl), role:'Primary' },
+    support: { ...mk(supportHsl), role:'Support' },
+    accent:  { ...mk(accentHsl),  role:'Accent' }
   };
 }
 
@@ -602,6 +635,7 @@ let activeMode = 'brand';
 let mockTheme = 'light';
 let neutralText = true;
 let imageOn = true;
+let showVariants = false;
 const IMAGES = ['Animal','Architecture','Floral','Food','Madrid','Nature','Object','Palermo','Pattern','Portrait','Sculpture','Sicily','Urban'];
 let selectedImage = IMAGES[0];
 
@@ -831,10 +865,16 @@ function renderBalance(p){
   tag.style.background = '#'+labelColor.hex;
   tag.style.color = textOn(labelColor.hex);
 
-  const btn = document.getElementById('mockBtn');
-  btn.textContent = r.copy.btn;
-  btn.style.background = '#'+ctaColor.hex;
-  btn.style.color = textOn(ctaColor.hex);
+  // Buttons (primary solid / secondary outline / tertiary ghost) all derive from
+  // the CTA color, via CSS variables so :hover states track it.
+  const ctaHex = ctaColor.hex;
+  const ctaFg = ensureReadable(ctaColor.hsl, bg);   // legible outline/ghost color on the card bg
+  inner.style.setProperty('--btn-c', '#'+ctaHex);
+  inner.style.setProperty('--btn-on', textOn(ctaHex));
+  inner.style.setProperty('--btn-hover', '#'+shade(ctaHex, -9));  // primary hover: darker
+  inner.style.setProperty('--btn-fg', '#'+ctaFg);
+  inner.style.setProperty('--btn-tint', hexToRgba(ctaFg, 0.13));  // secondary/tertiary hover: lighter fill
+  document.getElementById('mockBtn').textContent = r.copy.btn;
 }
 
 function renderAll(hex){
@@ -917,6 +957,21 @@ document.querySelectorAll('#imageToggle button').forEach(b=>{
   };
 });
 renderImage();
+
+// ---- Secondary / tertiary button variants ----
+function renderButtons(){
+  const d = showVariants ? '' : 'none';
+  document.getElementById('mockBtn2').style.display = d;
+  document.getElementById('mockBtn3').style.display = d;
+}
+document.querySelectorAll('#buttonsToggle button').forEach(b=>{
+  b.onclick = ()=>{
+    showVariants = b.dataset.buttons === 'on';
+    document.querySelectorAll('#buttonsToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    renderButtons();
+  };
+});
+renderButtons();
 
 // ---- Formula section accordion (closed by default) ----
 const vizToggle = document.getElementById('vizToggle');
