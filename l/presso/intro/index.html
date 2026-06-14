@@ -656,7 +656,6 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="nav-project" data-project="intro" data-state="expanded">
       <button class="nav-project-pill" data-project="intro">Intro</button>
       <div class="nav-pills">
-        <button class="nav-btn active" onclick="goToSection('intro')">Intro</button>
         <button class="nav-btn" onclick="goToSection('about')">About Me</button>
         <button class="nav-btn" onclick="goToSection('career')">Career</button>
       </div>
@@ -829,16 +828,18 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0, about:1, career:2 };
+const sections = { about:1, career:2 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
-  let activeIdx = 0;
-  for (let i = 0; i < entries.length; i++) {
-    if (current >= entries[i][1]) activeIdx = i;
-  }
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
+  if (entries.length > 0 && current >= entries[0][1]) {
+    let activeIdx = 0;
+    for (let i = 0; i < entries.length; i++) {
+      if (current >= entries[i][1]) activeIdx = i;
+    }
+    document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
+  }
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
