@@ -656,7 +656,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="nav-project" data-project="intro" data-state="expanded">
       <button class="nav-project-pill" data-project="intro">Intro</button>
       <div class="nav-pills">
-        <button class="nav-btn active" onclick="goToSection('intro')">Agenda</button>
+        <button class="nav-btn active" onclick="goToSection('intro')">Intro</button>
         <button class="nav-btn" onclick="goToSection('about')">About Me</button>
         <button class="nav-btn" onclick="goToSection('career')">Career</button>
       </div>
@@ -700,78 +700,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 02 · AGENDA ══ grid -->
-<div class="slide slide-grid slide-light layout-vc" data-section="intro">
-  <div style="width:100%;">
-    <span class="overline">today's</span>
-    <h2>Agenda</h2>
-
-    <div class="timeline-h">
-
-      <!-- 01 · About Me -->
-      <div class="timeline-item">
-        <div class="timeline-dot">
-          <div class="timeline-dot-inner"></div>
-        </div>
-        <div class="timeline-card" style="margin-top:auto;">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div class="timeline-icon-wrap" style="background:rgba(50,90,210,0.1);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
-            <div>
-              <div class="card-label" style="color:var(--accent);margin-bottom:0;">About Me</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 02 · Career -->
-      <div class="timeline-item">
-        <div class="timeline-dot">
-          <div class="timeline-dot-inner" style="background:rgba(124,90,245,0.5);"></div>
-        </div>
-        <div class="timeline-card" style="border-color:rgba(124,90,245,0.15); margin-top:auto;">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div class="timeline-icon-wrap" style="background:rgba(124,90,245,0.1);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
-              </svg>
-            </div>
-            <div>
-              <div class="card-label" style="color:var(--accent2);margin-bottom:0;">Career</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 03 · Instacart's Tooling DS -->
-      <div class="timeline-item">
-        <div class="timeline-dot" style="border-color:rgba(255,99,50,0.3);">
-          <div class="timeline-dot-inner" style="background:rgba(255,99,50,0.5);"></div>
-        </div>
-        <div style="margin-top:auto; display:flex; flex-direction:column; align-items:flex-start; gap:8px; width:100%;">
-          <div class="timeline-card" style="border-color:rgba(255,99,50,0.18); width:100%;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div class="timeline-icon-wrap" style="background:rgba(255,99,50,0.1);">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>
-                </svg>
-              </div>
-              <div>
-                <div class="card-label" style="color:var(--red);margin-bottom:0;">Deep Dive</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══ 03 · ABOUT ME ══ dots -->
+<!-- ══ 02 · ABOUT ME ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="intro">
   <div style="display:flex; gap:52px; align-items:center;">
     <div style="flex-shrink:0;">
@@ -900,7 +829,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { intro:0, about:2, career:3 };
+const sections = { intro:0, about:1, career:2 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
