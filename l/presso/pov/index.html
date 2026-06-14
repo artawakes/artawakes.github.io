@@ -122,7 +122,19 @@
     font-size: 13px; font-weight: 600; color: var(--green);
     background: rgba(61,186,126,0.12); border: 1px solid rgba(61,186,126,0.22);
     border-radius: 20px; padding: 6px 14px;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s;
   }
+  .chip:hover, .chip.is-active { background: rgba(61,186,126,0.22); border-color: rgba(61,186,126,0.5); color: #d6f5e6; }
+  .chip:focus-visible { outline: 2px solid rgba(61,186,126,0.5); outline-offset: 2px; }
+  .chip-detail {
+    margin-top: 16px; padding: 16px 18px; min-height: 78px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .chip-detail.is-active { border-color: rgba(61,186,126,0.32); background: rgba(61,186,126,0.045); }
+  .chip-detail .cd-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin: 0 0 7px; }
+  .chip-detail .cd-desc { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: none; }
+  .chip-detail .cd-hint { font-size: 13.5px; color: var(--text-dim); margin: 0; }
 
   /* ── Was / Now roles ── */
   .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 6px; }
@@ -181,17 +193,17 @@
 <main class="page">
 
   <p class="eyebrow"><span class="eyebrow-dot"></span>Point of view</p>
-  <h1>Is the source of truth moving from design to code?</h1>
+  <h1>Is the source of truth moving from design to<br>code?</h1>
   <p class="subhead">AI and the future of design systems</p>
   <div class="cover-line"></div>
-  <p class="dek">For years we treated the design file as the source of truth. In an AI-native workflow that no longer holds, and the shift is already underway in the tools we use. This lays out why the mock was never really the truth, what replaces it, and what changes for designers.</p>
+  <p class="dek">For years we treated the design file as the source of truth.<br>In an AI-native workflow that no longer holds, and the shift is already underway in the tools we use. This lays out why the mock was never really the truth, what replaces it, and what changes for designers.</p>
 
   <p class="step">1 &middot; The problem</p>
-  <h2>The mock was never really the source of truth</h2>
+  <h2>The mock was never really the source of<br>truth</h2>
   <p class="lede">We said <strong>the design file was the source of truth</strong>: Figma held the canonical screens, engineering implemented them, and if the build did not match the file, the build was wrong. But a picture under-specifies intent. It cannot fully express logic, states, data, or behavior, so every handoff is lossy and engineers end up reverse-engineering what we meant. The file drifts from the build, and the thing everyone trusts is never the thing the user actually experiences. The file was treated as the source of truth. It never quite was.</p>
 
   <p class="step">2 &middot; Why it bites hardest for the design system</p>
-  <h2>A design system trapped in Figma cannot enforce anything</h2>
+  <h2>A design system trapped in Figma<br>cannot enforce anything</h2>
   <p>A design system that lives only in Figma is a library of pictures. It is not typed, linted, or tested, engineers re-create it by hand, and parity quietly drifts. Worst of all, a generator can ignore it: a design system that exists only as a drawing is a suggestion, not a rule.</p>
   <p>The pattern is already here. Ask today's AI tools to build a UI and they reach for a code-first component system by default, chosen by the tool, not by us. (shadcn is the current example, but the point is the pattern, not the project.) If our system is a Figma library, the machine now building most interfaces is already skipping it.</p>
 
@@ -355,17 +367,21 @@
   <p>Putting the contract in code removes the lossiness from step 1 and the no-enforcement problem from step 2 in one move. The spec is the handoff, so nothing is reverse-engineered. Change one token and it cascades to every screen. The agents produce on-spec UI instead of guessing. And because the prototype is real code, we test actual logic with users from day one rather than testing a picture of it.</p>
   <p>Rebuilding on a real contract also opens flexibility that was painful to maintain by hand. These stop being per-screen chores and become capabilities we define once and get everywhere:</p>
   <div class="chips">
-    <span class="chip">Dark mode</span>
-    <span class="chip">Theming</span>
-    <span class="chip">Localization</span>
-    <span class="chip">Responsiveness</span>
-    <span class="chip">Density layouts</span>
-    <span class="chip">Motion &amp; animation</span>
-    <span class="chip">OKLCH color scales</span>
-    <span class="chip">Calculated tints</span>
-    <span class="chip">Component-level tokens</span>
-    <span class="chip">Self-describing scales</span>
-    <span class="chip">Extensible variants</span>
+    <span class="chip" tabindex="0" data-t="Dark mode" data-d="Components reference semantic color tokens by role (surface, text, border), never raw hex. Dark mode just points those roles at a dark value set, so the whole product flips from one switch with no per-screen rework.">Dark mode</span>
+    <span class="chip" tabindex="0" data-t="Theming" data-d="Swap the token values with a new theme and every component re-skins itself. Brand, sub-brand, or white-label variants come from the same contract, not a forked UI.">Theming</span>
+    <span class="chip" tabindex="0" data-t="Localization" data-d="Layouts use logical properties and content-aware spacing, so they adapt to longer strings and right-to-left scripts instead of breaking.">Localization</span>
+    <span class="chip" tabindex="0" data-t="Responsiveness" data-d="Components respond to their container and the tokens, so a card behaves correctly wherever it lands, without bespoke breakpoint code per screen.">Responsiveness</span>
+    <span class="chip" tabindex="0" data-t="Density layouts" data-d="A single density token rescales padding, sizing, and type together, so compact and comfortable modes come for free instead of being redrawn.">Density layouts</span>
+    <span class="chip" tabindex="0" data-t="Motion &amp; animation" data-d="Duration, easing, and choreography live as tokens, so motion stays consistent and tunable across the system rather than hand-built per screen.">Motion &amp; animation</span>
+    <span class="chip" tabindex="0" data-t="OKLCH color scales" data-d="Perceptually even color ramps are generated from a base hue with math, so every primitive step looks evenly spaced. No hand-picking red-50 through red-900.">OKLCH color scales</span>
+    <span class="chip" tabindex="0" data-t="Calculated tints" data-d="Tinted, semi-transparent backgrounds for buttons and tags are derived from the foreground token, so you never author a redundant background or watch the two drift.">Calculated tints</span>
+    <span class="chip" tabindex="0" data-t="Self-describing scales" data-d="The primitive layer, named by value: ds-gap-8 is 8px, Button-32 is 32px tall, extending to Button-40 or 48 without S/M/L naming breaking. Purpose lives one layer up, in semantic tokens.">Self-describing scales</span>
+    <span class="chip" tabindex="0" data-t="Semantic tokens" data-d="The middle layer: purpose-named tokens (surface, text-secondary, accent-subtle) that point at primitives. Components and themes read these, so intent stays stable while the values underneath change.">Semantic tokens</span>
+    <span class="chip" tabindex="0" data-t="Component-level tokens" data-d="The component layer: each component exposes its own tokens that inherit from the semantic layer, so you can retheme one component without forking it or touching the rest.">Component-level tokens</span>
+    <span class="chip" tabindex="0" data-t="Extensible variants" data-d="Variants live at the semantic layer, named by role and composition (accent, subtle, neutral; text-16-20-regular) rather than rank, so you can add 16-24 or 17-21-extrabold without primary/secondary conflicts.">Extensible variants</span>
+  </div>
+  <div class="chip-detail" id="chipDetail" aria-live="polite">
+    <p class="cd-hint">Hover a capability to see how the contract handles it.</p>
   </div>
 
   <p class="step">5 &middot; What it means for designers</p>
@@ -472,6 +488,30 @@
     if (label) label.textContent = fromProjects ? 'All presentations' : 'Back to dariofidanza.com';
   })();
 </script>
+
+  <script>
+    /* Capability pills: hover/focus/tap a pill to reveal its explanation. */
+    (function () {
+      var detail = document.getElementById('chipDetail');
+      if (!detail) return;
+      var chips = document.querySelectorAll('.chips .chip');
+      function show(chip) {
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        detail.classList.add('is-active');
+        var t = document.createElement('p'); t.className = 'cd-title'; t.textContent = chip.getAttribute('data-t');
+        var d = document.createElement('p'); d.className = 'cd-desc'; d.textContent = chip.getAttribute('data-d');
+        detail.innerHTML = ''; detail.appendChild(t); detail.appendChild(d);
+      }
+      chips.forEach(function (chip) {
+        chip.addEventListener('mouseenter', function () { show(chip); });
+        chip.addEventListener('focus', function () { show(chip); });
+        chip.addEventListener('click', function () { show(chip); });
+      });
+      // Default to the first pill's explanation on load.
+      if (chips.length) show(chips[0]);
+    })();
+  </script>
 
   <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
