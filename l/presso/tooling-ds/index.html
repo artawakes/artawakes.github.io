@@ -1880,8 +1880,6 @@ function saveDeck() {
 document.addEventListener('keydown', e => {
   if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
-  if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
-  if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
   if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveDeck(); return; }
   if (inText && (e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'||e.key===' ')) {
     e.stopImmediatePropagation();
