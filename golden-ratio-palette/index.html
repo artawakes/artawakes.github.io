@@ -76,6 +76,20 @@
   .sub { color: var(--text-muted); font-size: clamp(15px, 1.5vw, 17px); line-height: 1.65; max-width: 64ch; }
   .sub b { color: var(--text); font-weight: 600; }
 
+  /* ── Top-level tabs ── */
+  .page-tabs {
+    display: flex; gap: 6px; margin: 0 0 28px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    padding: 5px; border-radius: 12px; width: fit-content; flex-wrap: wrap;
+  }
+  .page-tab {
+    background: transparent; border: none; color: var(--text-dim);
+    padding: 10px 22px; border-radius: 9px; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .15s;
+  }
+  .page-tab:hover { color: var(--text); }
+  .page-tab.active { background: var(--accent); color: #fff; }
+
   /* ── Input ── */
   .input-row {
     display: flex; align-items: center; gap: 16px;
@@ -127,6 +141,7 @@
   }
   .mode-btn:hover { color: var(--text); }
   .mode-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 16px rgba(79,128,245,0.42); }
+  .fav-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
   /* ── Palette ── */
   .palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 48px; }
@@ -227,6 +242,7 @@
   .mock-image { flex: 0 0 38%; }
   .mock-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (max-width: 640px) { .mock { flex-direction: column; } .mock-image { flex: none; height: 200px; } }
+  #gradientBox { height: 380px; border-radius: 16px; }
   .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
   .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
   .mock-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -280,6 +296,12 @@
     <p class="sub">Pick one color and build a balanced three-color palette from it. Switch between formulas, preview it in light and dark modes, with colored or neutral text, and find a solid palette for your UI.</p>
   </header>
 
+  <div class="page-tabs">
+    <button class="page-tab active" data-tab="own">Pick your own</button>
+    <button class="page-tab" data-tab="fav">Try my favorites</button>
+  </div>
+
+  <div id="tabPickOwn">
   <div class="input-row">
     <span class="input-label">Main color</span>
     <div class="hex-field">
@@ -296,9 +318,26 @@
       <div class="mode-btns" id="modeBtns"></div>
     </div>
   </div>
+  </div><!-- /#tabPickOwn -->
+
+  <div id="tabFavorites" style="display:none">
+    <div class="mode-row">
+      <div class="toggle-group">
+        <span class="toggle-label">Favorites</span>
+        <div class="fav-controls">
+          <div class="theme-toggle" id="favToggle">
+            <button data-fav="combos" class="active">&#9829; Combos</button>
+            <button data-fav="gradients">&#9829; Gradients</button>
+          </div>
+          <select class="image-select" id="favSelect"></select>
+        </div>
+      </div>
+    </div>
+  </div><!-- /#tabFavorites -->
 
   <div class="palette" id="palette"></div>
 
+  <div id="formulaDownstream">
   <div class="section-h section-toggle" id="vizToggle"><span class="caret"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8fa8c4" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span>The formula, visualized</div>
   <div class="viz-grid" id="vizGrid" style="display:none">
     <div>
@@ -368,6 +407,9 @@
       </div>
     </div>
   </div>
+  </div><!-- /#formulaDownstream -->
+
+  <div id="gradientBox" style="display:none"></div>
 </div>
 
 <div class="toast" id="toast">Copied</div>
@@ -629,6 +671,30 @@ const balanceBar = document.getElementById('balanceBar');
 const toast = document.getElementById('toast');
 
 const PRESETS = ['4F80F5','7C5AF5','3DBA7E','FFA623','FFC20F'];
+
+// ---- Favorites: hand-picked combos (named by the bottom color) and gradients ----
+const COMBOS = [
+  { top:{name:'Shadow Grey',   hex:'272727'}, bottom:{name:'Sandy Clay',     hex:'D4AA7D'}, mid:'EAE6E1' },
+  { top:{name:'Coffee Bean',   hex:'2E1E1F'}, bottom:{name:'Raspberry',      hex:'E30B5C'}, mid:'E1C5CF' },
+  { top:{name:'Icy Blue',      hex:'A4D8FF'}, bottom:{name:'Gunmetal',       hex:'35393C'}, mid:'FFFBCC' },
+  { top:{name:'Blush',         hex:'E36887'}, bottom:{name:'Morning Butter', hex:'F3D98F'}, mid:'E2CCE9' },
+  { top:{name:'Lavender Blush',hex:'F6E3E5'}, bottom:{name:'French Blue',    hex:'213F95'}, mid:'A7AFC7' },
+  { top:{name:'Celadon',       hex:'A8D3A8'}, bottom:{name:'Chocolate Plum', hex:'553832'}, mid:'DED0D0' },
+  { top:{name:'Rich Mahogany', hex:'4C1413'}, bottom:{name:'Bubblegum Pink', hex:'EA6B7E'}, mid:'B2DDF4' }
+];
+const GRADIENTS = [
+  { name:'Obsidian Chrome',   colors:[{name:'Onyx',hex:'0A0A0A'},        {name:'Blue Slate',hex:'536878'},      {name:'Alabaster Grey',hex:'E5E4E2'}] },
+  { name:'Neon Petal',        colors:[{name:'Neon Pink',hex:'EC2B7A'},   {name:'Pink Carnation',hex:'FE7BBF'},  {name:'Chartreuse',hex:'CEFF32'}] },
+  { name:'Terracotta Sunset', colors:[{name:'Espresso',hex:'4E2C23'},    {name:'Burnt Peach',hex:'E2725B'},     {name:'Soft Apricot',hex:'FFDAB9'}] },
+  { name:'Coral Horizon',     colors:[{name:'Cool Horizon',hex:'58A6FF'},{name:'Grapefruit Pink',hex:'FF6B6B'}, {name:'Papaya Whip',hex:'FFEDD5'}] },
+  { name:'Neon Orchid',       colors:[{name:'Obsidian Veil',hex:'0B130E'},{name:'Vivid Violet',hex:'9932CC'},   {name:'Apricot Glow',hex:'FFDAB9'}] },
+  { name:'Scarlet Glacier',   colors:[{name:'Inferno',hex:'AA0003'},     {name:'Periwinkle',hex:'BFB4DC'},      {name:'Bright Snow',hex:'FAFBFD'}] },
+  { name:'Ancient Gild',      colors:[{name:'Black Cherry',hex:'550003'},{name:'Old Gold',hex:'B8AB38'},        {name:'Vanilla Custard',hex:'E0D794'}] }
+];
+let favKind = 'combos';
+let favoriteCombo = null;
+let favoriteGradient = null;
+let sourceMode = 'formula';   // 'formula' (Pick your own) or 'favorite' (Try my favorites)
 let current = null;
 let activeRatio = 'classic';
 let activeMode = 'brand';
@@ -801,7 +867,7 @@ function renderModeControls(){
     const b=document.createElement('button');
     b.className='mode-btn'+(key===activeMode?' active':'');
     b.textContent = m.label;
-    b.onclick = ()=>{ if(activeMode===key) return; activeMode=key; renderAll(current.primary.hex); };
+    b.onclick = ()=>{ if(activeMode===key) return; activeMode=key; renderAll(hexInput.value); };
     wrap.appendChild(b);
   });
 }
@@ -877,14 +943,64 @@ function renderBalance(p){
   document.getElementById('mockBtn').textContent = r.copy.btn;
 }
 
-function renderAll(hex){
-  current = buildPalette(hex, activeMode);
-  renderModeControls();
+function renderDownstream(){
+  setGradientMode(false);
   renderPalette(current);
   renderFormula(current);
   renderWheel(current);
   renderRatioControls();
   renderBalance(current);
+}
+function renderAll(hex){
+  current = buildPalette(hex, activeMode);
+  renderModeControls();
+  renderDownstream();
+}
+
+// A favorite combo (top + bottom) becomes a 3-color palette that feeds the
+// same swatches/wheel/ratio/preview: primary = bottom (the named color),
+// accent = top, support = a muted blend of the two.
+function comboToPalette(combo){
+  const mk = hex => { const {r,g,b} = hexToRgb(hex); return { hex, hsl: rgbToHsl(r,g,b) }; };
+  const guard = o => { const g = guardColor(o.hsl); return { hex: hslToHex(g.h,g.s,g.l), hsl: g }; };
+  return {
+    primary: { ...guard(mk(combo.bottom.hex)), role:'Primary' },
+    support: { ...guard(mk(combo.mid)),        role:'Support' },
+    accent:  { ...guard(mk(combo.top.hex)),    role:'Accent' }
+  };
+}
+// A gradient's three stops become the swatches; the preview is just the gradient box.
+function gradientToPalette(grad){
+  const mk = c => { const {r,g,b} = hexToRgb(c.hex); return { hex:c.hex, hsl:rgbToHsl(r,g,b), role:c.name }; };
+  return { primary: mk(grad.colors[0]), support: mk(grad.colors[1]), accent: mk(grad.colors[2]) };
+}
+function gradientCss(grad){
+  const c = grad.colors.map(x=>'#'+x.hex);
+  // fade each blob to its own zero-alpha color (not `transparent`, which is
+  // transparent black and leaves a muddy edge)
+  return `radial-gradient(at 20% 18%, ${c[0]} 0px, ${c[0]}00 60%),`
+       + `radial-gradient(at 82% 30%, ${c[1]} 0px, ${c[1]}00 58%),`
+       + `radial-gradient(at 45% 92%, ${c[2]} 0px, ${c[2]}00 60%),`
+       + `linear-gradient(160deg, ${c[0]}, ${c[1]}, ${c[2]})`;
+}
+function setGradientMode(on){
+  document.getElementById('formulaDownstream').style.display = on ? 'none' : '';
+  document.getElementById('gradientBox').style.display = on ? '' : 'none';
+}
+function renderFavoriteView(){
+  if(favKind === 'combos'){
+    if(!favoriteCombo) favoriteCombo = COMBOS[0];
+    document.getElementById('favSelect').value = String(COMBOS.indexOf(favoriteCombo));
+    current = comboToPalette(favoriteCombo);
+    renderDownstream();
+  } else {
+    if(!favoriteGradient) favoriteGradient = GRADIENTS[0];
+    document.getElementById('favSelect').value = String(GRADIENTS.indexOf(favoriteGradient));
+    current = gradientToPalette(favoriteGradient);
+    renderPalette(current);
+    setGradientMode(true);
+    document.getElementById('gradientBox').style.background = gradientCss(favoriteGradient);
+  }
 }
 
 function isValidHex(h){ return /^[0-9a-fA-F]{6}$/.test(h); }
@@ -972,6 +1088,80 @@ document.querySelectorAll('#buttonsToggle button').forEach(b=>{
   };
 });
 renderButtons();
+
+// ---- Favorites (combos / gradients) ----
+function applyComboToCard(combo){
+  const top = combo.top.hex, bottom = combo.bottom.hex;
+  const { r, g, b } = hexToRgb(bottom);
+  const fg = ensureReadable(rgbToHsl(r,g,b), top);   // bottom color, readable on the top background
+  const inner = document.getElementById('mockInner');
+  inner.style.background = '#'+top;
+
+  const title = document.getElementById('mockTitle');
+  title.textContent = combo.bottom.name;
+  title.style.color = '#'+fg;
+  const body = document.getElementById('mockText');
+  body.textContent = '“' + combo.top.name + '” paired with “' + combo.bottom.name + '.”';
+  body.style.color = hexToRgba(fg, 0.8);
+
+  const tag = document.getElementById('mockTag');
+  tag.textContent = combo.top.name;
+  tag.style.background = '#'+bottom;
+  tag.style.color = textOn(bottom);
+
+  inner.style.setProperty('--btn-c', '#'+bottom);
+  inner.style.setProperty('--btn-on', textOn(bottom));
+  inner.style.setProperty('--btn-hover', '#'+shade(bottom, -9));
+  inner.style.setProperty('--btn-fg', '#'+fg);
+  inner.style.setProperty('--btn-tint', hexToRgba(fg, 0.13));
+  document.getElementById('mockBtn').textContent = combo.bottom.name;
+}
+
+function renderFavorites(){
+  const sel = document.getElementById('favSelect');
+  const list = favKind === 'combos' ? COMBOS : GRADIENTS;
+  sel.innerHTML = '';
+  const ph = document.createElement('option');
+  ph.value = ''; ph.textContent = list.length ? ('Select a ' + favKind.slice(0,-1) + '…') : '(none yet)';
+  sel.appendChild(ph);
+  list.forEach((item, i)=>{
+    const o = document.createElement('option');
+    o.value = String(i);
+    o.textContent = favKind === 'combos' ? item.bottom.name : item.name;
+    sel.appendChild(o);
+  });
+  sel.value = '';
+}
+
+document.querySelectorAll('#favToggle button').forEach(b=>{
+  b.onclick = ()=>{
+    favKind = b.dataset.fav;
+    document.querySelectorAll('#favToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    renderFavorites();
+    renderFavoriteView();
+  };
+});
+document.getElementById('favSelect').addEventListener('change', e=>{
+  const v = e.target.value;
+  if(v === '') return;
+  if(favKind === 'combos') favoriteCombo = COMBOS[+v];
+  else favoriteGradient = GRADIENTS[+v];
+  renderFavoriteView();
+});
+renderFavorites();
+
+// ---- Top-level tabs (Pick your own / Try my favorites) ----
+document.querySelectorAll('.page-tab').forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll('.page-tab').forEach(x=>x.classList.toggle('active', x===t));
+    const tab = t.dataset.tab;
+    document.getElementById('tabPickOwn').style.display = tab === 'own' ? '' : 'none';
+    document.getElementById('tabFavorites').style.display = tab === 'fav' ? '' : 'none';
+    sourceMode = tab === 'own' ? 'formula' : 'favorite';
+    if(sourceMode === 'formula') renderAll(hexInput.value);
+    else renderFavoriteView();
+  };
+});
 
 // ---- Formula section accordion (closed by default) ----
 const vizToggle = document.getElementById('vizToggle');
