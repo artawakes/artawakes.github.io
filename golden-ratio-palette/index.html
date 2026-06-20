@@ -122,11 +122,13 @@
   input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border-strong); border-radius: 10px; }
   .chips { display: flex; gap: 8px; flex-wrap: wrap; }
   .chip {
+    display: inline-flex; align-items: center; gap: 8px;
     background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
-    border-radius: 999px; padding: 7px 13px; font-size: 13px; cursor: pointer;
-    font-family: ui-monospace, monospace; transition: all .15s;
+    border-radius: 999px; padding: 6px 14px 6px 8px; font-size: 13px; font-weight: 400;
+    cursor: pointer; transition: all .15s; white-space: nowrap;
   }
   .chip:hover { color: var(--text); border-color: var(--accent); }
+  .chip .sw { width: 14px; height: 14px; border-radius: 999px; flex-shrink: 0; }
 
   /* ── Mode selector ── */
   .mode-row { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -796,7 +798,7 @@ function renderPresets(){
   PRESETS.forEach(p=>{
     const b = document.createElement('button');
     b.className='chip';
-    b.innerHTML = `<span style="display:inline-block;width:9px;height:9px;border-radius:3px;background:#${p};margin-right:6px;vertical-align:middle"></span>${p}`;
+    b.innerHTML = `<span class="sw" style="background:#${p}"></span>${p}`;
     b.onclick = ()=>setHex(p);
     c.appendChild(b);
   });
