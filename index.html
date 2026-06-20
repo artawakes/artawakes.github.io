@@ -467,7 +467,7 @@
                 <p class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-3">AI &amp; Design Engineering</p>
                 <h2 class="text-3xl mb-8">Closing the gap between design and code</h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <!-- left: working posture / professional AI work -->
                     <div class="space-y-5 text-muted-foreground">
                         <p>
@@ -486,37 +486,71 @@
                             <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Figma MCP</span>
                             <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Code Connect</span>
                             <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Claude Code</span>
-                            <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Figma plugins</span>
                         </div>
                     </div>
 
-                    <!-- right: personal side-project tile -->
-                    <a href="golden-ratio-palette/" target="_blank" rel="noopener"
-                       class="group block rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-primary">Personal side project</span>
-                            <span class="inline-flex items-center text-sm font-medium text-primary group-hover:underline">
-                                Open the tool
+                    <!-- right: TinyRoots experiment tile -->
+                    <div class="rounded-xl border border-border bg-card p-6">
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-primary">Experiment</span>
+                            <a href="https://tinyroots.app" target="_blank" rel="noopener"
+                               class="inline-flex items-center whitespace-nowrap text-sm font-medium text-primary hover:underline">
+                                Explore TinyRoots
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1.5">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
                                     <line x1="10" y1="14" x2="21" y2="3"></line>
                                 </svg>
-                            </span>
+                            </a>
                         </div>
-                        <h3 class="text-xl mb-2">Palette Builder</h3>
+                        <h3 class="text-xl mb-2">TinyRoots</h3>
                         <p class="text-sm text-muted-foreground mb-5">
-                            A tool I vibe-coded for fun. Five ways to build a balanced color palette, with controls to tune the ratios and preview it in light or dark on a sample banner UI. Free for anyone to use.
+                            A product and design system experiment built by AI, for AI. Designers define product intent, lo-fi wireframes, and component contracts, and a locked design system scaffolds hi-fi prototypes straight to code, more faithfully than Figma-to-code. It's the experiment behind the POV on the left.
                         </p>
-                        <div class="flex gap-1.5" aria-hidden="true">
-                            <span class="h-9 flex-1 rounded-md" style="background:#23406b"></span>
-                            <span class="h-9 flex-1 rounded-md" style="background:#4f80f5"></span>
-                            <span class="h-9 flex-1 rounded-md" style="background:#7c5af5"></span>
-                            <span class="h-9 flex-1 rounded-md" style="background:#3dba7e"></span>
-                            <span class="h-9 flex-1 rounded-md" style="background:#f5a623"></span>
-                            <span class="h-9 flex-1 rounded-md" style="background:#ffc20f"></span>
-                        </div>
-                    </a>
+                        <a href="https://tinyroots.app/design-system" target="_blank" rel="noopener"
+                           class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+                            View the sample design system
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1.5">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Passion project: Palette Builder (relocated, full width) -->
+    <section id="passion-project" class="py-16">
+        <div class="site-container">
+            <div class="max-w-6xl mx-auto">
+                <div class="rounded-xl border border-border bg-card p-6">
+                    <div class="flex items-center justify-between gap-2 mb-4">
+                        <span class="text-xs font-semibold tracking-[0.18em] uppercase text-primary">Passion project</span>
+                        <a href="golden-ratio-palette/" target="_blank" rel="noopener"
+                           class="inline-flex items-center whitespace-nowrap text-sm font-medium text-primary hover:underline">
+                            Open the tool
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1.5">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+                    <h3 class="text-xl mb-2">Palette Builder</h3>
+                    <p class="text-sm text-muted-foreground mb-5 max-w-2xl">
+                        A tool I vibe-coded for fun. Five ways to build a balanced color palette, with controls to tune the ratios and preview it in light or dark on a sample banner UI. Free for anyone to use.
+                    </p>
+                    <div class="flex gap-1.5" aria-hidden="true">
+                        <span class="h-9 flex-1 rounded-md" style="background:#23406b"></span>
+                        <span class="h-9 flex-1 rounded-md" style="background:#4f80f5"></span>
+                        <span class="h-9 flex-1 rounded-md" style="background:#7c5af5"></span>
+                        <span class="h-9 flex-1 rounded-md" style="background:#3dba7e"></span>
+                        <span class="h-9 flex-1 rounded-md" style="background:#f5a623"></span>
+                        <span class="h-9 flex-1 rounded-md" style="background:#ffc20f"></span>
+                    </div>
                 </div>
             </div>
         </div>
