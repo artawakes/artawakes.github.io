@@ -242,7 +242,26 @@
   .mock-image { flex: 0 0 38%; }
   .mock-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (max-width: 640px) { .mock { flex-direction: column; } .mock-image { flex: none; height: 200px; } }
-  #gradientBox { height: 380px; border-radius: 16px; }
+  #formulaGradientBox { height: 380px; border-radius: 16px; }
+  .preview-head { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+  .ph-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+
+  /* favorites pills */
+  .fav-group { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
+  .fav-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .fav-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 999px; padding: 6px 14px 6px 8px; font-size: 13px; font-weight: 400;
+    cursor: pointer; transition: all .15s; white-space: nowrap;
+  }
+  .fav-pill:hover { color: var(--text); border-color: var(--accent); }
+  .fav-pill.active { color: var(--text); border-color: var(--accent); background: rgba(79,128,245,0.14); }
+  .fav-pill .sw { width: 14px; height: 14px; border-radius: 999px; flex-shrink: 0; }
+  .fav-pill .sw2 { position: relative; width: 22px; height: 14px; flex-shrink: 0; }
+  .fav-pill .sw2 .d { position: absolute; top: 0; width: 14px; height: 14px; border-radius: 999px; }
+  .fav-pill .sw2 .d.back { left: 8px; }
+  .fav-pill .sw2 .d.front { left: 0; z-index: 1; }
   .mock h3 { font-size: 24px; margin-bottom: 10px; transition: color .3s; letter-spacing: -.01em; }
   .mock p { font-size: 14px; max-width: 440px; margin-bottom: 20px; transition: color .3s; }
   .mock-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -293,7 +312,7 @@
     <p class="eyebrow"><span class="eyebrow-dot"></span>Color tool</p>
     <h1>Palette Builder</h1>
     <div class="cover-line"></div>
-    <p class="sub">Pick one color and build a balanced three-color palette from it. Switch between formulas, preview it in light and dark modes, with colored or neutral text, and find a solid palette for your UI.</p>
+    <p class="sub">Pick one color and build a balanced three-color palette from it, select from my top picks, or preview gradients. See it as a UI card or a gradient, in light or dark, and find a solid palette for your UI.</p>
   </header>
 
   <div class="page-tabs">
@@ -321,23 +340,20 @@
   </div><!-- /#tabPickOwn -->
 
   <div id="tabFavorites" style="display:none">
-    <div class="mode-row">
-      <div class="toggle-group">
-        <span class="toggle-label">Favorites</span>
-        <div class="fav-controls">
-          <div class="theme-toggle" id="favToggle">
-            <button data-fav="combos" class="active">&#9829; Combos</button>
-            <button data-fav="gradients">&#9829; Gradients</button>
-          </div>
-          <select class="image-select" id="favSelect"></select>
-        </div>
-      </div>
+    <div class="fav-group">
+      <span class="toggle-label">&#9829; Top picks</span>
+      <div class="fav-pills" id="comboPills"></div>
+    </div>
+    <div class="fav-group">
+      <span class="toggle-label">&#9829; Gradients</span>
+      <div class="fav-pills" id="gradientPills"></div>
     </div>
   </div><!-- /#tabFavorites -->
 
   <div class="palette" id="palette"></div>
 
   <div id="formulaDownstream">
+  <div id="vizSection">
   <div class="section-h section-toggle" id="vizToggle"><span class="caret"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8fa8c4" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span>The formula, visualized</div>
   <div class="viz-grid" id="vizGrid" style="display:none">
     <div>
@@ -348,9 +364,16 @@
     </div>
     <div class="formula-list" id="formulaList"></div>
   </div>
+  </div><!-- /#vizSection -->
 
-  <div class="section-h">Ratio preview</div>
-  <div class="balance-card">
+  <div class="preview-head">
+    <span class="ph-label">Preview</span>
+    <div class="theme-toggle" id="previewToggle">
+      <button data-preview="card" class="active">UI Card</button>
+      <button data-preview="gradient">Gradient</button>
+    </div>
+  </div>
+  <div class="balance-card" id="balanceCard">
     <div class="ratio-controls" id="ratioControls"></div>
     <div class="balance-bar" id="balanceBar"></div>
 
@@ -407,9 +430,9 @@
       </div>
     </div>
   </div>
-  </div><!-- /#formulaDownstream -->
 
-  <div id="gradientBox" style="display:none"></div>
+  <div id="formulaGradientBox" style="display:none"></div>
+  </div><!-- /#formulaDownstream -->
 </div>
 
 <div class="toast" id="toast">Copied</div>
@@ -674,27 +697,27 @@ const PRESETS = ['4F80F5','7C5AF5','3DBA7E','FFA623','FFC20F'];
 
 // ---- Favorites: hand-picked combos (named by the bottom color) and gradients ----
 const COMBOS = [
-  { top:{name:'Shadow Grey',   hex:'272727'}, bottom:{name:'Sandy Clay',     hex:'D4AA7D'}, mid:'EAE6E1' },
-  { top:{name:'Coffee Bean',   hex:'2E1E1F'}, bottom:{name:'Raspberry',      hex:'E30B5C'}, mid:'E1C5CF' },
-  { top:{name:'Icy Blue',      hex:'A4D8FF'}, bottom:{name:'Gunmetal',       hex:'35393C'}, mid:'FFFBCC' },
-  { top:{name:'Blush',         hex:'E36887'}, bottom:{name:'Morning Butter', hex:'F3D98F'}, mid:'E2CCE9' },
-  { top:{name:'Lavender Blush',hex:'F6E3E5'}, bottom:{name:'French Blue',    hex:'213F95'}, mid:'A7AFC7' },
-  { top:{name:'Celadon',       hex:'A8D3A8'}, bottom:{name:'Chocolate Plum', hex:'553832'}, mid:'DED0D0' },
-  { top:{name:'Rich Mahogany', hex:'4C1413'}, bottom:{name:'Bubblegum Pink', hex:'EA6B7E'}, mid:'B2DDF4' }
+  { top:{name:'Shadow Grey',   hex:'272727'}, bottom:{name:'Sandy Clay',     hex:'D4AA7D'}, mid:'EAE6E1', pill:'Sandy' },
+  { top:{name:'Coffee Bean',   hex:'2E1E1F'}, bottom:{name:'Raspberry',      hex:'E30B5C'}, mid:'E1C5CF', pill:'Raspberry' },
+  { top:{name:'Icy Blue',      hex:'A4D8FF'}, bottom:{name:'Gunmetal',       hex:'35393C'}, mid:'FFFBCC', pill:'Gunmetal' },
+  { top:{name:'Blush',         hex:'E36887'}, bottom:{name:'Morning Butter', hex:'F3D98F'}, mid:'E2CCE9', pill:'Butter' },
+  { top:{name:'Lavender Blush',hex:'F6E3E5'}, bottom:{name:'French Blue',    hex:'213F95'}, mid:'A7AFC7', pill:'French' },
+  { top:{name:'Celadon',       hex:'A8D3A8'}, bottom:{name:'Chocolate Plum', hex:'553832'}, mid:'DED0D0', pill:'Plum' },
+  { top:{name:'Rich Mahogany', hex:'4C1413'}, bottom:{name:'Bubblegum Pink', hex:'EA6B7E'}, mid:'B2DDF4', pill:'Bubblegum' }
 ];
 const GRADIENTS = [
-  { name:'Obsidian Chrome',   colors:[{name:'Onyx',hex:'0A0A0A'},        {name:'Blue Slate',hex:'536878'},      {name:'Alabaster Grey',hex:'E5E4E2'}] },
-  { name:'Neon Petal',        colors:[{name:'Neon Pink',hex:'EC2B7A'},   {name:'Pink Carnation',hex:'FE7BBF'},  {name:'Chartreuse',hex:'CEFF32'}] },
-  { name:'Terracotta Sunset', colors:[{name:'Espresso',hex:'4E2C23'},    {name:'Burnt Peach',hex:'E2725B'},     {name:'Soft Apricot',hex:'FFDAB9'}] },
-  { name:'Coral Horizon',     colors:[{name:'Cool Horizon',hex:'58A6FF'},{name:'Grapefruit Pink',hex:'FF6B6B'}, {name:'Papaya Whip',hex:'FFEDD5'}] },
-  { name:'Neon Orchid',       colors:[{name:'Obsidian Veil',hex:'0B130E'},{name:'Vivid Violet',hex:'9932CC'},   {name:'Apricot Glow',hex:'FFDAB9'}] },
-  { name:'Scarlet Glacier',   colors:[{name:'Inferno',hex:'AA0003'},     {name:'Periwinkle',hex:'BFB4DC'},      {name:'Bright Snow',hex:'FAFBFD'}] },
-  { name:'Ancient Gild',      colors:[{name:'Black Cherry',hex:'550003'},{name:'Old Gold',hex:'B8AB38'},        {name:'Vanilla Custard',hex:'E0D794'}] }
+  { name:'Obsidian Chrome',   pill:'Obsidian',   colors:[{name:'Onyx',hex:'0A0A0A'},        {name:'Blue Slate',hex:'536878'},      {name:'Alabaster Grey',hex:'E5E4E2'}] },
+  { name:'Neon Petal',        pill:'Petal',      colors:[{name:'Neon Pink',hex:'EC2B7A'},   {name:'Pink Carnation',hex:'FE7BBF'},  {name:'Chartreuse',hex:'CEFF32'}] },
+  { name:'Terracotta Sunset', pill:'Terracotta', colors:[{name:'Espresso',hex:'4E2C23'},    {name:'Burnt Peach',hex:'E2725B'},     {name:'Soft Apricot',hex:'FFDAB9'}] },
+  { name:'Coral Horizon',     pill:'Coral',      colors:[{name:'Cool Horizon',hex:'58A6FF'},{name:'Grapefruit Pink',hex:'FF6B6B'}, {name:'Papaya Whip',hex:'FFEDD5'}] },
+  { name:'Neon Orchid',       pill:'Orchid',     colors:[{name:'Obsidian Veil',hex:'0B130E'},{name:'Vivid Violet',hex:'9932CC'},   {name:'Apricot Glow',hex:'FFDAB9'}] },
+  { name:'Scarlet Glacier',   pill:'Scarlet',    colors:[{name:'Inferno',hex:'AA0003'},     {name:'Periwinkle',hex:'BFB4DC'},      {name:'Bright Snow',hex:'FAFBFD'}] },
+  { name:'Ancient Gild',      pill:'Gild',       colors:[{name:'Black Cherry',hex:'550003'},{name:'Old Gold',hex:'B8AB38'},        {name:'Vanilla Custard',hex:'E0D794'}] }
 ];
-let favKind = 'combos';
-let favoriteCombo = null;
-let favoriteGradient = null;
+let favType = 'combo';   // last-selected favorite kind
+let favIndex = 0;        // last-selected favorite index
 let sourceMode = 'formula';   // 'formula' (Pick your own) or 'favorite' (Try my favorites)
+let previewMode = 'card';     // 'card' or 'gradient' for the Ratio-preview section
 let current = null;
 let activeRatio = 'classic';
 let activeMode = 'brand';
@@ -944,12 +967,12 @@ function renderBalance(p){
 }
 
 function renderDownstream(){
-  setGradientMode(false);
   renderPalette(current);
   renderFormula(current);
   renderWheel(current);
   renderRatioControls();
   renderBalance(current);
+  applyPreviewMode();
 }
 function renderAll(hex){
   current = buildPalette(hex, activeMode);
@@ -974,8 +997,8 @@ function gradientToPalette(grad){
   const mk = c => { const {r,g,b} = hexToRgb(c.hex); return { hex:c.hex, hsl:rgbToHsl(r,g,b), role:c.name }; };
   return { primary: mk(grad.colors[0]), support: mk(grad.colors[1]), accent: mk(grad.colors[2]) };
 }
-function gradientCss(grad){
-  const c = grad.colors.map(x=>'#'+x.hex);
+function gradientCss(hexes){
+  const c = hexes.map(h => '#' + String(h).replace('#',''));
   // fade each blob to its own zero-alpha color (not `transparent`, which is
   // transparent black and leaves a muddy edge)
   return `radial-gradient(at 20% 18%, ${c[0]} 0px, ${c[0]}00 60%),`
@@ -983,25 +1006,25 @@ function gradientCss(grad){
        + `radial-gradient(at 45% 92%, ${c[2]} 0px, ${c[2]}00 60%),`
        + `linear-gradient(160deg, ${c[0]}, ${c[1]}, ${c[2]})`;
 }
-function setGradientMode(on){
-  document.getElementById('formulaDownstream').style.display = on ? 'none' : '';
-  document.getElementById('gradientBox').style.display = on ? '' : 'none';
-}
-function renderFavoriteView(){
-  if(favKind === 'combos'){
-    if(!favoriteCombo) favoriteCombo = COMBOS[0];
-    document.getElementById('favSelect').value = String(COMBOS.indexOf(favoriteCombo));
-    current = comboToPalette(favoriteCombo);
-    renderDownstream();
-  } else {
-    if(!favoriteGradient) favoriteGradient = GRADIENTS[0];
-    document.getElementById('favSelect').value = String(GRADIENTS.indexOf(favoriteGradient));
-    current = gradientToPalette(favoriteGradient);
-    renderPalette(current);
-    setGradientMode(true);
-    document.getElementById('gradientBox').style.background = gradientCss(favoriteGradient);
+// Show the preview as the UI card or as a gradient of the current palette.
+function applyPreviewMode(){
+  const grad = previewMode === 'gradient';
+  document.getElementById('balanceCard').style.display = grad ? 'none' : '';
+  const fgb = document.getElementById('formulaGradientBox');
+  fgb.style.display = grad ? '' : 'none';
+  if(grad && current){
+    fgb.style.background = gradientCss([current.primary.hex, current.support.hex, current.accent.hex]);
   }
 }
+function selectFavorite(type, i){
+  favType = type; favIndex = i;
+  current = type === 'combo' ? comboToPalette(COMBOS[i]) : gradientToPalette(GRADIENTS[i]);
+  previewMode = type === 'combo' ? 'card' : 'gradient';   // sensible default; the switch can override
+  document.querySelectorAll('.fav-pill').forEach(p=>p.classList.toggle('active', p.dataset.type===type && +p.dataset.i===i));
+  document.querySelectorAll('#previewToggle button').forEach(x=>x.classList.toggle('active', x.dataset.preview===previewMode));
+  renderDownstream();
+}
+function renderFavoriteView(){ selectFavorite(favType, favIndex); }
 
 function isValidHex(h){ return /^[0-9a-fA-F]{6}$/.test(h); }
 
@@ -1117,38 +1140,47 @@ function applyComboToCard(combo){
   document.getElementById('mockBtn').textContent = combo.bottom.name;
 }
 
-function renderFavorites(){
-  const sel = document.getElementById('favSelect');
-  const list = favKind === 'combos' ? COMBOS : GRADIENTS;
-  sel.innerHTML = '';
-  const ph = document.createElement('option');
-  ph.value = ''; ph.textContent = list.length ? ('Select a ' + favKind.slice(0,-1) + '…') : '(none yet)';
-  sel.appendChild(ph);
-  list.forEach((item, i)=>{
-    const o = document.createElement('option');
-    o.value = String(i);
-    o.textContent = favKind === 'combos' ? item.bottom.name : item.name;
-    sel.appendChild(o);
-  });
-  sel.value = '';
+// Lift very dark colors for the pill dot only, so they read against the dark UI.
+// The real combo colors are untouched for the swatches and preview on selection.
+function pillDot(hex){
+  const {r,g,b} = hexToRgb(hex);
+  const c = rgbToHsl(r,g,b);
+  return c.l < 40 ? hslToHex(c.h, c.s, 44) : String(hex).replace('#','');
 }
+function makePill(type, i, name, cols){
+  const b = document.createElement('button');
+  b.className = 'fav-pill'; b.dataset.type = type; b.dataset.i = String(i);
+  if(type === 'combo'){
+    // two overlapping solid dots: named color in front, secondary behind
+    const sw = document.createElement('span'); sw.className = 'sw2';
+    const back = document.createElement('span');  back.className = 'd back';   back.style.background = '#'+pillDot(cols[2]);
+    const front = document.createElement('span'); front.className = 'd front'; front.style.background = '#'+pillDot(cols[0]);
+    sw.appendChild(back); sw.appendChild(front); b.appendChild(sw);
+  } else {
+    const sw = document.createElement('span'); sw.className = 'sw';
+    sw.style.background = 'linear-gradient(135deg, #'+cols[0]+', #'+cols[1]+', #'+cols[2]+')';
+    b.appendChild(sw);
+  }
+  b.appendChild(document.createTextNode(name));
+  b.onclick = ()=>selectFavorite(type, i);
+  return b;
+}
+function renderFavPills(){
+  const cp = document.getElementById('comboPills'), gp = document.getElementById('gradientPills');
+  cp.innerHTML = ''; gp.innerHTML = '';
+  COMBOS.forEach((c,i)=> cp.appendChild(makePill('combo', i, c.pill, [c.bottom.hex, c.mid, c.top.hex])));
+  GRADIENTS.forEach((g,i)=> gp.appendChild(makePill('gradient', i, g.pill, g.colors.map(x=>x.hex))));
+}
+renderFavPills();
 
-document.querySelectorAll('#favToggle button').forEach(b=>{
+// ---- Preview type (UI card / gradient) ----
+document.querySelectorAll('#previewToggle button').forEach(b=>{
   b.onclick = ()=>{
-    favKind = b.dataset.fav;
-    document.querySelectorAll('#favToggle button').forEach(x=>x.classList.toggle('active', x===b));
-    renderFavorites();
-    renderFavoriteView();
+    previewMode = b.dataset.preview;
+    document.querySelectorAll('#previewToggle button').forEach(x=>x.classList.toggle('active', x===b));
+    applyPreviewMode();
   };
 });
-document.getElementById('favSelect').addEventListener('change', e=>{
-  const v = e.target.value;
-  if(v === '') return;
-  if(favKind === 'combos') favoriteCombo = COMBOS[+v];
-  else favoriteGradient = GRADIENTS[+v];
-  renderFavoriteView();
-});
-renderFavorites();
 
 // ---- Top-level tabs (Pick your own / Try my favorites) ----
 document.querySelectorAll('.page-tab').forEach(t=>{
@@ -1157,6 +1189,7 @@ document.querySelectorAll('.page-tab').forEach(t=>{
     const tab = t.dataset.tab;
     document.getElementById('tabPickOwn').style.display = tab === 'own' ? '' : 'none';
     document.getElementById('tabFavorites').style.display = tab === 'fav' ? '' : 'none';
+    document.getElementById('vizSection').style.display = tab === 'own' ? '' : 'none';
     sourceMode = tab === 'own' ? 'formula' : 'favorite';
     if(sourceMode === 'formula') renderAll(hexInput.value);
     else renderFavoriteView();
