@@ -1483,7 +1483,11 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:10px; align-content:start;">
       <div class="metric-card">
         <div class="metric-number accent" style="font-size:44px;">538K+</div>
-        <div class="card-label">TDS inserts across 27 teams · 8.5k/wk</div>
+        <div class="card-label">TDS inserts across 27 teams</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number accent" style="font-size:44px;">8.5k</div>
+        <div class="card-label">inserts per week</div>
       </div>
       <div class="metric-card">
         <div class="metric-number green" style="font-size:44px;">90.9%</div>
@@ -1509,7 +1513,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="metric-number accent" style="font-size:44px;">47+</div>
         <div class="card-label">usage docs added in 2025</div>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" style="grid-column: 1 / -1;">
         <div class="metric-number" style="font-size:34px;"><span style="color:var(--red);">490k</span><span style="color:var(--text);">→200k</span></div>
         <div class="card-label">nodes reduced, speed doubled</div>
       </div>
