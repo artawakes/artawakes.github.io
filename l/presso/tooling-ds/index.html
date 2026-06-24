@@ -674,7 +674,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div class="nav-center">
     <!-- Intro — collapsed -->
     <div class="nav-project" data-project="intro" data-state="collapsed">
-      <button class="nav-project-pill" data-href="../intro/index.html"><span>Intro</span></button>
+      <button class="nav-project-pill" data-href="/"><span>Intro</span></button>
     </div>
     <!-- Tooling DS — expanded (active) -->
     <div class="nav-project" data-project="tds" data-state="expanded">
@@ -808,7 +808,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 05 · NO SOURCE OF TRUTH ══ pure -->
-<div class="slide hero-right slide-light slide-grid" data-section="problem">
+<div class="slide hero-right slide-light slide-grid" data-section="problem" style="background:#eef2fc;">
   <div class="hero-content">
     <span class="overline red">Designer Perspective</span>
     <h2>No single source of truth.</h2>
@@ -1880,6 +1880,8 @@ function saveDeck() {
 document.addEventListener('keydown', e => {
   if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
+  if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
+  if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
   if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveDeck(); return; }
   if (inText && (e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'||e.key===' ')) {
     e.stopImmediatePropagation();
@@ -2281,7 +2283,7 @@ if(false)(function(){
 <!-- ── Presenter UI: shown when URL has #presenter ── -->
 <div id="presenter-ui">
   <div class="p-projects">
-    <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
+    <button class="p-project-btn" data-href="/">Intro</button>
     <button class="p-project-btn p-project-btn--active">Tooling DS</button>
     <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
     <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
