@@ -62,6 +62,7 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,128,245,.2)}
 .err.show{display:block}
 .request{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);margin-top:24px}
 .request:hover{text-decoration:underline}
+.request .bi-arrow-up-right{font-size:.85em}
 </style>
 </head>
 <body>
@@ -84,7 +85,7 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,128,245,.2)}
   <input type="password" id="password" autocomplete="current-password" required autofocus>
   <button class="btn" type="submit">Access Projects</button>
   <p class="err" id="err">That password didn't match. Try again?</p>
-  <a class="request" href="mailto:varnish-beehive.4s@icloud.com?subject=Project%20access%20request">Don't have it? Email me ↗</a>
+  <a class="request" href="mailto:varnish-beehive.4s@icloud.com?subject=Project%20access%20request">Don't have it? Email me <i class="bi bi-arrow-up-right"></i></a>
 </form>
 
 <script>
