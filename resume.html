@@ -26,7 +26,7 @@ html:not(.dark){
   --fade:rgba(244,246,253,.9);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s}
 a{color:inherit;text-decoration:none}
 
 #flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
@@ -49,12 +49,12 @@ html:not(.dark) .icon-sun{display:none}
 .tb-zoom{min-width:48px;text-align:center;font-size:12.5px;font-weight:600;color:var(--dim);letter-spacing:.02em}
 .tb-dl{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 20px;margin-left:8px;border-radius:999px;font-size:13px;font-weight:600;background:linear-gradient(92deg,var(--blue),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(79,128,245,.4);transition:.2s}
 .tb-dl:hover{transform:translateY(-1px)}
-@media(max-width:640px){.tb-btn,.tb-zoom{display:none}.tb-dl{padding:0 14px}nav{padding:12px 16px}}
+@media(max-width:640px){.tb-btn,.tb-zoom{display:none}.tb-dl{padding:0 14px}.dl-txt{display:none}nav{padding:12px 16px}.stage{padding:88px 12px 60px}}
 
 /* sheet: the real HTML resume in an iframe, scaled — vector-crisp at any zoom */
 .stage{position:relative;z-index:2;padding:104px 24px 80px;display:flex;justify-content:center}
 .sheet-holder{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.55);background:#fff}
-#sheet{display:block;width:1000px;height:1620px;border:0;transform-origin:top left}
+#sheet{width:1000px;transform-origin:top left}
 </style>
 </head>
 <body>
@@ -69,14 +69,14 @@ html:not(.dark) .icon-sun{display:none}
     <button class="tb-btn" onclick="zoom(-1)" aria-label="Zoom out"><i class="bi bi-dash-lg"></i></button>
     <span class="tb-zoom" id="zoomLabel">100%</span>
     <button class="tb-btn" onclick="zoom(1)" aria-label="Zoom in"><i class="bi bi-plus-lg"></i></button>
-    <a class="tb-dl" href="Assets/Dario-Fidanza-Resume.pdf" download="Dario Fidanza Resume.pdf"><i class="bi bi-download"></i>Download PDF</a>
+    <a class="tb-dl" href="Assets/Dario-Fidanza-Resume.pdf" download="Dario Fidanza Resume.pdf"><i class="bi bi-download"></i><span class="dl-txt">Download PDF</span></a>
     <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
   </div>
 </nav>
 
 <div class="stage">
   <div class="sheet-holder" id="holder">
-    <iframe id="sheet" src="Assets/resume-embed.html" title="Resume of Dario Fidanza" scrolling="no"></iframe>
+    <div id="sheet" role="document" aria-label="Resume of Dario Fidanza"></div>
   </div>
 </div>
 
@@ -90,19 +90,21 @@ function toggleDarkMode() {
   document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
 })();
 
-/* zoom: scales the real HTML sheet (1000px natural width) */
+/* zoom: the resume HTML lives in a shadow root (style-isolated, no iframe —
+   iOS re-lays-out iframes and cropped the sheet) and is scaled as a normal div */
 const LEVELS = [60, 75, 90, 100, 115, 130, 150, 175];
-const NATURAL_W = 1000, NATURAL_H = 1620;
+const NATURAL_W = 1000;
+let naturalH = 1620;
 let level = 3;
 const sheet = document.getElementById('sheet');
 const holder = document.getElementById('holder');
 const label = document.getElementById('zoomLabel');
-function baseWidth() { return Math.min(1170, innerWidth - 32); }
+function baseWidth() { return Math.min(1170, innerWidth - 48); }
 function apply() {
   const scale = baseWidth() * LEVELS[level] / 100 / NATURAL_W;
   sheet.style.transform = 'scale(' + scale + ')';
   holder.style.width = Math.round(NATURAL_W * scale) + 'px';
-  holder.style.height = Math.round(NATURAL_H * scale) + 'px';
+  holder.style.height = Math.round(naturalH * scale) + 'px';
   label.textContent = LEVELS[level] + '%';
 }
 function zoom(dir) {
@@ -111,6 +113,21 @@ function zoom(dir) {
 }
 addEventListener('resize', apply);
 apply();
+
+(async function loadSheet() {
+  const txt = await (await fetch('Assets/resume-embed.html')).text();
+  const doc = new DOMParser().parseFromString(txt, 'text/html');
+  const shadow = sheet.attachShadow({ mode: 'open' });
+  doc.querySelectorAll('link[rel="stylesheet"], style').forEach(n => shadow.appendChild(n.cloneNode(true)));
+  const page = doc.querySelector('.page');
+  shadow.appendChild(page.cloneNode(true));
+  const measure = () => {
+    const h = shadow.querySelector('.page').offsetHeight;
+    if (h > 100) { naturalH = h; apply(); }
+  };
+  requestAnimationFrame(measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(measure, 50));
+})();
 
 /* flowing contour lines, same as the homepage */
 (function () {
