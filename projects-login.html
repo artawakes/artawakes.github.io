@@ -1,183 +1,154 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects Login - Dario Fidanza</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts: Inter (body) + Hepta Slab (headings), matches the deck -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    
-    <script>
-        // Copy the tailwind config from Index.html
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Hepta Slab', 'serif'],
-                    },
-                    colors: {
-                        border: "hsl(var(--border))",
-                        input: "hsl(var(--input))",
-                        ring: "hsl(var(--ring))",
-                        background: "hsl(var(--background))",
-                        foreground: "hsl(var(--foreground))",
-                        primary: {
-                            DEFAULT: "hsl(var(--primary))",
-                            foreground: "hsl(var(--primary-foreground))",
-                        },
-                        secondary: {
-                            DEFAULT: "hsl(var(--secondary))",
-                            foreground: "hsl(var(--secondary-foreground))",
-                        },
-                        card: {
-                            DEFAULT: "hsl(var(--card))",
-                            foreground: "hsl(var(--card-foreground))",
-                        },
-                    },
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* Deck-matched tokens (same mapping as the homepage) */
-        :root {
-            --background: 228 60% 97%;
-            --foreground: 218 64% 7%;
-            --card: 0 0% 100%;
-            --card-foreground: 218 64% 7%;
-            --primary: 222 89% 60%;
-            --primary-foreground: 0 0% 100%;
-            --secondary: 228 40% 92%;
-            --secondary-foreground: 218 64% 7%;
-            --muted-foreground: 216 32% 38%;
-            --border: 220 24% 86%;
-            --input: 220 24% 86%;
-            --ring: 222 89% 60%;
-            --radius: 0.5rem;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Access · Dario Fidanza</title>
+<meta name="robots" content="noindex">
 
-        .dark {
-            --background: 218 64% 7%;
-            --foreground: 225 100% 97%;
-            --card: 214 56% 11%;
-            --card-foreground: 225 100% 97%;
-            --primary: 222 89% 64%;
-            --primary-foreground: 0 0% 100%;
-            --secondary: 214 35% 16%;
-            --secondary-foreground: 225 100% 97%;
-            --muted-foreground: 212 31% 66%;
-            --border: 213 30% 18%;
-            --input: 213 30% 18%;
-            --ring: 222 89% 64%;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        h1, h2, h3 { font-family: 'Hepta Slab', serif; font-weight: 500; letter-spacing: -0.02em; }
-        h1.font-bold { font-weight: 500; }
+<style>
+:root{
+  --bg:#07101f; --bg2:#0d1a2e; --bg3:#12233b; --bg4:#182c48;
+  --text:#f0f4ff; --dim:#8fa8c4; --faint:#5a7396;
+  --blue:#4f80f5; --violet:#7c5af5; --magenta:#c55af5; --green:#3dba7e;
+  --line:rgba(143,168,196,.14);
+  --glass:rgba(13,26,46,.7);
+  --fade:rgba(7,16,31,.85);
+}
+html:not(.dark){
+  --bg:#f4f6fd; --bg2:#ffffff; --bg3:#e8edf9; --bg4:#dde5f5;
+  --text:#07101f; --dim:#3a5070; --faint:#6b80a0;
+  --line:rgba(7,16,31,.12);
+  --glass:rgba(255,255,255,.7);
+  --fade:rgba(244,246,253,.9);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;transition:background .3s,color .3s}
+h1{font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
 
-        /* Subtle dot-grid backdrop, calmer cousin of the deck cover */
-        body { position: relative; }
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: radial-gradient(circle, rgba(79,128,245,0.14) 1px, transparent 1px);
-            background-size: 30px 30px;
-            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 0%, transparent 75%);
-            mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 0%, transparent 75%);
-        }
-        html:not(.dark) body::before {
-            background-image: radial-gradient(circle, rgba(50,90,210,0.16) 1px, transparent 1px);
-        }
-        body > * { position: relative; z-index: 1; }
-    </style>
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+
+/* header: back + wordmark on one baseline, toggle right */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:linear-gradient(180deg,var(--fade),transparent)}
+.nav-left{display:flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:16px;transition:.2s}
+.back:hover{color:var(--text);background:var(--bg3)}
+.wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
+.wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
+.theme:hover{color:var(--text)}
+html.dark .icon-moon{display:none}
+html:not(.dark) .icon-sun{display:none}
+
+/* access card */
+.card{position:relative;z-index:2;width:min(420px,calc(100vw - 48px));border-radius:22px;border:1px solid var(--line);background:linear-gradient(170deg,var(--bg2),var(--bg));padding:40px 36px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.card .glow{position:absolute;top:-1px;left:28px;right:28px;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent)}
+.lock-ring{width:56px;height:56px;border-radius:50%;margin:0 auto 22px;padding:2px;background:conic-gradient(from 210deg,var(--blue),var(--violet),var(--magenta),var(--blue))}
+.lock-ring .inner{width:100%;height:100%;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:20px}
+h1{font-size:30px;margin-bottom:10px}
+.sub{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:30px}
+label{display:block;text-align:left;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+input{width:100%;height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.2s;margin-bottom:18px}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,128,245,.2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border-radius:999px;border:none;cursor:pointer;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;background:linear-gradient(92deg,var(--blue),var(--violet));color:#fff;box-shadow:0 10px 34px rgba(79,128,245,.4);transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.err{font-size:12.5px;color:#FF6332;margin-top:14px;display:none}
+.err.show{display:block}
+.request{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);margin-top:24px}
+.request:hover{text-decoration:underline}
+</style>
 </head>
-<body class="bg-background text-foreground min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md p-8">
-        <div class="text-center mb-8 relative">
-            <a href="index.html" class="absolute left-0 top-0 p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Back to home">
-                <i class="bi bi-arrow-left text-xl"></i>
-            </a>
-            <a href="index.html">
-                <img src="Assets/logo.svg" alt="Dario Fidanza" class="h-12 mx-auto mb-4 block dark:hidden">
-                <img src="Assets/LogoWhite.svg" alt="Dario Fidanza" class="h-12 mx-auto mb-4 hidden dark:block">
-            </a>
-            <h1 class="text-2xl font-bold">Project Access</h1>
-            <p class="text-muted-foreground mt-2">Please enter the password to view projects</p>
-        </div>
-        
-        <div class="bg-card p-6 rounded-lg border">
-            <form id="loginForm" onsubmit="return checkPassword(event)">
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium mb-2">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="w-full px-3 py-2 border rounded-md bg-background text-foreground"
-                        required
-                    >
-                </div>
-                <button 
-                    type="submit" 
-                    class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4"
-                >
-                    Access Projects
-                </button>
-            </form>
-        </div>
-    </div>
+<body>
+<canvas id="flow" aria-hidden="true"></canvas>
 
-    <script>
-        function checkPassword(event) {
-            event.preventDefault();
-            const password = document.getElementById('password').value;
-            
-            // Replace 'your_password_here' with the actual password you want to use
-            if (password === '*Insta-2025*') {
-                // Store authentication state
-                sessionStorage.setItem('projectsAuthenticated', 'true');
-                // Redirect to projects page
-                window.location.href = 'l/presso/';
-            } else {
-                alert('Incorrect password');
-            }
-            return false;
-        }
-    </script>
+<nav>
+  <div class="nav-left">
+    <a class="back" href="index.html" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
+    <a class="wordmark" href="index.html"><span><b>Dario</b>&nbsp;Fidanza</span></a>
+  </div>
+  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+</nav>
 
-    <!-- Add this script right after your existing scripts, before the closing </body> tag -->
-    <script>
-        // Check for saved dark mode preference when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            const stored = localStorage.getItem('darkMode');
-            const darkMode = stored === null ? true : stored === 'true';
-            if (darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
+<form class="card" id="loginForm" onsubmit="return checkPassword(event)">
+  <div class="glow"></div>
+  <div class="lock-ring"><div class="inner"><i class="bi bi-lock-fill"></i></div></div>
+  <h1>Project Access</h1>
+  <p class="sub">Case studies are password protected.<br>Enter the password to continue.</p>
+  <label for="password">Password</label>
+  <input type="password" id="password" autocomplete="current-password" required autofocus>
+  <button class="btn" type="submit">Access Projects</button>
+  <p class="err" id="err">That password didn't match. Try again?</p>
+  <a class="request" href="mailto:varnish-beehive.4s@icloud.com?subject=Project%20access%20request">Don't have it? Email me ↗</a>
+</form>
 
-        // Update dark mode toggle function
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            // Store the preference
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
-        }
-    </script>
-  <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+function checkPassword(event) {
+  event.preventDefault();
+  const password = document.getElementById('password').value;
+  if (password === '*Insta-2025*') {
+    sessionStorage.setItem('projectsAuthenticated', 'true');
+    window.location.href = 'l/presso/';
+  } else {
+    document.getElementById('err').classList.add('show');
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+  return false;
+}
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+}
+(function () {
+  const stored = localStorage.getItem('darkMode');
+  const dark = stored === null ? true : stored === 'true';
+  document.documentElement.classList.toggle('dark', dark);
+})();
+
+/* flowing contour lines, same as the homepage */
+(function () {
+  const canvas = document.getElementById('flow');
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize() { canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    const dark = document.documentElement.classList.contains('dark');
+    for (let i = 0; i < LINES; i++) {
+      const yBase = (i / (LINES - 1)) * h * 1.1 - h * 0.05;
+      const p = i / LINES;
+      const r = dark ? Math.round(79 + p * 118) : Math.round(50 + p * 100);
+      const g = dark ? Math.round(128 - p * 38) : Math.round(90 - p * 30);
+      const b = dark ? 245 : 215;
+      const alpha = (0.09 + 0.16 * Math.sin(p * Math.PI)) * (i % 4 === 0 ? 1.6 : 1) * (dark ? 1 : 0.55);
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase
+          + Math.sin(x * 0.003 + t * 0.7 + i * 0.45) * 34
+          + Math.sin(x * 0.0011 - t * 0.4 + i * 0.8) * 52
+          + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
+      ctx.stroke();
+    }
+  }
+  function loop() { t += 0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize);
+  resize();
+  if (reduce) { render(); } else { requestAnimationFrame(loop); }
+})();
+</script>
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
-</html> 
+</html>
