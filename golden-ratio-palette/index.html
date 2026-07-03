@@ -42,10 +42,22 @@
     background: rgba(7,16,31,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
+  .nav-left { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-back-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%;
+    color: var(--text-dim); text-decoration: none; transition: color 0.2s, background 0.2s;
+  }
+  .nav-back-btn:hover { color: var(--text); background: rgba(143,168,196,0.12); }
   .nav-logo {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text); text-decoration: none; opacity: 0.85;
-    text-shadow: 0 0 18px rgba(79,128,245,0.28);
+    display: inline-flex; align-items: center; line-height: 34px;
+    font-family: 'Hepta Slab', serif; font-size: 17px; letter-spacing: -0.02em;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-logo b {
+    background: linear-gradient(90deg, #4f80f5, #c55af5);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; font-weight: 700;
   }
   .nav-back {
     display: inline-flex; align-items: center; gap: 7px;
@@ -53,8 +65,6 @@
     color: var(--text-dim); text-decoration: none; transition: color 0.2s;
   }
   .nav-back:hover { color: var(--text); }
-  .nav-back svg { transition: transform 0.2s; }
-  .nav-back:hover svg { transform: translateX(-3px); }
 
   /* ── Header ── */
   header { margin-bottom: 42px; }
@@ -293,7 +303,7 @@
     .viz-grid { grid-template-columns: 1fr; }
     .palette { grid-template-columns: 1fr; }
     nav { padding: 0 20px; }
-    .nav-back span { display: none; }
+    .nav-back { display: none; }
   }
 </style>
 </head>
@@ -302,9 +312,11 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <a class="nav-logo" href="/">Darío Fidanza</a>
+  <div class="nav-left">
+    <a class="nav-back-btn" href="/" aria-label="Back to dariofidanza.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+    <a class="nav-logo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
+  </div>
   <a class="nav-back" href="/">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <span>Back to dariofidanza.com</span>
   </a>
 </nav>
