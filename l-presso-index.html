@@ -51,6 +51,7 @@
     display: flex;
     align-items: center;
     padding: 16px 40px;
+    min-height: 76px;
     gap: 6px;
     background: linear-gradient(180deg, var(--fade), transparent);
   }
@@ -115,7 +116,7 @@
     font-weight: 400;
     letter-spacing: -0.03em;
     line-height: 1.05;
-    margin-bottom: 6px;
+    margin-bottom: 28px;
     white-space: nowrap;
   }
   h1 b {
@@ -186,26 +187,21 @@
   .deck:hover .arrow { color: var(--text); }
   @media (prefers-reduced-motion: reduce) { .arrow { animation: none; } .overline-dot { animation: none; } }
 
-  .site-url {
+  .site-copy {
     position: fixed;
-    bottom: 58px;
+    bottom: 14px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.10em;
+    letter-spacing: 0.06em;
     color: var(--faint);
-    text-decoration: none;
-    text-align: center;
     white-space: nowrap;
     z-index: 1;
-    transition: color 0.2s;
   }
-  .site-url:hover { color: var(--text); }
 
   .footer-note {
     position: fixed;
-    bottom: 20px;
+    bottom: 34px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 10px;
@@ -232,14 +228,13 @@
   <a class="wordmark" href="https://dariofidanza.com"><span><b>Darío</b>&nbsp;Fidanza</span></a>
 </nav>
 
-<a class="site-url" href="https://dariofidanza.com">DARIOFIDANZA.COM</a>
-<p class="footer-note"><strong>Best viewed on desktop</strong><br><span>case studies are optimized for larger screens</span></p>
+<span class="site-copy">© 2026 Dario Fidanza</span>
+<p class="footer-note"><strong>Best viewed on desktop</strong><br><span>Case studies are optimized for larger screens</span></p>
 
 <div class="wrap">
-  <span class="overline"><span class="overline-dot"></span>Deep Dive · Presentations</span>
+  <span class="overline"><span class="overline-dot"></span>L6 Designer @Instacart</span>
   <h1><b>Darío</b> Fidanza</h1>
-  <p class="subtitle">L6 Design Systems Designer &bull; Instacart</p>
-
+  
   <div class="deck-list">
 
     <!-- Non-project tiles, side by side -->
@@ -332,8 +327,8 @@
         </svg>
       </div>
       <div class="deck-body">
-        <div class="deck-title">Older Work</div>
-        <div class="deck-sub">Project archive · Figma decks</div>
+        <div class="deck-title">Project Archive</div>
+        <div class="deck-sub">Older work case studies &amp; decks</div>
       </div>
       <span class="arrow">→</span>
     </a>

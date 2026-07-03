@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none}
 
 #flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:linear-gradient(180deg,var(--fade),transparent)}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;min-height:76px;background:linear-gradient(180deg,var(--fade),transparent)}
 .nav-left{display:flex;align-items:center;gap:6px}
 .back{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:16px;transition:.2s}
 .back:hover{color:var(--text);background:var(--bg3)}
@@ -68,7 +68,7 @@ html:not(.dark) .icon-sun{display:none}
 </nav>
 
 <div class="stage">
-  <img class="sheet" id="sheet" src="Assets/resume-sheet.png" alt="Resume of Dario Fidanza. Download the PDF below for a text version." width="2000" height="3240">
+  <img class="sheet" id="sheet" src="Assets/resume-sheet.png" alt="Resume of Dario Fidanza. Download the PDF below for a text version." width="3000" height="4860">
 </div>
 
 <div class="toolbar">
@@ -93,7 +93,7 @@ const LEVELS = [60, 75, 90, 100, 115, 130, 150, 175];
 let level = 3;
 const sheet = document.getElementById('sheet');
 const label = document.getElementById('zoomLabel');
-function baseWidth() { return Math.min(900, innerWidth - 32); }
+function baseWidth() { return Math.min(1170, innerWidth - 32); }
 function apply() {
   sheet.style.width = Math.round(baseWidth() * LEVELS[level] / 100) + 'px';
   label.textContent = LEVELS[level] + '%';
