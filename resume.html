@@ -37,23 +37,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:cent
 .back:hover{color:var(--text);background:var(--bg3)}
 .wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
 .wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
-.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
+.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s;margin-left:8px}
 .theme:hover{color:var(--text)}
 html.dark .icon-moon{display:none}
 html:not(.dark) .icon-sun{display:none}
 
-/* floating toolbar */
-.toolbar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:6px;background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.tb-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:none;background:none;color:var(--dim);font-size:16px;cursor:pointer;transition:.2s}
+/* toolbar lives in the nav now, right side, for visibility */
+.nav-right{display:flex;align-items:center;gap:4px}
+.tb-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:none;background:none;color:var(--dim);font-size:15px;cursor:pointer;transition:.2s}
 .tb-btn:hover{color:var(--text);background:var(--bg3)}
-.tb-zoom{min-width:52px;text-align:center;font-size:12.5px;font-weight:600;color:var(--dim);letter-spacing:.02em}
-.tb-dl{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 20px;border-radius:999px;font-size:13px;font-weight:600;background:linear-gradient(92deg,var(--blue),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(79,128,245,.4);transition:.2s;margin-left:4px}
+.tb-zoom{min-width:48px;text-align:center;font-size:12.5px;font-weight:600;color:var(--dim);letter-spacing:.02em}
+.tb-dl{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 20px;margin-left:8px;border-radius:999px;font-size:13px;font-weight:600;background:linear-gradient(92deg,var(--blue),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(79,128,245,.4);transition:.2s}
 .tb-dl:hover{transform:translateY(-1px)}
+@media(max-width:640px){.tb-btn,.tb-zoom{display:none}.tb-dl{padding:0 14px}nav{padding:12px 16px}}
 
-/* sheet */
-.stage{position:relative;z-index:2;padding:100px 24px 120px;display:flex;justify-content:center}
-.sheet{border-radius:6px;box-shadow:0 30px 90px rgba(0,0,0,.55);border:1px solid var(--line);transition:width .2s ease;height:auto;max-width:none}
-@media(max-width:600px){nav{padding:12px 16px}.stage{padding:84px 12px 110px}}
+/* sheet: the real HTML resume in an iframe, scaled — vector-crisp at any zoom */
+.stage{position:relative;z-index:2;padding:104px 24px 80px;display:flex;justify-content:center}
+.sheet-holder{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.55);background:#fff}
+#sheet{display:block;width:1000px;height:1620px;border:0;transform-origin:top left}
 </style>
 </head>
 <body>
@@ -64,18 +65,19 @@ html:not(.dark) .icon-sun{display:none}
     <a class="back" href="index.html" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
     <a class="wordmark" href="index.html"><span><b>Dario</b>&nbsp;Fidanza</span></a>
   </div>
-  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+  <div class="nav-right">
+    <button class="tb-btn" onclick="zoom(-1)" aria-label="Zoom out"><i class="bi bi-dash-lg"></i></button>
+    <span class="tb-zoom" id="zoomLabel">100%</span>
+    <button class="tb-btn" onclick="zoom(1)" aria-label="Zoom in"><i class="bi bi-plus-lg"></i></button>
+    <a class="tb-dl" href="Assets/Dario-Fidanza-Resume.pdf" download="Dario Fidanza Resume.pdf"><i class="bi bi-download"></i>Download PDF</a>
+    <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+  </div>
 </nav>
 
 <div class="stage">
-  <img class="sheet" id="sheet" src="Assets/resume-sheet.png" alt="Resume of Dario Fidanza. Download the PDF below for a text version." width="3000" height="4860">
-</div>
-
-<div class="toolbar">
-  <button class="tb-btn" onclick="zoom(-1)" aria-label="Zoom out"><i class="bi bi-dash-lg"></i></button>
-  <span class="tb-zoom" id="zoomLabel">100%</span>
-  <button class="tb-btn" onclick="zoom(1)" aria-label="Zoom in"><i class="bi bi-plus-lg"></i></button>
-  <a class="tb-dl" href="Assets/Dario-Fidanza-Resume.pdf" download="Dario Fidanza Resume.pdf"><i class="bi bi-download"></i>Download PDF</a>
+  <div class="sheet-holder" id="holder">
+    <iframe id="sheet" src="Assets/resume-embed.html" title="Resume of Dario Fidanza" scrolling="no"></iframe>
+  </div>
 </div>
 
 <script>
@@ -88,14 +90,19 @@ function toggleDarkMode() {
   document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
 })();
 
-/* zoom: 100% = comfortable reading width, capped to viewport at the low end */
+/* zoom: scales the real HTML sheet (1000px natural width) */
 const LEVELS = [60, 75, 90, 100, 115, 130, 150, 175];
+const NATURAL_W = 1000, NATURAL_H = 1620;
 let level = 3;
 const sheet = document.getElementById('sheet');
+const holder = document.getElementById('holder');
 const label = document.getElementById('zoomLabel');
 function baseWidth() { return Math.min(1170, innerWidth - 32); }
 function apply() {
-  sheet.style.width = Math.round(baseWidth() * LEVELS[level] / 100) + 'px';
+  const scale = baseWidth() * LEVELS[level] / 100 / NATURAL_W;
+  sheet.style.transform = 'scale(' + scale + ')';
+  holder.style.width = Math.round(NATURAL_W * scale) + 'px';
+  holder.style.height = Math.round(NATURAL_H * scale) + 'px';
   label.textContent = LEVELS[level] + '%';
 }
 function zoom(dir) {

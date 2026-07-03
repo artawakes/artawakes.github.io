@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Preview · Dario Fidanza</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07101f; --dim:#3a5070; --faint:#6b80a0;
+  --blue:#4f80f5; --violet:#7c5af5; --magenta:#c55af5; --green:#3dba7e;
+  --line:rgba(7,16,31,.12); --chip:#eef2fc;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e8ecf5;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;padding:40px 0}
+.page{width:1000px;min-height:1294px;margin:0 auto;background:#fff;padding:56px 60px 48px;box-shadow:0 20px 60px rgba(7,16,31,.15)}
+@media print{
+  body{background:#fff;padding:0}
+  .page{box-shadow:none;min-height:auto}
+  @page{margin:0;size:1000px 1620px}
+}
+.serif{font-family:'Hepta Slab',serif}
+.grad{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* header */
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+.wordmark{font-family:'Hepta Slab',serif;font-size:46px;letter-spacing:-.02em;line-height:1}
+.wordmark b{font-weight:700;background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tagline{font-family:'Hepta Slab',serif;font-weight:300;font-size:15.5px;color:var(--dim);margin-top:10px;letter-spacing:-.01em}
+.contact{text-align:right;font-size:11.5px;color:var(--dim);line-height:2}
+.contact a{color:var(--ink);text-decoration:none;font-weight:600;letter-spacing:.04em}
+.contact .loc{display:inline-flex;align-items:center;gap:5px;color:var(--faint)}
+.contact .loc .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* section kicker, matches the site's index-num style */
+.kicker{font-family:'Hepta Slab',serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.kicker .n{color:var(--faint)}
+
+/* main grid */
+.cols{display:grid;grid-template-columns:37fr 63fr;gap:44px}
+.block{margin-bottom:30px}
+.block p{font-size:12.5px;line-height:1.72;color:var(--dim)}
+.block p b{color:var(--ink)}
+
+.ai-item{font-size:12px;line-height:1.65;color:var(--dim);margin-bottom:11px;padding-left:14px;position:relative}
+.ai-item::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:2px;background:linear-gradient(135deg,var(--blue),var(--magenta))}
+.ai-item b{color:var(--ink)}
+.ai-item .arw{color:var(--blue);font-weight:600}
+
+/* experience timeline */
+.xp{position:relative;padding-left:74px}
+.job::before{content:"";position:absolute;left:-44px;top:6px;bottom:-24px;width:2px;background:var(--line)}
+.job:last-child::before{display:none}
+.year{position:absolute;left:-74px;width:62px;text-align:center;background:#f7f9fd;border:1px solid var(--line);border-radius:999px;font-size:9.5px;font-weight:600;letter-spacing:.04em;color:var(--faint);padding:3px 4px}
+.job{margin-bottom:24px;position:relative}
+.job-head{font-size:13.5px;font-weight:700;letter-spacing:.02em;margin-bottom:2px}
+.job-head .co-instacart{color:var(--violet)}
+.job-head .co-lyft{color:var(--magenta)}
+.job-head .co-ea{color:var(--blue)}
+.job-sub{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--ink);text-transform:uppercase;margin-bottom:9px}
+.job li{list-style:none;font-size:11.5px;line-height:1.6;color:var(--dim);margin-bottom:7px;padding-left:13px;position:relative}
+.job li::before{content:"•";position:absolute;left:0;color:var(--faint)}
+.job li b{color:var(--ink)}
+.job li .arw{color:var(--blue);font-weight:600}
+.job li .m{color:var(--violet);font-weight:700}
+.co-list{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--blue);line-height:1.8;text-transform:uppercase}
+.co-list span{color:var(--faint);font-weight:400}
+
+/* bottom bands */
+.divider{border:none;border-top:1px solid var(--line);margin:8px 0 26px}
+.bottom{display:grid;grid-template-columns:.95fr .85fr 1.75fr;gap:30px;margin-bottom:26px}
+.bottom h4{font-family:'Hepta Slab',serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.cap{font-size:11px;line-height:1.6;color:var(--dim);margin-bottom:9px}
+.cap b{color:var(--ink)}
+.edu{margin-bottom:10px}
+.edu b{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.edu span{font-size:11px;color:var(--faint)}
+.awards{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.award{margin-bottom:10px}
+.award b{display:block;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.award span{font-size:10.5px;color:var(--faint);line-height:1.45}
+.beyond{border-left:2px solid;border-image:linear-gradient(180deg,var(--blue),var(--magenta)) 1;padding-left:16px}
+.beyond p{font-size:11.5px;line-height:1.65;color:var(--dim)}
+</style>
+<style>body{background:#fff;padding:0}.page{box-shadow:none;margin:0;min-height:0}</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="wordmark"><b>Dario</b> Fidanza</div>
+      <div class="tagline">I design products, and the systems that scale them.</div>
+    </div>
+    <div class="contact">
+      <a href="https://dariofidanza.com">DARIOFIDANZA.COM</a><br>
+      <a href="https://linkedin.com/in/dariofidanza">LINKEDIN.COM/IN/DARIOFIDANZA</a><br>
+      <span class="loc"><span class="dot"></span>US-based · open to roles in Spain and the EU</span>
+    </div>
+  </header>
+
+  <div class="cols">
+    <div>
+      <div class="block">
+        <div class="kicker"><span class="n">01 /</span> Summary</div>
+        <p>L6 Design Lead with 9+ years scaling tools and systems at Instacart, Lyft, and EA. I close the gap between design and code: design systems, token architecture, and north-star visions, with AI doing the slow parts between Figma and production. I align executives, engineering, and product teams around a shared vision and drive adoption across complex organizations.</p>
+      </div>
+
+      <div class="block">
+        <div class="kicker"><span class="n">02 /</span> AI &amp; Design Engineering</div>
+        <div class="ai-item"><b>Token architecture + AI migration</b> <span class="arw">→</span> Designed a cascading primitive → semantic → component token system (1:1 with code) and used AI to generate and migrate the token scheme, making instant theming, dark mode, and the Instacart rebrand real in Figma and in code.</div>
+        <div class="ai-item"><b>Migration QA plugin</b> <span class="arw">→</span> Built a Figma plugin to audit all designed components, catching and correcting token drift in fonts, effects, borders, colors, and radii where hardcoded values had crept in.</div>
+        <div class="ai-item"><b>Code Connect pipeline</b> <span class="arw">→</span> Used Claude Code + the Figma MCP to update 185+ components and wire Code Connect, linking the Figma library directly to our GitHub repo.</div>
+        <div class="ai-item"><b>Designer enablement</b> <span class="arw">→</span> Created prompt-to-prototype and Figma-to-prototype skills, now in controlled beta with 10 designers testing new product features.</div>
+      </div>
+
+      <div class="block beyond">
+        <div class="kicker"><span class="n">03 /</span> Beyond the Desk</div>
+        <p>Exploring emerging tools: a 100-day React/JS challenge and AI prototyping experiments. I co-host a podcast on mental health and gay dating, published a digital short story, and practice digital illustration, photography, yoga, and dance. I organize monthly board game nights for connection and facilitation.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="kicker" style="margin-left:74px"><span class="n">04 /</span> Experience</div>
+      <div class="xp">
+        <div class="job">
+          <span class="year" style="top:0">2022 – 26</span>
+          <div class="job-head"><span class="co-instacart">INSTACART</span></div>
+          <div class="job-sub">Sr. Product Designer II · Design Systems Designer II (L6)</div>
+          <ul>
+            <li><b>Tooling Design System</b> <span class="arw">→</span> Founded and scaled from zero to <span class="m">185+ components</span> and 6+ templates across 4 enterprise platforms in &lt;1 year; now <span class="m">538K+ inserts in the last year (12K a week)</span> across <span class="m">27 teams</span> at <span class="m">90.9%</span> designer &amp; eng satisfaction. (Data: Jun '26)</li>
+            <li>Migrated 17% of Partner Platform in 3 months with a repeatable retrofit model; drove <span class="m">+35% adoption</span> through structured education and governance forums aligning design, product, and engineering leaders.</li>
+            <li><b>Orders Dashboard</b> <span class="arw">→</span> Redesigned fragmented order support (4 tools into 1 unified view), cutting CX handling time <span class="m">40%</span> within 2 months.</li>
+            <li><b>Shopper App North-Star</b> <span class="arw">→</span> Architected a 5-year vision with executive leadership, unifying 4 product pods and lifting shopper satisfaction <span class="m">+8%</span> and batch acceptance <span class="m">+5%</span>.</li>
+            <li><b>Enterprise Fulfillment</b> <span class="arw">→</span> Launched Store Manager and Partner Portal tools improving staffing, scheduling, and operational visibility.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <span class="year" style="top:0">2019 – 21</span>
+          <div class="job-head"><span class="co-lyft">LYFT</span></div>
+          <div class="job-sub">Sr. Product Designer</div>
+          <ul>
+            <li><b>Digital Workspace</b> <span class="arw">→</span> Architected unified workspace vision integrating Jira, Confluence, and Google Suite; drove adoption to <span class="m">6.5M monthly queries</span>, <span class="m" style="white-space:nowrap">75%&nbsp;NPS</span>.</li>
+            <li><b>Risk &amp; Compliance Systems</b> <span class="arw">→</span> Redesigned reporting and compliance tools, reducing resolution time and false positives, improving regulatory accuracy.</li>
+            <li><b>Accident Reporting Tool</b> <span class="arw">→</span> Delivered compliance-ready redesign with location/photo upload; processed <span class="m">250+ accurate reports</span> in first month.</li>
+            <li><b>Design system</b> support &amp; contributions, enabling consistency across enterprise platforms.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <span class="year" style="top:0">2017 – 19</span>
+          <div class="job-head"><span class="co-ea">ELECTRONIC ARTS</span></div>
+          <div class="job-sub">Sr. Product Designer</div>
+          <ul>
+            <li><b>EA World Redesign</b> <span class="arw">→</span> Led research and UX strategy for EA's global intranet, consolidating multiple portals into a unified, company-wide experience; defined navigation, content strategy, and interaction models that improved discoverability and engagement.</li>
+            <li><b>Design System Integration</b> <span class="arw">→</span> Partnered with EA's Design System team to codify enterprise patterns, aligning new platforms (EA World, Learning Management, Enterprise Search) to brand and accessibility standards.</li>
+            <li><b>Enterprise Search v3.0</b> <span class="arw">→</span> Directed research and platform analysis, translating insights into technical requirements driving development.</li>
+            <li><b>Learning Management System</b> <span class="arw">→</span> Delivered UX requirements and mapped flows for a SaaS learning platform within EA's enterprise ecosystem.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <span class="year" style="top:0">2008 – 17</span>
+          <div class="job-head">PRODUCT DESIGNER</div>
+          <p class="co-list"><span>Contractor:</span> Mutual Mobile · Salesforce · Jackrabbit Mobile · Creative Tonic · Ideation League</p>
+        </div>
+
+        <div class="job" style="margin-bottom:0">
+          <span class="year" style="top:0">1997 – 08</span>
+          <div class="job-head">GRAPHIC DESIGNER</div>
+          <p class="co-list">The Bloom Films · LA Weekly · Westates Automotive · The Peterson Group · EXO Training Center · Iraola Architecture</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="bottom">
+    <div>
+      <h4>Capabilities</h4>
+      <div class="cap"><b>Design Systems:</b> Governance, Tokens, Documentation, Adoption Strategy</div>
+      <div class="cap"><b>AI / Design Engineering:</b> Claude Code, Figma MCP, Code Connect, Figma plugins, prompt-to-prototype</div>
+      <div class="cap"><b>Product Design:</b> Research Synthesis, North-Star Vision, UX Strategy</div>
+      <div class="cap"><b>Technical Fluency:</b> Figma, Storybook, Accessibility Standards, PR Reviews</div>
+      <div class="cap"><b>Leadership:</b> Cross-functional Alignment, Roadmap Strategy, Mentorship</div>
+    </div>
+    <div>
+      <h4>Education</h4>
+      <div class="edu"><b>User Experience Design</b><span>Austin Community College, Texas</span></div>
+      <div class="edu"><b>Graphic Design</b><span>Austin Community College, Texas</span></div>
+      <div class="edu"><b>Interaction Design</b><span>UC San Diego, Online</span></div>
+      <div class="edu"><b>Software Engineering</b><span>Tech. #12 Gral. San Martin, Argentina</span></div>
+    </div>
+    <div>
+      <h4>Roles and Awards</h4>
+      <div class="awards">
+        <div class="award"><b>Pride ERG Lead<span style="white-space:nowrap"> / '18 – '21</span></b><span>EA &amp; Lyft SF Lead, LGBTQAI+ Employee Group</span></div>
+        <div class="award"><b>Austin Design Week Organizer<span style="white-space:nowrap"> / 2017</span></b><span>Program Lead, managed 25 hosts · Austin, TX</span></div>
+        <div class="award"><b>Keynote Speaker<span style="white-space:nowrap"> / Nov '18</span></b><span>Handsome Agency for ADW Event · Austin, TX</span></div>
+        <div class="award"><b>Design Thinking Facilitator<span style="white-space:nowrap"> / 2017</span></b><span>Certified IBM Training · Austin, TX</span></div>
+        <div class="award"><b>Fresh2Design Organizer<span style="white-space:nowrap"> / '16 – '19</span></b><span>Branding &amp; Operations Director · Austin, TX</span></div>
+        <div class="award"><b>IDEO Human-Centered Design<span style="white-space:nowrap"> / 2016</span></b><span>Project Lead · Austin, TX</span></div>
+        <div class="award"><b>AIGA Board Member<span style="white-space:nowrap"> / '16 – '18</span></b><span>UX for New Tech · Austin, TX</span></div>
+        <div class="award"><b>UX Hackathon 1st Place<span style="white-space:nowrap"> / 2015</span></b><span>Team Lead · Austin, TX</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
