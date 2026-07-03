@@ -24,7 +24,8 @@ nav {
   background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
-.nav-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); text-decoration: none; opacity: 0.85; text-shadow: 0 0 18px rgba(79,128,245,0.28); flex-shrink: 0; }
+.nav-logo { display:inline-flex; align-items:center; font-family:'Hepta Slab',serif; font-size:15px; letter-spacing:-0.02em; color: var(--text); text-decoration: none; flex-shrink: 0; }
+.nav-logo b { background:linear-gradient(90deg,#4f80f5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
 
 /* PILL NAV */
 .nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
@@ -650,7 +651,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <nav>
-  <a class="nav-logo" href="../">Darío Fidanza</a>
+  <a class="nav-logo" href="../"><b>Darío</b>&nbsp;Fidanza</a>
   <div class="nav-center">
     <!-- Intro — expanded (active) -->
     <div class="nav-project" data-project="intro" data-state="expanded">
@@ -692,8 +693,8 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div style="max-width:680px;">
     <div class="cover-line"></div>
     <span class="overline">Live Intro</span>
-    <h1 style="font-size:clamp(52px,7vw,96px); margin-bottom:0; letter-spacing:1px;">Darío</h1>
-    <h1 style="font-size:clamp(52px,7vw,96px); color:var(--accent); letter-spacing:1px;">Fidanza</h1>
+    <h1 style="font-size:clamp(52px,7vw,96px); margin-bottom:0; letter-spacing:1px; background:linear-gradient(90deg,#4f80f5,#7c5af5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">Darío</h1>
+    <h1 style="font-size:clamp(52px,7vw,96px); color:var(--text); letter-spacing:1px;">Fidanza</h1>
     <p class="subtitle">Product &amp; Design Systems Designer • Instacart</p>
     <p style="margin-top:22px; font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase;">dariofidanza.com</p>
   </div>

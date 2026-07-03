@@ -581,7 +581,7 @@ const MODES = {
   brand: {
     label: 'Brand',
     brand: true,
-    accentHueShift: 173,     // primary (blue) -> accent (orange) for the wheel arc
+    accentHueShift: 59,      // primary (blue) -> accent (magenta) for the wheel arc
   },
   golden: {
     label: 'Golden Ratio',
@@ -609,12 +609,12 @@ const MODES = {
 // entered (blue) seed:
 //   Primary = the blue seed
 //   Support = purple
-//   Accent  = the amber/gold midpoint (one warm tile)
+//   Accent  = the magenta end of the site gradient
 // In dark mode the mock sits on the page background, not a tile.
 const BRAND_OFFSETS = [
   { role:'Primary', dh:0,     sm:1,    dl:0    },  // Blue (seed) 4F80F5
   { role:'Support', dh:30.6,  sm:0.99, dl:2.2  },  // Purple 7C5AF5
-  { role:'Accent',  dh:173.3, sm:1.12, dl:-6.6 }   // Orange FFA623
+  { role:'Accent',  dh:59.1,  sm:0.99, dl:2.2  }   // Magenta C55AF5
 ];
 const BRAND_DARK_BG = '07101F';                       // page background -> dark-mode background
 
@@ -678,7 +678,7 @@ const wheel = document.getElementById('wheel');
 const balanceBar = document.getElementById('balanceBar');
 const toast = document.getElementById('toast');
 
-const PRESETS = ['4F80F5','7C5AF5','3DBA7E','FFA623','FFC20F'];
+const PRESETS = ['4F80F5','7C5AF5','C55AF5','3DBA7E','F5A623'];
 
 // ---- Favorites: hand-picked combos (named by the bottom color) and gradients ----
 const COMBOS = [

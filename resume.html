@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume · Dario Fidanza</title>
+<meta name="description" content="Resume of Dario Fidanza, design systems designer. Nine+ years at EA, Lyft, and Instacart.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<style>
+:root{
+  --bg:#07101f; --bg2:#0d1a2e; --bg3:#12233b;
+  --text:#f0f4ff; --dim:#8fa8c4; --faint:#5a7396;
+  --blue:#4f80f5; --violet:#7c5af5; --magenta:#c55af5; --green:#3dba7e;
+  --line:rgba(143,168,196,.14);
+  --glass:rgba(13,26,46,.7);
+  --fade:rgba(7,16,31,.85);
+}
+html:not(.dark){
+  --bg:#f4f6fd; --bg2:#ffffff; --bg3:#e8edf9;
+  --text:#07101f; --dim:#3a5070; --faint:#6b80a0;
+  --line:rgba(7,16,31,.12);
+  --glass:rgba(255,255,255,.7);
+  --fade:rgba(244,246,253,.9);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s}
+a{color:inherit;text-decoration:none}
+
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:linear-gradient(180deg,var(--fade),transparent)}
+.nav-left{display:flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:16px;transition:.2s}
+.back:hover{color:var(--text);background:var(--bg3)}
+.wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
+.wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
+.theme:hover{color:var(--text)}
+html.dark .icon-moon{display:none}
+html:not(.dark) .icon-sun{display:none}
+
+/* floating toolbar */
+.toolbar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:6px;background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.tb-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:none;background:none;color:var(--dim);font-size:16px;cursor:pointer;transition:.2s}
+.tb-btn:hover{color:var(--text);background:var(--bg3)}
+.tb-zoom{min-width:52px;text-align:center;font-size:12.5px;font-weight:600;color:var(--dim);letter-spacing:.02em}
+.tb-dl{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 20px;border-radius:999px;font-size:13px;font-weight:600;background:linear-gradient(92deg,var(--blue),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(79,128,245,.4);transition:.2s;margin-left:4px}
+.tb-dl:hover{transform:translateY(-1px)}
+
+/* sheet */
+.stage{position:relative;z-index:2;padding:100px 24px 120px;display:flex;justify-content:center}
+.sheet{border-radius:6px;box-shadow:0 30px 90px rgba(0,0,0,.55);border:1px solid var(--line);transition:width .2s ease;height:auto;max-width:none}
+@media(max-width:600px){nav{padding:12px 16px}.stage{padding:84px 12px 110px}}
+</style>
+</head>
+<body>
+<canvas id="flow" aria-hidden="true"></canvas>
+
+<nav>
+  <div class="nav-left">
+    <a class="back" href="index.html" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
+    <a class="wordmark" href="index.html"><span><b>Dario</b>&nbsp;Fidanza</span></a>
+  </div>
+  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+</nav>
+
+<div class="stage">
+  <img class="sheet" id="sheet" src="Assets/resume-sheet.png" alt="Resume of Dario Fidanza. Download the PDF below for a text version." width="2000" height="3240">
+</div>
+
+<div class="toolbar">
+  <button class="tb-btn" onclick="zoom(-1)" aria-label="Zoom out"><i class="bi bi-dash-lg"></i></button>
+  <span class="tb-zoom" id="zoomLabel">100%</span>
+  <button class="tb-btn" onclick="zoom(1)" aria-label="Zoom in"><i class="bi bi-plus-lg"></i></button>
+  <a class="tb-dl" href="Assets/Dario-Fidanza-Resume.pdf" download="Dario Fidanza Resume.pdf"><i class="bi bi-download"></i>Download PDF</a>
+</div>
+
+<script>
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+}
+(function () {
+  const stored = localStorage.getItem('darkMode');
+  document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
+})();
+
+/* zoom: 100% = comfortable reading width, capped to viewport at the low end */
+const LEVELS = [60, 75, 90, 100, 115, 130, 150, 175];
+let level = 3;
+const sheet = document.getElementById('sheet');
+const label = document.getElementById('zoomLabel');
+function baseWidth() { return Math.min(900, innerWidth - 32); }
+function apply() {
+  sheet.style.width = Math.round(baseWidth() * LEVELS[level] / 100) + 'px';
+  label.textContent = LEVELS[level] + '%';
+}
+function zoom(dir) {
+  level = Math.max(0, Math.min(LEVELS.length - 1, level + dir));
+  apply();
+}
+addEventListener('resize', apply);
+apply();
+
+/* flowing contour lines, same as the homepage */
+(function () {
+  const canvas = document.getElementById('flow');
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize() { canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    const dark = document.documentElement.classList.contains('dark');
+    for (let i = 0; i < LINES; i++) {
+      const yBase = (i / (LINES - 1)) * h * 1.1 - h * 0.05;
+      const p = i / LINES;
+      const r = dark ? Math.round(79 + p * 118) : Math.round(50 + p * 100);
+      const g = dark ? Math.round(128 - p * 38) : Math.round(90 - p * 30);
+      const b = dark ? 245 : 215;
+      const alpha = (0.09 + 0.16 * Math.sin(p * Math.PI)) * (i % 4 === 0 ? 1.6 : 1) * (dark ? 1 : 0.55);
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase
+          + Math.sin(x * 0.003 + t * 0.7 + i * 0.45) * 34
+          + Math.sin(x * 0.0011 - t * 0.4 + i * 0.8) * 52
+          + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
+      ctx.stroke();
+    }
+  }
+  function loop() { t += 0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize);
+  resize();
+  if (reduce) { render(); } else { requestAnimationFrame(loop); }
+})();
+</script>
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
