@@ -167,7 +167,7 @@ section.band{position:relative;z-index:2}
 /* 02 AI + palette subsection */
 .ai-grid{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:stretch;margin-top:40px}
 .ai-grid .tile{display:flex;flex-direction:column}
-.ai-grid .tile .link{margin-top:auto}
+.ai-grid .tile .links{margin-top:auto;display:flex;flex-direction:column;gap:7px;align-items:flex-start}
 .pov-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--blue);margin:20px 0}
 .pov-link:hover{text-decoration:underline}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -342,7 +342,10 @@ footer.site{position:relative;z-index:2;border-top:1px solid var(--line);padding
         <div class="kick">Experiment</div>
         <h3><img src="Assets/tinyroots-icon.png" alt="TinyRoots logo">TinyRoots</h3>
         <p>A product and design system experiment built by AI, for AI. Designers define intent, wireframes, and component contracts, and a locked design system scaffolds hi-fi prototypes straight to code. The experiment behind my POV.</p>
-        <a class="link" href="https://tinyroots.app" target="_blank" rel="noopener">Explore TinyRoots ↗</a>
+        <div class="links">
+          <a class="link" href="https://tinyroots.app" target="_blank" rel="noopener">Explore TinyRoots ↗</a>
+          <a class="link" href="https://tinyroots.app/design-system" target="_blank" rel="noopener">View the sample design system ↗</a>
+        </div>
       </div>
     </div>
     <div class="palette-card">
