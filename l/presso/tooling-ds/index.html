@@ -517,8 +517,10 @@ html.light .card:hover { background: rgba(0,0,0,0.03); }
 html.light .slide::before { background-image: radial-gradient(circle, rgba(50,90,210,0.22) 1px, transparent 1px); opacity: 0.25; }
 html.light .slide-dots::before { display: none; }
 html.light .slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px); }
-.theme-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
-.theme-btn:hover { border-color: var(--border-strong); }
+.theme-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+.theme-btn:hover { color: var(--text); border-color: var(--border-strong); }
+html.light .tb-sun { display: none; }
+html:not(.light) .tb-moon { display: none; }
 
 /* ═══════ EDIT MODE ═══════ */
 .edit-toolbar { display:none; position:fixed; top:14px; right:155px; z-index:9999; gap:8px; align-items:center; }
@@ -697,7 +699,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
   <div class="nav-right">
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark"><svg class="tb-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="tb-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
     <span class="slide-counter" id="counter">1 / 37</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
@@ -1792,12 +1794,10 @@ updateNav();
 // ═══════ THEME TOGGLE ═══════
 function toggleTheme() {
   const isLight = document.documentElement.classList.toggle('light');
-  document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀';
   localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
 }
 if (localStorage.getItem('deck-theme') === 'light') {
   document.documentElement.classList.add('light');
-  document.getElementById('themeBtn').textContent = '🌙';
 }
 
 // ═══════ EDIT MODE ═══════
