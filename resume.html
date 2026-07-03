@@ -118,7 +118,14 @@ apply();
   const txt = await (await fetch('Assets/resume-embed.html')).text();
   const doc = new DOMParser().parseFromString(txt, 'text/html');
   const shadow = sheet.attachShadow({ mode: 'open' });
-  doc.querySelectorAll('link[rel="stylesheet"], style').forEach(n => shadow.appendChild(n.cloneNode(true)));
+  doc.querySelectorAll('link[rel="stylesheet"], style').forEach(n => {
+    const c = n.cloneNode(true);
+    if (c.tagName === 'STYLE') c.textContent = c.textContent.replace(/:root/g, ':host');
+    shadow.appendChild(c);
+  });
+  const base = document.createElement('style');
+  base.textContent = ":host{display:block;color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}";
+  shadow.appendChild(base);
   const page = doc.querySelector('.page');
   shadow.appendChild(page.cloneNode(true));
   const measure = () => {
