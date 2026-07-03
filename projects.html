@@ -1,868 +1,294 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Dario Fidanza</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        border: "hsl(var(--border))",
-                        input: "hsl(var(--input))",
-                        ring: "hsl(var(--ring))",
-                        background: "hsl(var(--background))",
-                        foreground: "hsl(var(--foreground))",
-                        primary: {
-                            DEFAULT: "hsl(var(--primary))",
-                            foreground: "hsl(var(--primary-foreground))",
-                        },
-                        secondary: {
-                            DEFAULT: "hsl(var(--secondary))",
-                            foreground: "hsl(var(--secondary-foreground))",
-                        },
-                        card: {
-                            DEFAULT: "hsl(var(--card))",
-                            foreground: "hsl(var(--card-foreground))",
-                        },
-                    },
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects · Dario Fidanza</title>
+<meta name="description" content="Selected work by Dario Fidanza: design systems, enterprise tooling, and product design at Instacart, Lyft, and EA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<style>
+:root{
+  --bg:#07101f; --bg2:#0d1a2e; --bg3:#12233b;
+  --text:#f0f4ff; --dim:#8fa8c4; --faint:#5a7396;
+  --blue:#4f80f5; --violet:#7c5af5; --magenta:#c55af5; --green:#3dba7e;
+  --line:rgba(143,168,196,.14);
+  --glass:rgba(13,26,46,.7);
+  --fade:rgba(7,16,31,.85);
+}
+html:not(.dark){
+  --bg:#f4f6fd; --bg2:#ffffff; --bg3:#e8edf9;
+  --text:#07101f; --dim:#3a5070; --faint:#6b80a0;
+  --line:rgba(7,16,31,.12);
+  --glass:rgba(255,255,255,.7);
+  --fade:rgba(244,246,253,.9);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+h1,h2,h3{font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
 
-    <style>
-        :root {
-            --background: 0 0% 100%;
-            --foreground: 222.2 84% 4.9%;
-            --card: 0 0% 100%;
-            --card-foreground: 222.2 84% 4.9%;
-            --primary: 222.2 47.4% 11.2%;
-            --primary-foreground: 210 40% 98%;
-            --secondary: 210 40% 96.1%;
-            --secondary-foreground: 222.2 47.4% 11.2%;
-            --muted: 210 40% 96.1%;
-            --muted-foreground: 215.4 16.3% 46.9%;
-            --border: 214.3 31.8% 91.4%;
-            --input: 214.3 31.8% 91.4%;
-            --ring: 222.2 84% 4.9%;
-            --radius: 0.5rem;
-        }
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
 
-        .dark {
-            --background: 222.2 84% 4.9%;
-            --foreground: 210 40% 98%;
-            --card: 222.2 84% 4.9%;
-            --card-foreground: 210 40% 98%;
-            --primary: 210 40% 98%;
-            --primary-foreground: 222.2 47.4% 11.2%;
-            --secondary: 217.2 32.6% 17.5%;
-            --secondary-foreground: 210 40% 98%;
-            --muted: 217.2 32.6% 17.5%;
-            --muted-foreground: 215 20.2% 65.1%;
-            --border: 217.2 32.6% 17.5%;
-            --input: 217.2 32.6% 17.5%;
-            --ring: 212.7 26.8% 83.9%;
-        }
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:linear-gradient(180deg,var(--fade),transparent)}
+.nav-left{display:flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:16px;transition:.2s}
+.back:hover{color:var(--text);background:var(--bg3)}
+.wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
+.wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
+.theme:hover{color:var(--text)}
+html.dark .icon-moon{display:none}
+html:not(.dark) .icon-sun{display:none}
 
-        /* Consistent Margins - 92px left and right */
-        .site-container {
-            max-width: calc(100vw - 184px); /* 100vw - (92px * 2) */
-            margin-left: 92px;
-            margin-right: 92px;
-        }
+.wrap{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:130px 40px 80px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 14px;margin-bottom:20px;backdrop-filter:blur(8px)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-size:clamp(34px,4vw,52px);line-height:1.1;margin-bottom:12px}
+h1 .strike{text-decoration:line-through;opacity:.45;font-weight:300}
+.sub{font-size:15.5px;color:var(--dim);line-height:1.7;max-width:560px;margin-bottom:56px}
 
-        @media (max-width: 1200px) {
-            .site-container {
-                max-width: calc(100vw - 64px);
-                margin-left: 32px;
-                margin-right: 32px;
-            }
-        }
+.kicker{font-family:'Hepta Slab',serif;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue);margin:0 0 22px}
+.kicker .n{color:var(--faint)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:70px}
+.grid:last-of-type{margin-bottom:0}
 
-        @media (max-width: 768px) {
-            .site-container {
-                max-width: calc(100vw - 32px);
-                margin-left: 16px;
-                margin-right: 16px;
-            }
-        }
+.pcard{position:relative;display:flex;flex-direction:column;border-radius:20px;border:1px solid var(--line);background:linear-gradient(170deg,var(--bg2),var(--bg));overflow:hidden;transition:transform .25s,border-color .25s}
+.pcard:hover{transform:translateY(-4px);border-color:rgba(124,90,245,.45)}
+.pcard .glow{position:absolute;top:-1px;left:20px;right:20px;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);opacity:0;transition:opacity .25s;z-index:2}
+.pcard:hover .glow{opacity:1}
+.pcard-img{height:168px;background-size:cover;background-position:center top;border-bottom:1px solid var(--line);filter:saturate(.92);transition:filter .25s}
+.pcard:hover .pcard-img{filter:saturate(1.05)}
+.pcard-body{display:flex;flex-direction:column;flex:1;padding:20px 22px 18px}
+.pcard-body h3{font-size:17px;line-height:1.3;margin-bottom:8px}
+.pcard-body p{font-size:12.5px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.pcard-body .link{margin-top:auto;font-size:13px;font-weight:600;color:var(--blue)}
+.pcard:hover .link{text-decoration:underline}
 
-        body {
-            background-color: hsl(var(--background));
-            color: hsl(var(--foreground));
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: hsl(var(--background));
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        main {
-            margin-top: 4rem;
-            min-height: calc(100vh - 4rem);
-        }
-
-        .project-card {
-            background-size: cover;
-            background-position: center;
-            min-height: 320px;
-        }
-
-        /* Individual project card backgrounds */
-        .project-card[data-project="creative-tonic-agency"] {
-            background-image: url('Assets/Projects/creative-tonic-thumb.jpg');
-        }
-
-        .project-card[data-project="ea-design-system"] {
-            background-image: url('Assets/Projects/ea-design-system-thumb.jpg');
-        }
-
-        .project-card[data-project="ea-digital-workspace"] {
-            background-image: url('Assets/Projects/ea-digital-workspace-thumb.jpg');
-        }
-
-        .project-card[data-project="ea-learning-management"] {
-            background-image: url('Assets/Projects/ea-learning-thumb.jpg');
-        }
-
-        .project-card[data-project="forkright-brand"] {
-            background-image: url('Assets/Projects/forkright-thumb.jpg');
-        }
-
-        .project-card[data-project="fresh2design"] {
-            background-image: url('Assets/Projects/fresh2design-thumb.jpg');
-        }
-
-        .project-card[data-project="human-centered-design"] {
-            background-image: url('Assets/Projects/human-centered-thumb.jpg');
-        }
-
-        .project-card[data-project="lyft-driver-app"] {
-            background-image: url('Assets/Projects/lyft-driver-thumb.jpg');
-        }
-
-        .project-card[data-project="lyft-home-search"] {
-            background-image: url('Assets/Projects/lyft-home-thumb.jpg');
-        }
-
-        .project-card[data-project="lyft-rmis"] {
-            background-image: url('Assets/Projects/lyft-rmis-thumb.jpg');
-        }
-
-        .project-card[data-project="pmg-digital-marketing"] {
-            background-image: url('Assets/Projects/pmg-thumb.jpg');
-        }
-
-        .project-card[data-project="salesforce-crm"] {
-            background-image: url('Assets/Projects/salesforce-thumb.jpg');
-        }
-
-        /* Add to your existing project card backgrounds */
-        .project-card[data-project="instacart-tooling"] {
-            background-image: url('Assets/Projects/InstacartDS.png');
-        }
-
-        .project-card[data-project="carrotwork"] {
-            background-image: url('Assets/Projects/Carrotwork.png');
-        }
-
-        .project-card[data-project="partner-platform"] {
-            background-image: url('Assets/Projects/Onboarding.png');
-        }
-
-        .project-card[data-project="store-manager"] {
-            background-image: url('Assets/Projects/InstacartStoreManager.png');
-        }
-
-        .project-card[data-project="shopper-northstar"] {
-            background-image: url('Assets/Projects/Shopper.png');
-        }
-
-        .project-card[data-project="order-dashboard"] {
-            background-image: url('Assets/Projects/InstacartOrders.png');
-        }
-
-        /* Project card hover effects */
-        .project-card .overlay {
-            background: linear-gradient(to bottom, hsla(222.2, 84%, 4.9%, 0.9), rgba(48, 0, 115, 0.5));
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out;
-        }
-
-        .project-card:hover .overlay {
-            opacity: 1;
-        }
-
-        /* Content wrapper styles */
-        .project-card .content-wrapper {
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out;
-        }
-
-        .project-card:hover .content-wrapper {
-            opacity: 1;
-        }
-
-        /* Consistent tap targets for all devices */
-        .project-card {
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-            transition: transform 0.1s ease-in-out;
-            position: relative;
-        }
-        
-        .project-card:active {
-            transform: scale(0.98);
-        }
-        
-        /* Ensure buttons have consistent tap target size (minimum 44px) */
-        .project-card a {
-            min-height: 44px;
-            min-width: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-        
-        /* Mobile tap improvements */
-        @media (max-width: 768px) {
-            /* Hide content by default on mobile, show on tap */
-            .project-card .content-wrapper {
-                opacity: 0;
-                transition: opacity 0.2s ease-in-out;
-            }
-            
-            .project-card .mt-4 {
-                opacity: 0;
-                transition: opacity 0.2s ease-in-out;
-            }
-            
-            .project-card .overlay {
-                opacity: 0;
-                transition: opacity 0.2s ease-in-out;
-            }
-            
-            /* Show content and overlay on tap */
-            .project-card.tapped .content-wrapper,
-            .project-card.tapped .mt-4 {
-                opacity: 1;
-            }
-            
-            .project-card.tapped .overlay {
-                opacity: 1;
-            }
-        }
-        
-        /* Disable hover effects on "Coming Soon" buttons - no longer needed */
-    </style>
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:26px 48px;display:flex;align-items:center;justify-content:center;gap:24px;color:var(--faint);font-size:12.5px}
+footer a{color:var(--faint);transition:.2s}
+footer a:hover{color:var(--text)}
+@media(max-width:960px){.grid{grid-template-columns:1fr 1fr}.wrap{padding:110px 24px 60px}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div class="site-container flex h-16 items-center justify-between">
-            <!-- Left side links -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
-                <a href="index.html#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
-                <a href="projects.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
-                <a href="index.html#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
-            </div>
+<canvas id="flow" aria-hidden="true"></canvas>
 
-            <!-- Center logo -->
-            <a href="index.html" class="flex items-center absolute left-1/2 transform -translate-x-1/2">
-                <img src="Assets/logo.svg" alt="Dario Fidanza" class="h-10 block dark:hidden">
-                <img src="Assets/LogoWhite.svg" alt="Dario Fidanza" class="h-10 hidden dark:block">
-            </a>
+<nav>
+  <div class="nav-left">
+    <a class="back" href="index.html" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
+    <a class="wordmark" href="index.html"><span><b>Dario</b>&nbsp;Fidanza</span></a>
+  </div>
+  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+</nav>
 
-            <!-- Right side social icons -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-linkedin"></i>
-                </a>
-                <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-dribbble"></i>
-                </a>
-                <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-medium"></i>
-                </a>
-                <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-pinterest"></i>
-                </a>
-                <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-github"></i>
-                </a>
-                <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                    <i class="bi bi-camera-fill"></i>
-                </a>
-                <a href="mailto:varnish-beehive.4s@icloud.com" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email Me">
-                    <i class="bi bi-send"></i>
-                </a>
-                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle dark mode">
-                    <i class="bi bi-sun-fill hidden dark:block text-lg"></i>
-                    <i class="bi bi-moon-fill block dark:hidden text-lg"></i>
-                </button>
-            </div>
+<div class="wrap">
+  <span class="eyebrow"><span class="dot"></span>Project archive</span>
+  <h1><span class="strike">One</span> a few more things.</h1>
+  <p class="sub">A collection of selected works showcasing my experience in design systems, user experience, and digital innovation. Each card opens its Figma deck.</p>
 
-            <!-- Mobile menu button -->
-            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-full bg-card hover:bg-card/80 transition-colors" aria-label="Toggle mobile menu">
-                <i class="bi bi-list"></i>
-            </button>
+  <h2 class="kicker"><span class="n">01 /</span> Recent work</h2>
+  <div class="grid">
+      <a class="pcard" href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/TEMPLATE?node-id=2009-3128&viewport=-95%2C-3398%2C0.46&t=O98fqS2l8P5H7tZg-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/InstacartStoreManager.png')"></div>
+        <div class="pcard-body">
+          <h3>Instacart Store Manager App</h3>
+          <p>Retail management platform providing real-time order status tracking, cancellation handling, rapid shift scheduling, and comprehensive performance analytics.</p>
+          <span class="link">Figma deck ↗</span>
         </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
-            <div class="container px-4 py-4">
-                <!-- Navigation links -->
-                <div class="flex flex-col space-y-4 mb-6">
-                    <a href="index.html" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
-                    <a href="index.html#journey" class="text-sm font-medium transition-colors hover:text-primary">About</a>
-                    <a href="projects.html" class="text-sm font-medium transition-colors hover:text-primary">Projects</a>
-                    <a href="index.html#engagement" class="text-sm font-medium transition-colors hover:text-primary">Engagement</a>
-                </div>
-                
-                <!-- Social icons -->
-                <div class="flex items-center space-x-4">
-                    <a href="https://linkedin.com/in/dariofidanza" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-linkedin"></i>
-                    </a>
-                    <a href="https://dribbble.com/TigerWonder" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-dribbble"></i>
-                    </a>
-                    <a href="https://medium.com/@ArtAwake" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-medium"></i>
-                    </a>
-                    <a href="https://jp.pinterest.com/artawake/" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-pinterest"></i>
-                    </a>
-                    <a href="https://github.com/artawakes" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-github"></i>
-                    </a>
-                    <a href="https://bsky.app/profile/tigerwonder.bsky.social" target="_blank" rel="noopener" class="text-muted-foreground hover:text-foreground transition-colors">
-                        <i class="bi bi-camera-fill"></i>
-                    </a>
-                    <a href="mailto:varnish-beehive.4s@icloud.com" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email Me">
-                        <i class="bi bi-send"></i>
-                    </a>
-                </div>
-            </div>
+      </a>
+      <a class="pcard" href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2015-3922&viewport=-95%2C-4782%2C0.46&t=Yy0ywLMidXhLgtwD-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/Carrotwork.png')"></div>
+        <div class="pcard-body">
+          <h3>CarrotWork</h3>
+          <p>Advanced labor scheduling platform optimizing retail workforce management for order picking and delivery operations.</p>
+          <span class="link">Figma deck ↗</span>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-            <main class="site-container">
-        <div class="pt-8">
-            <h1 class="text-4xl font-bold mb-2">
-                <span class="line-through opacity-70">One</span> a few more things.
-            </h1>
-            <h3 class="text-base text-muted-foreground mb-8 max-w-2xl">
-                A collection of selected works showcasing my experience in design systems, user experience, and digital innovation.
-            </h3>
-            
-            <!-- Recent Work Section -->
-            <h2 class="text-2xl font-semibold mb-6">Recent work</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <!-- 1. Instacart Tooling Design System -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="instacart-tooling">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Instacart Tooling Design System</h3>
-                            <p class="text-sm opacity-90 mt-2">0-1 component library design and development unifying Instacart Partner Portal, Ads Manager, Caper tooling, and Foodstorm platforms.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/LIve-Portfolio-Deck?node-id=2015-142138&viewport=-95%2C-4782%2C0.46&t=A0vEpp1tQ5gbPdRA-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Instacart Store Manager App -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="store-manager">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Instacart Store Manager App</h3>
-                            <p class="text-sm opacity-90 mt-2">Retail management platform providing real-time order status tracking, cancellation handling, rapid shift scheduling, and comprehensive performance analytics.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/TEMPLATE?node-id=2009-3128&viewport=-95%2C-3398%2C0.46&t=O98fqS2l8P5H7tZg-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Orders Dashboard -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="order-dashboard">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Orders Dashboard</h3>
-                            <p class="text-sm opacity-90 mt-2">Design a dashboard that transforms complex logistics into clear, actionable workflows for Customer support.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/TEMPLATE?node-id=2015-5253&viewport=-95%2C-4782%2C0.46&t=A0vEpp1tQ5gbPdRA-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <!-- 4. CarrotWork -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="carrotwork">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">CarrotWork</h3>
-                            <p class="text-sm opacity-90 mt-2">Advanced labor scheduling platform optimizing retail workforce management for order picking and delivery operations.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2015-3922&viewport=-95%2C-4782%2C0.46&t=Yy0ywLMidXhLgtwD-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. Instacart Partner Platform Pickup Onboarding -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="partner-platform">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Instacart Partner Platform Pickup Onboarding</h3>
-                            <p class="text-sm opacity-90 mt-2">Streamlined onboarding experience for retail partners integrating pickup services into their operations.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2006-3688&t=u2dI5V3nh8TA08kU-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6. Shopper App Northstar -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="shopper-northstar">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Shopper App Northstar</h3>
-                            <p class="text-sm opacity-90 mt-2">Next-generation shopper experience platform focusing on efficiency, earnings transparency, and user satisfaction.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2015-6187&t=TlXY1ROIVIlZDLoZ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                Figma Deck
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M7 7h10v10"></path>
-                                    <path d="M7 17 17 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Older Work Section -->
-            <h2 class="text-2xl font-semibold mb-6">Older work</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 7. Lyft Driver App -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-driver-app">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Lyft Driver App</h3>
-                            <p class="text-sm opacity-90 mt-2">Driver-focused application redesign for Lyft.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/lyft-driver-app/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 8. Lyft Home -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-home-search">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Lyft Home</h3>
-                            <p class="text-sm opacity-90 mt-2">Homepage redesign and optimization for Lyft.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/lyft-home-search/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 9. Lyft RMIS -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="lyft-rmis">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Lyft RMIS</h3>
-                            <p class="text-sm opacity-90 mt-2">Risk Management Information System for Lyft.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/lyft-rmis/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 10. EA Design System -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-design-system">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">EA Design System</h3>
-                            <p class="text-sm opacity-90 mt-2">Enterprise-wide design system implementation for Electronic Arts.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/ea-design-system/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 11. EA Digital Workspace -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-digital-workspace">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">EA Digital Workspace</h3>
-                            <p class="text-sm opacity-90 mt-2">Digital workplace transformation for Electronic Arts employees.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/ea-digital-workspace/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 12. EA Learning -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="ea-learning-management">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">EA Learning</h3>
-                            <p class="text-sm opacity-90 mt-2">Learning management system redesign for Electronic Arts.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/ea-learning-management/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 13. Creative Tonic Agency -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="creative-tonic-agency">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Creative Tonic Agency</h3>
-                            <p class="text-sm opacity-90 mt-2">Brand identity and digital experience design for Creative Tonic Agency.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/creative-tonic-agency/Index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 14. Forkright -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="forkright-brand">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Forkright</h3>
-                            <p class="text-sm opacity-90 mt-2">Recipe management and meal planning application design.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/forkright-brand/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 15. Fresh2Design -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="fresh2design">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Fresh2Design Rebrand</h3>
-                            <p class="text-sm opacity-90 mt-2">Transforming Austin's leading design community through strategic rebranding and platform redesign.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/fresh2design/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 16. PMG -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="pmg-digital-marketing">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">PMG</h3>
-                            <p class="text-sm opacity-90 mt-2">Digital marketing platform design for PMG.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/pmg-digital-marketing/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 17. Human Centered Design -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="human-centered-design">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Human Centered Design</h3>
-                            <p class="text-sm opacity-90 mt-2">Design thinking and innovation consulting practice.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/human-centered-design/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 18. Salesforce -->
-                <div class="project-card group relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" data-project="salesforce-crm">
-                    <div class="overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="p-6 h-full flex flex-col justify-between relative z-10">
-                        <div class="content-wrapper text-white">
-                            <h3 class="text-lg font-semibold">Salesforce</h3>
-                            <p class="text-sm opacity-90 mt-2">Enterprise CRM platform design for Salesforce.</p>
-                        </div>
-                        <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="projects/salesforce-crm/index.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                                View project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </a>
+      <a class="pcard" href="https://www.figma.com/deck/ar4YRpEjCFeAdqUtS76Oac/Dario-Live-Portfolio-Deck?node-id=2006-3688&t=u2dI5V3nh8TA08kU-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/Onboarding.png')"></div>
+        <div class="pcard-body">
+          <h3>Instacart Partner Platform Pickup Onboarding</h3>
+          <p>Streamlined onboarding experience for retail partners integrating pickup services into their operations.</p>
+          <span class="link">Figma deck ↗</span>
         </div>
-    </main>
+      </a>
+  </div>
 
-    <script>
-        // Dark mode toggle
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            // Store the preference
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
-        }
+  <h2 class="kicker"><span class="n">02 /</span> Older work</h2>
+  <div class="grid">
+      <a class="pcard" href="projects/lyft-driver-app/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/lyft-driver-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Lyft Driver App</h3>
+          <p>Driver-focused application redesign for Lyft.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/lyft-home-search/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/lyft-home-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Lyft Home</h3>
+          <p>Homepage redesign and optimization for Lyft.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/lyft-rmis/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/lyft-rmis-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Lyft RMIS</h3>
+          <p>Risk Management Information System for Lyft.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/ea-design-system/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/ea-design-system-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>EA Design System</h3>
+          <p>Enterprise-wide design system implementation for Electronic Arts.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/ea-digital-workspace/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/ea-digital-workspace-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>EA Digital Workspace</h3>
+          <p>Digital workplace transformation for Electronic Arts employees.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/ea-learning-management/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/ea-learning-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>EA Learning</h3>
+          <p>Learning management system redesign for Electronic Arts.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/creative-tonic-agency/Index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/creative-tonic-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Creative Tonic Agency</h3>
+          <p>Brand identity and digital experience design for Creative Tonic Agency.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/forkright-brand/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/forkright-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Forkright</h3>
+          <p>Recipe management and meal planning application design.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/fresh2design/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/fresh2design-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Fresh2Design Rebrand</h3>
+          <p>Transforming Austin&#x27;s leading design community through strategic rebranding and platform redesign.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/pmg-digital-marketing/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/pmg-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>PMG</h3>
+          <p>Digital marketing platform design for PMG.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/human-centered-design/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/human-centered-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Human Centered Design</h3>
+          <p>Design thinking and innovation consulting practice.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+      <a class="pcard" href="projects/salesforce-crm/index.html" target="_blank" rel="noopener">
+        <div class="glow"></div>
+        <div class="pcard-img" style="background-image:url('Assets/Projects/salesforce-thumb.jpg')"></div>
+        <div class="pcard-body">
+          <h3>Salesforce</h3>
+          <p>Enterprise CRM platform design for Salesforce.</p>
+          <span class="link">Figma deck ↗</span>
+        </div>
+      </a>
+  </div>
+</div>
 
-        // Check for saved dark mode preference
-        document.addEventListener('DOMContentLoaded', () => {
-            const darkMode = localStorage.getItem('darkMode') === 'true';
-            if (darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
+<footer>
+  <span>© 2026 Dario Fidanza</span>
+  <a href="l/presso/">Case study presentations →</a>
+  <a href="#" >Back to the top <i class="bi bi-chevron-up"></i></a>
+</footer>
 
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        }
+<script>
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+}
+(function () {
+  const stored = localStorage.getItem('darkMode');
+  document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
+})();
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
-
-        // Close mobile menu when resizing to larger viewport
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            }
-        });
-
-        // Make project cards fully clickable with consistent tap targets
-        document.querySelectorAll('.project-card').forEach(card => {
-            // Find the primary link inside the card (prefer project links over Figma links)
-            const projectLink = card.querySelector('a[href*="projects/"]');
-            const figmaLink = card.querySelector('a[href*="figma.com"]');
-            const primaryLink = projectLink || figmaLink;
-            
-            if (primaryLink) {
-                // Make the entire card clickable
-                card.style.cursor = 'pointer';
-                
-                let isTapped = false;
-                let touchStartTime = 0;
-                
-                // Handle touch start - show content
-                card.addEventListener('touchstart', (e) => {
-                    touchStartTime = Date.now();
-                    isTapped = true;
-                    card.classList.add('tapped');
-                    card.style.transform = 'scale(0.98)';
-                });
-                
-                // Handle touch end - navigate if it was a tap (not a drag)
-                card.addEventListener('touchend', (e) => {
-                    const touchDuration = Date.now() - touchStartTime;
-                    
-                    // Only navigate if it was a quick tap (not a drag or long press)
-                    if (isTapped && touchDuration < 500) {
-                        // Don't trigger if touching any link directly
-                        if (e.target.tagName !== 'A' && !e.target.closest('a')) {
-                            e.preventDefault();
-                            // Use the same link behavior as the button
-                            if (primaryLink.target === '_blank') {
-                                window.open(primaryLink.href, '_blank', 'noopener,noreferrer');
-                            } else {
-                                window.location.href = primaryLink.href;
-                            }
-                        }
-                    }
-                    
-                    // Reset visual state
-                    setTimeout(() => {
-                        card.classList.remove('tapped');
-                        card.style.transform = '';
-                        isTapped = false;
-                    }, 150);
-                });
-                
-                // Handle touch cancel - reset state
-                card.addEventListener('touchcancel', () => {
-                    card.classList.remove('tapped');
-                    card.style.transform = '';
-                    isTapped = false;
-                });
-                
-                // Handle mouse click for desktop
-                card.addEventListener('click', (e) => {
-                    // Don't trigger if clicking on any link directly
-                    if (e.target.tagName === 'A' || e.target.closest('a')) {
-                        return;
-                    }
-                    
-                    // Use the same link behavior as the button
-                    if (primaryLink.target === '_blank') {
-                        window.open(primaryLink.href, '_blank', 'noopener,noreferrer');
-                    } else {
-                        window.location.href = primaryLink.href;
-                    }
-                });
-            }
-        });
-    </script>
-  <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+/* flowing contour lines, same as the homepage */
+(function () {
+  const canvas = document.getElementById('flow');
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize() { canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    const dark = document.documentElement.classList.contains('dark');
+    for (let i = 0; i < LINES; i++) {
+      const yBase = (i / (LINES - 1)) * h * 1.1 - h * 0.05;
+      const p = i / LINES;
+      const r = dark ? Math.round(79 + p * 118) : Math.round(50 + p * 100);
+      const g = dark ? Math.round(128 - p * 38) : Math.round(90 - p * 30);
+      const b = dark ? 245 : 215;
+      const alpha = (0.09 + 0.16 * Math.sin(p * Math.PI)) * (i % 4 === 0 ? 1.6 : 1) * (dark ? 1 : 0.55);
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase
+          + Math.sin(x * 0.003 + t * 0.7 + i * 0.45) * 34
+          + Math.sin(x * 0.0011 - t * 0.4 + i * 0.8) * 52
+          + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
+      ctx.stroke();
+    }
+  }
+  function loop() { t += 0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize);
+  resize();
+  if (reduce) { render(); } else { requestAnimationFrame(loop); }
+})();
+</script>
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
