@@ -13,7 +13,7 @@
   :root {
     --bg: #07101f; --bg2: #0d1a2e;
     --surface: rgba(255,255,255,0.04); --surface-2: rgba(255,255,255,0.07);
-    --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+    --border: rgba(143,168,196,0.14); --border-strong: rgba(143,168,196,0.30);
     --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
     --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e;
     --nav-h: 60px;
@@ -30,8 +30,8 @@
     padding: calc(var(--nav-h) + 56px) 24px 110px;
   }
 
-  /* ── Dot-wave canvas background (matches l/presso) ── */
-  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  /* ── Flowing contour lines, matches dariofidanza.com ── */
+  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .85; mask-image: linear-gradient(180deg,#000 0%,#000 55%,transparent 100%); -webkit-mask-image: linear-gradient(180deg,#000 0%,#000 55%,transparent 100%); }
 
   .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
 
@@ -59,20 +59,17 @@
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; font-weight: 700;
   }
-  .nav-back {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
-    color: var(--text-dim); text-decoration: none; transition: color 0.2s;
-  }
-  .nav-back:hover { color: var(--text); }
 
   /* ── Header ── */
   header { margin-bottom: 42px; }
   .eyebrow {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); background: rgba(13,26,46,0.7); border: 1px solid var(--border);
+    border-radius: 999px; padding: 7px 14px; margin-bottom: 18px; backdrop-filter: blur(8px);
   }
-  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 9px var(--accent2); }
+  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); flex-shrink: 0; animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   h1 {
     font-family: 'Hepta Slab', serif; font-weight: 400;
     font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -0.025em;
@@ -90,15 +87,15 @@
   .page-tabs {
     display: flex; gap: 6px; margin: 0 0 28px;
     background: var(--surface-2); border: 1px solid var(--border);
-    padding: 5px; border-radius: 12px; width: fit-content; flex-wrap: wrap;
+    padding: 5px; border-radius: 999px; width: fit-content; flex-wrap: wrap;
   }
   .page-tab {
     background: transparent; border: none; color: var(--text-dim);
-    padding: 10px 22px; border-radius: 9px; font-size: 14px; font-weight: 600;
+    padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600;
     cursor: pointer; transition: all .15s;
   }
   .page-tab:hover { color: var(--text); }
-  .page-tab.active { background: var(--accent); color: #fff; }
+  .page-tab.active { background: linear-gradient(92deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 4px 18px rgba(79,128,245,0.35); }
 
   /* ── Input ── */
   .input-row {
@@ -144,15 +141,15 @@
   .mode-row { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; flex-wrap: wrap; }
   .mode-btns {
     display: flex; gap: 4px; flex-wrap: wrap;
-    background: var(--surface-2); border: 1px solid var(--border); padding: 4px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border); padding: 4px; border-radius: 999px;
   }
   .mode-btn {
     background: transparent; border: none; color: var(--text-dim);
-    padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
     cursor: pointer; transition: all .15s; white-space: nowrap;
   }
   .mode-btn:hover { color: var(--text); }
-  .mode-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 16px rgba(79,128,245,0.42); }
+  .mode-btn.active { background: linear-gradient(92deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 0 16px rgba(79,128,245,0.42); }
   .fav-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
   /* ── Palette ── */
@@ -303,7 +300,6 @@
     .viz-grid { grid-template-columns: 1fr; }
     .palette { grid-template-columns: 1fr; }
     nav { padding: 0 20px; }
-    .nav-back { display: none; }
   }
 </style>
 </head>
@@ -316,9 +312,6 @@
     <a class="nav-back-btn" href="/" aria-label="Back to dariofidanza.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
     <a class="nav-logo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
   </div>
-  <a class="nav-back" href="/">
-    <span>Back to dariofidanza.com</span>
-  </a>
 </nav>
 
 <div class="wrap">
@@ -452,61 +445,39 @@
 <div class="toast" id="toast">Copied</div>
 
 <script>
-// ── Dot-wave canvas animation (matches l/presso landing) ──
-(function() {
+// ── Flowing contour lines, ported from dariofidanza.com ──
+(function () {
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-  const SPACING = 30;
   let w, h, t = 0;
-
-  function resize() {
-    w = canvas.width  = window.innerWidth  || document.documentElement.clientWidth  || 1280;
-    h = canvas.height = window.innerHeight || document.documentElement.clientHeight || 800;
-  }
-
-  function draw() {
-    t += 0.016;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize() { canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render() {
     ctx.clearRect(0, 0, w, h);
-
-    const cx = w * 0.65, cy = h * 0.42;
-    const maxD = Math.sqrt(w * w + h * h) * 0.55;
-    const cols = Math.ceil(w / SPACING) + 2;
-    const rows = Math.ceil(h / SPACING) + 2;
-
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const x = c * SPACING - SPACING * 0.5;
-        const y = r * SPACING - SPACING * 0.5;
-        const dx = x - cx, dy = y - cy;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const norm = Math.min(1, dist / maxD);
-
-        const a  = Math.sin(dist * 0.013 - t * 2.0);
-        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
-        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
-        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
-
-        const falloff = Math.pow(1 - norm, 1.3);
-        const opacity = (wave * 0.38 + 0.30) * falloff;
-        if (opacity < 0.04) continue;
-
-        const bright = Math.max(0, wave);
-        const rc = Math.round(79  + bright * 90);
-        const gc = Math.round(128 - bright * 60);
-        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
-
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
-        ctx.fill();
+    for (let i = 0; i < LINES; i++) {
+      const yBase = (i / (LINES - 1)) * h * 1.1 - h * 0.05;
+      const p = i / LINES;
+      const r = Math.round(79 + p * 118);
+      const g = Math.round(128 - p * 38);
+      const alpha = (0.09 + 0.16 * Math.sin(p * Math.PI)) * (i % 4 === 0 ? 1.6 : 1);
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase
+          + Math.sin(x * 0.003 + t * 0.7 + i * 0.45) * 34
+          + Math.sin(x * 0.0011 - t * 0.4 + i * 0.8) * 52
+          + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
+      ctx.strokeStyle = `rgba(${r},${g},245,${alpha})`;
+      ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
+      ctx.stroke();
     }
-    requestAnimationFrame(draw);
   }
-
+  function loop() { t += 0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize);
   resize();
-  window.addEventListener('resize', resize);
-  setTimeout(() => { requestAnimationFrame(draw); }, 60);
+  if (reduce) { render(); } else { requestAnimationFrame(loop); }
 })();
 
 // ---------- Color math ----------
