@@ -52,12 +52,6 @@
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; font-weight: 700;
   }
-  .nav-back {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
-    color: var(--text-dim); text-decoration: none; transition: color 0.2s;
-  }
-  .nav-back:hover { color: var(--text); }
 
   /* ── Reading column ── */
   .page {
@@ -183,7 +177,6 @@
   @media (max-width: 600px) {
     .page { padding: calc(var(--nav-h) + 48px) 22px 90px; }
     nav { padding: 0 20px; }
-    .nav-back { display: none; }
     .roles { grid-template-columns: 1fr; }
   }
 </style>
@@ -197,9 +190,6 @@
     <a class="nav-back-btn" id="navBack" href="/" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
     <a class="nav-logo" id="navLogo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
   </div>
-  <a class="nav-back" id="navBackText" href="/">
-    <span id="navBackLabel">Back to dariofidanza.com</span>
-  </a>
 </nav>
 
 <main class="page">
@@ -490,16 +480,12 @@
      - From dariofidanza.com or direct → back to the site home. */
   (function () {
     var back = document.getElementById('navBack');
-    var label = document.getElementById('navBackLabel');
     var logo = document.getElementById('navLogo');
     var ref = document.referrer || '';
     var fromProjects = ref.indexOf('/l/presso/') !== -1 && ref.indexOf('/pov') === -1;
     var target = fromProjects ? '../' : '/';
     if (back) back.setAttribute('href', target);
-    var backText = document.getElementById('navBackText');
-    if (backText) backText.setAttribute('href', target);
     if (logo) logo.setAttribute('href', target);
-    if (label) label.textContent = fromProjects ? 'All presentations' : 'Back to dariofidanza.com';
   })();
 </script>
 
