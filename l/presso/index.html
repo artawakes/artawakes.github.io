@@ -25,9 +25,9 @@
     font-family: 'Inter', system-ui, sans-serif;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    overflow-x: hidden;
     position: relative;
     -webkit-font-smoothing: antialiased;
   }
@@ -53,7 +53,14 @@
     padding: 16px 40px;
     min-height: 76px;
     gap: 6px;
-    background: linear-gradient(180deg, var(--fade), transparent);
+  }
+  nav::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: -44px;
+    background: linear-gradient(180deg, var(--fade) 0%, var(--fade) 55%, transparent 100%);
+    pointer-events: none;
+    z-index: -1;
   }
   .back {
     display: inline-flex; align-items: center; justify-content: center;
@@ -79,7 +86,9 @@
     width: max-content;
     max-width: min(580px, calc(100vw - 64px));
     min-width: 280px;
-    padding: 66px 32px 70px;
+    padding: 90px 32px 40px;
+    margin-top: auto;
+    margin-bottom: auto;
     position: relative;
     z-index: 1;
   }
@@ -193,36 +202,20 @@
   .deck:hover .arrow { color: var(--text); }
   @media (prefers-reduced-motion: reduce) { .arrow { animation: none; } .overline-dot { animation: none; } }
 
-  .site-copy {
-    position: fixed;
-    bottom: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    color: var(--faint);
-    white-space: nowrap;
+  .site-foot {
+    position: relative;
     z-index: 1;
-  }
-
-  .footer-note {
-    position: fixed;
-    bottom: 34px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    color: var(--faint);
+    width: 100%;
+    border-top: 1px solid var(--line);
+    padding: 22px 24px;
     text-align: center;
-    white-space: nowrap;
-    line-height: 1.6;
-    pointer-events: none;
-    z-index: 1;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
   }
-  .footer-note strong {
-    color: var(--dim);
-    font-weight: 600;
-  }
+  .site-foot strong { color: var(--dim); font-weight: 600; }
+  .site-foot .copy { display: block; margin-top: 8px; letter-spacing: 0.07em; }
 </style>
 </head>
 <body>
@@ -233,9 +226,6 @@
   <a class="back" href="https://dariofidanza.com" aria-label="Back to dariofidanza.com"><i class="bi bi-arrow-left"></i></a>
   <a class="wordmark" href="https://dariofidanza.com"><span><b>Darío</b>&nbsp;Fidanza</span></a>
 </nav>
-
-<span class="site-copy">© 2026 Dario Fidanza</span>
-<p class="footer-note"><strong>Best viewed on desktop</strong><br><span>Case studies are optimized for larger screens</span></p>
 
 <div class="wrap">
   <span class="overline"><span class="overline-dot"></span>L6 Designer @Instacart</span>
@@ -336,11 +326,16 @@
         <div class="deck-title">Project Archive</div>
         <div class="deck-sub">Older work case studies &amp; decks</div>
       </div>
-      <span class="arrow">→</span>
     </a>
 
   </div>
 </div>
+
+<footer class="site-foot">
+  <strong>Best viewed on desktop</strong><br>
+  Case studies are optimized for larger screens
+  <span class="copy">© 2026 Dario Fidanza</span>
+</footer>
 
 <script>
 // ── Flowing contour lines, ported from dariofidanza.com (dark-only page) ──
