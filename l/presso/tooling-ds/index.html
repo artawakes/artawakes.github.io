@@ -677,7 +677,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div class="nav-center">
     <!-- Intro — collapsed -->
     <div class="nav-project" data-project="intro" data-state="collapsed">
-      <button class="nav-project-pill" data-href="/"><span>Intro</span></button>
+      <button class="nav-project-pill" data-href="../intro/index.html"><span>Intro</span></button>
     </div>
     <!-- Tooling DS — expanded (active) -->
     <div class="nav-project" data-project="tds" data-state="expanded">
@@ -700,7 +700,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark"><svg class="tb-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="tb-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
-    <span class="slide-counter" id="counter">1 / 37</span>
+    <span class="slide-counter" id="counter">1 / 40</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled="">←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
@@ -745,7 +745,33 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div><!-- /hero-content -->
 </div>
 
-<!-- ══ 02 · PROBLEMS ══ dots -->
+<!-- ══ 02 · WHAT IS TDS ══ dots -->
+<div class="slide slide-dots layout-vc" data-section="problem">
+  <div style="width:100%; display:flex; align-items:center; gap:56px;">
+    <div style="flex:1 1 0; min-width:0;">
+      <span class="overline">What is TDS</span>
+      <h2>One tooling system,<br>two flagship products.</h2>
+      <p class="body-text" style="margin-top:14px; max-width:520px;">Instacart's unified <strong>Tooling Design System</strong> — the foundational system behind our enterprise tools.</p>
+      <div style="display:flex; gap:36px; margin-top:30px;">
+        <div class="stat-callout"><div class="stat-number" style="color:var(--accent);">2</div><div class="stat-label">Flagship products</div></div>
+        <div class="stat-callout"><div class="stat-number" style="color:var(--accent2);">2</div><div class="stat-label">Unofficially supported</div></div>
+        <div class="stat-callout"><div class="stat-number" style="color:var(--green);">1</div><div class="stat-label">Upcoming</div></div>
+      </div>
+    </div>
+    <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:22px; align-items:flex-start;">
+      <figure style="margin:0;">
+        <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Ads Manager</figcaption>
+        <img src="images/ads-manager.webp" alt="Ads Manager campaign performance dashboard with AI assistant" style="width:520px; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+      </figure>
+      <figure style="margin:0;">
+        <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Instacart Partner Platform</figcaption>
+        <img src="images/ipp-platform.webp" alt="IPP Instacart Partner Platform executive summary analytics" style="width:520px; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 · PROBLEMS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="problem">
   <div style="width:100%;">
     <span class="overline red">Problems</span>
@@ -1322,7 +1348,77 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 29 · GOVERNANCE ══ dots -->
+<!-- ══ 30 · MIGRATION PATH ══ dots -->
+<div class="slide slide-light slide-dots layout-vc" data-section="components">
+  <span class="overline green">The Migration Path</span>
+  <h2>A clear path, in milestones.</h2>
+  <div class="timeline-h" style="margin-top:26px;">
+    <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
+      <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <div class="timeline-num" style="color:var(--green);">Phase 01</div>
+        <div class="timeline-title">Assess</div>
+        <p>Audit the incoming library, map components to TDS, and surface gaps &amp; API differences.</p>
+        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a week</span></div>
+      </div>
+    </div>
+    <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
+      <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <div class="timeline-num" style="color:var(--green);">Phase 02</div>
+        <div class="timeline-title">Foundations</div>
+        <p>Migrate color &amp; typography tokens, then wire them into code.</p>
+        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+      </div>
+    </div>
+    <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
+      <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <div class="timeline-num" style="color:var(--green);">M1</div>
+        <div class="timeline-title">Core components</div>
+        <p>Foundational set: buttons, inputs, checkboxes and radios.</p>
+        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+      </div>
+    </div>
+    <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
+      <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <div class="timeline-num" style="color:var(--green);">M2</div>
+        <div class="timeline-title">Most-used batch</div>
+        <p>Expand coverage: dropdowns, date pickers and tabs.</p>
+        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+      </div>
+    </div>
+    <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
+      <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <div class="timeline-num" style="color:var(--green);">M3</div>
+        <div class="timeline-title">Complex components</div>
+        <p>Advanced components — some need a back-end refactor.</p>
+        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ half a quarter</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="width:100%; display:grid; grid-template-columns:repeat(5,1fr); gap:24px; margin-top:16px;">
+    <div style="grid-column:4 / 6; padding:0 10px;">
+      <div style="display:flex; align-items:center; gap:13px; padding:12px 18px; border-radius:14px; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
+        <span style="flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:rgba(61,186,126,0.22); color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        <div style="min-width:0;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; color:var(--green); margin-bottom:3px;">Parallel track · from M2 &rarr;</div>
+          <div class="body-text" style="margin:0; font-size:13px; line-height:1.4;">All net-new features &amp; pages can start being built in TDS.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:22px; display:flex; align-items:center; gap:10px; justify-content:center; flex-wrap:wrap;">
+    <span class="tag">Optional</span>
+    <span class="tag green">AI navigation bar</span>
+    <span class="tag green">AI components</span>
+    <span class="body-text" style="margin:0;">— can layer on at any stage.</span>
+  </div>
+</div>
+
+<!-- ══ 31 · GOVERNANCE ══ dots -->
 <div id="slide-32" class="slide hero-left slide-light slide-grid" style="background-color:#eef2ff;" data-section="impact">
   <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;padding-left:48px;">
     <span class="overline">Governance</span>
@@ -1392,6 +1488,21 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="uploaded-img-wrap" style="border-radius:12px;position:relative;z-index:2;" data-edit-bound="1"><img src="images/Docs+selfserve.png" style="max-width:936px;width:100%;height:auto;object-fit:contain;display:block;"></div>
     </div>
   </div>
+  <div style="display:flex; align-items:center; gap:8px; margin-top:20px; flex-wrap:wrap; justify-content:center;">
+    <span class="overline" style="margin:0 8px 0 0;">Guidance at every step</span>
+    <span class="tag">Assessment</span>
+    <span class="tag">Guidance</span>
+    <span class="tag">Set up</span>
+    <span class="tag">Support</span>
+    <span class="tag">Education</span>
+    <span class="tag">Maintenance</span>
+    <span style="width:1px; height:16px; background:var(--border-strong); margin:0 6px;"></span>
+    <span class="tag purple">Product crits</span>
+    <span class="tag purple">Weekly office hours</span>
+    <span class="tag purple">#tds-questions</span>
+    <span class="tag purple">Embedded design technologist</span>
+    <span class="tag green">~20 designers supported</span>
+  </div>
 </div>
 <!-- ══ 31 · ENG PARTNERSHIPS ══ grid -->
 <div class="slide slide-grid layout-vc" data-section="impact" style="background:#001810 !important;">
@@ -1442,7 +1553,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide hero-right" data-section="impact">
   <div class="hero-content">
     <span class="overline">AI Workstream · Components</span>
-    <h2>5 AI components</h2>
+    <h2>5 AI components<br><span style="color:var(--text-dim);">shipped in 2026</span></h2>
   </div>
   <div class="hero-img">
     <div class="uploaded-img-wrap img-fit" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" data-edit-bound="1"><img src="images/ai2.png" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -1489,15 +1600,15 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card-label">TDS inserts across 27 teams</div>
       </div>
       <div class="metric-card">
-        <div class="metric-number accent" style="font-size:44px;">8.5k</div>
-        <div class="card-label">inserts per week</div>
+        <div class="metric-number accent" style="font-size:44px;">12k</div>
+        <div class="card-label">inserts per week (12-mo avg)</div>
       </div>
       <div class="metric-card">
         <div class="metric-number green" style="font-size:44px;">90.9%</div>
         <div class="card-label">satisfaction score</div>
       </div>
       <div class="metric-card">
-        <div class="metric-number accent" style="font-size:44px;">185+</div>
+        <div class="metric-number accent" style="font-size:44px;">187</div>
         <div class="card-label">components in Figma library</div>
       </div>
       <div class="metric-card">
@@ -1505,7 +1616,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card-label">faster workflows reported</div>
       </div>
       <div class="metric-card">
-        <div class="metric-number accent" style="font-size:44px;">48</div>
+        <div class="metric-number accent" style="font-size:44px;">10+</div>
         <div class="card-label">net new components in 2026</div>
       </div>
       <div class="metric-card">
@@ -1513,7 +1624,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card-label">components in Storybook (96)</div>
       </div>
       <div class="metric-card">
-        <div class="metric-number accent" style="font-size:44px;">23+</div>
+        <div class="metric-number accent" style="font-size:44px;">47+</div>
         <div class="card-label">usage docs added in 2026</div>
       </div>
       <div class="metric-card" style="grid-column: 1 / -1;">
@@ -1528,7 +1639,32 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
-<!-- ══ 36 · TAKEAWAYS ══ dots -->
+<!-- ══ 39 · CHALLENGES + WHAT'S NEXT ══ dots -->
+<div class="slide slide-dots layout-vc" data-section="impact">
+  <span class="overline">Challenges &amp; what's next</span>
+  <h2>Building the system —<br>and its next chapter.</h2>
+  <div class="grid-2" style="margin-top:28px; align-items:start;">
+    <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
+      <div class="card-label" style="color:var(--red);">Challenges</div>
+      <ul class="bullet-list" style="margin-top:10px;">
+        <li>Building a <strong>0 → 1</strong> new way of working</li>
+        <li>Earning trust &amp; respect across teams</li>
+        <li>Migrations need <strong>dedicated focus</strong> &amp; resourcing</li>
+        <li>Balancing creativity vs. the rigidity of a system</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(61,186,126,0.25); background:rgba(61,186,126,0.04);">
+      <div class="card-label" style="color:var(--green);">What's next</div>
+      <ul class="bullet-list green" style="margin-top:10px;">
+        <li><strong>AI pilot</strong> — accelerate design &amp; build</li>
+        <li><strong>Figma Slots</strong> — flexibility without breaking the system</li>
+        <li>Deeper theming for rebrand &amp; white-label</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 40 · TAKEAWAYS ══ dots -->
 <div class="slide slide-dots layout-vc" data-section="impact">
   <span class="overline">Personal Takeaways</span>
   <h2>What I'd carry into<br>the next system.</h2>
@@ -1589,7 +1725,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { problem:0, system:6, components:16, impact:28 };
+const sections = { problem:0, system:7, components:17, impact:30 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
@@ -1885,8 +2021,6 @@ function saveDeck() {
 document.addEventListener('keydown', e => {
   if (location.hash === '#presenter') return;
   const inText = e.target.isContentEditable || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
-  if ((e.key === 'e' || e.key === 'E') && !inText) { toggleEditMode(); return; }
-  if ((e.key === 'p' || e.key === 'P') && !inText) { e.preventDefault(); openPresenter(); return; }
   if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveDeck(); return; }
   if (inText && (e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'||e.key===' ')) {
     e.stopImmediatePropagation();
@@ -2274,7 +2408,7 @@ if(false)(function(){
 </script>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["I hope I can cover all the points you are interested on, but Ill be happy to answer questions at the end.\n\nMy role for this project was as a Lead System Designer for the tooling design system\n\nDay to day I Work closely with one Design Technologist and many engineers across multiple teams. \nThere are 2 other designers on the team focused on other systems. converged for crits.\n\nFor planning and strategy I work with the director of platform and 2 design and 2 eng managers. \n\nVery horizontal enablement role. and expands 4 verticals. So I do support and enablement for many more people daily.\n\nThe initial goal for launch timeline was 6 months. But we now continue expanding on the project.", "Quick overview\n\nWe have 4 platforms using multiple legacy libraries. \n\nTeams shipped independently with no shared system contracts\n\n\nBottleneck for scaling.  Engineers not knowing how to build a design mock in code - ending in fragmentation with hard coded components - Resulting in High delivery cost. \n\nAll leading to inconsistent experiences especially for the portion of our users that use several of our products.", "Landscape of libraries.\n\nLegacy libraries, not fully deprecated\n\ndifficult for engineers to follow design. \nIt was difficult for designers, specially new ones to onboard and learn how to build mocks.\n\nSimilar for Engineers they had 5 different storybooks (Storybook is where we host our code documentation), lots of confusion.", "We'll see the full audit in a second, but here you can see some of our problem.\n\nSame pattern would look different in other platforms, or sometimes across features on the same platform. \n", "From the designer perspetive, they would see tons of similar options, hundreds of colors, buttons, font styles.", "a small glimpse of my audit. of over 1000+ components and patterns across our tools.\n\nInconsistency eroded trust with users\n\nour design-to-dev cycles were slow so it increased engineering overhead\n\n\nat the time we had Low design and engineer satisfaction and efficiency\n\n It wasn't just  bad UX, it was also poorly executed craft. \n\nand the real cost wasn't even aesthetics. It was coordination.", "Here is a timeline of how of focus for the first & second year. \n\nvery high level, we'll zone into some these more in a second.\n\nFirst year theme was alignment. \n\nLock down tokens and primitives\nSeparate what must be consistent from what can be changed.\nDevelop structures and processes\nSupport adoption and migrations.\n\nAlso ongoing through the year was Research, audits, feedback loops, \n all that to inform the path forward.\n\nThe goal was to building the bridges with other teams for better collaboration. ", "Second year, maturity milestones.\n\nit was about improving perfomance, expand the library, add self-serve \n\nGovernance to relieve bottleneck and enable innovation from designers..\n\nMore niche product team workstreams  for further quality and consistency\n• Ai principles and systems.\n• A new navigation bar strategy for all enterprise offering .\n\nWhile on the side I continue supporting migration, and component gaps, and and juggling new contributions. ", "Getting a little ahead here,.\n\n you can see how we started standarizing layouts with atoms, components and pattterns.", "We wennt from different ways to execute a form, \n\nto standarize layouts., with visual consistency, and predictable behavior across tools\n\nUsers learned our how to use our tools once, not 10 times", "So How did we get there\n\n\nI rebuilt the hierarchy so TDS could become the single source of truth.. \n\nSome elements were centralized and locked\n\nComponents were opinionated but flexible\n\npatterns, were springboards for designers workflows serving as suggestions.\n\nI optimized for flexibility, not uniformity.", "This is what I proposed in terms of the reorganized structure for and how to align with the other systems. We have a complex ecosystem, with many different needs. But we shifted as the assets from pantry to a global library.\n\nIn that way we can have a shared color guidelines from brand with tokens- from here we can control all vertical cascading theming. this helps with this like the current rebrand or theming.\n\nAssets is where we have shared system icons and images, some photography. That's the DNA of our brand\n\nAnd then our 3 vertical's figma libraries:\n\nPantry for consumers. \nTDS for enterprise tooling.\nCaper DS for our hardware cart tablets. \n\nscale by avoiding bloating with patterns that are not relevant to that vertical.'s designer..\n\n----------------\n\nFor example, our enteprise tools don't need a funnel, or cart pattern. Our marketplace doesn't need tables, or data viz, or modals - ", " on the dev side is straight forward\n\n headless component development\n\nthat we style for each vertical via system tokens", "once structure was define. \n\nI ran of explorations with stakeholders and the system consumer (Designers) \n\nWe aligned on the basics — color, type, spacing \n\nWe are now upgrading to component level tokens usage, to add theming for our white label products and dark mode.", "Here is our token architecture\n\nthe Value, feeds into primtives, then to system semantics, and finally to component level tokens.\n\nThis give us flebility, We can get as  broad or granular as we need to.\n\n\n\n\n--------------\n\nFor example 1: Our brand color on tds differs from the brighter more peppy consumer app brand primary color\n\nExample 2: at the tds level where it affects everywhere it appears, if we change the brand color, it would change ctas, but say we want ctas to be orange instead of kale, while keeping the nav bar our brnd color, instead of changing the brand level, we would hcange the component level token.\n\n--------------\nOur token dictionary maps directly with Eng, and we collaborate on defining the schema that makes sense. We were just having discussion about how to name things across web, mobile ios, mobile android and figma. ", "Here you can see Tokens in action. We can move a design from a light mode section to another section where the dark mode theme was applied, and the design automatically absorbs the theme set for that space. Designers design once and can preview different themes — this would be really helpful for our rebrand and when we extend theming capabilities to different retailers, where they will be able to see their brand reflected on our tooling.", "After that phase \nWe designed and developed core components. \n\nMade sure they were built with explicit anatomy\nThat the Variants were well documented (and matched to storybook)\nDefine clear extension libraries for team\n\nI made sure that design and dev aligned on intent and execution. \n\n----\n\nFor prioritization i used audit i shared earlier to find most used core components, those are the ones with highest impact\nand sequenced a foundational component migration\n\nafter that, We expanded coverage to more complex organism.. \n\nGoal: aiming for the 80% most used components. \nand requirements is that are used in multiple tools. with 3 clear use cases or more. \n\nassure  cost of building them would be an amortized ROI. ", "not a lot to see here a little bit of craft: \n\nCore components\n\nButtons, links, ", "Markers, pills, inputs", "Expanded set secondary\n\n for avatar, tooltips, accordions.", "More complex organism like cards or feature annoucements.", "Here you can see side by side on how much more. \nStreamlined - More simplified, \n\n\nSemantically organized - so clearer for designers to understand usage.", "Patterns and templates are to me the most powerful way to create alignment at scale, specially on platform. ", "These were layouts that defined standardized pages\n\nWe had some for \n\nData visualization and items lists\nItem Details...", "Single Step and multistep forms. ", "Editor", "Autho\n\nMore examples online or I can send appendix async.", "This was a cool project I worked with one of the engs\nHe buit a script that allowed each tooling platform to scaffold each template quickly, in less than 30 seconds.\nIn order to build them, we map the layout, and the spec of the layout, and how the default components for that layout were configured.\nThis accelarated eng time, and allowed us to maintain consistency across different feature teams when building new features. ", "way to develop designer trust was to be flexible and nonblocking.\n\nif we want to create adoption with scale and speed, \nclear pathways contribute and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \nWe defined criteria for exceptions:\n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns were stablished and tested.  \nand that informs our future roadmap for the official system, we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the new templates.\n\n\n\n------\nHow do I prioritize: (Depending on priorities, resources, cost, and how close my team may be for definite pattern) \n\n---------\n\nin  cases were our team couldn't support their needs.\nwith 25 designers was practically impossible to support every product feature need, ", "Self serving drives adoption.\n\nI document usage clearly - so teams can move fast finding what they need. \nnow we have a slack with AI answers.\n\nFeedback we have quarterly survey — to keep a pulse on satisfaction and how we were doing meeting needs. \n\nEDUCATION. I have onboarding deck for new employees, and i'm finishing a 4-week course for Staff level design on design system literacy to train them as ambassadors of the system\n\n\n\n\n--------\n\nOur design tech created a status plugin manager... \nIt automatically updates status legend on figma from our status spreadsheet tracker. Designers can see at a glance component readiness.", "\nfor eng parity\nGoal with figma is to be 1:1 to storybook. \nboth on nomeclature, and component functionality.\n\nmy hand off documentation includes variants and props, annotated components with colors, spacing, layout and tokens. \n\nThis means we have sometimes gnarly syncs with IOS, Android, Web eng and designers to align on execution and naming, \nAnd where i learn the limitations on the code bases for the diffferent implemetnations.\n\nThis helped to\n• reduced Q&A cycles\n• Fewer Slack threads \n• Faster merges, and more reliable releases\n\nOverall just happier engineers", "\nend of h2...  I began explorations on new AI styles and interactions., \n\nTop down directive to develop more ai features in product.\n\nproduct teams got out of sync quickly. \n\nSo i ran a quick alignment sprint with the leads. \n\nAnd we came up with principles of usage, a new look and feel, a mini system for anything that was ai. . \n\nEnded the year 5 components ready....", "...special AI buttons, AI assistant chat drawers, insights and suggestions cards, and AI loaders. ", "To Recap\n\nWe created a cohesive visual language, and a reusable library of atomics, tokens, components and patterns. \n\nDocumentation, hand off process, contribution process,  all aided on  accelerate delivery & higher satisfaction with designers, engineers, product. \n\ni think Most importantly at a reduced design and eng cost.\n\nAnd we built structures that helped scale the system, and help with flexibility and getting design and eng unblocked to build what they actually need. (built governance, support channels, crits, feedback loops)", "Ton of work, we are not done.\n\nFresh from perf review recap\n\nWe are currently at 17.5% (Jan 2025) & growing (migrating old features. but any new pages are not fully bult in TDS)\n\n538 thousand inserts across 27 teams (8.5k inserts per week)\nIncrease library speed by reducing almost half a million. nodes to 200k (lots of streamlining of components)\nPositive Satisfaction hit 90% across design and eng. in the latest Dec poll.\n72% of people report faster workflows.\nAdded 52 new components, getting us to a total of 185+.\n67% are available in storybook - 96 components.\nadded 47 components to our usage docs.", "Some personal takeaways: \n\nGovernance and alignment beats speed, Get the stakeholders goals, design needs, and eng resourcing aligned early on.\n\nBeing non-blocking and having support channels sustains growth, and adds flexibility - \n\nand design systems are never done, they are living organism. So you have to consistently take in feedback and iterate, builds trust. \nand that helps product teams suceed.", "That's all I have for today, happy to answer questions "]</script>
+<script id="deck-notes-data" type="application/json">["Well, let's dive into it. I hope that we can cover the material in the time we have, and happy to answer questions at the end.\n\nToday I will talking about instacart's tooling design system\n\nFor this project I am the lead designer - I built tds 0-1 in 6 months, that was about 2.5 years ago. So I' would say the it is a pretty mature library today serving over 20 designers across 27 teams, and double that in engineers\n\nMy role is horizontal enablement role: I partner daily with product designers and engineers that are shipping products.", "Quick context before we get into the problems.\n\nTDS is the foundational system behind Instacart's enterprise tools.\n\nSurface Area: We officially power IPP (our platform portal) and Ads Manager.\n\nWe also unofficially support two more tools, Food storm and Caper Admin, with one product on deck this quarter, Eversight.", "Quick overview of the problems we were facing:\n\nBefore TDS, IPP and Ads teams didn't have a single source of truth for design and eng.\n\nTeams shipped independently with no shared system contracts\n\nEngineers not knowing how to build a design mock in code created a bottle next for scaling - ending in fragmentation with hard coded components - Resulting in high delivery cost. \n\nAll leading to inconsistent experiences especially for the portion of our users that use several of our products.", "Landscape of libraries.\n\nLegacy libraries, not fully deprecated\n\ndifficult for engineers to follow design. \nIt was difficult for designers, specially new ones to onboard and learn how to build mocks.\n\nSimilar for Engineers they had 5 different storybooks (Storybook is where we host our code documentation), lots of confusion.", "I'll talk about the audit in a second, but here you can see a common problem that we identified.\n\nSame pattern would look different in other platforms, or sometimes across features on the same platform.", "From the perspective of the designer, they would see tons of similar options, hundreds of colors, buttons for iOS, web android, over 50 font styles. Making it difficult to scale consistency and move fast", "a small glimpse of my audit. I audit over 1000+ components and patterns across our tools.\n\nAnd it aligned with what we were hearing from research, that all the inconsistency was eroding trust with users\n\n\nOur design-to-dev cycles were slow so it increased engineering overhead\n\n\nat the time we had Low design and engineer satisfaction and efficiency\n\nIt was bad UX, poorly executed craft. And was costing us a lot of coordination efforts.", "Here is a timeline of how our focus for the first & second year. \n\nvery high level:\n\nFirst year theme was alignment. \n\nLocking down tokens and primitives\nSeparate what must be consistent from what can be changed.\nDevelop structures and processes\nSupport adoption and migrations.\n\nAlso ongoing through the year was Research, audits, feedback loops, \nall that to inform the path forward.\n\nThe goal was to building the bridges with other teams for better collaboration.", "Second year, maturity milestones.\n\nit was about improving performance, expanding the library, adding self-serve \n\nFirst trial of governance models to relieve bottlenecks and enable innovation for designers..\n\nMore niche product team work-streams also arrived this year focused on quality and consistency\n• Ai principles and systems.\n• A new navigation bar strategy for all enterprise offerings.\n\nWhile on the side I continue supporting migration, and component gaps, and securing new contributions.", "Getting a little ahead here,.\n\nyou can see the before and after layouts with atoms, components and patterns.", "We went from different ways to execute a form, \n\nto standardized layouts, with visual consistency, and predictable behavior across tools\n\nUsers learned how to use our tools once, not every time they open a new tool", "So How did we get there\n\n\nI rebuilt the hierarchy so TDS could become the single source of truth.. \n\nSome elements were centralized and locked\n\nComponents were opinionated but flexible\n\npatterns, were springboards for designers to start new features fast.\n\nI tend to optimize for flexibility.", "This is our reorganization the Figma structure- this is how our libraries aligned with the other systems that our team support. \n\nWe have a complex ecosystem, with many different needs. \n\nMainly what's important here is that  all our systems share assets, such as our icons and illustrations and photography.\n\nBranding informs of color options and brand guidelines. and those cascade down through theming. To our three 3 vertical libraries\n\nPantry for consumers. \nTDS for enterprise tooling.\nCaper DS for our hardware cart tablets. \n\nSeparating these libraries in Figma is what allow us to not bloat the system with irrelevant patterns or components.\n\n----------------\n\nFor example, our enterprise tools don't need a funnel, or cart pattern. Our marketplace doesn't need tables, or dataviz, or modals -", "on the dev side is straight forward\n\nheadless component development, no styles. \n\nthat we style for each vertical via system tokens", "once structure was define. \n\nTooling has a unified visual language, defined by a main color palette, a dataviz palette. Instacart Fonts, Radius, Spacing, Elevation and layout. \n\nAll our components support theming for our white label products and for dark mode. And with a new branding in the horizon, we'll be also providing a new brand theme soon.", "The way we support theming is through this architecture: \n\nthe value feeds into primitives token, then to system semantics, and finally to component level tokens.\n\nThis gives us flexibility, We can get as  broad or granular for changes as we need to.\n\n\n--------------\n\nFor example 1: Our brand color on tds differs from the brighter more peppy consumer app brand primary color.", "Here you can see Tokens in action. We can move a design from a light mode section to another section set to dark mode, and the design automatically changes accordingly.\n\nDesigners design once and can preview different themes — similarly, with the new brand, they'll be able to see it reflected instantly.", "Components in Figma currently are our source of truth for design intent, and storybook reflects that same intent. This is something we are changing in the Age of AI with a new model where our source of truth lives in code and we render a visual layer for discussions and feedback. \n\nBut for this project initially we build the explicit anatomy and documented the variants in figma and they served as the intended source of truth.\n\nAnd my job has been to make sure design and dev are aligned on the execution. \n\n----\n\nGoal: aiming to have in the library up to 80% of our most used components. \nand requirements is that are used in multiple tools. with 3 clear use cases or more. \n\nTo assure  cost of building them would be an amortized ROI.", "For prioritization i used audit i shared earlier to find most used core components, those are the ones with highest impact\n\nButtons, links", "Markers, pills, inputs", "After that we sequenced a foundational component migration\n\nfor things like avatar, tooltips, accordions.", "More complex organism like cards or feature announcements, components that require more back end eng.", "Here you can see how simple our library is\nStreamlined - simplified, \n\nAND\n\nSemantically organized - so clearer for designers to understand usage.", "Patterns and templates are another resource we provided to IPP and Ads. Which are standardized pages\n\nto me they are the most powerful way to create alignment at scale, specially on platform. Where there is a lot of room on the page to lay elements. For consistency we need stronger layouts and rules.", "We currently have layout templates for \n\nData visualization and items lists", "Single Step and multistep forms.", "Editor", "Log in screens\n\nAnd we are working on some newer ones using Figma's new Slot feature.", "This was a cool part of the project I partnered with one of the engs\nHe built a ai skill that allowed each tooling platform to scaffold each template quickly, in less than 30 seconds.\n\nIn order to build them, we map the layout, with the measurements, and how the default components for that layout were configured.\n\nThis accelerated eng time, from days to minutes and allowed us to maintain consistency across different feature teams.", "This is how a migration actually runs when a team comes into TDS.\n\nPhase 1, assess: audit the incoming library, map components to TDS, surface gaps and API differences.\n\nPhase 2, foundations: we map and migrate color and typography tokens and wire them into code.\n\nThen component milestones: M1 is the core set (buttons, inputs, checkboxes, radios, links). M2 is the most used batch (dropdowns, date pickers, tabs). M3 is complex components, the ones that need back end refactors (tables, dataviz)\n\nKey point: from M2 onward, all net new features can start being built in TDS. So value starts landing while the migration is ongoing.\n\nAI components and the nav bar are optional depending on need/resourcing and can layer on at any stage.", "The way to develop designer trust is by being flexible and nonblocking.\n\nif we want to foster adoption, we need clear pathways to contribute, request and own\n\nwe understood that without flexibility, designers will break the system. So when they do, we take that as signals\n\nDifferent models for different things. \n\nfor single use components,  those are fed into an extensions libraries, \nOnce patterns are stablished and tested that informs our future roadmap for the official system,\nThat's the one we design, develop and maintain.\n\nFor templates we have a shared model of ownership, where i support creation, while the product teams designers  audit and suggest concepts for the layouts.", "I document usage clearly - so teams can move fast finding what they need. \n\nI create a plug in to keep our components status up to date. Designers can see at a glance component readiness. Green is in code, red is not.\n\nI automated an AI agent that answers qs on our slack from that documentation.\n\nI collaborate with product teams through design crits, where I can consult live on design direction.\nWe also have weekly office hours\n\nEDUCATION. I have onboarding deck for new employees, and i'm finishing a 4-week course for Staff levels on design system literacy to train them as ambassadors of the system", "The goal of the figma library is to be synced 1:1 to storybook. \nboth on nomeclature, and component functionality.\n\nmy hand off documentation includes variants and props, annotated components. \n\nThis helped the product teams to\n• reduced Q&A cycles\n• Have Fewer Slack threads \n• Faster merges, and more reliable releases\n\nOverall just happier engineers, and better quality product features.", "end of last year...  I began explorations on new AI styles and interactions., \n\nWe had both platform teams working to develop more ai features in product.\n\nAnd they got out of sync very quickly. \n\nSo i ran a quick alignment sprint with the leads. \n\nAnd we came up with principles for AI usage, a new look and feel, a mini system for anything that was ai. . \n\nEnded the year 5 components ready....", "...special AI buttons, AI assistant chat drawers, insights and suggestions cards, and AI loaders.", "To Recap\n\nWe created a cohesive visual language, and a reusable library of atomics, tokens, components and patterns. \n\nDocumentation, hand off process, contribution process, all aided on accelerating delivery & higher satisfaction with designers, engineers, product. \n\ni think Most importantly at a reduced design and eng cost.\n\nAnd we built structures that helped scale the system, and help with flexibility and getting design and eng unblocked to build what they actually need. (built governance, support channels, crits, feedback loops)", "These are numbers from the June 2026 recap, I just verified last week on figma.\n\nWe are currently at 17.5% - grow 6.5% since January. All new pages are now fully built in TDS \n\n538 thousand inserts across 27 teams this half. About 12k inserts per week on the 12 month average.\n\nLibrary speed: reduced from half a million nodes to 200k, library speed doubled.\n\nOur last satisfaction survey yielded 90%. \n72% of people report faster workflows.\n\nOur library contains 187 components in Figma. 67% available in Storybook, that's 96 components.\n\n10+ net new components this year, and 47+ usage docs were added.\n\n--------\n\nExtra talking points if asked: 709k live component instances across 675 files, and a 250 to 1 insert to detach ratio excluding tables and data viz.", "A few honest challenges.\n\nthis was 0 to 1, a new way of working for all the team, so earning trust and respect across teams took time. Migrations need dedicated focus and resourcing. And there is a constant balance between creativity and the rigidity of a system.\n\nWhat's next: an AI pilot to accelerate design and build, Figma Slots for flexibility without breaking the system, and deeper theming for the rebrand and white label retailers.", "Some personal takeaways: \n\nGovernance and alignment beats speed, Get the stakeholders goals, design needs, and eng resourcing aligned early on.\n\nBeing non-blocking an flexible sustains growth. Be available, have channels for communication, built relationships, \n\ndesign systems are never done, they are living organism. SO take in feedback and iterate.", "I talked a lot, that's what I had prepared today. We can geek out on the AI future of design systems, or if you have any questions, I can help answer."]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -2288,7 +2422,7 @@ if(false)(function(){
 <!-- ── Presenter UI: shown when URL has #presenter ── -->
 <div id="presenter-ui">
   <div class="p-projects">
-    <button class="p-project-btn" data-href="/">Intro</button>
+    <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
     <button class="p-project-btn p-project-btn--active">Tooling DS</button>
     <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
     <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
