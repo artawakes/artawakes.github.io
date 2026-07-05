@@ -222,6 +222,11 @@ blockquote{font-style:normal;color:var(--dim);font-size:13px;line-height:1.65;bo
 .top-link:hover{color:var(--text)}
 footer.site{position:relative;z-index:2;border-top:1px solid var(--line);padding:26px 48px;text-align:center;color:var(--faint);font-size:12.5px}
 
+@media(max-width:640px){
+  .avatar-ring{width:104px;height:104px;padding:2.5px;margin-bottom:20px;box-shadow:0 0 30px rgba(124,90,245,.3),0 16px 40px rgba(0,0,0,.3)}
+  .avatar-ring img{border-width:2px}
+  .status{margin-bottom:24px}
+}
 @media(max-width:960px){
   nav{grid-template-columns:auto 1fr;padding:12px 16px}
   .nav-pill{display:none}
