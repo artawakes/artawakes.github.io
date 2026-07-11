@@ -758,14 +758,14 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="stat-callout"><div class="stat-number" style="color:var(--green);">1</div><div class="stat-label">Upcoming</div></div>
       </div>
     </div>
-    <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:22px; align-items:flex-start;">
-      <figure style="margin:0;">
+    <div style="flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:22px; align-items:flex-start;">
+      <figure style="margin:0; width:100%;">
         <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Ads Manager</figcaption>
-        <img src="images/ads-manager.webp" alt="Ads Manager campaign performance dashboard with AI assistant" style="width:520px; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+        <img src="images/ads-manager.webp" alt="Ads Manager campaign performance dashboard with AI assistant" style="width:auto; max-width:100%; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
       </figure>
-      <figure style="margin:0;">
+      <figure style="margin:0; width:100%;">
         <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Instacart Partner Platform</figcaption>
-        <img src="images/ipp-platform.webp" alt="IPP Instacart Partner Platform executive summary analytics" style="width:520px; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+        <img src="images/ipp-platform.webp" alt="IPP Instacart Partner Platform executive summary analytics" style="width:auto; max-width:100%; height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
       </figure>
     </div>
   </div>
@@ -882,7 +882,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <h2>No single source of truth.</h2>
   </div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap" style="position:absolute;inset:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:32px;" data-edit-bound="1"><img src="images/manybuttons.jpg" style="width:auto;height:100%;max-width:847px;max-height:788px;display:block;margin-top:140px;margin-left:105px;"></div>
+    <div class="uploaded-img-wrap" style="position:absolute;inset:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:32px;" data-edit-bound="1"><img src="images/manybuttons.jpg" style="width:auto;height:100%;max-width:847px;max-height:788px;display:block;margin-left:184px;"></div>
   </div>
 </div>
 
@@ -1695,9 +1695,10 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="card" style="border-color:rgba(61,186,126,0.25); background:rgba(61,186,126,0.04);">
       <div class="card-label" style="color:var(--green);">What's next</div>
       <ul class="bullet-list green" style="margin-top:10px;">
-        <li><strong>AI pilot</strong> — accelerate design &amp; build</li>
-        <li><strong>Figma Slots</strong> — flexibility without breaking the system</li>
-        <li>Deeper theming for rebrand &amp; white-label</li>
+        <li><strong>AI pilot</strong>: accelerate design &amp; build</li>
+        <li><strong>Liquid Glass adoption</strong>: Apple's new material, cross-platform</li>
+        <li><strong>Rebrand</strong>: deeper theming &amp; white-label</li>
+        <li><strong>Figma Slots</strong>: flexibility without breaking the system</li>
       </ul>
     </div>
   </div>
