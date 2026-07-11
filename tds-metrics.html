@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Darío Fidanza — TDS: The Numbers Behind the Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07101f; --bg2: #0d1a2e;
+    --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+    --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
+    --accent: #4f80f5; --accent2: #7c5af5; --magenta: #c55af5;
+    --green: #3dba7e; --amber: #f5a623;
+    --nav-h: 76px;
+  }
+
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; position: relative;
+  }
+
+  /* ── Dot-wave canvas background ── */
+  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  /* ── Top nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+    background: rgba(7,16,31,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-left { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-back-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%;
+    color: var(--text-dim); text-decoration: none; transition: color 0.2s, background 0.2s;
+  }
+  .nav-back-btn:hover { color: var(--text); background: rgba(143,168,196,0.12); }
+  .nav-logo {
+    display: inline-flex; align-items: center; line-height: 34px;
+    font-family: 'Hepta Slab', serif; font-size: 17px; letter-spacing: -0.02em;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-logo b {
+    background: linear-gradient(90deg, #4f80f5, #c55af5);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; font-weight: 700;
+  }
+
+  /* ── Page ── */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 1240px; margin: 0 auto;
+    padding: calc(var(--nav-h) + 56px) 32px 100px;
+  }
+
+  /* ── Header ── */
+  header.doc { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
+  .title-block h1 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 40px); line-height: 1.12; letter-spacing: -0.02em; color: var(--text);
+  }
+  .title-block h1 b {
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent), var(--magenta));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .title-block .sub { margin-top: 10px; font-size: 15px; color: var(--text-dim); max-width: 640px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px var(--green); }
+
+  .legend { display: flex; gap: 16px; align-items: center; margin: 22px 0 26px; flex-wrap: wrap; font-size: 12.5px; color: var(--text-dim); }
+  .legend .chip { display: inline-flex; align-items: center; gap: 7px; }
+  .tag { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+  .tag.actual { background: rgba(61,186,126,0.14); color: var(--green); border: 1px solid rgba(61,186,126,0.25); }
+  .tag.soft   { background: rgba(245,166,35,0.12); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
+  .tag.target { background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.25); }
+
+  /* ── Sections ── */
+  .section-label {
+    font-family: 'Hepta Slab', serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    margin: 38px 0 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  .grid { display: grid; gap: 16px; }
+  .g4 { grid-template-columns: repeat(4,1fr); }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px 22px 20px; position: relative; overflow: hidden; }
+  .card .tag { position: absolute; top: 16px; right: 16px; }
+  .stat { font-family: 'Hepta Slab', serif; font-size: 42px; font-weight: 500; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+  .stat .unit { font-size: 22px; font-weight: 500; }
+  .stat-label { margin-top: 10px; font-size: 13.5px; color: var(--text); font-weight: 600; }
+  .stat-note { margin-top: 5px; font-size: 12px; color: var(--text-dim); line-height: 1.35; }
+
+  .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+  .a-blue    { background: var(--accent); }
+  .a-violet  { background: var(--accent2); }
+  .a-green   { background: var(--green); }
+  .a-amber   { background: var(--amber); }
+
+  /* ── Product cards ── */
+  .product { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+  .product h3 { font-family: 'Hepta Slab', serif; font-weight: 500; font-size: 18px; color: var(--text); margin-bottom: 3px; }
+  .product .role { font-size: 12.5px; color: var(--text-dim); margin-bottom: 16px; }
+  .metric-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-top: 1px dashed var(--border); gap: 12px; }
+  .metric-row:first-of-type { border-top: none; }
+  .metric-row .v { font-size: 20px; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .metric-row .k { font-size: 13px; color: var(--text-dim); line-height: 1.3; }
+
+  /* ── Chart ── */
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+  .chart-card h3 { font-family: 'Hepta Slab', serif; font-weight: 500; font-size: 16px; color: var(--text); margin-bottom: 2px; }
+  .chart-card .cap { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 78px; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .bar-row .name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .bar-track { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; height: 26px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 7px; }
+  .bar-row .amt { font-size: 14px; font-weight: 700; color: var(--text); text-align: right; }
+
+  .adopt-wrap { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
+  .adopt-wrap svg { flex: 0 0 auto; }
+  .adopt-copy { flex: 1; min-width: 200px; }
+  .adopt-copy .big { font-family: 'Hepta Slab', serif; font-size: 34px; font-weight: 500; color: var(--text); letter-spacing: -0.02em; }
+  .adopt-copy .lbl { font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
+
+  /* ── Brand callout ── */
+  .brand-callout {
+    background: linear-gradient(170deg, var(--bg2), var(--bg));
+    border: 1px solid rgba(124,90,245,0.35); border-radius: 20px; padding: 30px 32px; margin-top: 16px;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .brand-callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(124,90,245,0.7), transparent); }
+  .brand-callout h2 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    color: var(--text); font-size: 22px; margin-bottom: 12px; letter-spacing: -0.015em;
+  }
+  .brand-callout p { font-size: 15px; line-height: 1.6; color: var(--text-dim); }
+  .brand-stats { display: flex; flex-direction: column; gap: 14px; }
+  .brand-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(124,90,245,0.25); border-radius: 14px; padding: 16px 18px; }
+  .brand-stat .n { font-family: 'Hepta Slab', serif; font-size: 26px; font-weight: 500; color: var(--accent2); }
+  .brand-stat .d { font-size: 12.5px; color: var(--text-dim); margin-top: 3px; }
+
+  footer { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-dim); line-height: 1.6; }
+  footer b { color: var(--text-muted); }
+
+  @media (max-width: 1000px) { .g4 { grid-template-columns: repeat(2,1fr); } .g3 { grid-template-columns: 1fr; } .brand-callout { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .g4, .g2 { grid-template-columns: 1fr; } .bar-row { grid-template-columns: 90px 1fr 66px; } .wrap { padding: calc(var(--nav-h) + 40px) 22px 80px; } nav { padding: 0 20px; } }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-left">
+    <a class="nav-back-btn" href="/" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+    <a class="nav-logo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <header class="doc">
+    <div class="title-block">
+      <h1><b>TDS</b> — The Numbers Behind the Tools</h1>
+      <div class="sub">The Tooling Design System is the shared UI foundation behind Instacart's partner-facing products — IPP and Ads Manager today, Eversight next. Here's the business it sits under.</div>
+    </div>
+    <div class="badge"><span class="dot"></span>Internal &middot; sourced from Glean &middot; Jul 2026</div>
+  </header>
+
+  <div class="legend">
+    <span class="chip"><span class="tag actual">Reported</span> confirmed actual</span>
+    <span class="chip"><span class="tag soft">Self-reported</span> survey signal</span>
+    <span class="chip"><span class="tag target">Target</span> goal, not yet hit</span>
+  </div>
+
+  <!-- PLATFORM SCALE -->
+  <div class="section-label">The platform these tools serve</div>
+  <div class="grid g4">
+    <div class="card"><span class="accent-bar a-blue"></span><span class="tag actual">Reported</span>
+      <div class="stat">2,200<span class="unit">+</span></div>
+      <div class="stat-label">Retail banners</div>
+      <div class="stat-note">Powered by the Instacart Enterprise platform</div>
+    </div>
+    <div class="card"><span class="accent-bar a-violet"></span><span class="tag actual">Reported</span>
+      <div class="stat">9,000<span class="unit">+</span></div>
+      <div class="stat-label">Brand advertisers</div>
+      <div class="stat-note">Connected across the ads ecosystem</div>
+    </div>
+    <div class="card"><span class="accent-bar a-green"></span><span class="tag actual">Reported</span>
+      <div class="stat">1.6<span class="unit">B+</span></div>
+      <div class="stat-label">Lifetime grocery orders</div>
+      <div class="stat-note">Across the platform</div>
+    </div>
+    <div class="card"><span class="accent-bar a-amber"></span><span class="tag actual">Reported</span>
+      <div class="stat">3,059</div>
+      <div class="stat-label">Retail partners</div>
+      <div class="stat-note">~72% SMB &middot; top 30 = ~87% of GMV</div>
+    </div>
+  </div>
+
+  <!-- TDS CORE -->
+  <div class="section-label">TDS itself</div>
+  <div class="grid g3">
+    <div class="chart-card">
+      <h3>Adoption is climbing</h3>
+      <div class="cap">TDS adoption in IPP, measured via Omlet (2025)</div>
+      <div class="adopt-wrap">
+        <svg width="230" height="120" viewBox="0 0 230 120">
+          <!-- gridlines -->
+          <line x1="0" y1="10" x2="230" y2="10" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <line x1="0" y1="60" x2="230" y2="60" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <line x1="0" y1="110" x2="230" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <!-- data: 14.0,15.2,15.7,16.3,17.0,17.4,17.5,17.5 mapped 14->y100 .. 18->y10 -->
+          <polygon fill="rgba(79,128,245,0.18)"
+            points="8,100 39,73 70,62 101,49 132,33 163,24 194,22 222,22 222,118 8,118"/>
+          <polyline fill="none" stroke="#4f80f5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+            points="8,100 39,73 70,62 101,49 132,33 163,24 194,22 222,22"/>
+          <circle cx="8" cy="100" r="3.5" fill="#4f80f5"/>
+          <circle cx="222" cy="22" r="4.5" fill="#4f80f5"/>
+          <text x="8" y="118" font-size="10" fill="#8fa8c4">Mar</text>
+          <text x="205" y="118" font-size="10" fill="#8fa8c4">Oct</text>
+        </svg>
+        <div class="adopt-copy">
+          <div class="big">14.0% &rarr; 17.5%</div>
+          <div class="lbl">Steady month-over-month growth as teams migrate. IPP is the most mature adopter.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+      <span class="tag soft">Self-reported</span>
+      <div class="stat">~40%</div>
+      <div class="stat-label">Faster time-to-completion</div>
+      <div class="stat-note">Survey of 59 eng + design respondents. A checkout redesign took ~6 weeks; without shared components, estimated closer to double.</div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+      <span class="tag actual">Reported</span>
+      <div class="stat">90.9<span class="unit">%</span></div>
+      <div class="stat-label">Design favorability</div>
+      <div class="stat-note">TDS Web favorability 100% (H1 2025). The system people actually want to use.</div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section-label">What TDS powers</div>
+  <div class="grid g3">
+    <div class="product">
+      <h3>Instacart Partner Platform</h3>
+      <div class="role">IPP / Portal &middot; most mature TDS adopter</div>
+      <div class="metric-row"><span class="k">Active accounts</span><span class="v">17,000+</span></div>
+      <div class="metric-row"><span class="k">External monthly active users</span><span class="v">~5,500</span></div>
+      <div class="metric-row"><span class="k">Retailer satisfaction (goal 60%)</span><span class="v">49%</span></div>
+      <div class="metric-row"><span class="k">NPS, 2024 (target &gt;25)</span><span class="v">&minus;13</span></div>
+    </div>
+
+    <div class="product">
+      <h3>Ads Manager</h3>
+      <div class="role">Carrot Ads &middot; mid-migration to TDS</div>
+      <div class="metric-row"><span class="k">2024 net ad revenue, Marketplace</span><span class="v">$800M+</span></div>
+      <div class="metric-row"><span class="k">Avg. sales boost for brands</span><span class="v">25%</span></div>
+      <div class="metric-row"><span class="k">Storefront Pro banners</span><span class="v">350+</span></div>
+      <div class="metric-row"><span class="k">Net take of GMV</span><span class="v">1.5&ndash;1.8%</span></div>
+    </div>
+
+    <div class="product">
+      <h3>Eversight</h3>
+      <div class="role">AI pricing &amp; promotions &middot; next in line for TDS</div>
+      <div class="metric-row"><span class="k">GMV driven (Kroger Delivery Now)</span><span class="v">$30M+</span></div>
+      <div class="metric-row"><span class="k">Annualized benefit</span><span class="v">$18.5M</span></div>
+      <div class="metric-row"><span class="k">ROI on $250K license</span><span class="v">23x</span></div>
+      <div class="metric-row"><span class="k">Pricing</span><span class="v">30&ndash;50 bps</span></div>
+    </div>
+  </div>
+
+  <!-- ADS REVENUE CHART -->
+  <div class="section-label">Ads Manager — 2024 net ad revenue by platform</div>
+  <div class="chart-card">
+    <h3>Real revenue runs through these surfaces</h3>
+    <div class="cap">Carrot Ads net revenue, FY2024 &middot; reported</div>
+    <div class="bar-row">
+      <span class="name">Marketplace</span>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(92deg,var(--accent),var(--accent2));"></div></div>
+      <span class="amt">$800M+</span>
+    </div>
+    <div class="bar-row">
+      <span class="name">Storefront</span>
+      <div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--accent2);"></div></div>
+      <span class="amt">$40M</span>
+    </div>
+    <div class="bar-row">
+      <span class="name">Storefront Pro</span>
+      <div class="bar-track"><div class="bar-fill" style="width:4.4%;background:var(--magenta);"></div></div>
+      <span class="amt">$35M</span>
+    </div>
+    <div class="bar-row">
+      <span class="name">Carrot Ads API</span>
+      <div class="bar-track"><div class="bar-fill" style="width:1%;background:var(--amber);"></div></div>
+      <span class="amt">$2.5M</span>
+    </div>
+  </div>
+
+  <!-- BRAND CALLOUT -->
+  <div class="brand-callout">
+    <div>
+      <h2>Why we stay tied to Instacart branding</h2>
+      <p>These aren't internal tools nobody sees. They're Instacart, in front of the retailers and brands we're trying to win and keep. Quality perception is already one of the top complaints partners raise, and it directly risks adoption of our self-serve tools. If every team drifts and builds its own look, we fragment that experience one inconsistent screen at a time. TDS is what keeps every partner-facing surface unmistakably Instacart, and makes the whole suite faster to build.</p>
+    </div>
+    <div class="brand-stats">
+      <div class="brand-stat"><div class="n">6 platforms</div><div class="d">Partner tools operate in silos today. TDS is the vehicle to unify them.</div></div>
+      <div class="brand-stat"><div class="n">1 brand</div><div class="d">Every surface a partner touches should read as one Instacart.</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <b>Sources:</b> Instacart Enterprise Platform Overview 2026; #askspansions (partner counts); IDS success metrics &amp; H2 2024 efficiency measure (adoption, favorability, ~40%); IPP All-Hands Q1'25 &amp; RFD Retailer App; Carrot Ads Data Science (2024 ad revenue); Recruiting Battle Card (25% boost, banners); KDN Eversight MUO deck. All figures quoted from internal Glean-indexed documents.<br>
+    <b>Read before quoting:</b> the ~40% figure is a self-reported survey signal (n=59), fair to say aloud but not a hard metric. Company-wide GMV/GTV is MNPI and not shown. Partner/banner counts vary by definition across sources.
+  </footer>
+
+</main>
+
+<script>
+// ── Dot-wave canvas animation (matches landing page) ──
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  const SPACING = 30;
+  let w, h, t = 0;
+
+  function resize() {
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.65, cy = h * 0.42;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
+
+        const falloff = Math.pow(1 - norm, 1.3);
+        const opacity = (wave * 0.38 + 0.30) * falloff;
+        if (opacity < 0.04) continue;
+
+        const bright = Math.max(0, wave);
+        const rc = Math.round(79  + bright * 90);
+        const gc = Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setTimeout(() => { requestAnimationFrame(draw); }, 60);
+})();
+</script>
+
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

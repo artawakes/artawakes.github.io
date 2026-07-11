@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Darío Fidanza — Liquid Glass: Cross-Platform Considerations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07101f; --bg2: #0d1a2e;
+    --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+    --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
+    --accent: #4f80f5; --accent2: #7c5af5; --magenta: #c55af5;
+    --green: #3dba7e; --amber: #f5a623; --red: #ff6332;
+    --nav-h: 76px;
+  }
+
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; position: relative;
+  }
+
+  /* ── Dot-wave canvas background ── */
+  #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  /* ── Top nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+    background: rgba(7,16,31,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-left { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-back-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%;
+    color: var(--text-dim); text-decoration: none; transition: color 0.2s, background 0.2s;
+  }
+  .nav-back-btn:hover { color: var(--text); background: rgba(143,168,196,0.12); }
+  .nav-logo {
+    display: inline-flex; align-items: center; line-height: 34px;
+    font-family: 'Hepta Slab', serif; font-size: 17px; letter-spacing: -0.02em;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-logo b {
+    background: linear-gradient(90deg, #4f80f5, #c55af5);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; font-weight: 700;
+  }
+
+  /* ── Page column ── */
+  .page {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    padding: calc(var(--nav-h) + 64px) 32px 110px;
+  }
+
+  /* ── Header ── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent2); border: 1px solid rgba(124,90,245,0.28); background: rgba(124,90,245,0.10);
+    padding: 7px 14px; border-radius: 999px; margin-bottom: 20px;
+  }
+  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 9px var(--accent2); }
+  h1 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(30px, 4.2vw, 48px); line-height: 1.12; letter-spacing: -0.025em;
+    color: var(--text); margin-bottom: 12px;
+  }
+  h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--magenta));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .header-meta { color: var(--text-dim); font-size: 13px; margin-bottom: 40px; }
+  .header-meta span { margin-right: 10px; }
+
+  /* ── Section headers ── */
+  .section { margin-bottom: 52px; }
+  h2 {
+    font-family: 'Hepta Slab', serif; font-weight: 400;
+    font-size: clamp(19px, 2.2vw, 25px); line-height: 1.2; letter-spacing: -0.015em;
+    color: var(--text); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 11px;
+  }
+  .section-icon {
+    width: 30px; height: 30px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  h3 { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 22px 24px; margin-bottom: 12px;
+  }
+  .card-sm { padding: 16px 20px; border-radius: 12px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── Pills ── */
+  .pill {
+    display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    padding: 2px 9px; border-radius: 100px; white-space: nowrap;
+  }
+  .pill-green  { background: rgba(61,186,126,0.12);  color: var(--green);  border: 1px solid rgba(61,186,126,0.25); }
+  .pill-orange { background: rgba(245,166,35,0.12);  color: var(--amber);  border: 1px solid rgba(245,166,35,0.25); }
+  .pill-red    { background: rgba(255,99,50,0.12);   color: var(--red);    border: 1px solid rgba(255,99,50,0.25); }
+  .pill-blue   { background: rgba(79,128,245,0.12);  color: var(--accent); border: 1px solid rgba(79,128,245,0.25); }
+  .pill-purple { background: rgba(124,90,245,0.12);  color: var(--accent2);border: 1px solid rgba(124,90,245,0.25); }
+  .pill-teal   { background: rgba(197,90,245,0.12);  color: var(--magenta);border: 1px solid rgba(197,90,245,0.25); }
+  .pill-muted  { background: rgba(255,255,255,0.05); color: var(--text-dim); border: 1px solid var(--border); }
+
+  /* ── Stats ── */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 48px; }
+  @media (max-width: 580px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 16px; text-align: center;
+  }
+  .stat-value { font-family: 'Hepta Slab', serif; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .stat-label { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px; margin-bottom: 36px;
+  }
+  .toc-title { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+  .toc-links { display: flex; flex-wrap: wrap; gap: 6px; }
+  .toc-links a {
+    font-size: 12px; color: var(--text-dim); text-decoration: none;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 100px; padding: 3px 12px; transition: all 0.15s;
+  }
+  .toc-links a:hover { color: var(--accent); border-color: rgba(79,128,245,0.4); background: rgba(79,128,245,0.08); }
+
+  /* ── Timeline ── */
+  .timeline { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-top: 4px; }
+  @media (max-width: 580px) { .timeline { grid-template-columns: 1fr 1fr; } }
+  .timeline-item { padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid var(--border); }
+  .timeline-bar { height: 4px; border-radius: 100px; margin-bottom: 10px; }
+  .timeline-label { font-size: 10px; color: var(--text-dim); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .timeline-title { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.4; }
+
+  /* ── Bullet list ── */
+  .bullet-list { list-style: none; }
+  .bullet-list li { position: relative; padding: 4px 0 4px 16px; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .bullet-list li::before { content: '·'; position: absolute; left: 0; top: 3px; color: var(--accent2); font-size: 20px; line-height: 1.1; }
+  .bullet-list li strong { color: var(--text); }
+
+  /* ── Callouts ── */
+  .callout {
+    background: rgba(124,90,245,0.08); border: 1px solid rgba(124,90,245,0.2);
+    border-left: 3px solid var(--accent2); border-radius: 10px;
+    padding: 14px 16px; font-size: 13px; color: var(--text-dim); line-height: 1.6;
+  }
+  .callout strong { color: var(--text); }
+  .callout-warn {
+    background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.22);
+    border-left: 3px solid var(--amber); border-radius: 10px;
+    padding: 14px 16px; font-size: 13px; color: var(--text-dim); line-height: 1.6;
+  }
+  .callout-warn strong { color: var(--text); }
+
+  /* ── Platform rows ── */
+  .platform-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .platform-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .platform-row:first-child { padding-top: 0; }
+  .platform-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .platform-body { flex: 1; min-width: 0; }
+  .platform-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; color: var(--text); }
+  .platform-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .platform-status { flex-shrink: 0; padding-top: 2px; }
+
+  /* ── Gap table ── */
+  .gap-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .gap-table th {
+    text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-dim); padding: 0 12px 10px 0; border-bottom: 1px solid var(--border-strong);
+  }
+  .gap-table td { padding: 11px 12px 11px 0; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .gap-table tr:last-child td { border-bottom: none; }
+  .gap-table td:first-child { color: var(--text); font-weight: 600; width: 24%; }
+  .gap-table td:nth-child(2) { color: var(--text-dim); width: 44%; }
+  .gap-table td:last-child { width: 32%; }
+
+  /* ── Rec cards ── */
+  .rec-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; position: relative; overflow: hidden;
+  }
+  .rec-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .rec-card.blue::before   { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .rec-card.green::before  { background: linear-gradient(90deg, var(--green), var(--accent)); }
+  .rec-card.orange::before { background: linear-gradient(90deg, var(--amber), var(--red)); }
+  .rec-card.purple::before { background: linear-gradient(90deg, var(--accent2), var(--magenta)); }
+  .rec-number { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+  .rec-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); line-height: 1.4; }
+  .rec-body { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .rec-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+
+  /* ── Matrix ── */
+  .matrix-wrap { overflow-x: auto; }
+  .matrix { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 560px; }
+  .matrix th {
+    padding: 8px 10px; background: rgba(255,255,255,0.04); color: var(--text-dim);
+    font-weight: 600; text-align: center; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .matrix th:first-child { text-align: left; border-radius: 8px 0 0 8px; }
+  .matrix th:last-child { border-radius: 0 8px 8px 0; }
+  .matrix td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; line-height: 1.4; color: var(--text-dim); }
+  .matrix td:first-child { text-align: left; font-weight: 500; color: var(--text); }
+  .matrix tr:last-child td { border-bottom: none; }
+
+  .check   { color: var(--green);  font-size: 12px; }
+  .cross   { color: var(--red);    font-size: 12px; }
+  .partial { color: var(--amber);  font-size: 12px; }
+  .na      { color: var(--text-dim); font-size: 12px; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0 26px; }
+  .foot { text-align: center; color: var(--text-dim); font-size: 12px; line-height: 1.7; }
+  .foot .src { color: rgba(143,168,196,0.55); }
+
+  @media (max-width: 600px) {
+    .page { padding: calc(var(--nav-h) + 44px) 22px 90px; }
+    nav { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-left">
+    <a class="nav-back-btn" href="/" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+    <a class="nav-logo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- Header -->
+  <div class="header" style="margin-bottom:8px;">
+    <span class="eyebrow"><span class="eyebrow-dot"></span>Design Systems POV</span>
+    <h1>Liquid Glass:<br><span>Cross-Platform Considerations</span></h1>
+    <div class="header-meta">
+      <span>July 8, 2026</span>
+      <span>·</span>
+      <span>Focus: Web / Android / Design System Strategy</span>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Jump to</div>
+    <div class="toc-links">
+      <a href="#context">Context</a>
+      <a href="#apple-summary">Apple LG Summary</a>
+      <a href="#internal-status">Internal Status</a>
+      <a href="#gaps">Gaps from my POV</a>
+      <a href="#platform-matrix">Platform Matrix</a>
+      <a href="#recommendations">Recommendations</a>
+      <a href="#questions">Open Questions</a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--red);">0</div>
+      <div class="stat-label">Web / Android mentions in plan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent2);">2027</div>
+      <div class="stat-label">Adoption soft req</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent);">3</div>
+      <div class="stat-label">Platforms to align</div>
+      <div style="font-size:10px; color:var(--text-dim); margin-top:4px;">iOS · Web · Android</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--amber);">8</div>
+      <div class="stat-label">Open gaps identified</div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="section" id="context">
+    <h2><span class="section-icon" style="background:rgba(79,128,245,0.12);">📋</span> What's happening</h2>
+    <div class="card">
+      <p style="font-size:14px; color:var(--text-dim); line-height:1.7; margin-bottom:14px;">
+        Apple removes the Liquid Glass opt-out flag in <strong style="color:var(--text);">iOS 27 (mid-September 2026)</strong>, making the new material mandatory. Instacart's iOS app was critically broken on initial testing. The working team is iOS-centric — compatibility burndown in Q3, nav adoption in Q4. LG effectively ends the era of OS-neutral design systems, requiring teams to separate native OS interfaces from the underlying brand and product layer in a way that wasn't necessary before.
+      </p>
+      <div class="callout-warn">
+        <strong>The internal doc is a solid iOS playbook. It has no answer for web, Android, or the shared design system library.</strong>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px;">Delivery timeline</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-bar" style="background:var(--amber);"></div>
+          <div class="timeline-label">Q3 2026</div>
+          <div class="timeline-title">iOS compatibility burndown</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-bar" style="background:var(--accent2);"></div>
+          <div class="timeline-label">Q4 2026</div>
+          <div class="timeline-title">Nav adoption + design vision sprint</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-bar" style="background:var(--accent);"></div>
+          <div class="timeline-label">H1 2027</div>
+          <div class="timeline-title">LG soft adoption + brand align</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-bar" style="background:rgba(255,255,255,0.14);"></div>
+          <div class="timeline-label">???</div>
+          <div class="timeline-title">Web &amp; Android strategy (undefined)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLE SUMMARY -->
+  <div class="section" id="apple-summary">
+    <h2><span class="section-icon" style="background:rgba(124,90,245,0.12);">🍎</span> Apple Liquid Glass — Key Points</h2>
+    <div class="grid-2" style="margin-bottom:12px;">
+      <div class="card card-sm">
+        <h3>What it is</h3>
+        <ul class="bullet-list" style="margin-top:8px;">
+          <li><strong>Real-time light bending (lensing)</strong> — refracts content behind UI chrome</li>
+          <li><strong>Specular highlights</strong> — respond to device motion via IMU</li>
+          <li><strong>Fluid morphing</strong> — components transform between states like liquid</li>
+          <li><strong>Hardware-dependent</strong> — requires Apple Silicon + Metal GPU pipeline</li>
+          <li>System-wide across iOS, iPadOS, macOS, watchOS, tvOS</li>
+        </ul>
+      </div>
+      <div class="card card-sm">
+        <h3>Critical HIG rules</h3>
+        <ul class="bullet-list" style="margin-top:8px;">
+          <li><strong>Navigation layer only</strong> — never apply to content (lists, tables, media)</li>
+          <li>iOS 27 reduced default transparency after beta pushback</li>
+          <li>iOS 27 added a user-facing <strong>glass vs. tint slider</strong> in Settings</li>
+          <li>Reduced transparency + high contrast must degrade to solid surfaces</li>
+          <li>Apple-platform only — no official web or Android equivalent</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card card-sm">
+      <h3>A11y risk — known issue, baked into the material</h3>
+      <ul class="bullet-list" style="margin-top:8px;">
+        <li>iOS 26 beta had low-contrast text over heavy blurs — Apple received significant feedback and dialed back</li>
+        <li>WCAG AA over frosted backgrounds requires tight contrast management + solid fallbacks</li>
+        <li>Reduced Transparency / Increase Contrast accessibility settings must trigger opaque surface fallback</li>
+        <li><strong>This is a design system responsibility</strong> — it has to be enforced at the component level, not left to product teams</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INTERNAL STATUS -->
+  <div class="section" id="internal-status">
+    <h2><span class="section-icon" style="background:rgba(61,186,126,0.12);">🏗</span> Internal plan — what's in scope</h2>
+    <div class="card">
+      <div class="platform-row">
+        <div class="platform-icon" style="background:rgba(61,186,126,0.12);">📱</div>
+        <div class="platform-body">
+          <div class="platform-name">iOS (Instacart App)</div>
+          <div class="platform-desc">Active. Q3 bug burndown, Q4 nav adoption. DRI: Mike Jablonski. 40% of critical issues resolved. Target: nav bars, tab bars, floating cart, CTAs, bottom-pinned search.</div>
+        </div>
+        <div class="platform-status"><span class="pill pill-green">In Flight</span></div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-icon" style="background:rgba(61,186,126,0.12);">🛒</div>
+        <div class="platform-body">
+          <div class="platform-name">iOS (Shopper App)</div>
+          <div class="platform-desc">Active. Parallel track to IC App. DRI: Joey Dong. Same phase structure.</div>
+        </div>
+        <div class="platform-status"><span class="pill pill-green">In Flight</span></div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-icon" style="background:rgba(245,166,35,0.12);">🎨</div>
+        <div class="platform-body">
+          <div class="platform-name">Design System (IDS / Pantry)</div>
+          <div class="platform-desc">Component Updates Plan exists. DRI: Amy Chen. Covers iOS component updates only. No web or Android component work scoped.</div>
+        </div>
+        <div class="platform-status"><span class="pill pill-orange">Partial</span></div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-icon" style="background:rgba(255,99,50,0.10);">🌐</div>
+        <div class="platform-body">
+          <div class="platform-name">Web</div>
+          <div class="platform-desc">Not mentioned anywhere. No DRI. No scope. No strategy.</div>
+        </div>
+        <div class="platform-status"><span class="pill pill-red">Not scoped</span></div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-icon" style="background:rgba(255,99,50,0.10);">🤖</div>
+        <div class="platform-body">
+          <div class="platform-name">Android</div>
+          <div class="platform-desc">Not mentioned. No DRI. No scope. Google leadership has confirmed Liquid Glass is not coming to Pixel devices — Material 3 / Expressive continues to govern Android's design ecosystem.</div>
+        </div>
+        <div class="platform-status"><span class="pill pill-red">Not scoped</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAPS -->
+  <div class="section" id="gaps">
+    <h2><span class="section-icon" style="background:rgba(255,99,50,0.10);">⚠️</span> Gaps from my POV</h2>
+    <div class="callout" style="margin-bottom:12px;">
+      The plan as written is an iOS execution plan. These are the gaps the team needs to address — or explicitly acknowledge as deferred with a revisit date.
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <table class="gap-table">
+        <thead>
+          <tr>
+            <th>Gap</th>
+            <th>Why it matters</th>
+            <th>Status in doc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Web platform strategy</td>
+            <td>Instacart.com users won't see LG. Do we approximate, intentionally diverge, or say nothing?</td>
+            <td><span class="pill pill-red">Missing entirely</span></td>
+          </tr>
+          <tr>
+            <td>Android strategy</td>
+            <td>Material You is a different visual language. iOS gets LG nav — Android users see something completely different. Parity question is open.</td>
+            <td><span class="pill pill-red">Missing entirely</span></td>
+          </tr>
+          <tr>
+            <td>Android navigation patterns</td>
+            <td>Beyond styling, iOS and Android have structurally different nav paradigms. LG directly targets nav components (tab bars, nav bars) — but Android uses system-level back gestures, no persistent tab bar standard, and Material You nav conventions that are behaviorally incompatible with iOS patterns. This is a UX pattern gap — behavioral and structural, deeper than styling. Shipping "Android parity" of LG nav components may not be meaningful or correct.</td>
+            <td><span class="pill pill-red">Not addressed</span></td>
+          </tr>
+          <tr>
+            <td>Multi-style library governance</td>
+            <td>One Pantry with LG + web + Android variants? Or fork? Who owns the token layer?</td>
+            <td><span class="pill pill-red">Not addressed</span></td>
+          </tr>
+          <tr>
+            <td>Component drift risk</td>
+            <td>iOS LG components evolve quarterly. Web/Android lag. Without a strategy, divergence compounds silently.</td>
+            <td><span class="pill pill-red">Not addressed</span></td>
+          </tr>
+          <tr>
+            <td>A11y compliance</td>
+            <td>LG had known contrast issues in early betas, but iOS provides system-level settings (Reduce Transparency, Increase Contrast) that render surfaces fully opaque — which may largely address this at the OS level. Worth validating how much app-level work actually remains before treating this as a blocker. Note: that OS-level safety net doesn't exist on web or Android, so any glassmorphism approximation on those platforms places the a11y burden on the component itself.</td>
+            <td><span class="pill pill-orange">Mentioned, no owner</span></td>
+          </tr>
+          <tr>
+            <td>Token architecture</td>
+            <td>LG needs semantic tokens for depth, translucency, blur. Do web/Android inherit them? Who designs this?</td>
+            <td><span class="pill pill-orange">Implied, not designed</span></td>
+          </tr>
+          <tr>
+            <td>Brand expression collision</td>
+            <td>H2 Brand updates run concurrently. If both brand and LG touch tokens simultaneously, web and Android absorb a double disruption.</td>
+            <td><span class="pill pill-orange">Risk flagged, not resolved</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PLATFORM MATRIX -->
+  <div class="section" id="platform-matrix">
+    <h2><span class="section-icon" style="background:rgba(197,90,245,0.12);">🔲</span> Platform capability matrix</h2>
+    <div class="card" style="padding:20px;">
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th style="width:30%;">Capability</th>
+              <th>iOS (SwiftUI)</th>
+              <th>React Native</th>
+              <th>Web (CSS)</th>
+              <th>Android (Compose)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Native Liquid Glass</td>
+              <td><span class="check">✓ Native</span></td>
+              <td><span class="partial">~ @callstack/liquid-glass</span></td>
+              <td><span class="cross">✗ Not possible</span></td>
+              <td><span class="cross">✗ Not possible</span></td>
+            </tr>
+            <tr>
+              <td>Backdrop blur</td>
+              <td><span class="check">✓ Metal GPU</span></td>
+              <td><span class="check">✓ UIVisualEffectView</span></td>
+              <td><span class="partial">~ backdrop-filter (no refraction)</span></td>
+              <td><span class="partial">~ Modifier.blur (API 31+)</span></td>
+            </tr>
+            <tr>
+              <td>Real-time light refraction</td>
+              <td><span class="check">✓ Hardware</span></td>
+              <td><span class="partial">~ Approximate</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Device-motion specular</td>
+              <td><span class="check">✓ Native</span></td>
+              <td><span class="partial">~ Gyro bridge possible</span></td>
+              <td><span class="cross">✗ No gyro in browser</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Fluid morphing</td>
+              <td><span class="check">✓ Native</span></td>
+              <td><span class="partial">~ Community lib</span></td>
+              <td><span class="partial">~ CSS transitions (no physics)</span></td>
+              <td><span class="partial">~ Compose animations</span></td>
+            </tr>
+            <tr>
+              <td>HIG-compliant nav layer</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">~ Custom impl needed</span></td>
+              <td><span class="na">N/A — web paradigm</span></td>
+              <td><span class="na">N/A — Material You</span></td>
+            </tr>
+            <tr>
+              <td>Reduced transparency fallback</td>
+              <td><span class="check">✓ OS-level</span></td>
+              <td><span class="partial">~ App must handle</span></td>
+              <td><span class="partial">~ prefers-reduced-transparency</span></td>
+              <td><span class="partial">~ Manual</span></td>
+            </tr>
+            <tr>
+              <td>WCAG AA viability</td>
+              <td><span class="partial">~ Known risk, requires care</span></td>
+              <td><span class="partial">~ Same risk</span></td>
+              <td><span class="check">✓ More controllable</span></td>
+              <td><span class="check">✓ Material You designed for this</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:11px; color:var(--text-dim); margin-top:12px;">✓ Full &nbsp; ~ Partial / approximation &nbsp; ✗ Not supported &nbsp; N/A Not applicable</p>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="section" id="recommendations">
+    <h2><span class="section-icon" style="background:rgba(61,186,126,0.12);">💡</span> My recommendations</h2>
+    <div class="grid-2" style="margin-bottom:12px;">
+      <div class="rec-card blue">
+        <div class="rec-number">01</div>
+        <div class="rec-title">Align on design principles across platforms</div>
+        <div class="rec-body">Extract the design intent behind LG — depth through translucency, hierarchy via material, fluid interaction — and codify it as platform-agnostic principles. iOS expresses this through LG. Web through backdrop-filter and layering. Android through Material You elevation and tonal surfaces. This extends to navigation patterns too: Android uses system back gestures, drawer navigation, and its own bottom nav conventions. Android nav components should follow Android standards and express the same underlying design intent through those native patterns.</div>
+        <div class="rec-tags">
+          <span class="pill pill-blue">Web</span>
+          <span class="pill pill-purple">Android</span>
+          <span class="pill pill-muted">Long-term</span>
+        </div>
+      </div>
+      <div class="rec-card green">
+        <div class="rec-number">02</div>
+        <div class="rec-title">Token-first: build the LG semantic layer now</div>
+        <div class="rec-body">Before iOS components ship, define semantic tokens for depth, translucency, blur strength, surface opacity. Prevents hardcoded values in iOS components. Web and Android consume the same token intent — each platform resolves it natively. This is the systemic lever that stops drift from accumulating silently.</div>
+        <div class="rec-tags">
+          <span class="pill pill-green">IDS</span>
+          <span class="pill pill-blue">Web</span>
+          <span class="pill pill-orange">Q3 priority</span>
+        </div>
+      </div>
+      <div class="rec-card orange">
+        <div class="rec-number">03</div>
+        <div class="rec-title">Component parity matrix — make drift visible</div>
+        <div class="rec-body">A living matrix tracking each target component's state across iOS, web, and Android: native LG / approximated / intentionally diverged / not started. Source of truth for quarterly alignment. Explicit divergence decisions are fine — silent drift is the enemy.</div>
+        <div class="rec-tags">
+          <span class="pill pill-orange">Governance</span>
+          <span class="pill pill-muted">Low cost, high signal</span>
+        </div>
+      </div>
+      <div class="rec-card purple">
+        <div class="rec-number">04</div>
+        <div class="rec-title">Own a11y as a system-level constraint</div>
+        <div class="rec-body">LG has a proven contrast problem. IDS should be the guardrail: every LG component ships with a tested reduced-transparency solid fallback, documented contrast ratios, and reduced-motion behavior. This belongs at the design system level, enforced through components.</div>
+        <div class="rec-tags">
+          <span class="pill pill-purple">A11y</span>
+          <span class="pill pill-red">WCAG AA</span>
+          <span class="pill pill-blue">All platforms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-card blue" style="margin-bottom:16px;">
+      <div class="rec-number">05</div>
+      <div class="rec-title">Position web as the stable brand canvas</div>
+      <div class="rec-body">iOS and Android are both mediated by the OS — the OS applies materials, nav conventions, and interaction patterns on top of your product. Web has none of that. There's no system material layer, no enforced nav pattern. What you ship is exactly what the user sees. That makes web the one platform where brand expression is fully under our control. Rather than framing web as the platform playing catch-up to LG, it can be the reference point — the place where Instacart's design language lives in its purest form, without OS mediation. iOS and Android then adapt that intent to their native constraints. This reframes the web question from "how do we approximate LG" to "what does our design language look like when it's fully ours."</div>
+      <div class="rec-tags">
+        <span class="pill pill-blue">Web</span>
+        <span class="pill pill-green">Brand</span>
+        <span class="pill pill-muted">Strategic framing</span>
+      </div>
+    </div>
+
+    <div class="card card-sm">
+      <h3 style="margin-bottom:10px;">On the library question: one library, multiple modes</h3>
+      <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:12px;">
+        Forking Pantry into an "iOS LG library" and a "Web library" creates two maintenance burdens and will diverge fast. The better model: <strong style="color:var(--text);">one Pantry library with explicit platform modes</strong> — like dark/light mode today. Each component has a "LG mode" (iOS), "glass approximation" (web), and "material" (Android) variant, all sourced from the same token base. The token layer is the contract. Platform implementations are the interpreters.
+      </p>
+      <div class="callout">
+        <strong>The key question to land in this meeting:</strong> Does the team agree that design system owns the cross-platform principle layer — or is web/Android each team's own problem? That decision determines everything downstream.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="section" id="questions">
+    <h2><span class="section-icon" style="background:rgba(245,166,35,0.12);">❓</span> Questions I'm bringing to the room</h2>
+    <div class="card">
+      <ul class="bullet-list">
+        <li><strong>Web components:</strong> When iOS nav adopts LG in Q4, what is the web nav doing? Intentional divergence or planned follow-up? Who decides and when?</li>
+        <li><strong>Android:</strong> Are we explicitly accepting that Android will look significantly different from iOS post-LG? If yes, that's a product decision PMs need to own — not just design systems.</li>
+        <li><strong>Android nav patterns:</strong> LG targets nav components specifically, but Android navigation is structurally different — system back gesture, no universal tab bar standard, drawer patterns. Do we even want Android nav to mirror iOS? Or should Android follow Material You nav conventions independently, and we align on intent rather than structure?</li>
+        <li><strong>Library strategy:</strong> Is IDS expected to maintain LG + non-LG component variants going forward? What's the deprecation path when LG becomes the iOS default?</li>
+        <li><strong>Token ownership:</strong> Who is designing the semantic tokens that underpin LG material properties? Needs to be scoped before components are built.</li>
+        <li><strong>Brand expression collision:</strong> H2 brand updates run concurrently. How do we sequence so LG and brand changes don't create conflicting token updates?</li>
+        <li><strong>Adoption definition:</strong> "2027 soft requirement" — does that mean iOS only, or does web/Android also need to express the new design language by 2027?</li>
+        <li><strong>A11y ownership:</strong> Who validates WCAG AA compliance for each LG component before it ships? Is there a shared QA protocol across iOS, web, and Android?</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <p class="foot">
+    Liquid Glass: Cross-Platform Considerations · <strong style="color:var(--text-muted);">Darío Fidanza</strong> · Instacart Design Systems · July 2026<br>
+    <span class="src">Sources: Internal exec summary · Apple HIG · Foresight Mobile · Vagary Tech</span>
+  </p>
+
+</main>
+
+<script>
+// ── Dot-wave canvas animation (matches landing page) ──
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  const SPACING = 30;
+  let w, h, t = 0;
+
+  function resize() {
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.65, cy = h * 0.42;
+    const maxD = Math.sqrt(w * w + h * h) * 0.55;
+    const cols = Math.ceil(w / SPACING) + 2;
+    const rows = Math.ceil(h / SPACING) + 2;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * SPACING - SPACING * 0.5;
+        const y = r * SPACING - SPACING * 0.5;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm = Math.min(1, dist / maxD);
+
+        const a  = Math.sin(dist * 0.013 - t * 2.0);
+        const b  = Math.sin(dist * 0.021 - t * 3.2 + 1.4);
+        const c2 = Math.sin(dist * 0.008 - t * 1.1 + 2.8);
+        const wave = a * 0.45 + b * 0.3 + c2 * 0.25;
+
+        const falloff = Math.pow(1 - norm, 1.3);
+        const opacity = (wave * 0.38 + 0.30) * falloff;
+        if (opacity < 0.04) continue;
+
+        const bright = Math.max(0, wave);
+        const rc = Math.round(79  + bright * 90);
+        const gc = Math.round(128 - bright * 60);
+        const radius = Math.max(0.5, 1.4 + wave * 1.0) * (0.5 + falloff * 0.7);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rc},${gc},245,${Math.min(0.85, Math.abs(opacity))})`;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setTimeout(() => { requestAnimationFrame(draw); }, 60);
+})();
+</script>
+
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
