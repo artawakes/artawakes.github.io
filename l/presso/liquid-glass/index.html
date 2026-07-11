@@ -244,8 +244,8 @@
 
 <nav>
   <div class="nav-left">
-    <a class="nav-back-btn" href="/" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
-    <a class="nav-logo" href="/"><span><b>Darío</b>&nbsp;Fidanza</span></a>
+    <a class="nav-back-btn" href="../" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+    <a class="nav-logo" href="../"><span><b>Darío</b>&nbsp;Fidanza</span></a>
   </div>
 </nav>
 
@@ -302,7 +302,7 @@
     <h2><span class="section-icon" style="background:rgba(79,128,245,0.12);">📋</span> What's happening</h2>
     <div class="card">
       <p style="font-size:14px; color:var(--text-dim); line-height:1.7; margin-bottom:14px;">
-        Apple removes the Liquid Glass opt-out flag in <strong style="color:var(--text);">iOS 27 (mid-September 2026)</strong>, making the new material mandatory. Instacart's iOS app was critically broken on initial testing. The working team is iOS-centric — compatibility burndown in Q3, nav adoption in Q4. LG effectively ends the era of OS-neutral design systems, requiring teams to separate native OS interfaces from the underlying brand and product layer in a way that wasn't necessary before.
+        Apple removes the Liquid Glass opt-out flag in <strong style="color:var(--text);">iOS 27 (mid-September 2026)</strong>, making the new material mandatory. Our flagship iOS app was critically broken on initial testing. The working team is iOS-centric — compatibility burndown in Q3, nav adoption in Q4. LG effectively ends the era of OS-neutral design systems, requiring teams to separate native OS interfaces from the underlying brand and product layer in a way that wasn't necessary before.
       </p>
       <div class="callout-warn">
         <strong>The internal doc is a solid iOS playbook. It has no answer for web, Android, or the shared design system library.</strong>
@@ -378,8 +378,8 @@
       <div class="platform-row">
         <div class="platform-icon" style="background:rgba(61,186,126,0.12);">📱</div>
         <div class="platform-body">
-          <div class="platform-name">iOS (Instacart App)</div>
-          <div class="platform-desc">Active. Q3 bug burndown, Q4 nav adoption. DRI: Mike Jablonski. 40% of critical issues resolved. Target: nav bars, tab bars, floating cart, CTAs, bottom-pinned search.</div>
+          <div class="platform-name">iOS (Consumer App)</div>
+          <div class="platform-desc">Active. Q3 bug burndown, Q4 nav adoption. DRI assigned. 40% of critical issues resolved. Target: nav bars, tab bars, floating cart, CTAs, bottom-pinned search.</div>
         </div>
         <div class="platform-status"><span class="pill pill-green">In Flight</span></div>
       </div>
@@ -387,15 +387,15 @@
         <div class="platform-icon" style="background:rgba(61,186,126,0.12);">🛒</div>
         <div class="platform-body">
           <div class="platform-name">iOS (Shopper App)</div>
-          <div class="platform-desc">Active. Parallel track to IC App. DRI: Joey Dong. Same phase structure.</div>
+          <div class="platform-desc">Active. Parallel track to the consumer app. DRI assigned. Same phase structure.</div>
         </div>
         <div class="platform-status"><span class="pill pill-green">In Flight</span></div>
       </div>
       <div class="platform-row">
         <div class="platform-icon" style="background:rgba(245,166,35,0.12);">🎨</div>
         <div class="platform-body">
-          <div class="platform-name">Design System (IDS / Pantry)</div>
-          <div class="platform-desc">Component Updates Plan exists. DRI: Amy Chen. Covers iOS component updates only. No web or Android component work scoped.</div>
+          <div class="platform-name">Design System (core library)</div>
+          <div class="platform-desc">Component Updates Plan exists. DRI assigned. Covers iOS component updates only. No web or Android component work scoped.</div>
         </div>
         <div class="platform-status"><span class="pill pill-orange">Partial</span></div>
       </div>
@@ -436,7 +436,7 @@
         <tbody>
           <tr>
             <td>Web platform strategy</td>
-            <td>Instacart.com users won't see LG. Do we approximate, intentionally diverge, or say nothing?</td>
+            <td>Web users won't see LG. Do we approximate, intentionally diverge, or say nothing?</td>
             <td><span class="pill pill-red">Missing entirely</span></td>
           </tr>
           <tr>
@@ -451,7 +451,7 @@
           </tr>
           <tr>
             <td>Multi-style library governance</td>
-            <td>One Pantry with LG + web + Android variants? Or fork? Who owns the token layer?</td>
+            <td>One shared library with LG + web + Android variants? Or fork? Who owns the token layer?</td>
             <td><span class="pill pill-red">Not addressed</span></td>
           </tr>
           <tr>
@@ -577,7 +577,7 @@
         <div class="rec-title">Token-first: build the LG semantic layer now</div>
         <div class="rec-body">Before iOS components ship, define semantic tokens for depth, translucency, blur strength, surface opacity. Prevents hardcoded values in iOS components. Web and Android consume the same token intent — each platform resolves it natively. This is the systemic lever that stops drift from accumulating silently.</div>
         <div class="rec-tags">
-          <span class="pill pill-green">IDS</span>
+          <span class="pill pill-green">DS</span>
           <span class="pill pill-blue">Web</span>
           <span class="pill pill-orange">Q3 priority</span>
         </div>
@@ -594,7 +594,7 @@
       <div class="rec-card purple">
         <div class="rec-number">04</div>
         <div class="rec-title">Own a11y as a system-level constraint</div>
-        <div class="rec-body">LG has a proven contrast problem. IDS should be the guardrail: every LG component ships with a tested reduced-transparency solid fallback, documented contrast ratios, and reduced-motion behavior. This belongs at the design system level, enforced through components.</div>
+        <div class="rec-body">LG has a proven contrast problem. The design system should be the guardrail: every LG component ships with a tested reduced-transparency solid fallback, documented contrast ratios, and reduced-motion behavior. This belongs at the design system level, enforced through components.</div>
         <div class="rec-tags">
           <span class="pill pill-purple">A11y</span>
           <span class="pill pill-red">WCAG AA</span>
@@ -606,7 +606,7 @@
     <div class="rec-card blue" style="margin-bottom:16px;">
       <div class="rec-number">05</div>
       <div class="rec-title">Position web as the stable brand canvas</div>
-      <div class="rec-body">iOS and Android are both mediated by the OS — the OS applies materials, nav conventions, and interaction patterns on top of your product. Web has none of that. There's no system material layer, no enforced nav pattern. What you ship is exactly what the user sees. That makes web the one platform where brand expression is fully under our control. Rather than framing web as the platform playing catch-up to LG, it can be the reference point — the place where Instacart's design language lives in its purest form, without OS mediation. iOS and Android then adapt that intent to their native constraints. This reframes the web question from "how do we approximate LG" to "what does our design language look like when it's fully ours."</div>
+      <div class="rec-body">iOS and Android are both mediated by the OS — the OS applies materials, nav conventions, and interaction patterns on top of your product. Web has none of that. There's no system material layer, no enforced nav pattern. What you ship is exactly what the user sees. That makes web the one platform where brand expression is fully under our control. Rather than framing web as the platform playing catch-up to LG, it can be the reference point — the place where our design language lives in its purest form, without OS mediation. iOS and Android then adapt that intent to their native constraints. This reframes the web question from "how do we approximate LG" to "what does our design language look like when it's fully ours."</div>
       <div class="rec-tags">
         <span class="pill pill-blue">Web</span>
         <span class="pill pill-green">Brand</span>
@@ -617,7 +617,7 @@
     <div class="card card-sm">
       <h3 style="margin-bottom:10px;">On the library question: one library, multiple modes</h3>
       <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:12px;">
-        Forking Pantry into an "iOS LG library" and a "Web library" creates two maintenance burdens and will diverge fast. The better model: <strong style="color:var(--text);">one Pantry library with explicit platform modes</strong> — like dark/light mode today. Each component has a "LG mode" (iOS), "glass approximation" (web), and "material" (Android) variant, all sourced from the same token base. The token layer is the contract. Platform implementations are the interpreters.
+        Forking the component library into an "iOS LG library" and a "Web library" creates two maintenance burdens and will diverge fast. The better model: <strong style="color:var(--text);">one shared library with explicit platform modes</strong> — like dark/light mode today. Each component has a "LG mode" (iOS), "glass approximation" (web), and "material" (Android) variant, all sourced from the same token base. The token layer is the contract. Platform implementations are the interpreters.
       </p>
       <div class="callout">
         <strong>The key question to land in this meeting:</strong> Does the team agree that design system owns the cross-platform principle layer — or is web/Android each team's own problem? That decision determines everything downstream.
@@ -633,7 +633,7 @@
         <li><strong>Web components:</strong> When iOS nav adopts LG in Q4, what is the web nav doing? Intentional divergence or planned follow-up? Who decides and when?</li>
         <li><strong>Android:</strong> Are we explicitly accepting that Android will look significantly different from iOS post-LG? If yes, that's a product decision PMs need to own — not just design systems.</li>
         <li><strong>Android nav patterns:</strong> LG targets nav components specifically, but Android navigation is structurally different — system back gesture, no universal tab bar standard, drawer patterns. Do we even want Android nav to mirror iOS? Or should Android follow Material You nav conventions independently, and we align on intent rather than structure?</li>
-        <li><strong>Library strategy:</strong> Is IDS expected to maintain LG + non-LG component variants going forward? What's the deprecation path when LG becomes the iOS default?</li>
+        <li><strong>Library strategy:</strong> Is the design system team expected to maintain LG + non-LG component variants going forward? What's the deprecation path when LG becomes the iOS default?</li>
         <li><strong>Token ownership:</strong> Who is designing the semantic tokens that underpin LG material properties? Needs to be scoped before components are built.</li>
         <li><strong>Brand expression collision:</strong> H2 brand updates run concurrently. How do we sequence so LG and brand changes don't create conflicting token updates?</li>
         <li><strong>Adoption definition:</strong> "2027 soft requirement" — does that mean iOS only, or does web/Android also need to express the new design language by 2027?</li>
@@ -645,7 +645,7 @@
   <hr class="divider">
 
   <p class="foot">
-    Liquid Glass: Cross-Platform Considerations · <strong style="color:var(--text-muted);">Darío Fidanza</strong> · Instacart Design Systems · July 2026<br>
+    Liquid Glass: Cross-Platform Considerations · <strong style="color:var(--text-muted);">Darío Fidanza</strong> · Design Systems POV · July 2026<br>
     <span class="src">Sources: Internal exec summary · Apple HIG · Foresight Mobile · Vagary Tech</span>
   </p>
 
