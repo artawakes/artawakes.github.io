@@ -79,27 +79,28 @@ html.light .nav-project-pill:hover {
   color: rgba(79, 128, 245, 1);
 }
 
-/* ── Section pill active: subtle tint so the arrow stands out ── */
+/* ── Section pill active: site-style filled pill (Mock F) ── */
 .nav-btn.active {
-  background: rgba(79, 128, 245, 0.14) !important;
-  color: rgba(79, 128, 245, 0.90) !important;
+  background: var(--bg3, #12233b) !important;
+  color: var(--text, #f0f4ff) !important;
   box-shadow: none !important;
 }
 html.light .nav-btn.active {
-  background: rgba(79, 128, 245, 0.11) !important;
-  color: rgba(79, 128, 245, 0.85) !important;
+  background: var(--bg3, #e8edf9) !important;
+  color: var(--text, #07101f) !important;
 }
 
 /* ── Next arrow: accent blue ── */
 #nextBtn {
   color: #fff;
   border-color: rgba(79, 128, 245, 0.70);
-  background: rgba(79, 128, 245, 1);
+  background: linear-gradient(92deg, #4f80f5, #7c5af5);
+  box-shadow: 0 4px 14px rgba(79, 128, 245, 0.35);
   position: relative;
   overflow: visible;
 }
 #nextBtn:hover {
-  background: rgba(99, 145, 255, 1);
+  background: linear-gradient(92deg, #6391ff, #8d6dff);
   border-color: rgba(99, 145, 255, 1);
 }
 
@@ -179,8 +180,10 @@ html.light .nav-hint-key {
 .nav-project[data-state="expanded"],
 .nav-project[data-state="expanding"],
 .nav-project[data-state="collapsing"] {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--glass, rgba(13,26,46,.7));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line, rgba(143,168,196,.14));
   border-radius: 100px;
   padding: 4px;
   gap: 2px;
@@ -189,7 +192,8 @@ html.light .nav-hint-key {
 html.light .nav-project[data-state="expanded"],
 html.light .nav-project[data-state="expanding"],
 html.light .nav-project[data-state="collapsing"] {
-  background: rgba(0,0,0,0.03);
+  background: var(--glass, rgba(255,255,255,.7));
+  border-color: var(--line, rgba(7,16,31,.12));
 }
 /* Strip the inner .nav-pills border when container has it */
 .nav-project[data-state="expanded"] .nav-pills,

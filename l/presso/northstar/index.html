@@ -27,7 +27,14 @@ html { font-size: 16px; }
   --amber: #f5a623;
   --red: #FF6332;
   --pink: #e0459a;
+  --magenta: #c55af5; --violet: #7c5af5; --bg3: #12233b; --faint: #5a7396;
+  --line: rgba(143,168,196,.14); --glass: rgba(13,26,46,.7); --fade: rgba(7,16,31,.85);
 }
+
+/* Mock F flow-lines canvas — behind slides, masked below 55% viewport */
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
 
 /* ─── LAYOUT ─── */
 html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
@@ -37,14 +44,33 @@ html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; back
 nav {
   position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
   display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
-  background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: transparent; border-bottom: none;
 }
+nav::before{ content:""; position:absolute; left:0; right:0; top:0; bottom:-64px; background:var(--fade);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  pointer-events:none; z-index:-1; }
+
+/* When the ACTIVE slide is light, the fixed nav flips to the light glass treatment */
+body.on-light {
+  --fade: rgba(244,246,253,.92); --glass: rgba(255,255,255,.7); --line: rgba(7,16,31,.12);
+  --bg3: #e8edf9; --surface: rgba(255,255,255,.75); --border: rgba(7,16,31,.09); --border-strong: rgba(7,16,31,.18);
+  --faint: #6b80a0; --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+}
+body.on-light { background: #f4f6fd; }
+body.on-light .nav-logo { color: #07101f; }
+body.on-light .nav-btn { color: #3a5070; }
+body.on-light .nav-btn:hover { color: #07101f; }
+body.on-light .slide-counter { color: #3a5070; }
+body.on-light .arrow-btn { color: #3a5070; }
+body.on-light .theme-btn { color: #3a5070; }
+/* Covers: transparent over the light body so the flow-lines show through */
+#slide-1.slide-light { background: transparent !important; }
 .nav-logo { display:inline-flex; align-items:center; font-family:'Hepta Slab',serif; font-size:17px; letter-spacing:-0.02em; color: var(--text); text-decoration: none; flex-shrink: 0; }
 .nav-logo b { background:linear-gradient(90deg,#4f80f5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
-.nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
-.nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
-.nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-pills { display: flex; background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { display: inline-flex; align-items: center; height: 34px; font-size: 13px; font-weight: 500; letter-spacing: normal; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 0 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
 .nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
 .nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .slide-counter { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.05em; min-width: 44px; text-align: right; }
@@ -70,9 +96,7 @@ html:not(.light) .tb-moon { display: none; }
   opacity: 0; transform: translateY(28px); pointer-events: none;
   transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden;
-  background: var(--bg);
-  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
-  background-size: 30px 30px;
+  background: transparent;
 }
 .slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
 .slide.exit-up { opacity: 0; transform: translateY(-28px); }
@@ -84,15 +108,14 @@ html:not(.light) .tb-moon { display: none; }
 
 /* light mode */
 .slide-light {
-  --bg: #f4f6fd;
+  --bg: #f4f6fd; --bg2: #eaecf8;
   --surface: rgba(255,255,255,0.75);
   --border: rgba(0,0,0,0.09);
   --text: #07101f;
   --text-dim: #3a5070;
   --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7);
   background-color: var(--bg);
-  background-image: radial-gradient(rgba(79,128,245,0.10) 1px, transparent 1px);
-  background-size: 30px 30px;
 }
 .slide-dots { background-image: none; }
 .slide-grid { background-image: none; }
@@ -103,6 +126,7 @@ html:not(.light) .tb-moon { display: none; }
   mask-composite: add;
   animation: gridScan 8s ease-in-out infinite;
 }
+#slide-10, #slide-11 { background-color: var(--bg); }
 #slide-9.slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.22) 1px, transparent 1px); }
 #slide-10.slide-grid::after, #slide-11.slide-grid::after { background-image: linear-gradient(rgba(79,128,245,0.20) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.20) 1px, transparent 1px); }
 @keyframes gridScan { 0% { --scan: -10%; } 100% { --scan: 110%; } }
@@ -114,7 +138,8 @@ html.light .slide-grid::after { background-image: linear-gradient(rgba(50,90,210
 h1 { font-family: 'Hepta Slab', serif; font-size: clamp(36px, 5vw, 72px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; color: var(--text); }
 h2 { font-family: 'Hepta Slab', serif; font-size: clamp(26px, 3.2vw, 50px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; color: var(--text); }
 h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--text); }
-.overline { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
+/* Kicker — the site's "01 / SECTION" spec: Hepta Slab, faint label, blue index */
+.overline { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; display: block; }
 .overline.green { color: var(--green); }
 .overline.purple { color: var(--accent2); }
 .overline.amber { color: var(--amber); }
@@ -128,6 +153,10 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 .card-label.amber { color: var(--amber); }
 .card-label.red { color: var(--red); }
 
+/* Gradient accent for key words inside headings */
+.grad { background: linear-gradient(92deg, var(--accent), var(--accent2), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+h1 em, h2 em { font-style: normal; color: var(--magenta); }
+
 /* ─── DIVIDER ─── */
 .divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; margin: 20px 0; animation: shimmerLine 2.5s linear infinite, glowPulse 2.5s ease-in-out infinite; background-size: 200% 100%; }
 @keyframes shimmerLine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
@@ -135,11 +164,17 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 .cover-line { width: 56px; height: 3px; background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent); border-radius: 2px; margin: 24px 0; animation: shimmerLine 3s linear infinite; background-size: 200% 100%; }
 
 /* ─── CARDS ─── */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.2s, background 0.2s; }
-.card:hover { border-color: var(--border-strong); background: rgba(255,255,255,0.06); }
-.metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; transition: all 0.2s; }
-.metric-card:hover { border-color: rgba(79,128,245,0.3); box-shadow: 0 0 20px rgba(79,128,245,0.07); }
-.metric-number { font-size: clamp(24px, 2.6vw, 42px); font-weight: 800; line-height: 1; color: var(--text); }
+.card { position: relative; background: linear-gradient(170deg, var(--bg2), var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 22px; transition: transform 0.25s, border-color 0.25s; }
+.card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); }
+.card::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--violet), transparent); opacity: 0.65; transition: opacity 0.25s; }
+.card:hover::before { opacity: 1; }
+.card h3 { font-family: 'Hepta Slab', serif; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
+.slide-light .card, html.light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); }
+.card:hover { border-color: var(--border-strong); background:linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.06)), linear-gradient(170deg,var(--bg2),var(--bg)); }
+.metric-card { position: relative; background: linear-gradient(170deg, var(--bg2), var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; transition: transform 0.25s, border-color 0.25s; }
+.metric-card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); box-shadow: none; }
+.slide-light .metric-card, html.light .metric-card { background: linear-gradient(170deg, var(--bg2), var(--bg)); }
+.metric-number { font-family: 'Hepta Slab', serif; font-size: clamp(24px, 2.6vw, 42px); font-weight: 400; letter-spacing: -0.03em; line-height: 1; color: var(--text); }
 .metric-number.green { color: var(--green); }
 .metric-number.accent { color: var(--accent); }
 .metric-number.purple { color: var(--accent2); }
@@ -147,11 +182,11 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 .metric-label { font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
 
 /* ─── TAGS ─── */
-.tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(79,128,245,0.3); background: rgba(79,128,245,0.08); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
-.tag.green { border-color: rgba(61,186,126,0.3); background: rgba(61,186,126,0.08); color: var(--green); }
-.tag.purple { border-color: rgba(124,90,245,0.3); background: rgba(124,90,245,0.08); color: var(--accent2); }
-.tag.amber { border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.08); color: var(--amber); }
-.tag.red { border-color: rgba(255,99,50,0.3); background: rgba(255,99,50,0.08); color: var(--red); }
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(79,128,245,0.3); background:linear-gradient(rgba(79,128,245,0.08), rgba(79,128,245,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
+.tag.green { border-color: rgba(61,186,126,0.3); background:linear-gradient(rgba(61,186,126,0.08), rgba(61,186,126,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--green); }
+.tag.purple { border-color: rgba(124,90,245,0.3); background:linear-gradient(rgba(124,90,245,0.08), rgba(124,90,245,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--accent2); }
+.tag.amber { border-color: rgba(245,166,35,0.3); background:linear-gradient(rgba(245,166,35,0.08), rgba(245,166,35,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--amber); }
+.tag.red { border-color: rgba(255,99,50,0.3); background:linear-gradient(rgba(255,99,50,0.08), rgba(255,99,50,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--red); }
 
 /* ─── BULLET LIST ─── */
 .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -175,9 +210,12 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 .icon-box.red { background: rgba(255,99,50,0.13); }
 
 /* ─── BEFORE/AFTER ─── */
-.ba-card { border-radius: 12px; padding: 20px; border: 1px solid; }
-.ba-before { border-color: rgba(255,99,50,0.3); background: rgba(255,99,50,0.05); }
-.ba-after  { border-color: rgba(61,186,126,0.3); background: rgba(61,186,126,0.05); }
+.ba-card { position: relative; overflow: hidden; border-radius: 18px; padding: 22px; border: 1px solid; }
+.ba-card::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; opacity: 0.75; }
+.ba-before::before { background: linear-gradient(90deg, transparent, rgba(255,99,50,0.85), transparent); }
+.ba-after::before  { background: linear-gradient(90deg, transparent, rgba(61,186,126,0.85), transparent); }
+.ba-before { border-color: rgba(255,99,50,0.3); background:linear-gradient(rgba(255,99,50,0.05), rgba(255,99,50,0.05)), linear-gradient(170deg,var(--bg2),var(--bg)); }
+.ba-after  { border-color: rgba(61,186,126,0.3); background:linear-gradient(rgba(61,186,126,0.05), rgba(61,186,126,0.05)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 
 /* ─── IMAGE WRAPPER ─── */
 .uploaded-img-wrap { position: relative; border-radius: 10px; overflow: hidden; }
@@ -189,6 +227,10 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 
 /* ─── CANVAS ─── */
 .dots-canvas { position: absolute !important; inset: 0; pointer-events: none; z-index: 0; }
+#thankyou-canvas { display: none !important; }
+.slide-center.slide-light { background: transparent !important; }  /* flow-lines are the closer texture */
+/* Cover rides the flow-lines now — no dot-matrix texture */
+#slide-1 .dots-canvas { display: none; }
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -199,7 +241,7 @@ h3 { font-family: 'Noto Sans', sans-serif; font-size: clamp(16px, 1.8vw, 22px); 
 @keyframes agendaPulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.6); } }
 
 /* ─── LIGHT THEME ─── */
-html.light { --bg: #f4f6fd; --bg2: #e8ecf8; --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.15); --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8; }
+html.light { --bg: #f4f6fd; --bg2: #e8ecf8; --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.15); --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8; --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7); --fade: rgba(244,246,253,.9); }
 html.light nav { background: rgba(244,246,253,0.92); }
 html.light .arrow-btn, html.light .theme-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); color: var(--text-dim); }
 html.light .nav-btn { color: var(--text-dim); }
@@ -210,14 +252,15 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
 #slide-1 { display: grid; grid-template-columns: 1fr 70%; grid-template-rows: 1fr; padding: 0; }
 .cover-left { padding: 80px 100px 60px 48px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
 .cover-right { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 40px 16px 40px 16px; }
-.cover-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to left, var(--bg) 0%, transparent 30%); z-index: 1; }
-.cover-right img { display: block; max-height: 74.25%; max-width: 82.5%; width: auto; border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); position: relative; z-index: 2; clip-path: inset(2px 0 2px 0 round 24px); }
+
+.cover-right .cover-shot { position: relative; z-index: 2; height: 74.25%; aspect-ratio: 760 / 1600; border-radius: 24px; overflow: hidden; box-shadow: 0 18px 52px rgba(0,0,0,0.5); }
+.cover-right .cover-shot img { display: block; width: 104%; height: 104%; margin: -2%; object-fit: cover; }
 .instacart-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 28px; }
 .instacart-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
 
 /* ─── STAT CALLOUT ─── */
 .stat-callout { display: flex; flex-direction: column; gap: 2px; }
-.stat-number { font-size: clamp(36px, 4.5vw, 64px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.stat-number { font-family: 'Hepta Slab', serif; font-size: clamp(36px, 4.5vw, 64px); font-weight: 400; line-height: 1; letter-spacing: -0.03em; }
 .stat-label { font-size: 13px; color: var(--text-dim); font-weight: 400; }
 
 /* ─── PHASE TRACK ─── */
@@ -254,9 +297,9 @@ body.edit-mode .edit-toolbar { display:flex; }
 .edit-save-btn:hover { opacity:0.82; }
 body.edit-mode [contenteditable] { outline:none; cursor:text; }
 body.edit-mode [contenteditable]:hover { outline:1px dashed rgba(245,166,35,0.45); border-radius:3px; }
-body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:rgba(245,166,35,0.04); }
+body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:linear-gradient(rgba(245,166,35,0.04), rgba(245,166,35,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 body.edit-mode .img-placeholder { cursor:pointer; transition:border-color .2s,background .2s; }
-body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:rgba(245,166,35,0.07); }
+body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:linear-gradient(rgba(245,166,35,0.07), rgba(245,166,35,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 body.edit-mode .uploaded-img-wrap::after { content:'⟳ Replace'; position:absolute; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:0.05em; }
 body.edit-mode .uploaded-img-wrap:hover::after { opacity:1; }
 body.edit-mode .uploaded-img-wrap { cursor:pointer; }
@@ -327,7 +370,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 }
 .p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
 #p-notes {
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(79,128,245,0.18);
+  flex:1; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.18);
   border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
   font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
 }
@@ -335,7 +378,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
 .p-reset-btn {
-  margin-top:auto; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
   cursor:pointer; font-family:inherit; transition:all .15s;
 }
@@ -345,7 +388,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
 }
 .p-project-btn {
-  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
   font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
   transition:all .15s; letter-spacing:0.02em;
@@ -359,6 +402,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <link rel="stylesheet" href="../shared/nav.css">
 </head>
 <body>
+<canvas id="flow" aria-hidden="true"></canvas>
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -406,12 +450,11 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots active" id="slide-1" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-1" width="1920" height="1145"></canvas>
+<div class="slide slide-dots slide-light active" id="slide-1" data-section="problem">
   <div class="cover-glow" style="top:-10%;left:40%;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(124,90,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
 
   <div class="cover-right">
-    <img src="images/Northstar.gif" alt="Northstar shopper app mockup">
+    <div class="cover-shot"><img src="images/Northstar.gif" alt="Northstar shopper app mockup"></div>
   </div>
 
   <div class="cover-left">
@@ -463,7 +506,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   </h2>
   <div class="divider"></div>
   <div style="margin-top:8px;max-width:520px;display:flex;flex-direction:column;gap:16px">
-    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.05), rgba(124,90,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <div class="icon-box purple">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
@@ -507,7 +550,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="divider"></div>
   </div>
   <div class="grid-3" style="margin-top:128px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04);display:flex;flex-direction:column">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -517,7 +560,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <h3 style="margin-bottom:10px">Fragmented app</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Multiple disconnected surfaces forced shoppers to context-switch constantly, increasing cognitive overhead on every batch.</p>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
@@ -527,7 +570,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <h3 style="margin-bottom:10px">High cognitive load</h3>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Overwhelming information density with no clear hierarchy. Shoppers — especially new ones — felt lost and made more errors.</p>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25);background:rgba(255,99,50,0.04)">
+    <div class="card" style="border-color:rgba(255,99,50,0.25);background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box red">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -553,10 +596,10 @@ html.presenter-mode #presenter-ui { display:flex; }
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:20px">What shoppers told us</h2>
   <div class="divider" style="margin:0"></div>
   <p class="subtitle" style="margin-top:20px;margin-bottom:-52px">Qualitative sessions, diary studies, and data analysis across thousands of active shoppers.</p>
-  <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-100px">
-    <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0" data-edit-bound="1">
-        <img src="images/slide4_img_10.png" alt="Research synthesis" style="width:100%;height:100%;object-fit:cover;display:block">
+  <div class="grid-2" style="grid-template-columns:460px 1fr;gap:0;align-items:center;flex:1;margin-top:-100px">
+    <div style="display:flex;justify-content:center;align-items:center;padding:0 24px;min-width:0;">
+      <div class="uploaded-img-wrap" style="width:auto;height:auto;max-width:100%;background:transparent;border-radius:0;overflow:visible;box-shadow:none;" data-edit-bound="1">
+        <img src="images/undraw/usability-testing.svg" alt="Research synthesis" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;">
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -607,7 +650,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
   </div>
   <div class="grid-3" style="margin-top:80px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05)">
+    <div class="card" style="border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.05), rgba(79,128,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box blue">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -617,7 +660,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <h3 style="font-size:16px;margin-bottom:6px">Human touch</h3>
       <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
     </div>
-    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05)">
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.05), rgba(124,90,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box purple">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
@@ -627,7 +670,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <h3 style="font-size:16px;margin-bottom:6px">Guidance</h3>
       <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Surface the right information at the right moment with clear, contextual cues.</p>
     </div>
-    <div class="card" style="border-color:rgba(61,186,126,0.3);background:rgba(61,186,126,0.05)">
+    <div class="card" style="border-color:rgba(61,186,126,0.3);background:linear-gradient(rgba(61,186,126,0.05), rgba(61,186,126,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box green">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
@@ -650,7 +693,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div style="display:flex;gap:40px;margin-top:10px;align-items:start">
 
     <!-- Guidance & Education -->
-    <div class="card" style="border-color:rgba(79,128,245,0.3);background:rgba(79,128,245,0.05);flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="card" style="border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.05), rgba(79,128,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg));flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
       <div style="flex:1;padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box blue">
@@ -675,7 +718,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
 
     <!-- Human Touch -->
-    <div class="card" style="border-color:rgba(124,90,245,0.3);background:rgba(124,90,245,0.05);flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.2s both">
+    <div class="card" style="border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.05), rgba(124,90,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg));flex:1;display:flex;flex-direction:row;gap:0;padding:0;overflow:hidden;border-radius:39px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.2s both">
       <div style="flex:1;padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="icon-box purple">
@@ -739,7 +782,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 8 — IMPLEMENTATION
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-8" data-section="system" style="justify-content:center">
+<div class="slide slide-dots slide-light" id="slide-8" data-section="system" style="justify-content:center">
   <canvas class="dots-canvas" id="canvas-8" width="1920" height="1145"></canvas>
   <span class="overline">Implementation</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three features shipped in the first sprint</h2>
@@ -747,8 +790,8 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div style="display:flex;gap:32px;margin-top:46px;align-items:center">
     <!-- Circular image -->
     <div style="display:flex;justify-content:center;align-items:center;flex-shrink:0">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);flex-shrink:0" data-edit-bound="1">
-        <img src="images/slide9_img_5.png" alt="Education toasts" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div class="uploaded-img-wrap" style="width:auto;height:auto;background:transparent;border-radius:0;overflow:visible;box-shadow:none;flex-shrink:0;" data-edit-bound="1">
+        <img src="images/undraw/push-notifications.svg" alt="Education toasts" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;">
       </div>
     </div>
     <div class="grid-3" style="flex:1;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both;align-items:stretch">
@@ -927,15 +970,15 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ═══════════════════════════════════════════════
      SLIDE 13 — LEARNINGS
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-grid slide-dots" id="slide-13" data-section="impact" style="padding-top:56px">
+<div class="slide slide-dots" id="slide-13" data-section="impact" style="padding-top:56px">
   <canvas class="dots-canvas" id="canvas-13" width="1920" height="1145"></canvas>
   <span class="overline">Learnings</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;max-width:640px">Three lessons that changed how we work</h2>
   <div class="divider" style="margin:0"></div>
   <div class="grid-2" style="grid-template-columns:380px 1fr;gap:0;align-items:center;flex:1;margin-top:-60px">
     <div style="display:flex;justify-content:center;align-items:center;padding:0 40px">
-      <div class="uploaded-img-wrap" style="width:250px;height:250px;border-radius:50%;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.15);" data-edit-bound="1">
-        <img src="images/slide14_img_12.png" alt="Alignment" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div class="uploaded-img-wrap" style="width:auto;height:auto;background:transparent;border-radius:0;overflow:visible;box-shadow:none;flex-shrink:0;" data-edit-bound="1">
+        <img src="images/undraw/lightbulb-moment.svg" alt="Lightbulb moment" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;">
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -997,25 +1040,23 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 
   <div style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:40px 60px 40px 20px;z-index:2">
-    <div style="position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 25%);z-index:1;pointer-events:none"></div>
     <img src="images/takeaway.png" alt="Northstar app vision" style="display:block;max-height:calc(70% - 4px);max-width:calc(100% - 4px);width:auto;background:#000;border-radius:26px;box-shadow:inset 0 0 0 2px #000,0 24px 80px rgba(0,0,0,0.65);position:relative;z-index:2">
   </div>
 </div>
 
 <!-- ══ QUESTIONS ══ -->
-<div class="slide slide-center" data-section="impact" style="overflow:hidden;">
+<div class="slide slide-center slide-light" data-section="impact" style="overflow:hidden;">
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s; z-index: 0;" width="1646" height="925"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
-  <div style="max-width:560px; position:relative; z-index:1;">
-    <span class="overline">Thank you</span>
-    <h1 style="font-size:clamp(48px,7vw,88px);">Questions</h1>
-    <div class="divider" style="margin:24px auto;"></div>
-    <p class="subtitle" style="max-width:100%;">
-      dariofidanza.com
-    </p>
-    <div style="margin-top:36px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center;">
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
+  <div style="max-width:640px; position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;">
+    <span class="overline" style="margin-bottom:22px;">Thank you</span>
+    <h1 style="font-size:clamp(52px,7.4vw,96px);"><span class="grad">Questions</span></h1>
+    <div class="divider" style="margin:28px auto;"></div>
+    <p style="margin-top:30px; font-size:14px; font-weight:400; letter-spacing:0.04em; color:var(--faint);">dariofidanza.com</p>
+    <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center; color:var(--faint);">
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
     </div>
   </div>
 </div>
@@ -1091,7 +1132,7 @@ function initDotCanvas(canvasId) {
   window.addEventListener('resize', () => { if (raf) resize(); });
 }
 
-['canvas-1'].forEach(initDotCanvas);
+[].forEach(initDotCanvas);
 
 function initDotWaveCanvas(canvasId) {
   const canvas = document.getElementById(canvasId);
@@ -1154,7 +1195,7 @@ function initDotWaveCanvas(canvasId) {
 (function(){
   const cvs = document.createElement('canvas');
   cvs.id = 'dot-wave-canvas';
-  cvs.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease;';
+  cvs.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1s ease;';
   document.body.appendChild(cvs);
   const ctx = cvs.getContext('2d');
   let raf = null, t = 0, running = false;
@@ -1205,12 +1246,12 @@ function initDotWaveCanvas(canvasId) {
   function stop(){  running=false; cvs.style.opacity='0'; if(raf){ cancelAnimationFrame(raf); raf=null; } }
 
   new MutationObserver(()=>{
-    const on = !!document.querySelector('.slide-dots.active:not(.slide-cover)');
+    const on = !!document.querySelector('.slide-dots.active:not(.slide-cover):not(#slide-1)');
     if(on && !running) start();
     else if(!on && running) stop();
   }).observe(document.body, {subtree:true, attributes:true, attributeFilter:['class']});
 
-  if(document.querySelector('.slide-dots.active:not(.slide-cover)')) start();
+  if(document.querySelector('.slide-dots.active:not(.slide-cover):not(#slide-1)')) start();
 })();
 
 // ─── NAVIGATION ───
@@ -1228,6 +1269,7 @@ function updateNav() {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
+  document.body.classList.toggle('on-light', slides[current].classList.contains('slide-light'));
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
@@ -1267,6 +1309,7 @@ updateNav();
 function toggleTheme() {
   const isLight = document.documentElement.classList.toggle('light');
   localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
+  window.mfFlowRender && window.mfFlowRender();
 }
 if (localStorage.getItem('deck-theme') === 'light') {
   document.documentElement.classList.add('light');
@@ -1590,4 +1633,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+/* Mock F flow-lines background — ported from dariofidanza.com; dark = NOT html.light */
+(function () {
+  const canvas = document.getElementById('flow');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize(){ canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render(){
+    ctx.clearRect(0,0,w,h);
+    const dark = !document.documentElement.classList.contains('light') && !document.body.classList.contains('on-light');
+    for (let i=0;i<LINES;i++){
+      const yBase=(i/(LINES-1))*h*1.1 - h*0.05, p=i/LINES;
+      const r=dark?Math.round(79+p*118):Math.round(50+p*100);
+      const g=dark?Math.round(128-p*38):Math.round(90-p*30);
+      const b=dark?245:215;
+      const alpha=(0.09+0.16*Math.sin(p*Math.PI))*(i%4===0?1.6:1)*(dark?1:0.55);
+      ctx.beginPath();
+      for(let x=0;x<=w;x+=8){
+        const y=yBase+Math.sin(x*0.003+t*0.7+i*0.45)*34+Math.sin(x*0.0011-t*0.4+i*0.8)*52+Math.sin(x*0.006+t*1.1+i*0.2)*10;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth=i%4===0?1.5:1.1; ctx.stroke();
+    }
+  }
+  function loop(){ t+=0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize); resize();
+  if (reduce){ render(); } else { requestAnimationFrame(loop); }
+  window.mfFlowRender = render;
+})();
+</script>
 </body></html>

@@ -13,24 +13,52 @@
   --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
   --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
   --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e; --amber: #f5a623; --red: #FF6332; --pink: #e0459a;
+  --magenta: #c55af5; --violet: #7c5af5; --bg3: #12233b; --faint: #5a7396;
+  --line: rgba(143,168,196,.14); --glass: rgba(13,26,46,.7); --fade: rgba(7,16,31,.85);
   --nav-h: 60px;
 }
+
+/* Mock F flow-lines canvas — behind slides, masked below 55% viewport */
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+
 html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
 
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
   display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
-  background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: transparent; border-bottom: none;
 }
+nav::before{ content:""; position:absolute; left:0; right:0; top:0; bottom:-64px; background:var(--fade);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  pointer-events:none; z-index:-1; }
+
+/* When the ACTIVE slide is light, the fixed nav flips to the light glass treatment */
+body.on-light {
+  --fade: rgba(244,246,253,.92); --glass: rgba(255,255,255,.7); --line: rgba(7,16,31,.12);
+  --bg3: #e8edf9; --surface: rgba(255,255,255,.75); --border: rgba(7,16,31,.09); --border-strong: rgba(7,16,31,.18);
+  --faint: #6b80a0; --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+}
+body.on-light { background: #f4f6fd; }
+body.on-light .nav-logo { color: #07101f; }
+body.on-light .nav-btn { color: #3a5070; }
+body.on-light .nav-btn:hover { color: #07101f; }
+body.on-light .slide-counter { color: #3a5070; }
+body.on-light .arrow-btn { color: #3a5070; }
+body.on-light .theme-btn { color: #3a5070; }
+/* Covers: transparent over the light body so the flow-lines show through */
+.slide-cover.slide-light, #chef-slide.slide-light { background: transparent !important; }
+#chef-slide.slide-light::after { display: none !important; }
 .nav-logo { display:inline-flex; align-items:center; font-family:'Hepta Slab',serif; font-size:17px; letter-spacing:-0.02em; color: var(--text); text-decoration: none; flex-shrink: 0; }
 .nav-logo b { background:linear-gradient(90deg,#4f80f5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
 
 /* PILL NAV */
-.nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
-.nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
-.nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-pills { display: flex; background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { display: inline-flex; align-items: center; height: 34px; font-size: 13px; font-weight: 500; letter-spacing: normal; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 0 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
 .nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
 
 .nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
@@ -53,17 +81,8 @@ nav {
 .slide-center { align-items: center; justify-content: center; text-align: center; }
 
 /* DOT GRID — global, angled perspective texture */
-.slide::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(79,128,245,0.16) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0.09;
-  transform-origin: 0% 100%;
-  animation: dotWave 18s ease-in-out infinite both;
-  -webkit-mask-image: linear-gradient(45deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,1) 100%);
-  mask-image: linear-gradient(45deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,1) 100%);
-  pointer-events: none; z-index: 0;
-}
+/* Default dot-grid retired — Mock F flow-lines canvas (#flow) is the global background now */
+.slide::before { display: none; }
 /* DOT GRID — .slide-dots uses canvas (see JS); pseudo-element hidden */
 .slide-dots::before { display: none; }
 
@@ -86,8 +105,8 @@ nav {
 .slide-cover::after { content: ''; position: absolute; top: 10%; right: 4%; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(79,128,245,0.18) 0%, transparent 70%); animation: coverGlowPulse 6s ease-in-out infinite; pointer-events: none; z-index: 0; }
 
 /* TYPE */
-.overline { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
-.overline::before {  margin-right: 6px; opacity: 0.4; }
+/* Kicker — the site's eyebrow spec: Hepta Slab, faint */
+.overline { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; display: block; }
 .overline.green { color: var(--green); }
 .overline.purple { color: var(--accent2); }
 .overline.amber { color: var(--amber); }
@@ -98,29 +117,38 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .subtitle { font-size: clamp(16px,1.6vw,21px); font-weight: 400; color: var(--text-dim); line-height: 1.65; margin-top: 14px; max-width: 620px; }
 .body-text { font-size: 14px; line-height: 1.7; color: var(--text-dim); }
 
+/* Gradient accent for key words inside headings */
+.grad { background: linear-gradient(92deg, var(--accent), var(--accent2), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+h1 em, h2 em { font-style: normal; color: var(--magenta); }
+
 /* GRIDS */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 32px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 28px; }
 
 /* CARDS */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.25s, background 0.25s; }
+.card { position: relative; background: linear-gradient(170deg, var(--bg2), var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 22px; transition: transform 0.25s, border-color 0.25s; }
+.card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); }
+.card::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--violet), transparent); opacity: 0.65; transition: opacity 0.25s; }
+.card:hover::before { opacity: 1; }
+.slide-light .card, html.light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); }
 .card:hover { border-color: var(--border-strong); background: rgba(255,255,255,0.055); }
 .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
 .card h3 { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; font-family: 'Noto Sans', sans-serif; }
 .card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-top: 7px; }
 
 /* METRIC */
-.metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.3s, box-shadow 0.3s; }
-.metric-card:hover { border-color: rgba(79,128,245,0.28); box-shadow: 0 0 24px rgba(79,128,245,0.07); }
-.metric-number { font-size: clamp(24px,2.6vw,42px); font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.metric-card { position: relative; background: linear-gradient(170deg, var(--bg2), var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.25s, border-color 0.25s; }
+.metric-card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); box-shadow: none; }
+.slide-light .metric-card, html.light .metric-card { background: linear-gradient(170deg, var(--bg2), var(--bg)); }
+.metric-number { font-family: 'Hepta Slab', serif; font-size: clamp(24px,2.6vw,42px); font-weight: 400; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
 .metric-number.green { color: var(--green); }
 .metric-number.accent { color: var(--accent); }
 .metric-number.purple { color: var(--accent2); }
 .metric-label { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
 /* TAGS */
-.tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 6px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.2); }
+.tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 999px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.2); }
 .tag.green { background: rgba(61,186,126,0.12); color: var(--green); border-color: rgba(61,186,126,0.2); }
 .tag.purple { background: rgba(124,90,245,0.12); color: var(--accent2); border-color: rgba(124,90,245,0.2); }
 .tag.amber { background: rgba(245,166,35,0.12); color: var(--amber); border-color: rgba(245,166,35,0.2); }
@@ -146,8 +174,8 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 /* BEFORE/AFTER */
 .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
 .ba-card { border-radius: 12px; padding: 24px; border: 1px solid var(--border); }
-.ba-before { background: rgba(255,99,50,0.04); border-color: rgba(255,99,50,0.2); }
-.ba-after  { background: rgba(61,186,126,0.04); border-color: rgba(61,186,126,0.2); }
+.ba-before { background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border-color: rgba(255,99,50,0.2); }
+.ba-after  { background:linear-gradient(rgba(61,186,126,0.04), rgba(61,186,126,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border-color: rgba(61,186,126,0.2); }
 .ba-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px; }
 .ba-before .ba-tag { background: rgba(255,99,50,0.15); color: var(--red); }
 .ba-after  .ba-tag { background: rgba(61,186,126,0.15); color: var(--green); }
@@ -248,7 +276,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .timeline-h .timeline-card { width: 100%; }
 .timeline-card {
   margin-top: 0;
-  background: rgba(255,255,255,0.75);
+  background: linear-gradient(170deg, var(--bg2), var(--bg));
   border: 1px solid rgba(0,0,0,0.09);
   border-radius: 14px;
   padding: 20px 22px;
@@ -332,7 +360,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .slide.active .grid-4 .metric-card:nth-child(8) { animation: subtlePop 0.35s cubic-bezier(0.22,1,0.36,1) 0.69s both; }
 
 /* IMAGE PLACEHOLDERS */
-.img-placeholder { border: 1.5px dashed rgba(79,128,245,0.45); border-radius: 10px; background: rgba(79,128,245,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: var(--text-dim); font-size: 11px; font-family: 'SF Mono','Fira Code',monospace; text-align: center; padding: 18px; }
+.img-placeholder { border: 1.5px dashed rgba(79,128,245,0.45); border-radius: 10px; background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: var(--text-dim); font-size: 11px; font-family: 'SF Mono','Fira Code',monospace; text-align: center; padding: 18px; }
 .img-placeholder .ph-icon { font-size: 20px; opacity: 0.45; }
 .img-placeholder .ph-label { font-weight: 700; color: var(--accent); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
 .img-placeholder .ph-size { color: var(--text-muted); font-size: 10px; }
@@ -341,6 +369,8 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .slide-cover::before { display: none; } /* canvas replaces generic dot grid on cover */
 #cover-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
 .slide-cover.active #cover-canvas { opacity: 1; }
+/* Cover rides the flow-lines now — no dot-wave canvas */
+.slide-cover #cover-canvas { display: none; }
 
 /* ═══════ LIGHT MODE ═══════ */
 /* ── LAYOUT HELPERS ────────────────────────────────────────────────── */
@@ -395,7 +425,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
   inset: 0;
   border-radius: 0;
   border: none;
-  background: rgba(79,128,245,0.06);
+  background:linear-gradient(rgba(79,128,245,0.06), rgba(79,128,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg));
 }
 
 /* HERO FULL — image is the full background, content overlays bottom */
@@ -478,21 +508,23 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
   --bg: #f4f6fd; --bg2: #eaecf8;
   --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.18);
   --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7);
   background: #f4f6fd !important; color: #07101f;
 }
 .slide-light::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; }
-.slide-light .card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.09); }
+.slide-light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); border-color: rgba(0,0,0,0.09); }
 .slide-light .card:hover { background: rgba(0,0,0,0.03); }
 
 html.light {
   --bg: #f4f6fd; --bg2: #eaecf8;
   --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.18);
   --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7); --fade: rgba(244,246,253,.9);
 }
 html.light body { background: var(--bg); color: var(--text); }
 html.light nav { background: rgba(244,246,253,0.92); }
-html.light .nav-pills { background: rgba(0,0,0,0.05); }
-html.light .nav-btn:hover { background: rgba(0,0,0,0.06); }
+html.light .nav-pills { background:linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), linear-gradient(170deg,var(--bg2),var(--bg)); }
+html.light .nav-btn:hover { background:linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.06)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 html.light .card:hover { background: rgba(0,0,0,0.03); }
 html.light .slide::before { background-image: radial-gradient(circle, rgba(50,90,210,0.22) 1px, transparent 1px); opacity: 0.25; }
 html.light .slide-dots::before { display: none; }
@@ -510,9 +542,9 @@ body.edit-mode .edit-toolbar { display:flex; }
 .edit-save-btn:hover { opacity:0.82; }
 body.edit-mode [contenteditable] { outline:none; cursor:text; }
 body.edit-mode [contenteditable]:hover { outline:1px dashed rgba(245,166,35,0.45); border-radius:3px; }
-body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:rgba(245,166,35,0.04); }
+body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:linear-gradient(rgba(245,166,35,0.04), rgba(245,166,35,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 body.edit-mode .img-placeholder { cursor:pointer; transition:border-color .2s,background .2s; }
-body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:rgba(245,166,35,0.07); }
+body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:linear-gradient(rgba(245,166,35,0.07), rgba(245,166,35,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 .uploaded-img-wrap { position:relative; display:flex; border-radius:10px; overflow:hidden; width:100%; }
 .uploaded-img-wrap img { object-fit:cover; width:100%; height:100%; display:block; }
 body.edit-mode .uploaded-img-wrap::after { content:'⟳ Replace'; position:absolute; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:0.05em; }
@@ -520,14 +552,18 @@ body.edit-mode .uploaded-img-wrap:hover::after { opacity:1; }
 body.edit-mode .uploaded-img-wrap { cursor:pointer; }
 
 /* ── Grid-3 column color tints ── */
-.grid-3 > .card:nth-child(3n+1) { background: rgba(79,128,245,0.07) !important; border-color: rgba(79,128,245,0.22) !important; }
-.grid-3 > .card:nth-child(3n+2) { background: rgba(224,69,154,0.07) !important; border-color: rgba(224,69,154,0.22) !important; }
-.grid-3 > .card:nth-child(3n)   { background: rgba(255,99,50,0.07) !important; border-color: rgba(255,99,50,0.22) !important; }
+.grid-3 > .card:nth-child(3n+1) { background:linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(79,128,245,0.22) !important; }
+.grid-3 > .card:nth-child(3n+2) { background:linear-gradient(rgba(224,69,154,0.07), rgba(224,69,154,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(224,69,154,0.22) !important; }
+.grid-3 > .card:nth-child(3n)   { background:linear-gradient(rgba(255,99,50,0.07), rgba(255,99,50,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(255,99,50,0.22) !important; }
 
 /* ── Tag / pill colors per column ── */
 .grid-3 > .card:nth-child(3n+1) .tag { background: rgba(79,128,245,0.13); color: var(--accent); border-color: rgba(79,128,245,0.25); }
 .grid-3 > .card:nth-child(3n+2) .tag { background: rgba(224,69,154,0.13); color: var(--pink); border-color: rgba(224,69,154,0.25); }
 .grid-3 > .card:nth-child(3n)   .tag { background: rgba(255,99,50,0.13); color: var(--red); border-color: rgba(255,99,50,0.25); }
+.maker-grid > .card:nth-child(1) { background: linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(79,128,245,0.22) !important; }
+.maker-grid > .card:nth-child(2) { background: linear-gradient(rgba(124,90,245,0.07), rgba(124,90,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(124,90,245,0.22) !important; }
+.maker-grid > .card:nth-child(3) { background: linear-gradient(rgba(197,90,245,0.07), rgba(197,90,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(197,90,245,0.22) !important; }
+
 
 /* ── Overline / card-label accent per column ── */
 .grid-3 > .card:nth-child(3n+2) .overline { color: var(--pink); }
@@ -600,7 +636,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 }
 .p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
 #p-notes {
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(79,128,245,0.18);
+  flex:1; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.18);
   border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
   font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
 }
@@ -608,7 +644,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
 .p-reset-btn {
-  margin-top:auto; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
   cursor:pointer; font-family:inherit; transition:all .15s;
 }
@@ -618,7 +654,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
 }
 .p-project-btn {
-  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
   font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
   transition:all .15s; letter-spacing:0.02em;
@@ -647,6 +683,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;600;700;800&amp;family=Noto+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
 </head>
 <body>
+<canvas id="flow" aria-hidden="true"></canvas>
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -690,7 +727,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div id="slides">
 
 <!-- ══ 01 · COVER ══ pure -->
-<div class="slide slide-cover active" data-section="intro">
+<div class="slide slide-cover slide-light active" data-section="intro">
   <canvas id="cover-canvas" width="1920" height="821"></canvas>
   <div style="max-width:680px;">
     <div class="cover-line"></div>
@@ -714,7 +751,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <span class="overline">About Me</span>
       <h2>I'm a maker.</h2>
       <p class="subtitle">Designer, storyteller, connector with a bias towards execution.</p>
-      <div class="grid-3" style="margin-top:28px;">
+      <div class="grid-3 maker-grid" style="margin-top:28px;">
         <div class="card">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
@@ -722,14 +759,14 @@ html.presenter-mode #presenter-ui { display:flex; }
           <div class="card-label">Creative</div>
         </div>
         <div class="card">
-          <div style="width:34px;height:34px;border-radius:9px;background:rgba(224,69,154,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </div>
           <div class="card-label">Community</div>
         </div>
         <div class="card">
-          <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
           </div>
           <div class="card-label">My Practice</div>
         </div>
@@ -739,11 +776,11 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ HOW I WORK ══ dots -->
-<div class="slide slide-dots layout-vc" data-section="intro">
-  <div style="max-width:760px; margin:0 auto; text-align:center;">
-    <div style="font-size:104px; line-height:1; margin-bottom:30px;">🧑‍🍳</div>
+<div class="slide slide-light layout-vc" id="chef-slide" data-section="intro">
+  <div style="max-width:760px; margin:-56px auto 0; text-align:center;">
+    <img src="images/undraw/ai-slop.svg" alt="Cooking like designing" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;margin:0 auto 30px;">
     <span class="overline">About Me · How I Work</span>
-    <h2>I design like I cook.</h2>
+    <h2>I <span class="grad">design</span> like I cook.</h2>
     <p class="subtitle" style="margin-top:14px;">Open every cabinet. Plan the whole menu.<br>Run every pot. Serve one balanced meal.</p>
   </div>
 </div>
@@ -781,17 +818,17 @@ html.presenter-mode #presenter-ui { display:flex; }
     <!-- RIGHT: Education -->
     <div class="card" style="height:100%; display:flex; flex-direction:column;">
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-        <div style="width:34px; height:34px; border-radius:9px; background:rgba(255,99,50,0.13); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div style="width:34px; height:34px; border-radius:9px; background:rgba(197,90,245,0.13); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
         </div>
         <div class="card-label" style="margin-bottom:0;">Education</div>
       </div>
       <div style="display:flex; flex-direction:column; gap:8px; flex:1; justify-content:center;">
-        <div style="padding:10px 14px; background:var(--surface); border-radius:8px; border:1px solid var(--border); font-size:13px; color:#ffffff;">◆&nbsp;&nbsp;Graphic Design</div>
-        <div style="padding:10px 14px; background:var(--surface); border-radius:8px; border:1px solid var(--border); font-size:13px; color:#ffffff;">◆&nbsp;&nbsp;Human-Computer Interaction</div>
-        <div style="padding:10px 14px; background:var(--surface); border-radius:8px; border:1px solid var(--border); font-size:13px; color:#ffffff;">◆&nbsp;&nbsp;UX Design</div>
+        <div style="padding:4px 0; font-size:13px; color:var(--text);"><span style="font-size:7px; vertical-align:2px; color:var(--magenta); margin-right:9px;">◆</span>Graphic Design</div>
+        <div style="padding:4px 0; font-size:13px; color:var(--text);"><span style="font-size:7px; vertical-align:2px; color:var(--magenta); margin-right:9px;">◆</span>Human-Computer Interaction</div>
+        <div style="padding:4px 0; font-size:13px; color:var(--text);"><span style="font-size:7px; vertical-align:2px; color:var(--magenta); margin-right:9px;">◆</span>UX Design</div>
       </div>
     </div>
 
@@ -819,7 +856,7 @@ html.presenter-mode #presenter-ui { display:flex; }
       <h3 style="margin-top:2px;">Insurance + Tooling DS</h3>
       <div style="margin-top:auto; padding-top:14px;"><span class="tag" style="font-size:10px;">Sr. Product Designer</span></div>
     </div>
-    <div class="card" style="border-color:rgba(79,128,245,0.3); background:rgba(79,128,245,0.04); display:flex; flex-direction:column;">
+    <div class="card" style="border-color:rgba(79,128,245,0.3); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; flex-direction:column;">
       <div class="card-label">Instacart · Current</div>
       <h3>Enterprise Retail Tooling +<br>Tooling DS 0→1</h3>
       <div style="margin-top:auto; padding-top:14px;"><span class="tag" style="font-size:10px;">Sr. Systems Designer II · L6</span></div>
@@ -878,6 +915,7 @@ function updateNav() {
     document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   }
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
+  document.body.classList.toggle('on-light', slides[current].classList.contains('slide-light'));
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
@@ -1071,6 +1109,7 @@ updateNav();
 function toggleTheme() {
   const isLight = document.documentElement.classList.toggle('light');
   localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
+  window.mfFlowRender && window.mfFlowRender();
 }
 if (localStorage.getItem('deck-theme') === 'light') {
   document.documentElement.classList.add('light');
@@ -1548,7 +1587,7 @@ if(false)(function(){
 </script><canvas id="dot-wave-canvas" width="1920" height="881" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1115" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1111" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["PRODUCT: \nI’m a product designer currently working at Instacart which is an e-commerce and delivery platform. \nMy roll currently is in the tooling design systems team, but prior to this I was part of the fulfillment org. \nMy background in fulfillment operations, helps me in my currently role bring some perspective of how ecommerce actually works, from the warehouse to the interface\n\nSYSTEMS:\nI'm a senior design systems designer at Instacart — \nI help teams design with more clarity and flexibility -  \nand I act as the bridge between design and engineer development, \nso that teams can design faster and lower eng costs.", "I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit. and I love languages, currently learning arabic and Italian.\n\ni host a board game night every month to foster community here in sf. \nI love connecting people through structure and storytelling\n\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.", "When I cook, I open all the cabinets. I look at what I have, and I plan the appetizer, the main dish and the dessert. Then I execute: I turn multiple pots on with different things going at once. I intuitively understand the timing of it.\n\nFor a moment it looks like a lot of different things are going on without rhyme or reason from an observer's point of view, but there is a plan.\n\nAt dinner time, all the cycles resolve into a perfectly balanced meal with very flavorful dishes: an appetizer, a balanced carb/protein main, and a little sweet, fatty dessert.\n\nThat's the kind of designer I am: I open every cabinet first, plan the full menu, run parallel tracks, and land them all together on time.", "I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 8 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Computer Interaction, User Experience Design and Graphic Design \n\ncareers like good systems and products, you have to iterate— \n\nAnd i think all my side quests added perspetive to my work.", "Last 3 jobs:\n\nI worked at EA a gaming company \nWorking on enterprise tools and my first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace. Driver app, support and insurance tooling.\nI was also part of a Lyft tooling design system group, where we created a repository of reusable patterns to use across tooling. \n\nAfter lyft, I joined instacart, I've been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. \nThe first few years I was building tooling for retailers and also experiences for the shopper mobile app.. \nand the last 2.5 years I've been leading a design system for tooling I built from 0-1\n\nCurrently serving 4 tools, planning 2 more adoptions in the horizon, \nthat translate to roughly 25 designers and multiple engineers consuming TDS across 18 teams.", "Two projects in flight at Instacart right now, both to be completed next quarter:\n\nLiquid Glass migration: Apple is making the new material mandatory on iOS, and I'm working on how our design system adopts it, including the cross-platform story for web and Android.\n\nLeapfrog: an AI readiness design system pilot, testing how the system needs to evolve so AI agents can build from it."]</script>
+<script id="deck-notes-data" type="application/json">["PRODUCT: \nI’m a product designer currently working at Instacart which is an e-commerce and delivery platform. \nMy roll currently is in the tooling design systems team, but prior to this I was part of the fulfillment org. \nMy background in fulfillment operations, helps me in my currently role bring some perspective of how ecommerce actually works, from the warehouse to the interface\n\nSYSTEMS:\nI'm a senior design systems designer at Instacart — \nI help teams design with more clarity and flexibility -  \nand I act as the bridge between design and engineer development, \nso that teams can design faster and lower eng costs.", "I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit. and I love languages, currently learning arabic and Italian.\n\ni host a board game night every month to foster community here in sf. \nI love connecting people through structure and storytelling\n\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.", "My manager recently asked me how I can context switch so fast, and across so many workstreams we have going on.\n\nI told her the best analogy is that my brain works the same way I cook: I open all the cabinets. I look at what I have, and I plan the appetizer, the main dish and the dessert. Then I execute: I turn multiple pots on with different things going at once. I intuitively understand the timing of it.\n\nFor a moment it looks like a lot of different things are going on without rhyme or reason from an observer's point of view, but there is a plan.\n\nAt dinner time, all the cycles resolve into a perfectly balanced meal with very flavorful dishes: an appetizer, a balanced carb/protein main, and a little sweet dessert.\n\nAn example is how I recently had to build a deck with my system's metrics for a pitch. So I queried the database, pulled the metrics, and fed them into my deck. But I also realized my manager would love to have those handy for a project she is working on called Customer Love Week, so I made her a dashboard. And I realized those metrics would come in handy for my mid cycle review, so I added them to my brag doc. And obviously, I put them here in this deck for you as well.", "I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 8 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Computer Interaction, User Experience Design and Graphic Design \n\ncareers like good systems and products, you have to iterate— \n\nAnd i think all my side quests added perspetive to my work.", "Last 3 jobs:\n\nI worked at EA a gaming company \nWorking on enterprise tools and my first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace. Driver app, support and insurance tooling.\nI was also part of a Lyft tooling design system group, where we created a repository of reusable patterns to use across tooling. \n\nAfter lyft, I joined instacart, I've been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. \nThe first few years I was building tooling for retailers and also experiences for the shopper mobile app.. \nand the last 2.5 years I've been leading a design system for tooling I built from 0-1\n\nCurrently serving 4 tools, planning 2 more adoptions in the horizon, \nthat translate to roughly 25 designers and multiple engineers consuming TDS across 18 teams.", "Two projects in flight at Instacart right now, both to be completed next quarter:\n\nLiquid Glass migration: Apple is making the new material mandatory on iOS, and I'm working on how our design system adopts it, including the cross-platform story for web and Android.\n\nLeapfrog: an AI readiness design system pilot, testing how the system needs to evolve so AI agents can build from it."]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -1595,4 +1634,38 @@ if(false)(function(){
 
 <script src="../shared/nav.js"></script>
 <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+/* Mock F flow-lines background — ported from dariofidanza.com; dark = NOT html.light */
+(function () {
+  const canvas = document.getElementById('flow');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize(){ canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render(){
+    ctx.clearRect(0,0,w,h);
+    const dark = !document.documentElement.classList.contains('light') && !document.body.classList.contains('on-light');
+    for (let i=0;i<LINES;i++){
+      const yBase=(i/(LINES-1))*h*1.1 - h*0.05, p=i/LINES;
+      const r=dark?Math.round(79+p*118):Math.round(50+p*100);
+      const g=dark?Math.round(128-p*38):Math.round(90-p*30);
+      const b=dark?245:215;
+      const alpha=(0.09+0.16*Math.sin(p*Math.PI))*(i%4===0?1.6:1)*(dark?1:0.55);
+      ctx.beginPath();
+      for(let x=0;x<=w;x+=8){
+        const y=yBase+Math.sin(x*0.003+t*0.7+i*0.45)*34+Math.sin(x*0.0011-t*0.4+i*0.8)*52+Math.sin(x*0.006+t*1.1+i*0.2)*10;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth=i%4===0?1.5:1.1; ctx.stroke();
+    }
+  }
+  function loop(){ t+=0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize); resize();
+  if (reduce){ render(); } else { requestAnimationFrame(loop); }
+  window.mfFlowRender = render;
+})();
+</script>
 </body></html>

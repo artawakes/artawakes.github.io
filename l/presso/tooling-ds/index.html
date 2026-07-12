@@ -13,24 +13,34 @@
   --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
   --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
   --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e; --amber: #f5a623; --red: #FF6332; --pink: #e0459a;
+  --magenta: #c55af5; --violet: #7c5af5; --bg3: #12233b; --faint: #5a7396;
+  --line: rgba(143,168,196,.14); --glass: rgba(13,26,46,.7); --fade: rgba(7,16,31,.85);
   --nav-h: 60px;
 }
+
+/* Mock F flow-lines canvas — behind slides, masked below 55% viewport */
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
 html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
 
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
   display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
-  background: rgba(7,16,31,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: transparent; border-bottom: none;
 }
+nav::before{ content:""; position:absolute; left:0; right:0; top:0; bottom:-64px; background:var(--fade);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  pointer-events:none; z-index:-1; }
 .nav-logo { display:inline-flex; align-items:center; font-family:'Hepta Slab',serif; font-size:17px; letter-spacing:-0.02em; color: var(--text); text-decoration: none; flex-shrink: 0; }
 .nav-logo b { background:linear-gradient(90deg,#4f80f5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
 
 /* PILL NAV */
-.nav-pills { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
-.nav-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 6px 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
-.nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-pills { display: flex; background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { display: inline-flex; align-items: center; height: 34px; font-size: 13px; font-weight: 500; letter-spacing: normal; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 0 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
 .nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
 
 .nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
@@ -46,9 +56,16 @@ nav {
 .nav-hint { display: none !important; }
 
 /* COVER SLIDE — white full-bleed left half */
-#slide-01 { padding: 0 !important; flex-direction: row !important; background: var(--bg) !important; }
-#slide-01 .hero-img { width: calc(50% - 30px) !important; max-width: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: hidden !important; flex-shrink: 0 !important; padding: 60px 40px !important; }
-#slide-01 .hero-content { flex: 1 !important; align-self: stretch !important; padding: 0 60px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+#slide-01 { padding: 0 !important; flex-direction: row !important; }
+#slide-01 .hero-img { width: 52% !important; max-width: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: visible !important; flex-shrink: 0 !important; align-self: stretch !important; height: auto !important; max-height: none !important; padding: 48px 24px 48px 48px !important; }
+#slide-01 .hero-content { flex: 1 !important; align-self: stretch !important; padding: 0 72px 0 48px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+#slide-01 .cover-chip { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; margin-bottom: 26px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+#slide-01 .cover-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: chipPulse 2.4s infinite; }
+#slide-01 .stat-number { font-size: clamp(36px, 4.2vw, 58px); }
+#slide-01 #cover-canvas { display: none; }  /* flow-lines are the cover texture now */
+#thankyou-canvas { display: none !important; }  /* flow-lines are the closer texture too */
+@keyframes chipPulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+@media (prefers-reduced-motion: reduce) { #slide-01 .cover-chip .dot { animation: none; } }
 
 /* SLIDES */
 #slides { position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1; }
@@ -60,17 +77,8 @@ nav {
 .slide-center { align-items: center; justify-content: center; text-align: center; }
 
 /* DOT GRID — global, angled perspective texture */
-.slide::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(79,128,245,0.16) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0.09;
-  transform-origin: 0% 100%;
-  animation: dotWave 18s ease-in-out infinite both;
-  -webkit-mask-image: linear-gradient(45deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,1) 100%);
-  mask-image: linear-gradient(45deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,1) 100%);
-  pointer-events: none; z-index: 0;
-}
+/* Default dot-grid texture retired — Mock F flow-lines canvas (#flow) is the global background now */
+.slide::before { display: none; }
 /* DOT GRID — .slide-dots uses canvas (see JS); pseudo-element hidden */
 .slide-dots::before { display: none; }
 
@@ -93,14 +101,17 @@ nav {
 .slide-cover::after { content: ''; position: absolute; top: 10%; right: 4%; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(79,128,245,0.18) 0%, transparent 70%); animation: coverGlowPulse 6s ease-in-out infinite; pointer-events: none; z-index: 0; }
 
 /* TYPE */
-.overline { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
-.overline::before {  margin-right: 6px; opacity: 0.4; }
+/* Kicker — the site's "01 / SECTION" spec: Hepta Slab, faint label, blue index */
+.overline { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; display: block; }
 .overline.green { color: var(--green); }
 .overline.purple { color: var(--accent2); }
 .overline.amber { color: var(--amber); }
 .overline.red { color: var(--red); }
-h1 { font-size: clamp(36px,5vw,72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); font-family: 'Hepta Slab', serif; }
-h2 { font-size: clamp(26px,3.2vw,50px); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; color: var(--text); font-family: 'Hepta Slab', serif; }
+h1 { font-size: clamp(40px,5.2vw,76px); font-weight: 400; line-height: 1.08; letter-spacing: -0.035em; color: var(--text); font-family: 'Hepta Slab', serif; }
+h2 { font-size: clamp(28px,3.5vw,54px); font-weight: 400; line-height: 1.12; letter-spacing: -0.03em; color: var(--text); font-family: 'Hepta Slab', serif; }
+/* Gradient accent for single key words inside headings (use sparingly) */
+.grad { background: linear-gradient(92deg, var(--accent), var(--accent2), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+h2 em, h1 em { font-style: normal; color: var(--magenta); }
 h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; letter-spacing: -0.015em; }
 .subtitle { font-size: clamp(16px,1.6vw,21px); font-weight: 400; color: var(--text-dim); line-height: 1.65; margin-top: 14px; max-width: 620px; }
 .body-text { font-size: 14px; line-height: 1.7; color: var(--text-dim); }
@@ -111,23 +122,25 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 28px; }
 
 /* CARDS */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.25s, background 0.25s; }
-.card:hover { border-color: var(--border-strong); background: rgba(255,255,255,0.055); }
+.card { position: relative; background: linear-gradient(170deg,var(--bg2),var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 22px; transition: transform 0.25s, border-color 0.25s; }
+.card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); background: linear-gradient(170deg,var(--bg2),var(--bg)); }
+.card::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg,transparent,var(--violet),transparent); opacity: 0.65; transition: opacity 0.25s; }
+.card:hover::before { opacity: 1; }
 .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-.card h3 { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; font-family: 'Noto Sans', sans-serif; }
+.card h3 { font-family: 'Hepta Slab', serif; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
 .card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-top: 7px; }
 
 /* METRIC */
-.metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.3s, box-shadow 0.3s; }
-.metric-card:hover { border-color: rgba(79,128,245,0.28); box-shadow: 0 0 24px rgba(79,128,245,0.07); }
-.metric-number { font-size: clamp(24px,2.6vw,42px); font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.metric-card { position: relative; background: linear-gradient(170deg,var(--bg2),var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.25s, border-color 0.25s; }
+.metric-card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); box-shadow: none; }
+.metric-number { font-family: 'Hepta Slab', serif; font-size: clamp(24px,2.6vw,42px); font-weight: 400; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
 .metric-number.green { color: var(--green); }
 .metric-number.accent { color: var(--accent); }
 .metric-number.purple { color: var(--accent2); }
 .metric-label { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
 /* TAGS */
-.tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 6px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.2); }
+.tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 999px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.22); }
 .tag.green { background: rgba(61,186,126,0.12); color: var(--green); border-color: rgba(61,186,126,0.2); }
 .tag.purple { background: rgba(124,90,245,0.12); color: var(--accent2); border-color: rgba(124,90,245,0.2); }
 .tag.amber { background: rgba(245,166,35,0.12); color: var(--amber); border-color: rgba(245,166,35,0.2); }
@@ -143,25 +156,28 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 
 /* TIMELINE */
 .timeline { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 32px; position: relative; }
-.timeline::before { content: ''; position: absolute; top: 17px; left: 36px; right: 36px; height: 1px; background: var(--border); }
-.timeline-item { padding: 0 10px; position: relative; }
+.timeline::before { content: ''; position: absolute; top: 17px; left: 36px; right: 36px; height: 1px; background: linear-gradient(90deg, var(--accent), var(--accent2), var(--magenta)); opacity: 0.35; }
+.timeline > .timeline-item { padding: 14px 14px 16px; position: relative; border-radius: 18px; border: 1px solid var(--line); background: linear-gradient(170deg, var(--bg2), var(--bg)); margin: 0 5px; box-shadow: 0 18px 44px rgba(0,0,0,0.3); }
+.timeline > .timeline-item::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--violet), transparent); }
+html.light .timeline > .timeline-item, .slide-light .timeline > .timeline-item { box-shadow: 0 14px 36px rgba(7,16,31,0.1); }
+.timeline-item { position: relative; }
 .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); margin-bottom: 14px; position: relative; z-index: 1; animation: timelinePing 3s ease-out infinite; }
-.timeline-q { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.timeline-q { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
 .timeline-item h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
 .timeline-item p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
 /* BEFORE/AFTER */
 .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
 .ba-card { border-radius: 12px; padding: 24px; border: 1px solid var(--border); }
-.ba-before { background: rgba(255,99,50,0.04); border-color: rgba(255,99,50,0.2); }
-.ba-after  { background: rgba(61,186,126,0.04); border-color: rgba(61,186,126,0.2); }
+.ba-before { background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border-color: rgba(255,99,50,0.2); }
+.ba-after  { background:linear-gradient(rgba(61,186,126,0.04), rgba(61,186,126,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border-color: rgba(61,186,126,0.2); }
 .ba-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px; }
 .ba-before .ba-tag { background: rgba(255,99,50,0.15); color: var(--red); }
 .ba-after  .ba-tag { background: rgba(61,186,126,0.15); color: var(--green); }
 
 /* DIVIDER */
-.divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); background-size: 200% auto; margin: 20px 0; border-radius: 2px; box-shadow: 0 0 12px rgba(79,128,245,0.8), 0 0 32px rgba(79,128,245,0.4); animation: glowPulse 2.5s ease-in-out infinite, shimmerLine 3s linear infinite; }
-.cover-line { width: 56px; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent2) 70%, transparent 100%); background-size: 200% auto; margin-bottom: 22px; border-radius: 2px; animation: shimmerLine 2.5s linear infinite; box-shadow: 0 0 12px rgba(79,128,245,0.5); }
+.divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--magenta), transparent); background-size: 200% auto; margin: 20px 0; border-radius: 2px; box-shadow: 0 0 12px rgba(79,128,245,0.8), 0 0 32px rgba(124,90,245,0.4); animation: glowPulse 2.5s ease-in-out infinite, shimmerLine 3s linear infinite; }
+.cover-line { width: 56px; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--accent) 35%, var(--accent2) 60%, var(--magenta) 80%, transparent 100%); background-size: 200% auto; margin-bottom: 22px; border-radius: 2px; animation: shimmerLine 2.5s linear infinite; box-shadow: 0 0 12px rgba(124,90,245,0.5); }
 
 /* TOKEN VIZ */
 .token-row { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); margin-bottom: 8px; }
@@ -255,7 +271,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .timeline-h .timeline-card { width: 100%; }
 .timeline-card {
   margin-top: 0;
-  background: rgba(255,255,255,0.75);
+  background: linear-gradient(170deg, var(--bg2), var(--bg));
   border: 1px solid rgba(0,0,0,0.09);
   border-radius: 14px;
   padding: 20px 22px;
@@ -322,7 +338,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 @keyframes progressShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 @keyframes fadeInUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 .stat-callout { display:flex; flex-direction:column; gap:2px; }
-.stat-number { font-size:clamp(48px,6vw,80px); font-weight:800; line-height:1; letter-spacing:-0.03em; }
+.stat-number { font-family:'Hepta Slab',serif; font-size:clamp(48px,6vw,80px); font-weight:400; line-height:1; letter-spacing:-0.03em; color: var(--accent); }
 .stat-label { font-size:14px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
 @keyframes subtlePop { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
 
@@ -342,7 +358,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .slide.active .grid-4 .metric-card:nth-child(8) { animation: subtlePop 0.35s cubic-bezier(0.22,1,0.36,1) 0.69s both; }
 
 /* IMAGE PLACEHOLDERS */
-.img-placeholder { border: 1.5px dashed rgba(79,128,245,0.45); border-radius: 10px; background: rgba(79,128,245,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: var(--text-dim); font-size: 11px; font-family: 'SF Mono','Fira Code',monospace; text-align: center; padding: 18px; }
+.img-placeholder { border: 1.5px dashed rgba(79,128,245,0.45); border-radius: 10px; background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: var(--text-dim); font-size: 11px; font-family: 'SF Mono','Fira Code',monospace; text-align: center; padding: 18px; }
 .img-placeholder .ph-icon { font-size: 20px; opacity: 0.45; }
 .img-placeholder .ph-label { font-weight: 700; color: var(--accent); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
 .img-placeholder .ph-size { color: var(--text-muted); font-size: 10px; }
@@ -391,7 +407,8 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .hero-right .hero-img {
   flex: 1;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  margin: 84px 44px 44px 16px;
 }
 .hero-right .hero-img img,
 .hero-right .hero-img .uploaded-img-wrap,
@@ -403,12 +420,22 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
   object-fit: cover;
   border-radius: 0;
 }
+/* Feature-piece frame: image sits on a spotlight tile — rounded ring,
+   violet top hairline, depth. Screenshots float with breathing room. */
+.hero-right .hero-img .uploaded-img-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.hero-right .hero-img .uploaded-img-wrap img { position: static; border-radius: 8px; }
+/* Bare hero images (no wrap) get the frame directly */
+.hero-right .hero-img > img { border-radius: 12px; }
+
 .hero-right .hero-img .img-placeholder {
   position: absolute;
   inset: 0;
   border-radius: 0;
   border: none;
-  background: rgba(79,128,245,0.06);
+  background:linear-gradient(rgba(79,128,245,0.06), rgba(79,128,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg));
 }
 
 /* HERO FULL — image is the full background, content overlays bottom */
@@ -460,9 +487,20 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 /* HERO LEFT — image auto-width left, content fills remainder right */
 .hero-left { flex-direction: row-reverse !important; padding: 0 !important; }
 .hero-left .hero-img { flex: 0 0 auto !important; max-width: 65% !important; display: flex !important; align-items: stretch !important; overflow: hidden !important; }
+/* Feature-piece frame for hero-left (cover excluded — its art uses blend mode) */
+.hero-left:not(.slide-cover) .hero-img { padding: 84px 16px 44px 44px; overflow: visible !important; align-items: center !important; }
+.hero-left:not(.slide-cover) .hero-img .uploaded-img-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
 .hero-left .hero-content { flex: 1 !important; min-width: 240px; padding: 96px 80px 40px 32px; }
 .hero-left .hero-img.img-fit img { object-position: left center; }
-#slide-12 .timeline-dot { background: var(--accent) !important; border-color: var(--bg) !important; }
+/* Year-roadmap dots (grid .timeline only — .timeline-h keeps its ringed dots):
+   small gradient points instead of bare filled circles */
+.timeline .timeline-dot { width: 12px !important; height: 12px !important; border: none !important; background: linear-gradient(92deg, var(--accent), var(--violet)) !important; box-shadow: 0 0 14px rgba(79,128,245,0.55) !important; }
+.timeline .timeline-dot[style*="accent2"] { background: linear-gradient(92deg, var(--violet), var(--magenta)) !important; box-shadow: 0 0 14px rgba(124,90,245,0.55) !important; }
 #slide-17::before { display: none !important; }
 #slide-26 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; overflow:visible !important; }
 #slide-26 .hero-img img { position:relative !important; inset:auto !important; width:80% !important; height:auto !important; object-fit:contain !important; margin-top:20px !important; }
@@ -470,8 +508,8 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 #slide-27 .hero-img { display:flex !important; align-items:center !important; padding-right:100px !important; overflow:hidden !important; }
 #slide-27 .hero-img img { position:relative !important; inset:auto !important; width:100% !important; height:auto !important; object-fit:contain !important; transform:scale(1.02) !important; transform-origin:left center !important; }
 #slide-08 { background: #ffffff !important; }
-#slide-11 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; background:transparent !important; }
-#slide-11 .hero-img img { position:relative !important; inset:auto !important; width:auto !important; height:auto !important; max-height:766px !important; max-width:908px !important; object-fit:contain !important; border-radius:32px !important; filter:grayscale(1) !important; display:block !important; box-shadow:inset 0 0 0 4px #ffffff !important; }
+#slide-11 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; background:transparent !important; padding-right:60px !important; }
+#slide-11 .hero-img img { position:relative !important; inset:auto !important; width:auto !important; height:auto !important; max-height:700px !important; max-width:908px !important; object-fit:contain !important; border-radius:27px !important; filter:grayscale(1) !important; display:block !important; border:2px solid rgba(7,16,31,0.35) !important; box-shadow:0 16px 48px rgba(0,0,0,0.28) !important; }
 #slide-32 { background-image: linear-gradient(135deg, #ffffff 40%, #dde6ff 100%) !important; background-color: #eef2ff !important; }
 #slide-32::after { content: '' !important; position: absolute !important; inset: 0 !important; z-index: 5 !important; animation: gridScan 8s ease-in-out infinite !important; background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; background-size: 18px 18px !important; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; -webkit-mask-composite: source-over !important; mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; mask-composite: add !important; pointer-events: none !important; }
 #slide-32 .hero-img { flex: 0 0 25% !important; max-width: 25% !important; overflow: hidden !important; z-index: 10 !important; }
@@ -498,23 +536,46 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
   --bg: #f4f6fd; --bg2: #eaecf8;
   --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.18);
   --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7);
   background: #f4f6fd !important; color: #07101f;
 }
+
+/* When the ACTIVE slide is light, the fixed nav flips to the light glass treatment
+   (body-level vars cascade into <nav>; hidden slides carry their own overrides) */
+body.on-light {
+  --fade: rgba(244,246,253,.92); --glass: rgba(255,255,255,.7); --line: rgba(7,16,31,.12);
+  --bg3: #e8edf9; --surface: rgba(255,255,255,.75); --border: rgba(7,16,31,.09); --border-strong: rgba(7,16,31,.18);
+  --faint: #6b80a0; --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+}
+body.on-light { background: #f4f6fd; }
+body.on-light .nav-logo { color: #07101f; }
+body.on-light .nav-btn { color: #3a5070; }
+body.on-light .nav-btn:hover { color: #07101f; }
+body.on-light .slide-counter { color: #3a5070; }
+body.on-light .arrow-btn { color: #3a5070; }
+body.on-light .theme-btn { color: #3a5070; }
+/* Covers: transparent over the light body so the flow-lines show through */
+#slide-01.slide-light { background: transparent !important; }
+#slide-17.slide-light { background: transparent !important; }
+#slide-08.slide-light { background: transparent !important; }
+.slide-center.slide-light { background: transparent !important; }
 .slide-light::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; }
-.slide-light .card { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.09); }
+.slide-light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); border-color: rgba(0,0,0,0.09); }
 .slide-light .card:hover { background: rgba(0,0,0,0.03); }
 
 html.light {
   --bg: #f4f6fd; --bg2: #eaecf8;
   --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.18);
   --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0;
+  --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7); --fade: rgba(244,246,253,.9);
 }
 html.light body { background: var(--bg); color: var(--text); }
-html.light nav { background: rgba(244,246,253,0.92); }
-html.light .nav-pills { background: rgba(0,0,0,0.05); }
-html.light .nav-btn:hover { background: rgba(0,0,0,0.06); }
-html.light .card:hover { background: rgba(0,0,0,0.03); }
-html.light .slide::before { background-image: radial-gradient(circle, rgba(50,90,210,0.22) 1px, transparent 1px); opacity: 0.25; }
+html.light nav { background: transparent; }
+html.light .nav-pills { background: var(--glass); }
+html.light .nav-btn:hover { background: var(--bg3); }
+html.light .card:hover { background: linear-gradient(170deg,var(--bg2),var(--bg)); }
+html.light .slide::before { display: none; }
 html.light .slide-dots::before { display: none; }
 html.light .slide-grid::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px); }
 .theme-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
@@ -530,28 +591,24 @@ body.edit-mode .edit-toolbar { display:flex; }
 .edit-save-btn:hover { opacity:0.82; }
 body.edit-mode [contenteditable] { outline:none; cursor:text; }
 body.edit-mode [contenteditable]:hover { outline:1px dashed rgba(245,166,35,0.45); border-radius:3px; }
-body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:rgba(245,166,35,0.04); }
+body.edit-mode [contenteditable]:focus { outline:1px solid rgba(245,166,35,0.7); border-radius:3px; background:linear-gradient(rgba(245,166,35,0.04), rgba(245,166,35,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 body.edit-mode .img-placeholder { cursor:pointer; transition:border-color .2s,background .2s; }
-body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:rgba(245,166,35,0.07); }
+body.edit-mode .img-placeholder:hover { border-color:rgba(245,166,35,0.55); background:linear-gradient(rgba(245,166,35,0.07), rgba(245,166,35,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); }
 .uploaded-img-wrap { position:relative; display:flex; border-radius:10px; overflow:hidden; width:100%; }
 .uploaded-img-wrap img { object-fit:cover; width:100%; height:100%; display:block; }
 body.edit-mode .uploaded-img-wrap::after { content:'⟳ Replace'; position:absolute; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:0.05em; }
 body.edit-mode .uploaded-img-wrap:hover::after { opacity:1; }
 body.edit-mode .uploaded-img-wrap { cursor:pointer; }
 
-/* ── Grid-3 column color tints ── */
-.grid-3 > .card:nth-child(3n+1) { background: rgba(79,128,245,0.07) !important; border-color: rgba(79,128,245,0.22) !important; }
-.grid-3 > .card:nth-child(3n+2) { background: rgba(224,69,154,0.07) !important; border-color: rgba(224,69,154,0.22) !important; }
-.grid-3 > .card:nth-child(3n)   { background: rgba(255,99,50,0.07) !important; border-color: rgba(255,99,50,0.22) !important; }
+/* ── Grid-3 column color tints — the site's blue → violet → magenta ramp ── */
+.grid-3 > .card:nth-child(3n+1) { background:linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(79,128,245,0.22) !important; }
+.grid-3 > .card:nth-child(3n+2) { background:linear-gradient(rgba(124,90,245,0.07), rgba(124,90,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(124,90,245,0.22) !important; }
+.grid-3 > .card:nth-child(3n)   { background:linear-gradient(rgba(197,90,245,0.07), rgba(197,90,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color: rgba(197,90,245,0.22) !important; }
 
 /* ── Tag / pill colors per column ── */
 .grid-3 > .card:nth-child(3n+1) .tag { background: rgba(79,128,245,0.13); color: var(--accent); border-color: rgba(79,128,245,0.25); }
-.grid-3 > .card:nth-child(3n+2) .tag { background: rgba(224,69,154,0.13); color: var(--pink); border-color: rgba(224,69,154,0.25); }
-.grid-3 > .card:nth-child(3n)   .tag { background: rgba(255,99,50,0.13); color: var(--red); border-color: rgba(255,99,50,0.25); }
-
-/* ── Overline / card-label accent per column ── */
-.grid-3 > .card:nth-child(3n+2) .overline { color: var(--pink); }
-.grid-3 > .card:nth-child(3n)   .overline { color: var(--red); }
+.grid-3 > .card:nth-child(3n+2) .tag { background: rgba(124,90,245,0.13); color: var(--violet); border-color: rgba(124,90,245,0.25); }
+.grid-3 > .card:nth-child(3n)   .tag { background: rgba(197,90,245,0.13); color: var(--magenta); border-color: rgba(197,90,245,0.25); }
 
 
 /* ── Notes panel (edit mode bottom bar) ── */
@@ -620,7 +677,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 }
 .p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
 #p-notes {
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(79,128,245,0.18);
+  flex:1; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.18);
   border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
   font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
 }
@@ -628,7 +685,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
 .p-reset-btn {
-  margin-top:auto; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
   cursor:pointer; font-family:inherit; transition:all .15s;
 }
@@ -638,7 +695,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
 }
 .p-project-btn {
-  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
   font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
   transition:all .15s; letter-spacing:0.02em;
@@ -667,6 +724,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;600;700;800&amp;family=Noto+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
 </head>
 <body>
+<canvas id="flow" aria-hidden="true"></canvas>
 <div class="mobile-gate">
   <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
   <p class="subtitle" style="max-width:320px">This case study is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
@@ -712,53 +770,34 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div id="slides">
 
 <!-- ══ 01 · TDS TITLE ══ pure -->
-<div id="slide-01" class="slide slide-cover hero-left active" data-section="problem">
-  <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;" width="1920" height="1050"></canvas>
+<div id="slide-01" class="slide slide-cover hero-left slide-light active" data-section="problem">
   <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div class="hero-img">
-    <style>
-      #slide-01 .hero-img { align-self: stretch !important; }
-      #slide-01 .cover-flow { display:flex; flex-direction:column; align-items:center; gap:0; }
-      #slide-01 .cf-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); }
-      #slide-01 .cf-tile { display:block; border-radius:12px; box-shadow:0 12px 32px rgba(0,0,0,0.45); }
-      #slide-01 .cf-i { opacity:0; animation: fadeInUp 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
-      #slide-01 .cf-i:nth-child(1) { animation-delay:0.10s; }
-      #slide-01 .cf-i:nth-child(2) { animation-delay:0.22s; }
-      #slide-01 .cf-i:nth-child(3) { animation-delay:0.34s; }
-      #slide-01 .cf-i:nth-child(4) { animation-delay:0.46s; }
-      #slide-01 .cf-i:nth-child(5) { animation-delay:0.58s; }
-      #slide-01 .cf-i:nth-child(6) { animation-delay:0.70s; }
-      #slide-01 .cf-i:nth-child(7) { animation-delay:0.82s; }
-      #slide-01 .cover-flow svg line, #slide-01 .cover-flow svg path { stroke:rgba(240,244,255,0.38); stroke-width:2.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-      #slide-01 .cf-grid { border:1px solid var(--border); background:var(--surface); border-radius:18px; padding:28px 30px; display:flex; flex-direction:column; gap:20px; align-items:center; }
-      #slide-01 .cf-row { display:flex; gap:16px; align-items:center; justify-content:center; }
-    </style>
-    <div class="cover-flow" style="position:relative; z-index:1;">
-      <div class="cf-i cf-label" style="margin-bottom:16px;">Global Libraries</div>
-      <img class="cf-i cf-tile" src="images/cover-tiles/pantry.png" alt="Pantry assets" style="height:58px; width:auto;">
-      <svg class="cf-i" width="24" height="72" viewBox="0 0 24 72"><line x1="12" y1="4" x2="12" y2="64"/><path d="M4,56 L12,66 L20,56"/></svg>
-      <img class="cf-i cf-tile" src="images/cover-tiles/toolingds.png" alt="tooling ds" style="height:58px; width:auto; box-shadow:0 16px 42px rgba(79,128,245,0.28);">
-      <svg class="cf-i" width="360" height="96" viewBox="0 0 360 96"><path d="M180,4 V30"/><path d="M180,30 Q180,48 162,48 H130 Q112,48 112,66 V80"/><path d="M180,30 Q180,48 198,48 H230 Q248,48 248,66 V80"/><path d="M104,72 L112,82 L120,72"/><path d="M240,72 L248,82 L256,72"/></svg>
-      <div class="cf-i cf-label" style="margin:10px 0 16px;">Tooling Platforms</div>
-      <div class="cf-i cf-grid">
-        <div class="cf-row">
-          <img class="cf-tile" src="images/cover-tiles/ipp.png" alt="IPP dashboard" style="height:58px; width:auto;">
-          <img class="cf-tile" src="images/cover-tiles/ads.png" alt="Ads platform" style="height:58px; width:auto;">
-        </div>
-        <div class="cf-row">
-          <img class="cf-tile" src="images/cover-tiles/caper.png" alt="Caper tooling" style="height:58px; width:auto;">
-          <img class="cf-tile" src="images/cover-tiles/foodstorm.png" alt="Foodstorm" style="height:58px; width:auto;">
-        </div>
-        <div class="cf-row" style="opacity:0.45;">
-          <img class="cf-tile" src="images/cover-tiles/eversight.png" alt="Eversight, upcoming" style="height:58px; width:auto; box-shadow:none;">
-          <img class="cf-tile" src="images/cover-tiles/whyndshop.png" alt="Whyndshop, upcoming" style="height:58px; width:auto; box-shadow:none;">
-        </div>
-      </div>
+    <!-- Recreated cover diagram: tiles cropped from cover-tds.png, connectors + panels native -->
+    <div style="position:relative; width:476px; height:598px; mix-blend-mode:multiply; flex-shrink:0; transform:scale(1.1); transform-origin:center center;">
+      <div style="position:absolute; left:0; top:374px; width:100%; text-align:center; font-size:13px; font-weight:800; letter-spacing:0.04em; color:#14181f; line-height:1;">TOOLING PLATFORMS</div>
+      <div style="position:absolute; left:0; top:392px; width:476px; height:206px; border-radius:18px; background:linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.24);"></div>
+      <svg viewBox="0 0 476 598" style="position:absolute; inset:0; width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M241,75 L241,206" stroke="#1a1f29" stroke-width="1.6" fill="none"/>
+        <polyline points="236,201 241,207 246,201" fill="none" stroke="#1a1f29" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M241,249 L241,324 Q241,336 229,336 L120,336 Q108,336 108,348 L108,422" stroke="#1a1f29" stroke-width="1.6" fill="none"/>
+        <path d="M241,249 L241,324 Q241,336 253,336 L365,336 Q377,336 377,348 L377,422" stroke="#1a1f29" stroke-width="1.6" fill="none"/>
+        <polyline points="103,417 108,423 113,417" fill="none" stroke="#1a1f29" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="372,417 377,423 382,417" fill="none" stroke="#1a1f29" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="position:absolute; left:241px; top:41px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg><span><b>Pantry</b> assets</span></div>
+      <div style="position:absolute; left:241px; top:212px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>tooling</b> ds</span></div>
+      <div style="position:absolute; left:107px; top:428px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>IPP</b> dashboard</span></div>
+      <div style="position:absolute; left:376px; top:428px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Ads</b> platform</span></div>
+      <div style="position:absolute; left:148px; top:484px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Caper</b> tooling</span></div>
+      <div style="position:absolute; left:339px; top:484px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Foodstorm</b></span></div>
+      <div style="position:absolute; left:159px; top:539px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(7,16,31,0.06); border:1px solid transparent; color:#9aa3b2; font-weight:700;">Eversight</div>
+      <div style="position:absolute; left:306px; top:539px; transform:translateX(-50%) scale(1.1); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(7,16,31,0.06); border:1px solid transparent; color:#9aa3b2; font-weight:700;">Whyndshop</div>
     </div>
   </div><!-- /hero-img -->
   <div class="hero-content" style="display:flex; flex-direction:column; justify-content:center; padding-top:0; padding-bottom:0; position:relative; z-index:1;">
-    <span class="overline" style="color:#ffffff;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;display:inline-block;"></span>Deep Dive</span>
-    <h1 style="font-size:clamp(28px,4vw,56px);">Instacart Tooling<br><span style="color:var(--accent);">Design System</span></h1>
+    <span class="cover-chip"><span class="dot"></span>Deep Dive</span>
+    <h1 style="font-size:clamp(32px,4.6vw,64px);">Instacart Tooling<br><span class="grad">Design System</span></h1>
     <div class="cover-line"></div>
     <div style="display:flex; gap:20px; margin-top:36px; align-items:stretch;">
       <div class="stat-callout">
@@ -796,14 +835,14 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="stat-callout"><div class="stat-number" style="color:var(--green);">1</div><div class="stat-label">Upcoming</div></div>
       </div>
     </div>
-    <div style="flex:1 1 0; min-width:0; align-self:stretch; display:flex; flex-direction:column; gap:22px; align-items:flex-start; justify-content:center;">
-      <figure style="margin:0; max-width:100%; min-height:0;">
-        <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Ads Manager</figcaption>
-        <img src="images/ads-manager.webp" alt="Ads Manager campaign performance dashboard with AI assistant" style="width:min(45.4vh,100%); height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+    <div style="flex:1 1 0; min-width:0; align-self:stretch; display:flex; flex-direction:column; gap:20px; align-items:stretch; justify-content:center;">
+      <figure style="margin:0; max-width:100%; min-height:0; position:relative;">
+        <figcaption style="font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:9px;">Ads Manager</figcaption>
+        <img src="images/ads-manager.webp" alt="Ads Manager campaign performance dashboard with AI assistant" style="width:40vh; max-width:100%; height:auto; display:block; border-radius:8px;">
       </figure>
-      <figure style="margin:0; max-width:100%; min-height:0;">
-        <figcaption class="card-label" style="color:var(--accent); margin-bottom:8px;">Instacart Partner Platform</figcaption>
-        <img src="images/ipp-platform.webp" alt="IPP Instacart Partner Platform executive summary analytics" style="width:min(45.4vh,100%); height:auto; display:block; border-radius:10px; border:1px solid var(--border);">
+      <figure style="margin:0; max-width:100%; min-height:0; position:relative;">
+        <figcaption style="font-size:10.5px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:9px;">Instacart Partner Platform</figcaption>
+        <img src="images/ipp-platform.webp" alt="IPP Instacart Partner Platform executive summary analytics" style="width:40vh; max-width:100%; height:auto; display:block; border-radius:8px;">
       </figure>
     </div>
   </div>
@@ -837,7 +876,7 @@ html.presenter-mode #presenter-ui { display:flex; }
         <p style="font-size:12px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
       </div>
     </div>
-    <div class="card" style="margin-top:14px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
+    <div class="card" style="margin-top:14px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div class="card-label" style="margin-bottom:0; color:var(--accent);">The financials</div>
       <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:baseline;">
         <div><span style="font-size:22px; font-weight:800; color:var(--text);">$800M+</span>&nbsp;<span style="font-size:12px; color:var(--text-muted);">net ad revenue via Ads Manager, 2024</span></div>
@@ -852,26 +891,26 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide slide-dots layout-vc" data-section="problem">
   <div style="width:100%;">
     <span class="overline red">Problems</span>
-    <h2 style="margin-bottom:20px;">Three forces driving fragmentation</h2>
-    <div style="display:flex; gap:40px; align-items:center;">
-      <!-- Circle image -->
-      <div style="flex:0 0 auto; width:240px; height:240px; border-radius:50%; overflow:hidden; border:2px solid rgba(255,99,50,0.3); background:#ffffff; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-        <div class="uploaded-img-wrap" style="width:100%;height:100%;object-fit:cover;" data-edit-bound="1"><img src="images/Problems.png"></div>
+    <h2 style="margin-bottom:8px;">Three forces driving <em style="color:var(--red);">fragmentation</em></h2>
+    <div style="display:flex; gap:64px; align-items:center; margin-top:28px;">
+      <!-- Editorial numbered list -->
+      <div style="flex:0 0 40%; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:22px; padding:22px 0;">
+          <span style="font-family:'Hepta Slab',serif; font-size:34px; color:var(--red); flex-shrink:0; line-height:1;">01</span>
+          <h3 style="font-size:21px; font-family:'Hepta Slab',serif; font-weight:400; letter-spacing:-0.01em;">No single source of truth</h3>
+        </div>
+        <div style="display:flex; align-items:center; gap:22px; padding:22px 0;">
+          <span style="font-family:'Hepta Slab',serif; font-size:34px; color:var(--red); flex-shrink:0; line-height:1;">02</span>
+          <h3 style="font-size:21px; font-family:'Hepta Slab',serif; font-weight:400; letter-spacing:-0.01em;">Scaling bottlenecks costly</h3>
+        </div>
+        <div style="display:flex; align-items:center; gap:22px; padding:22px 0;">
+          <span style="font-family:'Hepta Slab',serif; font-size:34px; color:var(--red); flex-shrink:0; line-height:1;">03</span>
+          <h3 style="font-size:21px; font-family:'Hepta Slab',serif; font-weight:400; letter-spacing:-0.01em;">Inconsistent user experience</h3>
+        </div>
       </div>
-      <!-- Cards -->
-      <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
-        <div class="card" style="border-color:rgba(255,99,50,0.2); background:rgba(255,99,50,0.03);">
-          <div class="card-label" style="color:var(--red);">01</div>
-          <h3>No single source of truth</h3>
-        </div>
-        <div class="card" style="border-color:rgba(255,99,50,0.2); background:rgba(255,99,50,0.03);">
-          <div class="card-label" style="color:var(--red);">02</div>
-          <h3>Scaling bottlenecks costly</h3>
-        </div>
-        <div class="card" style="border-color:rgba(255,99,50,0.2); background:rgba(255,99,50,0.03);">
-          <div class="card-label" style="color:var(--red);">03</div>
-          <h3>Inconsistent user experience</h3>
-        </div>
+      <!-- unDraw code-thinking, deck-red accent -->
+      <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+        <img src="images/undraw/code-thinking.svg" alt="Code thinking" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;">
       </div>
     </div>
   </div>
@@ -880,21 +919,49 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 03 · PLATFORMS LANDSCAPE ══ grid -->
 <div id="slide-08" class="slide hero-full slide-light" data-section="problem">
   <div class="hero-img" style="display:flex;align-items:flex-start;justify-content:center;">
-    <img src="images/old-libraries.jpg" style="width:73%;height:auto;display:block;object-fit:contain;margin-top:60px;">
+    <!-- Recreated fragmentation tree: fully native tiles + spaghetti connectors -->
+    <div style="position:relative; width:1240px; height:348px; margin-top:calc(14vw - 62px); flex-shrink:0; transform:scale(1.13); transform-origin:top center;">
+      <svg viewBox="0 0 1240 348" style="position:absolute; inset:0; width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#1a1f29" stroke-width="1.4" fill="none">
+          <path d="M355,51 L355,55 Q355,67 367,67 L462,67 Q474,67 474,79 L474,182"/>
+          <path d="M355,51 L355,55 Q355,67 367,67 L708,67 Q720,67 720,79 L720,182"/>
+          <path d="M355,51 L355,55 Q355,67 367,67 L901,67 Q913,67 913,79 L913,182"/>
+          <path d="M355,51 L355,55 Q355,67 367,67 L1089,67 Q1101,67 1101,79 L1101,182"/>
+          <path d="M355,51 L355,55 Q355,67 343,67 L179,67 Q167,67 167,79 L167,101"/>
+          <path d="M355,51 L355,101"/>
+          <path d="M167,138 L167,210 Q167,222 155,222 L91,222 Q79,222 79,234 L79,294"/>
+          <path d="M167,138 L167,210 Q167,222 179,222 L225,222 Q237,222 237,234 L237,294"/>
+          <path d="M167,138 L167,139 Q167,151 179,151 L343,151 Q355,151 355,163"/>
+          <path d="M355,138 L355,294"/>
+          <path d="M355,254 Q355,266 367,266 L578,266"/>
+          <path d="M474,219 L474,254 Q474,266 486,266 L572,266 Q584,266 584,278 L584,294"/>
+          <path d="M608,138 L608,254 Q608,266 596,266 Q584,266 584,278"/>
+          <path d="M720,219 L720,254 Q720,266 732,266 L777,266 Q789,266 789,278 L789,294"/>
+          <path d="M913,219 L913,254 Q913,266 901,266 L801,266 Q789,266 789,278"/>
+          <path d="M1101,219 L1101,254 Q1101,266 1089,266 L596,266 Q584,266 584,278"/>
+        </g>
+        <g fill="none" stroke="#1a1f29" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="469.5,181.5 474,187 478.5,181.5"/><polyline points="715.5,181.5 720,187 724.5,181.5"/><polyline points="908.5,181.5 913,187 917.5,181.5"/><polyline points="1096.5,181.5 1101,187 1105.5,181.5"/>
+          <polyline points="162.5,100.5 167,106 171.5,100.5"/><polyline points="350.5,100.5 355,106 359.5,100.5"/>
+          <polyline points="74.5,293.5 79,299 83.5,293.5"/><polyline points="232.5,293.5 237,299 241.5,293.5"/><polyline points="350.5,293.5 355,299 359.5,293.5"/><polyline points="579.5,293.5 584,299 588.5,293.5"/><polyline points="784.5,293.5 789,299 793.5,293.5"/>
+        </g>
+      </svg>
+      <div style="position:absolute; left:355px; top:20px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg><span><b>ids</b> atoms</span></div><div style="position:absolute; left:167px; top:107px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>ids</b> global</span></div><div style="position:absolute; left:355px; top:107px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>ids</b> tooling</span></div><div style="position:absolute; left:608px; top:107px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a6472" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>trailmix</b> legacy</span></div><div style="position:absolute; left:474px; top:188px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c55af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Community tooling library</span></div><div style="position:absolute; left:720px; top:188px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c55af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>IPP tooling library</span></div><div style="position:absolute; left:913px; top:188px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c55af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Ads library</span></div><div style="position:absolute; left:1101px; top:188px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c55af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Insights library</span></div><div style="position:absolute; left:79px; top:300px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>Instacart</b> app</span></div><div style="position:absolute; left:237px; top:300px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>Instacart</b>.com</span></div><div style="position:absolute; left:350px; top:300px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>SFX</b></span></div><div style="position:absolute; left:584px; top:300px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>IPP</b> Platform</span></div><div style="position:absolute; left:789px; top:300px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:8px; padding:7px 13px; background:rgba(255,255,255,0.95); border:1px solid rgba(7,16,31,0.09); border-radius:9px; box-shadow:0 2px 8px rgba(7,16,31,0.08); font-size:13px; color:#10141c; white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Ads</b> platform</span></div>
+    </div>
   </div>
   <div class="hero-content" style="background:transparent; padding:24px 80px 36px; margin-top:38%;">
     <span class="overline red">Tooling Platforms 2024</span>
     <h2 style="font-size:clamp(22px,3vw,38px); color:#07101f; margin-bottom:14px;">Fragmentation broke velocity and trust</h2>
     <div style="display:flex; gap:12px; flex-wrap:wrap;">
-      <div class="card" style="flex:1; min-width:200px; border-color:rgba(255,99,50,0.2); background:transparent; display:flex; align-items:center; gap:12px; padding:16px 20px;">
-        <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+      <div class="card" style="flex:1; min-width:200px; border-color:rgba(7,16,31,0.12); background:linear-gradient(170deg, var(--bg2), var(--bg)); display:flex; align-items:center; gap:12px; padding:16px 20px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
         </div>
         <div class="card-label" style="color:#07101f; margin-bottom:0;">Multiple legacy libraries</div>
       </div>
-      <div class="card" style="flex:1; min-width:200px; border-color:rgba(255,99,50,0.2); background:transparent; display:flex; align-items:center; gap:12px; padding:16px 20px;">
-        <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <div class="card" style="flex:1; min-width:200px; border-color:rgba(7,16,31,0.12); background:linear-gradient(170deg, var(--bg2), var(--bg)); display:flex; align-items:center; gap:12px; padding:16px 20px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div class="card-label" style="color:#07101f; margin-bottom:0;">Hard to onboard, easy to drift</div>
       </div>
@@ -906,9 +973,11 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide layout-vc" data-section="problem">
   <div style="width:100%;">
     <span class="overline red">The Audit</span>
-    <h2>Same patterns,<br>different executions.</h2>
-    <div style="margin-top:24px; width:100%; display:flex; align-items:flex-start; justify-content:center; overflow:hidden;">
-      <div style="max-width:1500px;"><img src="images/3samepattern.png" style="width:100%;height:auto;display:block;"></div>
+    <h2>Every product <em>rebuilt</em><br>the same patterns.</h2>
+    <div style="margin-top:28px; width:100%; display:flex; align-items:flex-start; justify-content:center;">
+      <div style="position:relative; max-width:1550px; overflow:hidden;">
+        <img src="images/3samepattern.png" style="width:100%;height:auto;display:block;border-radius:8px;">
+      </div>
     </div>
   </div>
 </div>
@@ -920,7 +989,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     <h2>No single source of truth.</h2>
   </div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap" style="position:absolute;inset:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:32px;" data-edit-bound="1"><img src="images/manybuttons.jpg" style="width:auto;height:auto;max-width:88%;max-height:78vh;display:block;margin-top:56px;transform:translateX(240px);"></div>
+    <div class="uploaded-img-wrap" style="position:absolute;inset:2px;overflow:visible;display:flex;align-items:center;justify-content:center;border-radius:0;background:transparent;" data-edit-bound="1"><img src="images/manybuttons.jpg" style="width:auto;height:auto;max-width:88%;max-height:78vh;display:block;margin-top:56px;"></div>
   </div>
 </div>
 
@@ -938,19 +1007,37 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 07 · YEAR 1 ══ grid -->
 <div id="slide-12" class="slide slide-grid layout-vc" data-section="system">
   <span class="overline">First Year · Strategy</span>
-  <h2>Foundation first alignment over speed</h2>
+  <h2>Foundation first, alignment over speed</h2>
   <div class="timeline" style="gap:14px; margin-top:20px;">
     <div class="timeline-item" style="display:flex;flex-direction:column;gap:10px;">
         <div class="timeline-dot"></div>
         <div class="timeline-q">Q1</div>
         <h4>Strategy Alignment + Library Architecture</h4>
-      <div class="uploaded-img-wrap" style="width:100%;height:238px;border-radius:8px;" data-edit-bound="1"><img src="images/Group%202147204797.png"></div>
+      <div style="height:238px; display:flex; align-items:center; justify-content:center; overflow:visible;">
+        <div style="position:relative; width:476px; height:598px; transform:translateY(-9px) scale(0.45); transform-origin:center center; flex-shrink:0;">
+          <div style="position:absolute; left:0; top:392px; width:476px; height:206px; border-radius:18px; background:rgba(79,128,245,0.1); border:1px solid rgba(79,128,245,0.3);"></div>
+          <svg viewBox="0 0 476 598" style="position:absolute; inset:0; width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+            <path d="M241,75 L241,206" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" fill="none"/>
+            <polyline points="234,199 241,207 248,199" fill="none" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M241,249 L241,324 Q241,336 229,336 L120,336 Q108,336 108,348 L108,422" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" fill="none"/>
+            <path d="M241,249 L241,324 Q241,336 253,336 L365,336 Q377,336 377,348 L377,422" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" fill="none"/>
+            <polyline points="101,415 108,423 115,415" fill="none" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="370,415 377,423 384,415" fill="none" stroke="rgba(220,230,248,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="position:absolute; left:241px; top:41px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg><span><b>Pantry</b> assets</span></div>
+          <div style="position:absolute; left:241px; top:212px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>tooling</b> ds</span></div>
+          <div style="position:absolute; left:107px; top:428px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>IPP</b> dashboard</span></div>
+          <div style="position:absolute; left:376px; top:428px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Ads</b> platform</span></div>
+          <div style="position:absolute; left:148px; top:484px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Caper</b> tooling</span></div>
+          <div style="position:absolute; left:339px; top:484px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; font-size:13px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Foodstorm</b></span></div>
+        </div>
+      </div>
     </div>
     <div class="timeline-item" style="display:flex;flex-direction:column;gap:10px;">
         <div class="timeline-dot"></div>
         <div class="timeline-q">Q2</div>
         <h4>Primitive + Semantic Tokens</h4>
-      <div class="uploaded-img-wrap" style="width:100%;height:238px;border-radius:8px;" data-edit-bound="1"><img src="images/tokens%201.png"></div>
+      <div class="uploaded-img-wrap" style="width:100%;height:238px;border-radius:8px;display:flex;justify-content:center;" data-edit-bound="1"><img src="images/token3.png" style="width:auto;border-radius:10px;"></div>
     </div>
     <div class="timeline-item" style="display:flex;flex-direction:column;gap:10px;">
         <div class="timeline-dot"></div>
@@ -1000,21 +1087,19 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 09 · BEFORE & AFTER DOMAIN ══ pure -->
 <div class="slide" data-section="system" style="padding:40px 80px; flex-direction:column; gap:16px;">
   <span class="overline">Before &amp; After · Domain Migration</span>
-  <h2>From fragmented to unified</h2>
-  <div style="display:flex;flex-direction:row;gap:20px;align-items:stretch;flex:1;min-height:0;">
-    <div style="flex:1;display:flex;align-items:center;justify-content:center;">
-      <img src="images/Before.png" style="width:60%;height:auto;display:block;">
+  <h2>From fragmented to <em>unified</em></h2>
+  <div style="display:flex;flex-direction:row;gap:24px;align-items:stretch;flex:1;min-height:0;margin-top:10px;">
+    <div style="flex:1;position:relative;padding:44px 20px 20px;display:flex;align-items:center;justify-content:center;overflow:visible;">
+      <span style="position:absolute;top:16px;left:20px;font-family:'Hepta Slab',serif;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--faint);">Before</span>
+      <div style="position:relative; width:60%;">
+        <img src="images/Before.png" style="width:100%;height:auto;display:block;">
+        <span style="position:absolute; left:2%; top:56.5%; font-family:'Hepta Slab',serif; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint);">IPP</span>
+        <span style="position:absolute; left:20%; top:98.5%; font-family:'Hepta Slab',serif; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint);">Ads</span>
+      </div>
     </div>
-    <div style="flex:1;display:flex;align-items:center;">
-      <img src="images/after.png" style="width:100%;height:auto;display:block;margin-top:20px;">
-    </div>
-  </div>
-  <div style="display:flex;gap:20px;">
-    <div style="flex:1;display:flex;justify-content:flex-end;">
-      <span class="ba-tag" style="background:rgba(255,99,50,0.15);color:var(--red);">Before</span>
-    </div>
-    <div style="flex:1;">
-      <span class="ba-tag" style="background:rgba(61,186,126,0.15);color:var(--green);">After · IPP + ADS</span>
+    <div style="flex:1;position:relative;padding:44px 20px 20px;display:flex;align-items:center;overflow:visible;">
+      <span style="position:absolute;top:16px;left:20px;font-family:'Hepta Slab',serif;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--green);">After · IPP + ADS</span>
+      <img src="images/after.png" style="width:100%;height:auto;max-height:100%;object-fit:contain;display:block;">
     </div>
   </div>
 </div>
@@ -1022,54 +1107,52 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 10 · COHERENCE ACROSS PRODUCTS ══ dots -->
 <div class="slide slide-dots" data-section="system" style="padding-top:40px; flex-direction:column; gap:16px;">
   <span class="overline">Coherence Across Products</span>
-  <h2>Many tools,<br>one platform experience.</h2>
-  <div style="display:flex;flex-direction:row;gap:20px;align-items:stretch;flex:1;min-height:0;margin-top:4px;">
-    <div style="flex:1;display:flex;align-items:center;justify-content:center;">
-      <img src="images/Before%20forms.png" style="width:60%;height:auto;display:block;">
+  <h2>Many tools,<br><em>one</em> platform experience.</h2>
+  <div style="display:flex;flex-direction:row;gap:24px;align-items:stretch;flex:1;min-height:0;margin-top:10px;">
+    <div style="flex:1;position:relative;padding:44px 20px 20px;display:flex;align-items:center;justify-content:center;overflow:visible;">
+      <span style="position:absolute;top:16px;left:20px;font-family:'Hepta Slab',serif;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--faint);">Before</span>
+      <div style="position:relative; width:60%;">
+        <img src="images/Before%20forms.png" style="width:100%;height:auto;display:block;">
+        <span style="position:absolute; left:1.5%; bottom:2%; font-family:'Hepta Slab',serif; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint);">IPP</span>
+        <span style="position:absolute; right:0; top:75.5%; font-family:'Hepta Slab',serif; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--faint);">Ads</span>
+      </div>
     </div>
-    <div style="flex:1;display:flex;align-items:flex-start;">
-      <img src="images/After%20forms.png" style="width:100%;height:auto;display:block;">
-    </div>
-  </div>
-  <div style="display:flex;gap:20px;">
-    <div style="flex:1;display:flex;justify-content:flex-end;">
-      <span class="ba-tag" style="background:rgba(255,99,50,0.15);color:var(--red);">Before</span>
-    </div>
-    <div style="flex:1;">
-      <span class="ba-tag" style="background:rgba(61,186,126,0.15);color:var(--green);">After</span>
+    <div style="flex:1;position:relative;padding:44px 20px 20px;display:flex;align-items:flex-start;overflow:visible;">
+      <span style="position:absolute;top:16px;left:20px;font-family:'Hepta Slab',serif;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--green);">After</span>
+      <img src="images/After%20forms.png" style="width:100%;height:auto;max-height:100%;object-fit:contain;display:block;">
     </div>
   </div>
 </div>
 
 <!-- ══ 11 · ARCHITECTURE ══ grid -->
 <div class="slide slide-dots layout-vc" data-section="system">
-  <div style="display:flex; gap:52px; align-items:center;">
-    <div style="flex-shrink:0;">
-      <div style="width:240px; height:240px; border-radius:50%; overflow:hidden; border:3px solid rgba(79,128,245,0.3);">
-        <div class="uploaded-img-wrap" style="width:100%;height:100%;" data-edit-bound="1"><img src="images/architecture.png" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+  <div style="display:flex; gap:56px; align-items:center;">
+    <div style="flex:0 0 auto; display:flex; align-items:center; justify-content:center;">
+      <div class="uploaded-img-wrap" style="width:auto;height:auto;background:transparent;border-radius:0;overflow:visible;flex-shrink:0;" data-edit-bound="1">
+        <img src="images/undraw/building-blocks.svg" alt="System boundaries" style="max-height:300px;max-width:100%;width:auto;height:auto;display:block;">
       </div>
     </div>
     <div style="flex:1; min-width:0;">
       <span class="overline">Architecture</span>
-      <h2>System boundaries</h2>
-      <div style="margin-top:28px; display:flex; flex-direction:column; gap:18px; max-width:760px;">
-        <div class="card" style="display:flex; align-items:center; gap:16px; padding:18px 22px;">
+      <h2>System <em>boundaries</em></h2>
+      <div style="margin-top:28px; display:flex; flex-direction:column; gap:18px;" class="arch-bound-list">
+        <div class="card" style="display:flex; align-items:center; gap:16px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path></svg>
           </div>
-          <h3 style="margin:0;">Tokens, Spacing, Typography = Centralized</h3>
+          <h3 style="font-size:17px;">Tokens, Spacing, Typography = Centralized</h3>
         </div>
-        <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04); display:flex; align-items:center; gap:16px; padding:18px 22px;">
+        <div class="card" style="border-color:rgba(124,90,245,0.25); background:linear-gradient(rgba(124,90,245,0.04), rgba(124,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
           </div>
-          <h3 style="margin:0;">Opinionated components but flexible</h3>
+          <h3 style="font-size:17px;">Opinionated components but flexible</h3>
         </div>
-        <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04); display:flex; align-items:center; gap:16px; padding:18px 22px;">
-          <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
+        <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+          <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
           </div>
-          <h3 style="margin:0;">Product Workflows = Patterns, not prescriptions</h3>
+          <h3 style="font-size:17px;">Product Workflows = Patterns, not prescriptions</h3>
         </div>
       </div>
     </div>
@@ -1079,13 +1162,56 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 
 <!-- ══ 12 · FIGMA LIBRARIES ══ grid -->
-<div id="slide-17" class="slide hero-right slide-light" style="background:#ffffff;" data-section="system">
+<div id="slide-17" class="slide hero-right slide-light" data-section="system">
   <div class="hero-content">
     <span class="overline">Figma Libraries</span>
     <h2>From fragmentation<br>to a unified hierarchy</h2>
   </div>
-  <div class="hero-img" style="background:#ffffff;display:flex;align-items:center;justify-content:flex-end;overflow:visible;">
-    <img src="images/new-library.jpg" style="position:relative;width:90%;height:auto;object-fit:contain;display:block;" data-edit-bound="1">
+  <div class="hero-img" style="background:transparent;display:flex;align-items:center;justify-content:center;overflow:visible;">
+    <!-- Recreated library tree: tiles cropped from new-library.jpg + cover-tds.png, connectors + panels native -->
+    <div id="lib-tree" style="position:relative; width:780px; height:462px; flex-shrink:0; transform:translateX(-54px) scale(1.21); transform-origin:center center;">
+      <div style="position:absolute; left:224px; top:24px; width:334px; text-align:center; font-size:10.5px; font-weight:800; letter-spacing:0.04em; color:#14181f; line-height:1;">GLOBAL LIBRARIES</div>
+      <div style="position:absolute; left:224px; top:40px; width:334px; height:56px; border-radius:16px; background:linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.24);"></div>
+      <div style="position:absolute; left:440px; top:289px; width:318px; text-align:center; font-size:10.5px; font-weight:800; letter-spacing:0.04em; color:#14181f; line-height:1;">TOOLING PLATFORMS</div>
+      <div style="position:absolute; left:440px; top:305px; width:318px; height:138px; border-radius:18px; background:linear-gradient(rgba(79,128,245,0.07), rgba(79,128,245,0.07)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.24);"></div>
+      <svg viewBox="0 0 780 462" style="position:absolute; inset:0; width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#1a1f29" stroke-width="1.5" fill="none">
+          <path d="M289,80 L289,123 Q289,128 284,128 L153,128 Q148,128 148,133 L148,170"/>
+          <path d="M289,80 L289,123 Q289,128 294,128 L408,128 Q413,128 413,133 L413,170"/>
+          <path d="M289,80 L289,123 Q289,128 294,128 L651,128 Q656,128 656,133 L656,170"/>
+          <path d="M481,80 L481,128" stroke-dasharray="4 4" stroke-width="1.4"/>
+          <path d="M148,199 L148,255 Q148,260 143,260 L99,260 Q94,260 94,265 L94,315"/>
+          <path d="M148,199 L148,255 Q148,260 153,260 L243,260 Q248,260 248,265 L248,315"/>
+          <path d="M148,199 L148,255 Q148,260 153,260 L369,260 Q374,260 374,265 L374,315"/>
+          <path d="M413,199 L413,255 Q413,260 418,260 L506,260 Q511,260 511,265 L511,315"/>
+          <path d="M413,199 L413,255 Q413,260 418,260 L689,260 Q694,260 694,265 L694,315"/>
+        </g>
+        <g fill="none" stroke="#1a1f29" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="143.5,167 148,172 152.5,167"/>
+          <polyline points="408.5,167 413,172 417.5,167"/>
+          <polyline points="651.5,167 656,172 660.5,167"/>
+          <polyline points="89.5,312 94,317 98.5,312"/>
+          <polyline points="243.5,312 248,317 252.5,312"/>
+          <polyline points="369.5,312 374,317 378.5,312"/>
+          <polyline points="506.5,312 511,317 515.5,312"/>
+          <polyline points="689.5,312 694,317 698.5,312"/>
+        </g>
+      </svg>
+      <div style="position:absolute; left:288px; top:57px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg><span><b>Pantry</b> assets</span></div>
+      <div style="position:absolute; left:481px; top:57px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg><span><b>Brand</b> guidelines</span></div>
+      <div style="position:absolute; left:147px; top:176px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>pantry</b> consumer</span></div>
+      <div style="position:absolute; left:413px; top:176px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>tooling</b> ds</span></div>
+      <div style="position:absolute; left:655px; top:176px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span><b>Caper</b> ds</span></div>
+      <div style="position:absolute; left:94px; top:321px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>Instacart</b> app</span></div>
+      <div style="position:absolute; left:248px; top:321px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>Instacart</b>.com</span></div>
+      <div style="position:absolute; left:374px; top:321px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span><b>SFX</b></span></div>
+      <div style="position:absolute; left:510px; top:321px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>IPP</b> dashboard</span></div>
+      <div style="position:absolute; left:693px; top:321px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Ads</b> platform</span></div>
+      <div style="position:absolute; left:539px; top:360px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Caper</b> tooling</span></div>
+      <div style="position:absolute; left:668px; top:360px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(255,255,255,0.96); border:1px solid rgba(7,16,31,0.09); box-shadow:0 2px 8px rgba(7,16,31,0.08); color:#10141c;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span><b>Foodstorm</b></span></div>
+      <div style="position:absolute; left:546px; top:398px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(7,16,31,0.06); border:1px solid transparent; color:#9aa3b2; font-weight:700;">Eversight</div>
+      <div style="position:absolute; left:646px; top:398px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px; font-size:11px; white-space:nowrap; background:rgba(7,16,31,0.06); border:1px solid transparent; color:#9aa3b2; font-weight:700;">Whyndshop</div>
+    </div>
   </div>
 </div>
 
@@ -1095,52 +1221,49 @@ html.presenter-mode #presenter-ui { display:flex; }
   <h2>Headless components,<br>styled via tokens.</h2>
   <div style="margin-top:24px; display:flex; flex-direction:column; align-items:flex-start; gap:0;">
     <!-- IDS Core top bar — full width -->
-    <div style="width:100%; padding:16px 40px; background:rgba(34,191,144,0.12); border-radius:12px; border:2px solid rgba(34,191,144,0.45); display:flex; align-items:center; justify-content:center;">
-      <span style="font-family:'SF Mono','Fira Code',monospace; font-size:16px; font-weight:700; color:#22BF90;">{IDS CORE}</span>
+    <div style="width:66.7%; margin:0 auto; padding:16px 40px; background:linear-gradient(rgba(79,128,245,0.09), rgba(79,128,245,0.09)), linear-gradient(170deg, var(--bg2), var(--bg)); border-radius:12px; border:2px solid rgba(79,128,245,0.45); display:flex; align-items:center; justify-content:center;">
+      <span style="font-family:'SF Mono','Fira Code',monospace; font-size:16px; font-weight:700; color:#3a63e0;">{IDS CORE}</span>
     </div>
-    <!-- Three arrows pointing to each box -->
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); width:100%;">
-      <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
-        <div style="width:2px; height:28px; background:rgba(34,191,144,0.5);"></div>
-        <div style="font-size:13px; color:rgba(34,191,144,0.6);">▼</div>
-      </div>
-      <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
-        <div style="width:2px; height:28px; background:rgba(34,191,144,0.5);"></div>
-        <div style="font-size:13px; color:rgba(34,191,144,0.6);">▼</div>
-      </div>
-      <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
-        <div style="width:2px; height:28px; background:rgba(34,191,144,0.5);"></div>
-        <div style="font-size:13px; color:rgba(34,191,144,0.6);">▼</div>
-      </div>
+    <!-- Tree-style split connector: percent geometry, fixed-size chevrons -->
+    <div style="position:relative; width:66.7%; margin:0 auto; height:60px;">
+      <div style="position:absolute; left:calc(50% - 0.8px); top:0; width:1.6px; height:24px; background:#4f80f5;"></div>
+      <div style="position:absolute; left:0; right:0; top:24px; height:29px; border-left:1.6px solid #4f80f5; border-right:1.6px solid #4f80f5; border-top:1.6px solid #4f80f5; border-radius:12px 12px 0 0;"></div>
+      <div style="position:absolute; left:calc(50% - 0.8px); top:24px; width:1.6px; height:29px; background:#4f80f5;"></div>
+      <svg width="14" height="8" viewBox="0 0 14 8" style="position:absolute; left:-6.2px; top:48px;" xmlns="http://www.w3.org/2000/svg"><polyline points="1,1 7,7 13,1" fill="none" stroke="#4f80f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="14" height="8" viewBox="0 0 14 8" style="position:absolute; left:calc(50% - 7px); top:48px;" xmlns="http://www.w3.org/2000/svg"><polyline points="1,1 7,7 13,1" fill="none" stroke="#4f80f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="14" height="8" viewBox="0 0 14 8" style="position:absolute; right:-6.2px; top:48px;" xmlns="http://www.w3.org/2000/svg"><polyline points="1,1 7,7 13,1" fill="none" stroke="#4f80f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <!-- Three DS boxes -->
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; width:100%;">
-      <div style="padding:20px 18px; background:rgba(50,90,210,0.08); border-radius:12px; border:1px solid rgba(50,90,210,0.25); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+      <div style="position:relative; overflow:hidden; padding:22px 20px; background:linear-gradient(rgba(255,99,50,0.08), rgba(255,99,50,0.08)), linear-gradient(170deg, var(--bg2), var(--bg)); border-radius:18px; border:1px solid rgba(255,99,50,0.3); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(255,99,50,0.9),transparent);"></span>
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(50,90,210,0.08);flex-shrink:0;">
+          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,99,50,0.09), rgba(255,99,50,0.09)), linear-gradient(170deg,var(--bg2),var(--bg));flex-shrink:0;">
             <div class="uploaded-img-wrap logo-wrap" style="width:32px;height:32px;object-fit:contain;" data-edit-bound="1"><img src="images/pantry.png"></div>
           </div>
           <span style="font-size:15px; font-weight:700; color:var(--text);">Pantry DS</span>
         </div>
-        <span class="tag" style="font-size:10px; background:rgba(50,90,210,0.1); color:var(--accent); border-color:rgba(50,90,210,0.25);">Consumer</span>
+        <span class="tag" style="font-size:10px; background:rgba(255,99,50,0.1); color:#e5551f; border-color:rgba(255,99,50,0.3);">Consumer</span>
       </div>
-      <div style="padding:20px 18px; background:rgba(124,90,245,0.08); border-radius:12px; border:1px solid rgba(124,90,245,0.25); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+      <div style="position:relative; overflow:hidden; padding:22px 20px; background:linear-gradient(rgba(245,166,35,0.10), rgba(245,166,35,0.10)), linear-gradient(170deg, var(--bg2), var(--bg)); border-radius:18px; border:1px solid rgba(245,166,35,0.38); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(245,166,35,0.95),transparent)"></span>
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(124,90,245,0.08);flex-shrink:0;">
+          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(245,166,35,0.12);flex-shrink:0;">
             <div class="uploaded-img-wrap logo-wrap" style="width:32px;height:32px;object-fit:contain;" data-edit-bound="1"><img src="images/TDS.png"></div>
           </div>
           <span style="font-size:15px; font-weight:700; color:var(--text);">Tooling DS</span>
         </div>
-        <span class="tag" style="font-size:10px; background:rgba(124,90,245,0.1); color:var(--accent2); border-color:rgba(124,90,245,0.25);">Enterprise</span>
+        <span class="tag" style="font-size:10px; background:rgba(245,166,35,0.13); color:#b57900; border-color:rgba(245,166,35,0.38);">Enterprise</span>
       </div>
-      <div style="padding:20px 18px; background:rgba(255,99,50,0.08); border-radius:12px; border:1px solid rgba(255,99,50,0.25); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+      <div style="position:relative; overflow:hidden; padding:22px 20px; background:linear-gradient(rgba(34,191,144,0.08), rgba(34,191,144,0.08)), linear-gradient(170deg, var(--bg2), var(--bg)); border-radius:18px; border:1px solid rgba(34,191,144,0.3); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(34,191,144,0.9),transparent);"></span>
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,99,50,0.08);flex-shrink:0;">
+          <div style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(rgba(34,191,144,0.08), rgba(34,191,144,0.08)), linear-gradient(170deg,var(--bg2),var(--bg));flex-shrink:0;">
             <div class="uploaded-img-wrap logo-wrap" style="width:32px;height:32px;object-fit:contain;" data-edit-bound="1"><img src="images/Caper.png"></div>
           </div>
           <span style="font-size:15px; font-weight:700; color:var(--text);">Caper DS</span>
         </div>
-        <span class="tag" style="font-size:10px; background:rgba(255,99,50,0.1); color:var(--red); border-color:rgba(255,99,50,0.25);">Hardware</span>
+        <span class="tag" style="font-size:10px; background:rgba(34,191,144,0.1); color:#1da97e; border-color:rgba(34,191,144,0.3);">Hardware</span>
       </div>
     </div>
   </div>
@@ -1152,14 +1275,23 @@ html.presenter-mode #presenter-ui { display:flex; }
     <span class="overline">Visual Language Foundations</span>
     <h2>Unified visual language</h2>
     <div style="display:flex; flex-direction:column; gap:12px; margin-top:24px;">
-      <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
-        <h3>◆ Color + type</h3>
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"></circle><circle cx="19" cy="13" r="2.5"></circle><circle cx="6" cy="12" r="2.5"></circle><circle cx="10" cy="19" r="2.5"></circle><path d="M12 2a10 10 0 1 0 10 10"></path></svg>
+        </div>
+        <h3 style="font-size:17px;">Color + type</h3>
       </div>
-      <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
-        <h3>◆ Grid, spacing, radii</h3>
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
+        </div>
+        <h3 style="font-size:17px;">Grid, spacing, radii</h3>
       </div>
-      <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
-        <h3>◆ Tooling consistent branding</h3>
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+        </div>
+        <h3 style="font-size:17px;">Tooling consistent branding</h3>
       </div>
     </div>
   </div>
@@ -1174,24 +1306,28 @@ html.presenter-mode #presenter-ui { display:flex; }
   <h2>Flexibility through structure</h2>
   <div style="margin-top:28px; display:flex; gap:24px; align-items:center; justify-content:center;">
     <!-- Left: cards -->
-    <div style="flex:0 0 26%; display:flex; flex-direction:column; gap:12px; min-width:0;">
-      <div class="card">
-        <div class="card-label" style="color:var(--red);">01. Customization at each level</div>
+    <div style="flex:0 0 30%; display:flex; flex-direction:column; min-width:0;">
+      <div style="display:flex; align-items:baseline; gap:18px; padding:20px 0;">
+        <span style="font-family:'Hepta Slab',serif; font-size:30px; color:var(--accent); flex-shrink:0; line-height:1;">01</span>
+        <h3 style="font-size:17px;">Customization at each level</h3>
       </div>
-      <div class="card">
-        <div class="card-label" style="color:var(--red);">02.&nbsp;Cascading structure</div>
+      <div style="display:flex; align-items:baseline; gap:18px; padding:20px 0;">
+        <span style="font-family:'Hepta Slab',serif; font-size:30px; color:var(--violet); flex-shrink:0; line-height:1;">02</span>
+        <h3 style="font-size:17px;">Cascading structure</h3>
       </div>
-      <div class="card">
-        <div class="card-label" style="color:var(--red);">03.&nbsp;1:1 with code</div>
+      <div style="display:flex; align-items:baseline; gap:18px; padding:20px 0;">
+        <span style="font-family:'Hepta Slab',serif; font-size:30px; color:var(--magenta); flex-shrink:0; line-height:1;">03</span>
+        <h3 style="font-size:17px;">1:1 with code</h3>
       </div>
     </div>
     <!-- Right: token chain -->
     <div style="flex:0 0 35%; display:flex; flex-direction:column; align-items:flex-start; gap:0; min-width:0; overflow:hidden;">
 
       <!-- Level 1: Value -->
-      <div style="display:flex; align-items:center; gap:14px; padding:14px 20px; background:rgba(79,128,245,0.08); border-radius:10px; border:1px solid rgba(79,128,245,0.3); width:100%;">
-        <div style="width:18px; height:18px; border-radius:50%; background:#FF6332; flex-shrink:0;"></div>
-        <div style="padding:6px 14px; background:rgba(79,128,245,0.15); border-radius:20px; border:1px solid rgba(79,128,245,0.3); font-size:12px; font-weight:600; color:var(--accent); font-family:'SF Mono','Fira Code',monospace;">#FF6332</div>
+      <div style="position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; padding:15px 20px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:14px; border:1px solid var(--line); width:100%;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent);"></span>
+        <div style="width:18px; height:18px; border-radius:50%; background:var(--magenta); flex-shrink:0;"></div>
+        <div style="padding:6px 14px; background:rgba(79,128,245,0.15); border-radius:20px; border:1px solid rgba(79,128,245,0.3); font-size:12px; font-weight:600; color:var(--accent); font-family:'SF Mono','Fira Code',monospace;">#C55AF5</div>
         <span style="margin-left:auto; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);">Value</span>
       </div>
       <!-- Arrow + alias -->
@@ -1201,8 +1337,9 @@ html.presenter-mode #presenter-ui { display:flex; }
         <span style="font-size:13px; color:rgba(79,128,245,0.8);">↓</span>
       </div>
       <!-- Level 2: Primitive Token -->
-      <div style="display:flex; align-items:center; gap:14px; padding:14px 20px; background:rgba(79,128,245,0.08); border-radius:10px; border:1px solid rgba(79,128,245,0.3); width:100%;">
-        <div style="width:18px; height:18px; border-radius:50%; background:#FF6332; flex-shrink:0;"></div>
+      <div style="position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; padding:15px 20px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:14px; border:1px solid var(--line); width:100%;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent);"></span>
+        <div style="width:18px; height:18px; border-radius:50%; background:var(--magenta); flex-shrink:0;"></div>
         <div style="padding:6px 14px; background:rgba(79,128,245,0.15); border-radius:20px; border:1px solid rgba(79,128,245,0.3); font-size:12px; font-weight:600; color:var(--accent); font-family:'SF Mono','Fira Code',monospace;">brand-primary-600</div>
         <span style="margin-left:auto; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);">Primitive Token</span>
       </div>
@@ -1213,8 +1350,9 @@ html.presenter-mode #presenter-ui { display:flex; }
         <span style="font-size:13px; color:rgba(79,128,245,0.8);">↓</span>
       </div>
       <!-- Level 3: System Token -->
-      <div style="display:flex; align-items:center; gap:14px; padding:14px 20px; background:rgba(79,128,245,0.08); border-radius:10px; border:1px solid rgba(79,128,245,0.3); width:100%;">
-        <div style="width:18px; height:18px; border-radius:50%; background:#FF6332; flex-shrink:0;"></div>
+      <div style="position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; padding:15px 20px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:14px; border:1px solid var(--line); width:100%;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,var(--violet),transparent);"></span>
+        <div style="width:18px; height:18px; border-radius:50%; background:var(--magenta); flex-shrink:0;"></div>
         <div style="padding:6px 14px; background:rgba(79,128,245,0.15); border-radius:20px; border:1px solid rgba(79,128,245,0.3); font-size:12px; font-weight:600; color:var(--accent); font-family:'SF Mono','Fira Code',monospace;">tds-brand-primary</div>
         <span style="margin-left:auto; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);">System Token</span>
       </div>
@@ -1225,8 +1363,9 @@ html.presenter-mode #presenter-ui { display:flex; }
         <span style="font-size:13px; color:rgba(79,128,245,0.8);">↓</span>
       </div>
       <!-- Level 4: Component Token -->
-      <div style="display:flex; align-items:center; gap:14px; padding:14px 20px; background:rgba(79,128,245,0.08); border-radius:10px; border:1px solid rgba(79,128,245,0.3); width:100%;">
-        <div style="width:18px; height:18px; border-radius:50%; background:#FF6332; flex-shrink:0;"></div>
+      <div style="position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; padding:15px 20px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:14px; border:1px solid var(--line); width:100%;">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,var(--magenta),transparent);"></span>
+        <div style="width:18px; height:18px; border-radius:50%; background:var(--magenta); flex-shrink:0;"></div>
         <div style="padding:6px 14px; background:rgba(79,128,245,0.2); border-radius:20px; border:1px solid rgba(79,128,245,0.4); font-size:12px; font-weight:600; color:var(--accent); font-family:'SF Mono','Fira Code',monospace;">tds-btn-primary-bg</div>
         <span style="margin-left:auto; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);">Component token</span>
       </div>
@@ -1240,7 +1379,7 @@ html.presenter-mode #presenter-ui { display:flex; }
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Tokens in action</h2>
   <p class="subtitle" style="max-width:620px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.06s both">Tokens are what make theming real. Design once, and let Figma show you what dark mode, retailer brand themes, or the upcoming Instacart rebrand look like instantly.</p>
   <div style="position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px;animation:subtlePop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div style="position:relative;z-index:10;transform:translateZ(0);will-change:transform;width:1200px;max-width:100%;aspect-ratio:1920/1118;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.6);border:1px solid rgba(79,128,245,0.2)">
+    <div style="position:relative;z-index:10;transform:translateZ(0);will-change:transform;width:850px;max-width:100%;aspect-ratio:1920/1118;border-radius:18px;overflow:hidden">
       <video id="tokens-video"
         src="darkmode.webm"
         autoplay muted loop playsinline
@@ -1256,14 +1395,14 @@ html.presenter-mode #presenter-ui { display:flex; }
     <span class="overline">Component Library</span>
     <h2>Components as contracts</h2>
     <div style="display:flex; flex-direction:column; gap:14px; margin-top:24px;">
-      <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
         </div>
         <div class="card-label" style="color:var(--accent);">Prioritization Method</div>
         <h3>80% most-used, 3+ use cases</h3>
       </div>
-      <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
         </div>
@@ -1279,44 +1418,56 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <!-- ══ 18 · CORE COMPONENTS: BUTTONS & LINKS ══ pure -->
 <div class="slide layout-vc" data-section="components">
-  <div style="width:100%;">
-    <span class="overline">Core Components · Craft</span>
-    <h2>Buttons, links the foundation.</h2>
-    <div style="margin-top:36px; width:100%; height:380px; border-radius:0; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:75%;height:100%;object-fit:contain;border-radius:0;overflow:hidden;" data-edit-bound="1"><img src="images/Core%20components%201.png" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+  <div style="width:100%; display:flex; gap:56px; align-items:center;">
+    <div style="flex:0 0 26%;">
+      <span class="overline" style="color:var(--accent);">Core Components · Craft</span>
+      <h2 style="font-size:clamp(26px,2.9vw,44px);">Buttons, links<br>the <em style="color:var(--accent);">foundation</em>.</h2>
+      <div style="margin-top:26px; font-family:'Hepta Slab',serif; font-size:13px; letter-spacing:0.24em; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;">PLATE <span style="color:var(--accent);">1</span> / 4</div>
+    </div>
+    <div style="flex:1; position:relative; overflow:hidden;">
+      <div class="uploaded-img-wrap" style="width:100%;max-height:640px;object-fit:contain;border-radius:0;display:flex;align-items:center;justify-content:center;" data-edit-bound="1"><img src="images/Core%20components%201.png" style="width:100%;height:auto;max-height:640px;object-fit:contain;display:block;"></div>
     </div>
   </div>
 </div>
 
 <!-- ══ 19 · CORE COMPONENTS: INPUTS ══ pure -->
 <div class="slide layout-vc" data-section="components">
-  <div style="width:100%;">
-    <span class="overline">Core Components · Craft</span>
-    <h2>Markers, pills, inputs.</h2>
-    <div style="margin-top:36px; width:100%; height:380px; border-radius:0; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:75%;height:100%;object-fit:contain;border-radius:0;overflow:hidden;" data-edit-bound="1"><img src="images/Core%20components%202.png" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+  <div style="width:100%; display:flex; gap:56px; align-items:center;">
+    <div style="flex:0 0 26%;">
+      <span class="overline purple">Core Components · Craft</span>
+      <h2 style="font-size:clamp(26px,2.9vw,44px);">Markers, pills,<br>inputs.</h2>
+      <div style="margin-top:26px; font-family:'Hepta Slab',serif; font-size:13px; letter-spacing:0.24em; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;">PLATE <span style="color:var(--accent2);">2</span> / 4</div>
+    </div>
+    <div style="flex:1; position:relative; overflow:hidden;">
+      <div class="uploaded-img-wrap" style="width:100%;max-height:640px;object-fit:contain;border-radius:0;display:flex;align-items:center;justify-content:center;" data-edit-bound="1"><img src="images/Core%20components%202.png" style="width:100%;height:auto;max-height:640px;object-fit:contain;display:block;"></div>
     </div>
   </div>
 </div>
 
 <!-- ══ 20 · COMPONENTS: OVERLAY ══ pure -->
 <div class="slide layout-vc" data-section="components">
-  <div style="width:100%;">
-    <span class="overline">Expanded Components · Craft</span>
-    <h2>Avatar, tooltips, accordions.</h2>
-    <div style="margin-top:36px; width:100%; height:380px; border-radius:0; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:75%;height:100%;object-fit:contain;border-radius:0;overflow:hidden;" data-edit-bound="1"><img src="images/Core%20componetns%203.png" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+  <div style="width:100%; display:flex; gap:56px; align-items:center;">
+    <div style="flex:0 0 26%;">
+      <span class="overline" style="color:var(--magenta);">Expanded Components · Craft</span>
+      <h2 style="font-size:clamp(26px,2.9vw,44px);">Avatar, tooltips,<br>accordions.</h2>
+      <div style="margin-top:26px; font-family:'Hepta Slab',serif; font-size:13px; letter-spacing:0.24em; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;">PLATE <span style="color:var(--magenta);">3</span> / 4</div>
+    </div>
+    <div style="flex:1; position:relative; overflow:hidden;">
+      <div class="uploaded-img-wrap" style="width:100%;max-height:640px;object-fit:contain;border-radius:0;display:flex;align-items:center;justify-content:center;" data-edit-bound="1"><img src="images/Core%20componetns%203.png" style="width:100%;height:auto;max-height:640px;object-fit:contain;display:block;"></div>
     </div>
   </div>
 </div>
 
 <!-- ══ 21 · COMPLEX ORGANISMS ══ pure -->
 <div class="slide layout-vc" data-section="components">
-  <div style="width:100%;">
-    <span class="overline">Complex Organisms · Craft</span>
-    <h2>Cards, feature announcements.</h2>
-    <div style="margin-top:36px; width:100%; height:380px; border-radius:0; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:75%;height:100%;object-fit:contain;border-radius:0;overflow:hidden;" data-edit-bound="1"><img src="images/cards.png" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+  <div style="width:100%; display:flex; gap:56px; align-items:center;">
+    <div style="flex:0 0 26%;">
+      <span class="overline green">Complex Organisms · Craft</span>
+      <h2 style="font-size:clamp(26px,2.9vw,44px);">Cards, feature<br>announcements.</h2>
+      <div style="margin-top:26px; font-family:'Hepta Slab',serif; font-size:13px; letter-spacing:0.24em; color:var(--faint); border-top:1px solid var(--line); padding-top:16px;">PLATE <span style="color:var(--green);">4</span> / 4</div>
+    </div>
+    <div style="flex:1; position:relative; overflow:hidden;">
+      <div class="uploaded-img-wrap" style="width:100%;max-height:640px;object-fit:contain;border-radius:0;display:flex;align-items:center;justify-content:center;" data-edit-bound="1"><img src="images/cards.png" style="width:100%;height:auto;max-height:640px;object-fit:contain;display:block;"></div>
     </div>
   </div>
 </div>
@@ -1344,18 +1495,18 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card-label" style="color:var(--accent);">Shared ownership</div>
       <h3>System + product teams co-own</h3>
     </div>
-    <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04);">
+    <div class="card" style="border-color:rgba(124,90,245,0.25); background:linear-gradient(rgba(124,90,245,0.04), rgba(124,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       </div>
       <div class="card-label" style="color:var(--accent2);">Coverage</div>
       <h3>High-frequency pages queued first</h3>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
-      <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+    <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
+      <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </div>
-      <div class="card-label" style="color:var(--red);">Result</div>
+      <div class="card-label" style="color:var(--magenta);">Result</div>
       <h3>New pages ship in hours, not days</h3>
     </div>
   </div>
@@ -1412,9 +1563,9 @@ html.presenter-mode #presenter-ui { display:flex; }
     <h2>From spec to scaffold<br>in seconds.</h2>
     <div class="divider"></div>
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.08s both">
-      <p class="body-text" style="max-width:360px">Each component mapped to its molecule or organism in the system.</p>
-      <p class="body-text" style="max-width:360px">Engineers ran a script to auto-generate the layout with the right base components and configuration.</p>
-      <p class="body-text" style="max-width:360px">A working foundation, ready in under 30 seconds.</p>
+      <div style="display:flex;gap:12px;align-items:baseline;"><span style="color:var(--green);font-size:9px;flex-shrink:0;">◆</span><p class="body-text" style="max-width:360px">Layouts mapped to system molecules and organisms</p></div>
+      <div style="display:flex;gap:12px;align-items:baseline;"><span style="color:var(--green);font-size:9px;flex-shrink:0;">◆</span><p class="body-text" style="max-width:440px;white-space:nowrap;">A script scaffolds the page, components pre-configured</p></div>
+      <div style="display:flex;gap:12px;align-items:baseline;"><span style="color:var(--green);font-size:9px;flex-shrink:0;">◆</span><p class="body-text" style="max-width:360px">Working foundation in under 30 seconds</p></div>
     </div>
     <div style="margin-top:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.16s both">
       <span class="tag green">Under 30 seconds</span>
@@ -1427,70 +1578,65 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <!-- ══ 30 · MIGRATION PATH ══ dots -->
 <div class="slide slide-light slide-dots layout-vc" data-section="components">
-  <span class="overline green">The Migration Path</span>
-  <h2>A clear path, in milestones.</h2>
+  <span class="overline" style="color:var(--magenta);">The Migration Path</span>
+  <h2>A clear path, in <em>milestones</em>.</h2>
   <div class="timeline-h" style="margin-top:26px;">
     <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
       <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
-      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <div class="timeline-num" style="color:var(--green);">Phase 01</div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:linear-gradient(170deg, var(--bg2), var(--bg)); border:1px solid rgba(7,16,31,0.1);">
+        <div class="timeline-num" style="color:var(--accent);">Phase 01</div>
         <div class="timeline-title">Assess</div>
-        <p>Audit the incoming library, map components to TDS, and surface gaps &amp; API differences.</p>
-        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a week</span></div>
+                <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:linear-gradient(rgba(7,16,31,0.04), rgba(7,16,31,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); color:var(--faint); border:1px solid rgba(7,16,31,0.1);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a week</span></div>
       </div>
     </div>
     <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
       <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
-      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <div class="timeline-num" style="color:var(--green);">Phase 02</div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:linear-gradient(170deg, var(--bg2), var(--bg)); border:1px solid rgba(7,16,31,0.1);">
+        <div class="timeline-num" style="color:var(--accent);">Phase 02</div>
         <div class="timeline-title">Foundations</div>
-        <p>Migrate color &amp; typography tokens, then wire them into code.</p>
-        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+                <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:linear-gradient(rgba(7,16,31,0.04), rgba(7,16,31,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); color:var(--faint); border:1px solid rgba(7,16,31,0.1);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
       </div>
     </div>
     <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
       <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
-      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <div class="timeline-num" style="color:var(--green);">M1</div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:linear-gradient(170deg, var(--bg2), var(--bg)); border:1px solid rgba(7,16,31,0.1);">
+        <div class="timeline-num" style="color:var(--accent);">M1</div>
         <div class="timeline-title">Core components</div>
-        <p>Foundational set: buttons, inputs, checkboxes and radios.</p>
-        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+                <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:linear-gradient(rgba(7,16,31,0.04), rgba(7,16,31,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); color:var(--faint); border:1px solid rgba(7,16,31,0.1);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
       </div>
     </div>
     <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
       <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
-      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <div class="timeline-num" style="color:var(--green);">M2</div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:linear-gradient(170deg, var(--bg2), var(--bg)); border:1px solid rgba(7,16,31,0.1);">
+        <div class="timeline-num" style="color:var(--accent);">M2</div>
         <div class="timeline-title">Most-used batch</div>
-        <p>Expand coverage: dropdowns, date pickers and tabs.</p>
-        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
+                <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:linear-gradient(rgba(7,16,31,0.04), rgba(7,16,31,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); color:var(--faint); border:1px solid rgba(7,16,31,0.1);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ a sprint</span></div>
       </div>
     </div>
     <div class="timeline-item" style="flex:1 1 0; width:auto; min-width:0;">
       <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
-      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <div class="timeline-num" style="color:var(--green);">M3</div>
+      <div class="timeline-card" style="margin-top:22px; flex:1 1 auto; display:flex; flex-direction:column; background:linear-gradient(170deg, var(--bg2), var(--bg)); border:1px solid rgba(7,16,31,0.1);">
+        <div class="timeline-num" style="color:var(--accent);">M3</div>
         <div class="timeline-title">Complex components</div>
-        <p>Advanced components — some need a back-end refactor.</p>
-        <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:rgba(61,186,126,0.06); color:var(--green); border:1px solid rgba(61,186,126,0.12);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ half a quarter</span></div>
+                <div style="margin-top:auto; padding-top:14px;"><span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; letter-spacing:0.02em; padding:5px 11px; border-radius:999px; background:linear-gradient(rgba(7,16,31,0.04), rgba(7,16,31,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); color:var(--faint); border:1px solid rgba(7,16,31,0.1);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>~ half a quarter</span></div>
       </div>
     </div>
   </div>
   <div style="width:100%; display:grid; grid-template-columns:repeat(5,1fr); gap:24px; margin-top:16px;">
     <div style="grid-column:4 / 6; padding:0 10px;">
-      <div style="display:flex; align-items:center; gap:13px; padding:12px 18px; border-radius:14px; background:rgba(61,186,126,0.08); border:1px solid rgba(61,186,126,0.32);">
-        <span style="flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:rgba(61,186,126,0.22); color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+      <div style="display:flex; align-items:center; gap:13px; padding:12px 18px; border-radius:14px; background:linear-gradient(rgba(79,128,245,0.08), rgba(79,128,245,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.32);">
+        <span style="flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:rgba(79,128,245,0.18); color:var(--accent);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         <div style="min-width:0;">
-          <div style="font-size:11px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; color:var(--green); margin-bottom:3px;">Parallel track · from M2 &rarr;</div>
-          <div class="body-text" style="margin:0; font-size:13px; line-height:1.4;">All net-new features &amp; pages can start being built in TDS.</div>
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; color:var(--accent); margin-bottom:3px;">Parallel track · from M2 &rarr;</div>
+          <div style="margin:0; font-size:14px; font-weight:600; color:var(--text); line-height:1.4;">All net-new features start in TDS</div>
         </div>
       </div>
     </div>
   </div>
   <div style="margin-top:22px; display:flex; align-items:center; gap:10px; justify-content:center; flex-wrap:wrap;">
     <span class="tag">Optional</span>
-    <span class="tag green">AI navigation bar</span>
-    <span class="tag green">AI components</span>
+    <span class="tag purple">AI navigation bar</span>
+    <span class="tag purple">AI components</span>
     <span class="body-text" style="margin:0;">— can layer on at any stage.</span>
   </div>
 </div>
@@ -1498,15 +1644,15 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 31 · GOVERNANCE ══ dots -->
 <div id="slide-32" class="slide hero-left slide-light slide-grid" style="background-color:#eef2ff;" data-section="impact">
   <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;padding-left:48px;">
-    <span class="overline">Governance</span>
-    <h2>Breakouts weren't failures,<br>they were signals.</h2>
+    <span class="overline" style="color:var(--accent);">Governance</span>
+    <h2>Turning breakouts<br>into <em style="color:var(--accent);">contributions</em>.</h2>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:24px; width:fit-content; min-width:340px;">
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
-          <div class="card-label" style="margin-bottom:0;">Contribution Path</div>
+          <h3 style="font-size:17px;">Contribution path</h3>
         </div>
       </div>
       <div class="card">
@@ -1514,7 +1660,7 @@ html.presenter-mode #presenter-ui { display:flex; }
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
           </div>
-          <div class="card-label" style="margin-bottom:0;">Feedback Loop</div>
+          <h3 style="font-size:17px;">Feedback loop</h3>
         </div>
       </div>
       <div class="card">
@@ -1522,7 +1668,7 @@ html.presenter-mode #presenter-ui { display:flex; }
           <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           </div>
-          <div class="card-label" style="margin-bottom:0;">Non-blocking = adoption</div>
+          <h3 style="font-size:17px;">Non-blocking = adoption</h3>
         </div>
       </div>
     </div>
@@ -1535,7 +1681,7 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 30 · DOCS + SELF-SERVE ══ dots -->
-<div class="slide slide-dots layout-vc" style="background:#202020 !important;" data-section="impact">
+<div class="slide slide-dots layout-vc" data-section="impact">
   <span class="overline">Docs · Self-Serve · Education</span>
   <h2>Self-serving drives adoption.</h2>
   <div style="display:flex; gap:8px; margin-top:24px; align-items:center; justify-content:center;">
@@ -1562,7 +1708,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
     <!-- Right: image hero -->
     <div style="flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
-      <div class="uploaded-img-wrap" style="border-radius:12px;position:relative;z-index:2;" data-edit-bound="1"><img src="images/Docs+selfserve.png" style="max-width:936px;width:100%;height:auto;object-fit:contain;display:block;"></div>
+      <div class="uploaded-img-wrap" style="border-radius:8px;position:relative;z-index:2;" data-edit-bound="1"><img src="images/Docs+selfserve.png" style="max-width:840px;width:100%;height:auto;object-fit:contain;display:block;border-radius:8px;"></div>
     </div>
   </div>
   <div style="display:flex; align-items:center; gap:8px; margin-top:20px; flex-wrap:wrap; justify-content:center;">
@@ -1582,24 +1728,33 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 <!-- ══ 31 · ENG PARTNERSHIPS ══ grid -->
-<div class="slide slide-grid layout-vc" data-section="impact" style="background:#001810 !important;">
+<div class="slide slide-grid slide-light layout-vc" data-section="impact">
   <div style="display:flex; gap:16px; align-items:center;">
     <!-- Left: image hero -->
     <div style="flex:1.2; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:70%;border-radius:12px;overflow:hidden;" data-edit-bound="1"><img src="images/Handogg.jpg" style="width:100%;height:auto;object-fit:contain;display:block;"></div>
+      <div class="uploaded-img-wrap" style="width:75%;border-radius:18px;overflow:hidden;" data-edit-bound="1"><img src="images/Measurements.png" style="width:100%;height:auto;object-fit:contain;display:block;border-radius:18px;"></div>
     </div>
     <!-- Right: title + cards -->
-    <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
-      <span class="overline" style="color:var(--green);">Engineering Partnerships</span>
+    <div style="flex:1; display:flex; flex-direction:column; gap:10px;">
+      <span class="overline">Engineering Partnerships</span>
       <h2 style="margin-bottom:8px;">Figma : Storybook – 1:1</h2>
-      <div class="card" style="display:flex; align-items:center;">
-        <div class="card-label" style="margin-bottom:0;">◆ Shared nomenclature across design and engineering</div>
+      <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <h3 style="font-size:17px;">Shared nomenclature across design and engineering</h3>
       </div>
-      <div class="card" style="border-color:rgba(61,186,126,0.25); background:rgba(61,186,126,0.04); display:flex; align-items:center;">
-        <div class="card-label" style="margin-bottom:0;">◆ Reduced QA cycles</div>
+      <div class="card" style="border-color:rgba(124,90,245,0.25); background:linear-gradient(rgba(124,90,245,0.04), rgba(124,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 style="font-size:17px;">Reduced QA cycles</h3>
       </div>
-      <div class="card" style="border-color:rgba(61,186,126,0.25); background:rgba(61,186,126,0.04); display:flex; align-items:center;">
-        <div class="card-label" style="margin-bottom:0;">◆ Fewer Slack threads, faster merges</div>
+      <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center; gap:16px;">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        </div>
+        <h3 style="font-size:17px;">Fewer Slack threads, faster merges</h3>
       </div>
     </div>
   </div>
@@ -1607,17 +1762,17 @@ html.presenter-mode #presenter-ui { display:flex; }
 <!-- ══ 32 · AI WORKSTREAM ══ grid -->
 <div class="slide hero-right" style="background:#000000;" data-section="impact">
   <div class="hero-content">
-    <span class="overline" style="color:#22BF90;">AI Workstream</span>
+    <span class="overline">AI Workstream</span>
     <h2 style="background:linear-gradient(135deg,#22BF90,#2B9BD8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Exploring AI patterns</h2>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:24px;">
-      <div class="card" style="border-color:rgba(43,155,216,0.3); background:rgba(43,155,216,0.04);">
-        <div class="card-label" style="color:#2B9BD8;">◆ AI Principles defined</div>
+      <div class="card" style="border-color:rgba(43,155,216,0.3); background:linear-gradient(rgba(43,155,216,0.04), rgba(43,155,216,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center;">
+        <div class="card-label" style="color:#2B9BD8; margin-bottom:0;">◆ AI Principles defined</div>
       </div>
-      <div class="card" style="border-color:rgba(43,155,216,0.3); background:rgba(43,155,216,0.04);">
-        <div class="card-label" style="color:#2B9BD8;">◆ Same sparkle across tools</div>
+      <div class="card" style="border-color:rgba(43,155,216,0.3); background:linear-gradient(rgba(43,155,216,0.04), rgba(43,155,216,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center;">
+        <div class="card-label" style="color:#2B9BD8; margin-bottom:0;">◆ Same sparkle across tools</div>
       </div>
-      <div class="card" style="border-color:rgba(43,155,216,0.3); background:rgba(43,155,216,0.04);">
-        <div class="card-label" style="color:#2B9BD8;">◆ Same gradient color tokens</div>
+      <div class="card" style="border-color:rgba(43,155,216,0.3); background:linear-gradient(rgba(43,155,216,0.04), rgba(43,155,216,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); display:flex; align-items:center;">
+        <div class="card-label" style="color:#2B9BD8; margin-bottom:0;">◆ Same gradient color tokens</div>
       </div>
     </div>
   </div>
@@ -1630,10 +1785,10 @@ html.presenter-mode #presenter-ui { display:flex; }
 <div class="slide hero-right" data-section="impact">
   <div class="hero-content">
     <span class="overline">AI Workstream · Components</span>
-    <h2>5 AI components<br><span style="color:var(--text-dim);">shipped in 2026</span></h2>
+    <h2><span style="background:linear-gradient(135deg,#22BF90,#2B9BD8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">5 AI components</span><br>shipped in 2026</h2>
   </div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap img-fit" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" data-edit-bound="1"><img src="images/ai2.png" style="width:100%;height:100%;object-fit:cover;"></div>
+    <div class="uploaded-img-wrap" style="position:absolute;inset:0;background:transparent;display:flex;align-items:center;justify-content:center;overflow:visible;border-radius:0;" data-edit-bound="1"><img src="images/ai2.png" style="width:75%;height:75%;object-fit:contain;display:block;"></div>
   </div>
 </div>
 
@@ -1649,27 +1804,27 @@ html.presenter-mode #presenter-ui { display:flex; }
       <div class="card-label" style="color:var(--accent);">Cohesion</div>
       <h3>A unified visual language</h3>
     </div>
-    <div class="card" style="border-color:rgba(124,90,245,0.25); background:rgba(124,90,245,0.04);">
+    <div class="card" style="border-color:rgba(124,90,245,0.25); background:linear-gradient(rgba(124,90,245,0.04), rgba(124,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </div>
       <div class="card-label" style="color:var(--accent2);">Velocity</div>
       <h3>Faster onboarding for designers &amp; devs</h3>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
-      <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
+      <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
       </div>
-      <div class="card-label" style="color:var(--red);">Most importantly</div>
+      <div class="card-label" style="color:var(--magenta);">Most importantly</div>
       <h3>Reduced design and development cost</h3>
     </div>
   </div>
 </div>
 <!-- ══ 35 · HIGHLIGHTS + OUTCOMES ══ grid -->
-<div class="slide slide-grid layout-vc" data-section="impact" style="background:#1F1F21 !important;">
-  <span class="overline">&nbsp;2026 Recap</span>
+<div class="slide slide-grid layout-vc" data-section="impact">
+  <span class="overline">2026 Recap</span>
   <h2 style="margin-bottom:0; margin-top:2px;">Highlights + outcomes</h2>
-  <div style="display:flex; gap:16px; margin-top:0; align-items:center;">
+  <div style="display:flex; gap:16px; margin-top:30px; align-items:center; max-width:1400px; margin-left:auto; margin-right:auto; width:100%;">
     <!-- Left: metric cards -->
     <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:10px; align-content:start;">
       <div class="metric-card">
@@ -1709,9 +1864,71 @@ html.presenter-mode #presenter-ui { display:flex; }
         <div class="card-label">nodes reduced, speed doubled</div>
       </div>
     </div>
-    <!-- Right: hero image -->
-    <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="height:764px;width:auto;max-width:100%;border-radius:12px;overflow:hidden;" data-edit-bound="1"><img src="images/Outcomes.png" style="height:100%;width:auto;object-fit:contain;display:block;"></div>
+    <!-- Right: recreated charts -->
+    <div style="flex:1; max-width:700px; align-self:stretch; display:flex; flex-direction:column; gap:14px;">
+      <div style="position:relative; overflow:hidden; flex:1; display:flex; flex-direction:column; justify-content:center; padding:14px 18px 10px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:18px; border:1px solid var(--line);">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(124,90,245,0.9),transparent);"></span>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px;">
+          <div class="card-label" style="margin-bottom:0; color:var(--accent2);">TDS Figma library layer count</div>
+          <span style="font-size:10.5px; color:var(--faint);">lower = faster library</span>
+        </div>
+        <svg viewBox="0 0 560 150" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lcLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#7c5af5"/><stop offset="1" stop-color="#c55af5"/>
+            </linearGradient>
+          </defs>
+          <g stroke="rgba(122,144,168,0.16)" stroke-width="1">
+            <line x1="46" y1="12" x2="548" y2="12"/><line x1="46" y1="36" x2="548" y2="36"/>
+            <line x1="46" y1="60" x2="548" y2="60"/><line x1="46" y1="84" x2="548" y2="84"/>
+            <line x1="46" y1="108" x2="548" y2="108"/><line x1="46" y1="132" x2="548" y2="132"/>
+          </g>
+          <g font-size="9.5" fill="var(--faint)" text-anchor="end">
+            <text x="40" y="15">500k</text><text x="40" y="39">400k</text><text x="40" y="63">300k</text>
+            <text x="40" y="87">200k</text><text x="40" y="111">100k</text>
+          </g>
+          <g font-size="9.5" fill="var(--faint)" text-anchor="middle">
+            <text x="46" y="148">6/24</text><text x="140" y="148">9/24</text><text x="234" y="148">12/24</text>
+            <text x="328" y="148">3/25</text><text x="422" y="148">6/25</text><text x="516" y="148">9/25</text>
+          </g>
+          <polyline points="234,14 265,12 297,62 328,53 360,52 391,49 422,62 454,84 485,85 516,83 548,84" fill="none" stroke="url(#lcLine)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <g fill="#0d1a2e" stroke="#9d7bf5" stroke-width="2">
+            <circle cx="234" cy="14" r="3"/><circle cx="265" cy="12" r="3"/><circle cx="297" cy="62" r="3"/>
+            <circle cx="328" cy="53" r="3"/><circle cx="360" cy="52" r="3"/><circle cx="391" cy="49" r="3"/>
+            <circle cx="422" cy="62" r="3"/><circle cx="454" cy="84" r="3"/><circle cx="485" cy="85" r="3"/>
+            <circle cx="516" cy="83" r="3"/><circle cx="548" cy="84" r="3"/>
+          </g>
+        </svg>
+      </div>
+      <div style="position:relative; overflow:hidden; flex:1; display:flex; flex-direction:column; justify-content:center; padding:14px 18px 10px; background:linear-gradient(170deg,var(--bg2),var(--bg)); border-radius:18px; border:1px solid var(--line);">
+        <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(124,90,245,0.9),transparent);"></span>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px;">
+          <div class="card-label" style="margin-bottom:0; color:var(--accent);">TDS adoption · share of total inserts</div>
+          <span style="font-size:10.5px; color:var(--faint);">projection to Dec '26</span>
+        </div>
+        <svg viewBox="0 0 560 150" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(122,144,168,0.16)" stroke-width="1">
+            <line x1="46" y1="36" x2="548" y2="36"/>
+            <line x1="46" y1="84" x2="548" y2="84"/>
+            <line x1="46" y1="132" x2="548" y2="132"/>
+          </g>
+          <g font-size="9.5" fill="var(--faint)" text-anchor="end">
+            <text x="40" y="39">20%</text><text x="40" y="87">10%</text><text x="40" y="135">0%</text>
+          </g>
+          <path d="M46,98.4 L69.9,92.6 L93.8,87.4 L117.7,82.6 L141.6,77.8 L165.5,73.4 L189.4,69.1 L213.3,65.3 L237.2,61.9 L261.1,58.6 L285,55.7 L308.9,53.3 L332.8,51.4 L356.7,49.9 L380.6,48.7 L404.6,48 L404.6,132 L46,132 Z" fill="rgba(79,128,245,0.16)"/>
+          <path d="M46,98.4 L69.9,92.6 L93.8,87.4 L117.7,82.6 L141.6,77.8 L165.5,73.4 L189.4,69.1 L213.3,65.3 L237.2,61.9 L261.1,58.6 L285,55.7 L308.9,53.3 L332.8,51.4 L356.7,49.9 L380.6,48.7 L404.6,48" fill="none" stroke="#4f80f5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M404.6,48 L535,23.5" fill="none" stroke="#4f80f5" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"/>
+          <circle cx="404.6" cy="48" r="4" fill="#4f80f5" stroke="#0d1a2e" stroke-width="1.5"/>
+          <circle cx="537" cy="23" r="5.5" fill="none" stroke="#4f80f5" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="404.6" y="34" font-size="11" font-weight="700" fill="var(--text)" text-anchor="middle">17.5%</text>
+          <text x="548" y="12" font-size="11" font-weight="700" fill="#7ea2f8" text-anchor="end">~23%</text>
+          <g font-size="9.5" text-anchor="middle">
+            <text x="52" y="148" fill="var(--faint)">Mar '25</text>
+            <text x="404.6" y="148" fill="var(--text)" font-weight="700">Jun '26</text>
+            <text x="530" y="148" fill="var(--faint)">Dec '26</text>
+          </g>
+        </svg>
+      </div>
     </div>
   </div>
 </div>
@@ -1721,16 +1938,16 @@ html.presenter-mode #presenter-ui { display:flex; }
   <span class="overline">Challenges &amp; what's next</span>
   <h2>Building the system —<br>and its next chapter.</h2>
   <div class="grid-2" style="margin-top:28px; align-items:start;">
-    <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
-      <div class="card-label" style="color:var(--red);">Challenges</div>
+    <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
+      <div class="card-label" style="color:var(--magenta);">Challenges</div>
       <ul class="bullet-list" style="margin-top:10px;">
         <li>Building a <strong>0 → 1</strong> new way of working</li>
-        <li>Earning trust &amp; respect across teams</li>
+        <li>Earning <strong>trust &amp; respect</strong> across teams</li>
         <li>Migrations need <strong>dedicated focus</strong> &amp; resourcing</li>
-        <li>Balancing creativity vs. the rigidity of a system</li>
+        <li>Balancing <strong>creativity vs. rigidity</strong></li>
       </ul>
     </div>
-    <div class="card" style="border-color:rgba(61,186,126,0.25); background:rgba(61,186,126,0.04);">
+    <div class="card" style="border-color:rgba(61,186,126,0.25); background:linear-gradient(rgba(61,186,126,0.04), rgba(61,186,126,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div class="card-label" style="color:var(--green);">What's next</div>
       <ul class="bullet-list green" style="margin-top:10px;">
         <li><strong>AI pilot</strong>: accelerate design &amp; build</li>
@@ -1747,44 +1964,43 @@ html.presenter-mode #presenter-ui { display:flex; }
   <span class="overline">Personal Takeaways</span>
   <h2>What I'd carry into<br>the next system.</h2>
   <div class="grid-3" style="margin-top:32px;">
-    <div class="card" style="border-color:rgba(79,128,245,0.25); background:rgba(79,128,245,0.04);">
+    <div class="card" style="border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       </div>
       <div class="card-label" style="color:var(--accent);">Takeaway 01</div>
       <h3>Governance matters more than components</h3>
     </div>
-    <div class="card" style="border-color:rgba(100,50,220,0.35); background:rgba(100,50,220,0.08);">
-      <div style="width:34px;height:34px;border-radius:9px;background:rgba(100,50,220,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7832DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    <div class="card" style="border-color:rgba(124,90,245,0.25); background:linear-gradient(rgba(124,90,245,0.04), rgba(124,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
+      <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       </div>
-      <div class="card-label" style="color:#7832DC;">Takeaway 02</div>
+      <div class="card-label" style="color:var(--violet);">Takeaway 02</div>
       <h3>Support + self-service drives adoption</h3>
     </div>
-    <div class="card" style="border-color:rgba(255,99,50,0.25); background:rgba(255,99,50,0.04);">
-      <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,99,50,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <div class="card" style="border-color:rgba(197,90,245,0.25); background:linear-gradient(rgba(197,90,245,0.04), rgba(197,90,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
+      <div style="width:34px;height:34px;border-radius:9px;background:rgba(197,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
-      <div class="card-label" style="color:var(--red);">Takeaway 03</div>
+      <div class="card-label" style="color:var(--magenta);">Takeaway 03</div>
       <h3>Systems succeed when teams trust them</h3>
     </div>
   </div>
 </div>
 
 <!-- ══ 37 · THANK YOU ══ pure -->
-<div class="slide slide-center" data-section="impact" style="overflow:hidden;">
+<div class="slide slide-center slide-light" data-section="impact" style="overflow:hidden;">
+  <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s; z-index: 0;" width="1920" height="1110"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
-  <div style="max-width:560px; position:relative; z-index:1;">
-    <span class="overline">Thank you</span>
-    <h1 style="font-size:clamp(48px,7vw,88px);">Questions</h1>
-    <div class="divider" style="margin:24px auto;"></div>
-    <p class="subtitle" style="max-width:100%;">
-      dariofidanza.com
-    </p>
-    <div style="margin-top:36px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center;">
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
-      <span style="font-size:24px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
+  <div style="max-width:640px; position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;">
+    <span class="overline" style="margin-bottom:22px;">Thank you</span>
+    <h1 style="font-size:clamp(52px,7.4vw,96px);"><span class="grad">Questions</span></h1>
+    <div class="divider" style="margin:28px auto;"></div>
+    <p style="margin-top:30px; font-size:14px; font-weight:400; letter-spacing:0.04em; color:var(--faint);">dariofidanza.com</p>
+    <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center; color:var(--faint);">
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
     </div>
   </div>
 </div>
@@ -1813,6 +2029,7 @@ function updateNav() {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
   document.getElementById('counter').textContent = `${current+1} / ${total}`;
+  document.body.classList.toggle('on-light', slides[current].classList.contains('slide-light'));
   document.getElementById('prevBtn').disabled = current === 0;
   document.getElementById('nextBtn').disabled = current === total-1;
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
@@ -2008,6 +2225,7 @@ updateNav();
 function toggleTheme() {
   const isLight = document.documentElement.classList.toggle('light');
   localStorage.setItem('deck-theme', isLight ? 'light' : 'dark');
+  window.mfFlowRender && window.mfFlowRender();
 }
 if (localStorage.getItem('deck-theme') === 'light') {
   document.documentElement.classList.add('light');
@@ -2260,7 +2478,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (function(){
   const cvs = document.createElement('canvas');
   cvs.id = 'dot-wave-canvas';
-  cvs.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease;';
+  cvs.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1s ease;';
   document.body.appendChild(cvs);
   const ctx = cvs.getContext('2d');
   let raf = null, t = 0, running = false;
@@ -2344,7 +2562,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if(false)(function(){
   const cvs = document.createElement('canvas');
   cvs.id = 'grid-wave-canvas';
-  cvs.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1s ease;';
+  cvs.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1s ease;';
   document.body.appendChild(cvs);
   const ctx = cvs.getContext('2d');
   let raf = null, t = 0, running = false;
@@ -2531,10 +2749,44 @@ if(false)(function(){
 
 
 <div id="tds-nav-hint" style="position: fixed; bottom: 20px; left: 75%; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255, 255, 255, 0.28); pointer-events: none; white-space: nowrap; transition: opacity 0.6s; opacity: 0;">
-  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">←</span>
-  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);font-size:10px;line-height:1;">→</span>
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.06)), linear-gradient(170deg,var(--bg2),var(--bg));font-size:10px;line-height:1;">←</span>
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.18);background:linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.06)), linear-gradient(170deg,var(--bg2),var(--bg));font-size:10px;line-height:1;">→</span>
   <span>navigate</span>
 </div>
 <script src="../shared/nav.js"></script>
+<script>
+/* Mock F flow-lines background — ported from dariofidanza.com; dark = NOT html.light */
+(function () {
+  const canvas = document.getElementById('flow');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize(){ canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render(){
+    ctx.clearRect(0,0,w,h);
+    const dark = !document.documentElement.classList.contains('light') && !document.body.classList.contains('on-light');
+    for (let i=0;i<LINES;i++){
+      const yBase=(i/(LINES-1))*h*1.1 - h*0.05, p=i/LINES;
+      const r=dark?Math.round(79+p*118):Math.round(50+p*100);
+      const g=dark?Math.round(128-p*38):Math.round(90-p*30);
+      const b=dark?245:215;
+      const alpha=(0.09+0.16*Math.sin(p*Math.PI))*(i%4===0?1.6:1)*(dark?1:0.55);
+      ctx.beginPath();
+      for(let x=0;x<=w;x+=8){
+        const y=yBase+Math.sin(x*0.003+t*0.7+i*0.45)*34+Math.sin(x*0.0011-t*0.4+i*0.8)*52+Math.sin(x*0.006+t*1.1+i*0.2)*10;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth=i%4===0?1.5:1.1; ctx.stroke();
+    }
+  }
+  function loop(){ t+=0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize); resize();
+  if (reduce){ render(); } else { requestAnimationFrame(loop); }
+  window.mfFlowRender = render;
+})();
+</script>
   <script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body></html>
