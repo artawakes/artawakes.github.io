@@ -17,6 +17,16 @@
     --glass:rgba(13,26,46,.7);
     --fade:rgba(7,16,31,.85);
   }
+  html.light{
+    --bg:#f4f6fd; --bg2:#eaecf8; --bg3:#dfe5f5;
+    --text:#07101f; --dim:#3a5070; --faint:#6b80a0;
+    --line:rgba(7,16,31,.12);
+    --glass:rgba(255,255,255,.7);
+    --fade:rgba(244,246,253,.85);
+  }
+  html.light .deck--muted:hover { border-color: rgba(7,16,31,.28); }
+  html.light .deck--muted .glow { background: linear-gradient(90deg, transparent, rgba(7,16,31,.35), transparent); }
+  html.light .deck--muted .deck-icon svg { stroke: #6b80a0; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -70,6 +80,22 @@
     color: var(--dim); font-size: 16px; text-decoration: none; transition: .2s;
   }
   .back:hover { color: var(--text); background: var(--bg3); }
+  .theme-btn {
+    margin-left: auto;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--glass);
+    color: var(--dim);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
+  }
+  .theme-btn:hover { color: var(--text); border-color: rgba(124,90,245,.4); }
+  .theme-btn .tb-moon { display: none; }
+  html.light .theme-btn .tb-sun { display: none; }
+  html.light .theme-btn .tb-moon { display: block; }
   .wordmark {
     display: inline-flex; align-items: center;
     font-family: 'Hepta Slab', serif;
@@ -227,6 +253,7 @@
 <nav>
   <a class="back" href="https://dariofidanza.com" aria-label="Back to dariofidanza.com"><i class="bi bi-arrow-left"></i></a>
   <a class="wordmark" href="https://dariofidanza.com"><span><b>Darío</b>&nbsp;Fidanza</span></a>
+  <button class="theme-btn" id="themeBtn" title="Toggle light/dark" aria-label="Toggle light/dark mode"><svg class="tb-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="tb-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
 </nav>
 
 <div class="wrap">
@@ -340,7 +367,17 @@
 </footer>
 
 <script>
-// ── Flowing contour lines, ported from dariofidanza.com (dark-only page) ──
+// ── Theme toggle (landing page only; decks manage their own per-slide modes) ──
+(function () {
+  if (localStorage.getItem('presso-theme') === 'light') document.documentElement.classList.add('light');
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light');
+    localStorage.setItem('presso-theme', isLight ? 'light' : 'dark');
+  });
+})();
+</script>
+<script>
+// ── Flowing contour lines, ported from dariofidanza.com ──
 (function () {
   const canvas = document.getElementById('flow');
   const ctx = canvas.getContext('2d');
@@ -364,7 +401,8 @@
           + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = `rgba(${r},${g},245,${alpha})`;
+      const lightMode = document.documentElement.classList.contains('light');
+      ctx.strokeStyle = `rgba(${r},${g},245,${lightMode ? alpha * 0.55 : alpha})`;
       ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
       ctx.stroke();
     }
