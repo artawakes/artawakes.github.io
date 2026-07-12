@@ -97,17 +97,6 @@ nav::before{ content:""; position:absolute; left:0; right:0; top:0; bottom:-64px
 }
 @property --scan { syntax: '<percentage>'; inherits: false; initial-value: -10%; }
 
-/* Slide 34: grid scan overlay confined to the image */
-.img-grid-scan { content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
-  background-image: linear-gradient(rgba(50,90,210,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.16) 1px, transparent 1px);
-  background-size: 18px 18px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.7) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.7) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
-  -webkit-mask-composite: source-over;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.7) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.7) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
-  mask-composite: add;
-  animation: gridScan 8s ease-in-out infinite;
-}
-
 /* COVER GLOW */
 .slide-cover::after { content: ''; position: absolute; top: 10%; right: 4%; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(79,128,245,0.18) 0%, transparent 70%); animation: coverGlowPulse 6s ease-in-out infinite; pointer-events: none; z-index: 0; }
 
@@ -522,6 +511,7 @@ html.light .timeline > .timeline-item, .slide-light .timeline > .timeline-item {
 #slide-11 .hero-img { display:flex !important; align-items:center !important; justify-content:center !important; background:transparent !important; padding-right:60px !important; }
 #slide-11 .hero-img img { position:relative !important; inset:auto !important; width:auto !important; height:auto !important; max-height:700px !important; max-width:908px !important; object-fit:contain !important; border-radius:27px !important; filter:grayscale(1) !important; display:block !important; border:2px solid rgba(7,16,31,0.35) !important; box-shadow:0 16px 48px rgba(0,0,0,0.28) !important; }
 #slide-32 { background-image: linear-gradient(135deg, #ffffff 40%, #dde6ff 100%) !important; background-color: #eef2ff !important; }
+#slide-34.slide-grid::after { z-index: 5; }
 #slide-32::after { content: '' !important; position: absolute !important; inset: 0 !important; z-index: 5 !important; animation: gridScan 8s ease-in-out infinite !important; background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; background-size: 18px 18px !important; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; -webkit-mask-composite: source-over !important; mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%) !important; mask-composite: add !important; pointer-events: none !important; }
 #slide-32 .hero-img { flex: 0 0 25% !important; max-width: 25% !important; overflow: hidden !important; z-index: 10 !important; }
 
@@ -1738,11 +1728,11 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 <!-- ══ 31 · ENG PARTNERSHIPS ══ grid -->
-<div class="slide slide-grid slide-light layout-vc" data-section="impact">
+<div id="slide-34" class="slide slide-grid slide-light layout-vc" data-section="impact">
   <div style="display:flex; gap:16px; align-items:center;">
     <!-- Left: image hero -->
     <div style="flex:1.33; display:flex; align-items:center; justify-content:center;">
-      <div class="uploaded-img-wrap" style="width:100%;border-radius:18px;overflow:hidden;position:relative;" data-edit-bound="1"><img src="images/Measuments3.png" style="width:100%;height:auto;object-fit:contain;display:block;border-radius:18px;"><div class="img-grid-scan"></div></div>
+      <div class="uploaded-img-wrap" style="width:100%;border-radius:18px;overflow:hidden;" data-edit-bound="1"><img src="images/Measuments3.png" style="width:100%;height:auto;object-fit:contain;display:block;border-radius:18px;"></div>
     </div>
     <!-- Right: title + cards -->
     <div style="flex:1; display:flex; flex-direction:column; gap:10px;">
