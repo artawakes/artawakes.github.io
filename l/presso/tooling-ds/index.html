@@ -46,7 +46,7 @@ nav {
 .nav-hint { display: none !important; }
 
 /* COVER SLIDE — white full-bleed left half */
-#slide-01 { padding: 0 !important; flex-direction: row !important; background: linear-gradient(to right, #ffffff calc(50% - 30px), var(--bg) calc(50% - 30px)) !important; }
+#slide-01 { padding: 0 !important; flex-direction: row !important; background: var(--bg) !important; }
 #slide-01 .hero-img { width: calc(50% - 30px) !important; max-width: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: hidden !important; flex-shrink: 0 !important; padding: 60px 40px !important; }
 #slide-01 .hero-content { flex: 1 !important; align-self: stretch !important; padding: 0 60px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
 
@@ -716,7 +716,46 @@ html.presenter-mode #presenter-ui { display:flex; }
   <canvas id="cover-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;" width="1920" height="1050"></canvas>
   <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <div class="hero-img">
-    <div class="uploaded-img-wrap" style="display:flex;overflow:hidden;" data-edit-bound="1"><img style="max-width:90%;max-height:933px;width:auto;height:auto;display:block;mix-blend-mode:screen;" src="cover-tds.png"></div>
+    <style>
+      #slide-01 .hero-img { align-self: stretch !important; }
+      #slide-01 .cover-flow { display:flex; flex-direction:column; align-items:center; gap:0; }
+      #slide-01 .cf-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); }
+      #slide-01 .cf-tile { display:block; border-radius:12px; box-shadow:0 12px 32px rgba(0,0,0,0.45); }
+      #slide-01 .cf-i { opacity:0; animation: fadeInUp 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+      #slide-01 .cf-i:nth-child(1) { animation-delay:0.10s; }
+      #slide-01 .cf-i:nth-child(2) { animation-delay:0.22s; }
+      #slide-01 .cf-i:nth-child(3) { animation-delay:0.34s; }
+      #slide-01 .cf-i:nth-child(4) { animation-delay:0.46s; }
+      #slide-01 .cf-i:nth-child(5) { animation-delay:0.58s; }
+      #slide-01 .cf-i:nth-child(6) { animation-delay:0.70s; }
+      #slide-01 .cf-i:nth-child(7) { animation-delay:0.82s; }
+      #slide-01 .cover-flow svg line, #slide-01 .cover-flow svg path { stroke:rgba(240,244,255,0.30); stroke-width:1.5; fill:none; }
+      #slide-01 .cover-flow svg polygon { fill:rgba(240,244,255,0.38); }
+      #slide-01 .cf-grid { border:1px solid var(--border); background:var(--surface); border-radius:18px; padding:22px 24px; display:flex; flex-direction:column; gap:14px; align-items:center; }
+      #slide-01 .cf-row { display:flex; gap:16px; align-items:center; justify-content:center; }
+    </style>
+    <div class="cover-flow" style="position:relative; z-index:1;">
+      <div class="cf-i cf-label" style="margin-bottom:10px;">Global Libraries</div>
+      <img class="cf-i cf-tile" src="images/cover-tiles/pantry.png" alt="Pantry assets" style="height:64px; width:auto;">
+      <svg class="cf-i" width="20" height="48" viewBox="0 0 20 48"><line x1="10" y1="2" x2="10" y2="40"/><polygon points="10,48 4,38 16,38"/></svg>
+      <img class="cf-i cf-tile" src="images/cover-tiles/toolingds.png" alt="tooling ds" style="height:86px; width:auto; box-shadow:0 16px 42px rgba(79,128,245,0.28);">
+      <svg class="cf-i" width="360" height="62" viewBox="0 0 360 62"><path d="M180,2 V18 C180,36 112,30 112,48 V52"/><path d="M180,18 C180,36 248,30 248,48 V52"/><polygon points="112,60 106,50 118,50"/><polygon points="248,60 242,50 254,50"/></svg>
+      <div class="cf-i cf-label" style="margin:8px 0 10px;">Tooling Platforms</div>
+      <div class="cf-i cf-grid">
+        <div class="cf-row">
+          <img class="cf-tile" src="images/cover-tiles/ipp.png" alt="IPP dashboard" style="height:60px; width:auto;">
+          <img class="cf-tile" src="images/cover-tiles/ads.png" alt="Ads platform" style="height:60px; width:auto;">
+        </div>
+        <div class="cf-row">
+          <img class="cf-tile" src="images/cover-tiles/caper.png" alt="Caper tooling" style="height:55px; width:auto;">
+          <img class="cf-tile" src="images/cover-tiles/foodstorm.png" alt="Foodstorm" style="height:55px; width:auto;">
+        </div>
+        <div class="cf-row" style="opacity:0.45;">
+          <img class="cf-tile" src="images/cover-tiles/eversight.png" alt="Eversight, upcoming" style="height:46px; width:auto; box-shadow:none;">
+          <img class="cf-tile" src="images/cover-tiles/whyndshop.png" alt="Whyndshop, upcoming" style="height:46px; width:auto; box-shadow:none;">
+        </div>
+      </div>
+    </div>
   </div><!-- /hero-img -->
   <div class="hero-content" style="display:flex; flex-direction:column; justify-content:center; padding-top:0; padding-bottom:0; position:relative; z-index:1;">
     <span class="overline" style="color:#ffffff;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;display:inline-block;"></span>Deep Dive</span>
