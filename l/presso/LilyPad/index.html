@@ -190,7 +190,8 @@ body.notes-open .hint { display: none; }
 <nav>
   <a class="nav-logo" href="#"><b>Darío</b>&nbsp;Fidanza</a>
   <div class="nav-pills">
-    <button class="nav-btn active" onclick="goToSection('context')">Context</button>
+    <button class="nav-btn active" onclick="goToSection('origin')">Origin</button>
+    <button class="nav-btn" onclick="goToSection('context')">Context</button>
     <button class="nav-btn" onclick="goToSection('solution')">Solution</button>
     <button class="nav-btn" onclick="goToSection('progress')">Progress</button>
     <button class="nav-btn" onclick="goToSection('next')">Next</button>
@@ -209,7 +210,7 @@ body.notes-open .hint { display: none; }
 <div id="slides">
 
 <!-- ══ 01 · COVER ══ -->
-<div id="slide-01" class="slide slide-cover slide-light active" data-section="context" style="flex-direction:row;padding:0!important;">
+<div id="slide-01" class="slide slide-cover slide-light active" data-section="origin" style="flex-direction:row;padding:0!important;">
   <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.16) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
   <!-- Left: stack diagram -->
   <div style="flex:0 0 46%;display:flex;align-items:center;justify-content:center;padding:72px 24px 48px 72px;position:relative;z-index:1;">
@@ -253,7 +254,147 @@ body.notes-open .hint { display: none; }
   </div>
 </div>
 
-<!-- ══ 02 · WHAT THIS IS ══ -->
+<!-- ══ 02 · THE WEEKEND EXPERIMENT ══ -->
+<div class="slide layout-vc" data-section="origin">
+  <div style="width:100%;display:flex;gap:60px;align-items:flex-start;">
+    <div style="flex:1;min-width:0;">
+      <span class="overline">Origin</span>
+      <h2>What if I built a design system from nothing, with AI, in a weekend?</h2>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.7;margin-top:16px;max-width:480px;">I used <strong style="color:var(--text);">TinyRoots.ai</strong> — a personal side project — as the test case. Brand, tokens, data schema, components, wireframes, and real pages. Spec first, tokens before wireframes, components before pages.</p>
+      <div style="display:flex;gap:28px;margin-top:28px;align-items:stretch;">
+        <div class="stat-callout"><div class="stat-number" style="font-size:clamp(36px,4vw,56px);color:var(--accent);">27</div><div class="stat-label">Components</div></div>
+        <div style="width:1px;background:var(--line);"></div>
+        <div class="stat-callout"><div class="stat-number" style="font-size:clamp(36px,4vw,56px);color:var(--accent2);">12</div><div class="stat-label">Screens</div></div>
+        <div style="width:1px;background:var(--line);"></div>
+        <div class="stat-callout"><div class="stat-number" style="font-size:clamp(36px,4vw,56px);color:var(--green);">2</div><div class="stat-label">AI tools</div></div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;">
+      <div style="padding:18px 20px;border-radius:14px;background:linear-gradient(rgba(255,99,50,0.04),rgba(255,99,50,0.04)),linear-gradient(170deg,var(--bg2),var(--bg));border:1px solid rgba(255,99,50,0.18);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);margin-bottom:10px;">What I expected to find</div>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;">Designers on socials were raving that Claude was amazing for design systems — but they were starting from scratch, prompting into the void. No foundation. No contract.</p>
+      </div>
+      <div style="padding:18px 20px;border-radius:14px;background:linear-gradient(rgba(61,186,126,0.04),rgba(61,186,126,0.04)),linear-gradient(170deg,var(--bg2),var(--bg));border:1px solid rgba(61,186,126,0.2);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">What I actually found</div>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.6;">When the foundation was solid — spec before wireframes, tokens before components — the AI didn't guess. It built correctly. One token change cascaded from the library to every screen to the live site. <strong style="color:var(--text);">Construction became review.</strong></p>
+      </div>
+      <div style="padding:14px 20px;border-radius:14px;background:linear-gradient(rgba(79,128,245,0.06),rgba(79,128,245,0.06)),linear-gradient(170deg,var(--bg2),var(--bg));border:1px solid rgba(79,128,245,0.2);">
+        <p style="font-size:13px;color:var(--text-dim);font-style:italic;line-height:1.55;">"The AI executes. I architect."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 · WHAT THE CODE TAUGHT ME ══ -->
+<div class="slide slide-grid layout-vc" data-section="origin">
+  <div style="width:100%;">
+    <span class="overline">The realization</span>
+    <h2>The source of truth isn't moving.<br>We're <em>untangling</em> it.</h2>
+    <p style="font-size:14px;color:var(--text-dim);line-height:1.7;margin-top:14px;max-width:600px;">The mock was never really the source of truth. It collapsed intent, artifact, and truth into one file — and every handoff was lossy because of it.</p>
+    <div style="display:flex;gap:0;margin-top:28px;align-items:stretch;position:relative;">
+      <!-- Connecting line -->
+      <div style="position:absolute;top:50%;left:calc(33.3% - 1px);right:calc(33.3% - 1px);height:1.5px;background:linear-gradient(90deg,rgba(79,128,245,0.4),rgba(124,90,245,0.4),rgba(61,186,126,0.4));z-index:0;transform:translateY(-50%);pointer-events:none;"></div>
+      <!-- Intent -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 10px;position:relative;z-index:1;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(124,90,245,0.12);border:1.5px solid rgba(124,90,245,0.35);display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Hepta Slab',serif;font-size:17px;font-weight:400;color:var(--text);margin-bottom:5px;">Intent</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;">Lo-fi · flows · goals</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.55;max-width:180px;">What it should be. True by aim. Figma becomes a lens here — for discussion, not the law.</p>
+        </div>
+      </div>
+      <!-- Contract -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 10px;position:relative;z-index:1;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(79,128,245,0.12);border:1.5px solid rgba(79,128,245,0.45);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(79,128,245,0.2);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Hepta Slab',serif;font-size:17px;font-weight:400;color:var(--text);margin-bottom:5px;">Contract</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Tokens · specs · rules · enforced</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.55;max-width:200px;">Intent made precise enough that code cannot quietly drift from it. Agents build from this. The missing piece.</p>
+        </div>
+        <div style="margin-top:4px;padding:8px 14px;border-radius:8px;background:rgba(79,128,245,0.1);border:1px solid rgba(79,128,245,0.25);">
+          <p style="font-size:11px;color:var(--accent);text-align:center;font-style:italic;line-height:1.5;">"A design system that exists only as a drawing is a suggestion, not a rule."</p>
+        </div>
+      </div>
+      <!-- Code -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 10px;position:relative;z-index:1;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(61,186,126,0.12);border:1.5px solid rgba(61,186,126,0.35);display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Hepta Slab',serif;font-size:17px;font-weight:400;color:var(--text);margin-bottom:5px;">Code <span style="font-size:12px;color:var(--green);">★</span></div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">The real truth · what ships</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.55;max-width:180px;">True by existence. One token change cascades from the library to every screen to the live site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 · FROM EXPERIMENT TO PILOT ══ -->
+<div class="slide layout-vc" data-section="origin">
+  <div style="width:100%;">
+    <span class="overline">How we got here</span>
+    <h2>From a weekend experiment to an approved pilot</h2>
+    <div style="display:flex;gap:0;margin-top:32px;align-items:stretch;position:relative;">
+      <!-- spine -->
+      <div style="position:absolute;top:28px;left:28px;right:28px;height:1.5px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--magenta),var(--green));opacity:0.35;z-index:0;"></div>
+      <!-- Step 1 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;padding:0 8px;">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),var(--bg));border:1.5px solid rgba(79,128,245,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(79,128,245,0.15);margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="card" style="width:100%;padding:16px;text-align:left;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:7px;">Weekend</div>
+          <h3 style="font-size:14px;font-family:'Hepta Slab',serif;font-weight:400;line-height:1.3;">TinyRoots.ai</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.5;">Proof of concept. 27 components, 12 screens. The cascade worked end to end.</p>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;padding:0 8px;">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),var(--bg));border:1.5px solid rgba(124,90,245,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(124,90,245,0.15);margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="card" style="width:100%;padding:16px;text-align:left;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:7px;">Team preso</div>
+          <h3 style="font-size:14px;font-family:'Hepta Slab',serif;font-weight:400;line-height:1.3;">Showed the team the process</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.5;">Walked through TinyRoots live. They were hooked. Validated the experiment was worth pursuing inside TDS.</p>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;padding:0 8px;">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),var(--bg));border:1.5px solid rgba(197,90,245,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(197,90,245,0.15);margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="card" style="width:100%;padding:16px;text-align:left;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--magenta);margin-bottom:7px;">POV doc</div>
+          <h3 style="font-size:14px;font-family:'Hepta Slab',serif;font-weight:400;line-height:1.3;">Articulated the philosophy</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.5;">Intent → contract → code. Made the case in writing. Convinced my manager to go deeper.</p>
+        </div>
+      </div>
+      <!-- Step 4 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;padding:0 8px;">
+        <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),var(--bg));border:1.5px solid rgba(61,186,126,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(61,186,126,0.2);margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="card" style="width:100%;padding:16px;text-align:left;border-color:rgba(61,186,126,0.3);background:linear-gradient(rgba(61,186,126,0.05),rgba(61,186,126,0.05)),linear-gradient(170deg,var(--bg2),var(--bg));">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:7px;">Approved ✓</div>
+          <h3 style="font-size:14px;font-family:'Hepta Slab',serif;font-weight:400;line-height:1.3;">Director + AI Readiness sign-off</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.5;">Resources allocated. Now building with 2 supporting engineers — eval layer and doc template format.</p>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="tag green" style="font-size:10px;padding:3px 8px;">Eval layer</span>
+            <span class="tag green" style="font-size:10px;padding:3px 8px;">Doc template format</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 · WHAT THIS IS ══ -->
 <div class="slide layout-vc" data-section="context">
   <div style="width:100%;">
     <span class="overline">What this is</span>
@@ -552,6 +693,9 @@ body.notes-open .hint { display: none; }
 <script id="deck-notes-data" type="application/json">
 [
   "This is a proposal deck, not a show-and-tell. The goal is alignment on the approach before the pilot kicks off.\n\nKey thesis to land: the shift isn't 'we're removing Mantine.' It's 'we're making the system AI-legible.' Mantine removal is a byproduct of building correctly, not the end goal.\n\nStack diagram on the left is the foundation story — every component starts at React Aria, gets styled through ids-core, and surfaces as a TDS component with a core.md contract attached.",
+  "TinyRoots was a personal side project — a product idea I was genuinely excited about. I used it as a test case because the stakes were low enough to experiment freely.\n\nThe starting observation: I was seeing designers on socials saying Claude was amazing for design systems, but when I looked closely, they were prompting from nothing. No foundation. No contract. Just vibes.\n\nSo I tested the disciplined version: spec first, tokens before wireframes, components before pages. What happened was different. When the AI had a real foundation to read, it didn't guess — it built correctly. One change to --color-primary cascaded from the design system tokens through the components to every screen to the live Vercel site. No manual updates.\n\nThat's the moment 'construction becomes review' became real, not a phrase.",
+  "This slide is the intellectual underpinning of everything that follows.\n\nThe key insight: we've been saying Figma is the source of truth, but it never really was. A picture under-specifies intent — it can't fully express logic, states, data, or behavior. Every handoff has been lossy because of it. Engineers reverse-engineer what we meant. The file drifts from the build.\n\nPull apart the tangle and you get three things that were always in there:\n- Intent (lo-fi, goals, taste — what it should be)\n- Contract (tokens, specs, rules — enforced in code — what makes intent precise enough that agents can build from it and can't quietly drift)\n- Code (the real truth — what actually ships and what users experience)\n\nFigma doesn't disappear. It moves to secondary — a lens for discussion and feedback, not the law. The agents render into it.\n\nThe quote on screen is from the POV doc: 'A design system that exists only as a drawing is a suggestion, not a rule.' That's the problem with our current state.",
+  "This slide is the credibility story — how we went from a side project to an approved experiment with two engineers.\n\nStep 1 → 2: I built TinyRoots, then presented the process to the team. Not just the output — the process. The discipline of spec-first, the cascade, the moment construction became review. They were hooked.\n\nStep 2 → 3: That reaction validated that the idea was worth articulating properly. I wrote the POV doc — 'Is the Source of Truth Moving from Design to Code?' — which laid out the philosophical case. That document is what convinced my manager to go deeper and develop a project plan.\n\nStep 3 → 4: We socialized the project plan to the Director of Product and the AI Readiness lead. Resources approved. We're now building, with myself at the helm and two engineers advising — one focused on the eval layer (how we test quality) and one on the documentation template format (the core.md contract structure).\n\nThe dual-path commitment: nothing gets replaced by decree. Old model and new model run side by side. Crossover is opt-in.",
   "Three things on this slide, in order of importance:\n\n1. core.md — this is the novel part. Not a Storybook page, not a Figma annotation. A structured markdown file an AI agent can parse: intent, anatomy, token map, state matrix, a11y requirements, do/don't. The spec the agent builds from.\n\n2. MCP layer — code changes can render into Figma automatically. This is how we end the Figma/code drift problem structurally, not through process.\n\n3. React Aria → ids-core — we're not building accessibility from scratch. ids-core is maintained and wraps WAI-ARIA patterns. We're building on top of it.",
   "Two columns deliberately — don't dwell on the left (today's problems). The audience knows them. Spend time on the right: we have the infrastructure to fix all four problems now. ids-core exists. The MCP layer exists. We've already cleared four Mantine components. The missing piece was the format — core.md — and that's what this pilot is.",
   "Frame this as a scale problem, not a quality problem. These five forces aren't new bugs — they're structural limits that make AI-assisted work impossible at the current shape of the system.\n\nProblem 3 (not machine-readable) is the crux — without it, the other four don't get better even if we fix Mantine. A machine needs a contract to build from.",
@@ -567,7 +711,7 @@ body.notes-open .hint { display: none; }
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { context: 0, solution: 4, progress: 5, next: 8 };
+const sections = { origin: 0, context: 4, solution: 7, progress: 8, next: 11 };
 
 let _notes = [];
 try {
