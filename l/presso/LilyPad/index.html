@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Lilypad — AI-native TDS Rebuild</title>
+<title>AI-Native Upgrade — TDS Rebuilt AI-Native</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
@@ -269,7 +269,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
     <!-- LilyPad — expanded (active) -->
     <div class="nav-project" data-project="lilypad" data-state="expanded">
-      <button class="nav-project-pill" data-project="lilypad">LilyPad</button>
+      <button class="nav-project-pill" data-project="lilypad">AI-Native Upgrade</button>
       <div class="nav-pills">
         <button class="nav-btn active" onclick="goToSection('origin')">Origin</button>
         <button class="nav-btn" onclick="goToSection('context')">Context</button>
@@ -332,12 +332,12 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
   <!-- Right: title -->
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 72px 0 40px;position:relative;z-index:1;">
-    <div class="cover-chip"><span class="dot"></span>AI-TDS Library Pilot</div>
+    <div class="cover-chip"><span class="dot"></span>AI-Native Upgrade · TDS Pilot</div>
     <h1 style="font-size:clamp(30px,4vw,58px);">Tooling Design System,<br><span class="grad">rebuilt AI-native</span></h1>
     <div class="cover-line"></div>
     <p class="subtitle">A Mantine-free library where every component ships with a contract an AI agent can implement from.</p>
     <div style="margin-top:28px;display:flex;gap:8px;flex-wrap:wrap;">
-      <span class="tag">AI-TDS Pilot</span>
+      <span class="tag">Project Lilypad</span>
       <span class="tag green">July 2026</span>
       <span class="tag purple">Dario</span>
     </div>
@@ -870,38 +870,37 @@ document.addEventListener('touchend', e => {
 slides[current].classList.add('active');
 updateNav();
 
-// ═══════ FLOW-LINES CANVAS ═══════
+/* Mock F flow-lines background — ported from dariofidanza.com; dark = NOT html.light */
 (function () {
   const canvas = document.getElementById('flow');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let w, h, t = 0;
-  const LINES = 18;
-  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-  function draw() {
-    t += 0.3;
-    ctx.clearRect(0, 0, w, h);
-    const isLight = document.body.classList.contains('on-light');
-    const baseAlpha = isLight ? 0.05 : 0.12;
-    for (let i = 0; i < LINES; i++) {
-      const y = (h / LINES) * i + Math.sin(t * 0.012 + i * 0.7) * 16;
-      const alpha = baseAlpha * (0.5 + 0.5 * Math.sin(t * 0.018 + i * 0.9));
-      const hue = 220 + Math.sin(t * 0.01 + i * 0.4) * 40;
-      ctx.strokeStyle = `hsla(${hue}, 80%, 65%, ${alpha})`;
-      ctx.lineWidth = 1;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize(){ canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render(){
+    ctx.clearRect(0,0,w,h);
+    const dark = !document.documentElement.classList.contains('light') && !document.body.classList.contains('on-light');
+    for (let i=0;i<LINES;i++){
+      const yBase=(i/(LINES-1))*h*1.1 - h*0.05, p=i/LINES;
+      const r=dark?Math.round(79+p*118):Math.round(50+p*100);
+      const g=dark?Math.round(128-p*38):Math.round(90-p*30);
+      const b=dark?245:215;
+      const alpha=(0.09+0.16*Math.sin(p*Math.PI))*(i%4===0?1.6:1)*(dark?1:0.55);
       ctx.beginPath();
-      for (let x = 0; x < w; x += 4) {
-        const wave = Math.sin((x * 0.006) + t * 0.022 + i * 0.5) * 14
-                   + Math.sin((x * 0.011) + t * 0.014 + i * 1.2) * 8;
-        if (x === 0) ctx.moveTo(x, y + wave);
-        else ctx.lineTo(x, y + wave);
+      for(let x=0;x<=w;x+=8){
+        const y=yBase+Math.sin(x*0.003+t*0.7+i*0.45)*34+Math.sin(x*0.0011-t*0.4+i*0.8)*52+Math.sin(x*0.006+t*1.1+i*0.2)*10;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }
-      ctx.stroke();
+      ctx.strokeStyle=`rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth=i%4===0?1.5:1.1; ctx.stroke();
     }
-    requestAnimationFrame(draw);
   }
-  window.addEventListener('resize', resize);
-  resize(); draw();
+  function loop(){ t+=0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize); resize();
+  if (reduce){ render(); } else { requestAnimationFrame(loop); }
+  window.mfFlowRender = render;
 })();
 </script>
 
@@ -910,7 +909,7 @@ updateNav();
   <div class="p-projects">
     <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
     <button class="p-project-btn" data-href="../tooling-ds/index.html">Tooling DS</button>
-    <button class="p-project-btn p-project-btn--active">LilyPad</button>
+    <button class="p-project-btn p-project-btn--active">AI-Native Upgrade</button>
     <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
     <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
   </div>
