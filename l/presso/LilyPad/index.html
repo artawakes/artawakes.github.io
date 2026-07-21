@@ -178,7 +178,76 @@ body.notes-open #notes-panel { display: flex; }
 .hint { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; transition: opacity 0.4s; pointer-events: none; }
 .hint kbd { border: 1px solid var(--text-muted); border-radius: 4px; padding: 2px 6px; font-size: 10px; }
 body.notes-open .hint { display: none; }
+
+/* ── Presenter mode overlay ── */
+html.presenter-mode body { overflow:auto; margin:0; background:#080b12; }
+html.presenter-mode .slide, html.presenter-mode nav,
+html.presenter-mode .progress-bar, html.presenter-mode .edit-toolbar,
+html.presenter-mode #notes-panel, html.presenter-mode .mobile-gate,
+html.presenter-mode #slides, html.presenter-mode #tds-nav-hint { display:none !important; }
+#presenter-ui { display:none; min-height:100vh; flex-direction:column;
+  background:#080b12; color:#e2e8f4; font-family:inherit; }
+html.presenter-mode #presenter-ui { display:flex; }
+
+.p-header {
+  display:flex; align-items:center; gap:20px; padding:16px 28px;
+  border-bottom:1px solid rgba(79,128,245,0.18); background:rgba(79,128,245,0.035);
+  flex-shrink:0;
+}
+.p-slide-info { flex:1; min-width:0; }
+.p-overline { font-size:12px; letter-spacing:0.2em; color:#4f80f5; font-weight:700; text-transform:uppercase; }
+.p-slide-num { font-size:24px; font-weight:700; color:#e2e8f4; margin:4px 0 2px; }
+.p-slide-title { font-size:13px; color:rgba(226,232,244,0.55); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.p-controls { display:flex; gap:8px; flex-shrink:0; }
+.p-btn {
+  background:rgba(79,128,245,0.12); border:1px solid rgba(79,128,245,0.25);
+  color:#4f80f5; border-radius:8px; padding:9px 20px; font-size:13px;
+  cursor:pointer; font-family:inherit; font-weight:600; letter-spacing:0.04em;
+  transition:background .15s;
+}
+.p-btn:hover { background:rgba(79,128,245,0.24); }
+.p-timer {
+  font-size:30px; font-weight:300; color:rgba(226,232,244,0.4);
+  font-variant-numeric:tabular-nums; letter-spacing:0.04em; min-width:72px; text-align:right; flex-shrink:0;
+}
+.p-body { display:flex; flex:1; overflow:hidden; }
+.p-notes-section { flex:1; display:flex; flex-direction:column; padding:22px 28px; min-width:0; }
+.p-next-section {
+  width:230px; flex-shrink:0; border-left:1px solid rgba(79,128,245,0.13);
+  padding:22px 22px; display:flex; flex-direction:column; background:rgba(79,128,245,0.02);
+}
+.p-label { font-size:12px; letter-spacing:0.18em; font-weight:700; color:rgba(226,232,244,0.3); text-transform:uppercase; margin-bottom:10px; }
+#p-notes {
+  flex:1; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(79,128,245,0.18);
+  border-radius:10px; padding:14px 16px; color:#e2e8f4; font-family:inherit;
+  font-size:15px; line-height:1.75; resize:none; outline:none; min-height:180px;
+}
+#p-notes::placeholder { color:rgba(226,232,244,0.2); }
+#p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
+.p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-reset-btn {
+  margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
+  cursor:pointer; font-family:inherit; transition:all .15s;
+}
+.p-reset-btn:hover { color:rgba(226,232,244,0.8); border-color:rgba(255,255,255,0.25); }
+.p-projects {
+  display:flex; gap:6px; padding:10px 28px; flex-shrink:0;
+  border-bottom:1px solid rgba(79,128,245,0.12); background:rgba(0,0,0,0.25);
+}
+.p-project-btn {
+  background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(226,232,244,0.45); border-radius:20px; padding:5px 14px;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
+  transition:all .15s; letter-spacing:0.02em;
+}
+.p-project-btn:hover { background:rgba(79,128,245,0.15); border-color:rgba(79,128,245,0.35); color:#e2e8f4; }
+.p-project-btn--active {
+  background:rgba(79,128,245,0.18); border-color:rgba(79,128,245,0.45);
+  color:#4f80f5; cursor:default; pointer-events:none;
+}
 </style>
+<link rel="stylesheet" href="../shared/nav.css">
 </head>
 <body>
 <canvas id="flow" aria-hidden="true"></canvas>
@@ -188,17 +257,38 @@ body.notes-open .hint { display: none; }
 </div>
 
 <nav>
-  <a class="nav-logo" href="#"><b>Darío</b>&nbsp;Fidanza</a>
-  <div class="nav-pills">
-    <button class="nav-btn active" onclick="goToSection('origin')">Origin</button>
-    <button class="nav-btn" onclick="goToSection('context')">Context</button>
-    <button class="nav-btn" onclick="goToSection('solution')">Solution</button>
-    <button class="nav-btn" onclick="goToSection('progress')">Progress</button>
-    <button class="nav-btn" onclick="goToSection('next')">Next</button>
+  <a class="nav-logo" href="../"><b>Darío</b>&nbsp;Fidanza</a>
+  <div class="nav-center">
+    <!-- Intro — collapsed -->
+    <div class="nav-project" data-project="intro" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../intro/index.html"><span>Intro</span></button>
+    </div>
+    <!-- Tooling DS — collapsed -->
+    <div class="nav-project" data-project="tds" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../tooling-ds/index.html"><span>Tooling DS</span></button>
+    </div>
+    <!-- LilyPad — expanded (active) -->
+    <div class="nav-project" data-project="lilypad" data-state="expanded">
+      <button class="nav-project-pill" data-project="lilypad">LilyPad</button>
+      <div class="nav-pills">
+        <button class="nav-btn active" onclick="goToSection('origin')">Origin</button>
+        <button class="nav-btn" onclick="goToSection('context')">Context</button>
+        <button class="nav-btn" onclick="goToSection('solution')">Solution</button>
+        <button class="nav-btn" onclick="goToSection('progress')">Progress</button>
+        <button class="nav-btn" onclick="goToSection('next')">Next</button>
+      </div>
+    </div>
+    <!-- Orders Dashboard — collapsed -->
+    <div class="nav-project" data-project="orders" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../orders-dashboard/index.html"><span>Orders Dashboard</span></button>
+    </div>
+    <!-- Shopper Northstar — collapsed -->
+    <div class="nav-project" data-project="northstar" data-state="collapsed">
+      <button class="nav-project-pill" data-href="../northstar/index.html"><span>Shopper Northstar</span></button>
+    </div>
   </div>
   <div class="nav-right">
-    <button class="notes-btn" onclick="toggleNotes()" title="Toggle speaker notes (N)">N</button>
-    <span class="slide-counter" id="counter">1 / 9</span>
+    <span class="slide-counter" id="counter">1 / 12</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled>←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
@@ -688,7 +778,7 @@ body.notes-open .hint { display: none; }
   <textarea id="np-textarea" placeholder="No notes for this slide." readonly></textarea>
 </div>
 
-<div id="hint" class="hint"><kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>N</kbd> notes</div>
+<div id="tds-nav-hint" class="hint"><kbd>←</kbd><kbd>→</kbd> navigate</div>
 
 <script id="deck-notes-data" type="application/json">
 [
@@ -752,7 +842,7 @@ function goTo(i) {
   current = i;
   slides[current].classList.add('active');
   updateNav();
-  document.getElementById('hint').style.opacity = '0';
+  const _h = document.getElementById('tds-nav-hint'); if (_h) _h.style.opacity = '0';
 }
 function nextSlide() { goTo(current + 1); }
 function prevSlide() { goTo(current - 1); }
@@ -764,10 +854,10 @@ function toggleNotes() {
 }
 
 document.addEventListener('keydown', e => {
+  if (document.documentElement.classList.contains('presenter-mode')) return;
   if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
   else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
-  else if (e.key === 'n' || e.key === 'N') { toggleNotes(); }
 });
 
 let tx = 0;
@@ -814,5 +904,156 @@ updateNav();
   resize(); draw();
 })();
 </script>
+
+<!-- ── Presenter UI: shown when URL has #presenter ── -->
+<div id="presenter-ui">
+  <div class="p-projects">
+    <button class="p-project-btn" data-href="../intro/index.html">Intro</button>
+    <button class="p-project-btn" data-href="../tooling-ds/index.html">Tooling DS</button>
+    <button class="p-project-btn p-project-btn--active">LilyPad</button>
+    <button class="p-project-btn" data-href="../orders-dashboard/index.html">Orders Dashboard</button>
+    <button class="p-project-btn" data-href="../northstar/index.html">Shopper Northstar</button>
+  </div>
+  <div class="p-header">
+    <div class="p-slide-info">
+      <div class="p-overline">Presenter View</div>
+      <div class="p-slide-num">Slide <span id="p-cur">1</span><span style="font-weight:300;opacity:0.35;"> / <span id="p-total">—</span></span></div>
+      <div class="p-slide-title" id="p-title">—</div>
+    </div>
+    <div class="p-controls">
+      <button class="p-btn" id="p-prev-btn">◀ Prev</button>
+      <button class="p-btn" id="p-next-btn">Next ▶</button>
+    </div>
+    <div class="p-timer" id="p-timer">0:00</div>
+  </div>
+  <div class="p-body">
+    <div class="p-notes-section">
+      <div class="p-label">Speaker Notes</div>
+      <textarea id="p-notes" placeholder="No notes for this slide." readonly></textarea>
+    </div>
+    <div class="p-next-section">
+      <div class="p-label">Up Next</div>
+      <div class="p-next-title" id="p-next-title">—</div>
+      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════ PRESENTER MODE (standard deck runtime) ═══════
+let _presenterWin = null;
+let _bc = null;
+try { _bc = new BroadcastChannel('deck-sync:' + location.pathname); } catch(e) {}
+
+function deckSend(msg) {
+  if (_bc) try { _bc.postMessage(msg); } catch(e) {}
+  if (_presenterWin && !_presenterWin.closed) { try { _presenterWin.postMessage(msg, '*'); } catch(e) {} }
+  if (window.opener && !window.opener.closed) { try { window.opener.postMessage(msg, '*'); } catch(e) {} }
+}
+function deckListen(handler) {
+  if (_bc) _bc.onmessage = e => handler(e.data);
+  window.addEventListener('message', e => { if (e.data && e.data.type) handler(e.data); });
+}
+function getSlideTitle(i) {
+  if (!slides[i]) return '—';
+  const h = slides[i].querySelector('h1,h2');
+  return h ? h.textContent.replace(/\s+/g,' ').trim().slice(0,55) : 'Slide '+(i+1);
+}
+function openPresenter() {
+  if (_presenterWin && !_presenterWin.closed) { _presenterWin.focus(); return; }
+  _presenterWin = window.open(location.href.split('#')[0]+'#presenter','_blank','width=1080,height=680,resizable=yes');
+}
+
+// broadcast slide changes to the presenter window
+const _lpGoTo = goTo;
+goTo = function(i) {
+  _lpGoTo(i);
+  deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+};
+
+if (location.hash === '#presenter') {
+  // ── PRESENTER WINDOW ──
+  document.documentElement.classList.add('presenter-mode');
+  let pIdx = 0, timerStart = Date.now();
+
+  function pGetNotes() {
+    try { const el=document.getElementById('deck-notes-data'); return el?JSON.parse(el.textContent||'[]'):[];} catch(e){return [];}
+  }
+  function pRefresh(idx) {
+    idx = Math.max(0, Math.min(total-1, idx));
+    const n=pGetNotes(); pIdx=idx;
+    const pCur=document.getElementById('p-cur');
+    const pTotal=document.getElementById('p-total');
+    const pTitle=document.getElementById('p-title');
+    const pNextT=document.getElementById('p-next-title');
+    const pNotes=document.getElementById('p-notes');
+    if(pCur) pCur.textContent=idx+1;
+    if(pTotal) pTotal.textContent=total;
+    if(pTitle) pTitle.textContent=getSlideTitle(idx);
+    if(pNextT) pNextT.textContent=getSlideTitle(idx+1);
+    if(pNotes) pNotes.value=n[idx]||'';
+  }
+
+  deckListen(d=>{ if(d.type==='nav'||d.type==='sync') pRefresh(d.index); });
+  pRefresh(0);
+  deckSend({type:'req-sync'});
+
+  const pTimer=document.getElementById('p-timer');
+  const pReset=document.getElementById('p-reset-btn');
+  setInterval(()=>{
+    if(!pTimer) return;
+    const s=Math.floor((Date.now()-timerStart)/1000);
+    pTimer.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  },1000);
+
+  function pNav(delta) {
+    if (delta > 0 && pIdx >= total-1) {
+      var pBtns = Array.from(document.querySelectorAll('.p-project-btn'));
+      var curIdx = pBtns.findIndex(function(b){ return !b.dataset.href; });
+      var nxt = pBtns[curIdx + 1];
+      var nextHref = nxt && nxt.dataset.href;
+      if (nextHref) {
+        if(window.opener&&!window.opener.closed) try{ window.opener.location.href = nextHref; }catch(e){}
+        window.location.href = nextHref + '#presenter';
+      }
+    } else {
+      pRefresh(pIdx+delta);
+      deckSend({type:'nav',index:pIdx});
+      if(window.opener&&!window.opener.closed) try{window.opener.goTo(pIdx);}catch(e){}
+    }
+  }
+  document.getElementById('p-prev-btn').onclick=()=>pNav(-1);
+  document.getElementById('p-next-btn').onclick=()=>pNav(1);
+  if(pReset) pReset.onclick=()=>{ timerStart=Date.now(); };
+  document.querySelectorAll('.p-project-btn[data-href]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      var href = btn.dataset.href;
+      if (window.opener && !window.opener.closed) {
+        try { window.opener.location.href = href; } catch(e) {}
+      }
+      window.location.href = href + '#presenter';
+    });
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'||e.target.isContentEditable) return;
+    if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); pNav(1); }
+    if(e.key==='ArrowLeft') { e.preventDefault(); pNav(-1); }
+  });
+} else {
+  // ── MAIN DECK ──
+  deckListen(d=>{
+    if(d.type==='nav') {
+      goTo(d.index);
+    }
+    if(d.type==='next-project') {
+      if(typeof window._navGoNextProject==='function') window._navGoNextProject();
+    }
+    if(d.type==='req-sync')
+      deckSend({type:'sync',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1)});
+  });
+}
+</script>
+<script src="../shared/nav.js"></script>
+
 </body>
 </html>
