@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" style="opacity:1;transition:opacity 380ms cubic-bezier(0.4,0,0.2,1)">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Lilypad — AI-native TDS Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #07101f; --bg2: #0d1a2e;
+  --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.15);
+  --text: #f0f4ff; --text-dim: #8fa8c4; --text-muted: #b8cce0;
+  --accent: #4f80f5; --accent2: #7c5af5; --green: #3dba7e; --amber: #f5a623; --red: #FF6332; --pink: #e0459a;
+  --magenta: #c55af5; --violet: #7c5af5; --bg3: #12233b; --faint: #5a7396;
+  --line: rgba(143,168,196,.14); --glass: rgba(13,26,46,.7); --fade: rgba(7,16,31,.85);
+  --nav-h: 60px;
+}
+
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+  background: transparent; border-bottom: none;
+}
+nav::before{ content:""; position:absolute; left:0; right:0; top:0; bottom:-64px; background:var(--fade);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);
+  pointer-events:none; z-index:-1; }
+.nav-logo { display:inline-flex; align-items:center; font-family:'Hepta Slab',serif; font-size:17px; letter-spacing:-0.02em; color: var(--text); text-decoration: none; flex-shrink: 0; }
+.nav-logo b { background:linear-gradient(90deg,#4f80f5,#c55af5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
+
+.nav-pills { display: flex; background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 100px; padding: 4px; gap: 2px; }
+.nav-btn { display: inline-flex; align-items: center; height: 34px; font-size: 13px; font-weight: 500; letter-spacing: normal; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 0 16px; border-radius: 100px; transition: color 0.2s, background 0.2s, box-shadow 0.2s; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
+.nav-btn.active { background: var(--accent); color: #fff; box-shadow: 0 0 14px rgba(79,128,245,0.35); }
+
+.nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.slide-counter { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.05em; min-width: 44px; text-align: right; }
+.nav-arrows { display: flex; gap: 4px; }
+.arrow-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 14px; }
+.arrow-btn:hover { border-color: var(--border-strong); color: var(--text); }
+.arrow-btn:disabled { opacity: 0.3; cursor: default; }
+
+.progress-bar { position: fixed; top: var(--nav-h); left: 0; height: 2px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent) 100%); background-size: 200% auto; animation: progressShimmer 3s linear infinite; z-index: 99; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+/* COVER SLIDE */
+#slide-01 { padding: 0 !important; flex-direction: row !important; }
+#slide-01 .hero-img { width: 52% !important; max-width: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: visible !important; flex-shrink: 0 !important; align-self: stretch !important; height: auto !important; max-height: none !important; padding: 48px 24px 48px 48px !important; }
+#slide-01 .hero-content { flex: 1 !important; align-self: stretch !important; padding: 0 72px 0 48px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+#slide-01 .cover-chip { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; margin-bottom: 26px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+#slide-01 .cover-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: chipPulse 2.4s infinite; }
+@keyframes chipPulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* SLIDES */
+#slides { position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-start; padding: 96px 80px 40px; opacity: 0; transform: translateY(28px); pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide > * { position: relative; z-index: 1; }
+.slide-cover { align-items: flex-start; }
+.slide-center { align-items: center; justify-content: center; text-align: center; }
+.layout-vc { justify-content: center !important; padding-top: 40px !important; }
+.slide::before { display: none; }
+.slide-dots::before { display: none; }
+
+/* LINE GRID */
+.slide-grid::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(79,128,245,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(79,128,245,0.07) 1px, transparent 1px); background-size: 18px 18px; pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.6) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.6) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), linear-gradient(to bottom, transparent 0%, transparent calc(var(--scan) - 8%), rgba(0,0,0,0.65) calc(var(--scan) - 3%), rgba(0,0,0,1) var(--scan), rgba(0,0,0,0.65) calc(var(--scan) + 3%), transparent calc(var(--scan) + 8%), transparent 100%);
+  mask-composite: add;
+  animation: gridScan 8s ease-in-out infinite;
+}
+@keyframes gridScan { 0% { --scan: -10%; } 100% { --scan: 110%; } }
+@property --scan { syntax: '<percentage>'; inherits: false; initial-value: -10%; }
+
+/* COVER GLOW */
+.slide-cover::after { content: ''; position: absolute; top: 10%; right: 4%; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(79,128,245,0.18) 0%, transparent 70%); animation: coverGlowPulse 6s ease-in-out infinite; pointer-events: none; z-index: 0; }
+
+/* TYPE */
+.overline { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; display: block; }
+.overline.green { color: var(--green); }
+.overline.purple { color: var(--accent2); }
+.overline.amber { color: var(--amber); }
+.overline.red { color: var(--red); }
+h1 { font-size: clamp(40px,5.2vw,76px); font-weight: 400; line-height: 1.08; letter-spacing: -0.035em; color: var(--text); font-family: 'Hepta Slab', serif; }
+h2 { font-size: clamp(28px,3.5vw,54px); font-weight: 400; line-height: 1.12; letter-spacing: -0.03em; color: var(--text); font-family: 'Hepta Slab', serif; }
+.grad { background: linear-gradient(92deg, var(--accent), var(--accent2), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+h2 em, h1 em { font-style: normal; color: var(--magenta); }
+h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; letter-spacing: -0.015em; }
+.subtitle { font-size: clamp(16px,1.6vw,21px); font-weight: 400; color: var(--text-dim); line-height: 1.65; margin-top: 14px; max-width: 620px; }
+.body-text { font-size: 14px; line-height: 1.7; color: var(--text-dim); }
+
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 28px; }
+
+/* CARDS */
+.card { position: relative; background: linear-gradient(170deg,var(--bg2),var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 22px; transition: transform 0.25s, border-color 0.25s; }
+.card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); }
+.card::before { content: ""; position: absolute; top: -1px; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg,transparent,var(--violet),transparent); opacity: 0.65; transition: opacity 0.25s; }
+.card:hover::before { opacity: 1; }
+.card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.card h3 { font-family: 'Hepta Slab', serif; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
+.card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-top: 7px; }
+
+/* METRIC */
+.metric-card { position: relative; background: linear-gradient(170deg,var(--bg2),var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.25s, border-color 0.25s; }
+.metric-card:hover { transform: translateY(-3px); border-color: rgba(124,90,245,0.4); }
+.metric-number { font-family: 'Hepta Slab', serif; font-size: clamp(24px,2.6vw,42px); font-weight: 400; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.metric-number.green { color: var(--green); }
+.metric-number.accent { color: var(--accent); }
+.metric-number.purple { color: var(--accent2); }
+.metric-label { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+/* TAGS */
+.tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 999px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.22); }
+.tag.green { background: rgba(61,186,126,0.12); color: var(--green); border-color: rgba(61,186,126,0.2); }
+.tag.purple { background: rgba(124,90,245,0.12); color: var(--accent2); border-color: rgba(124,90,245,0.2); }
+.tag.amber { background: rgba(245,166,35,0.12); color: var(--amber); border-color: rgba(245,166,35,0.2); }
+
+/* BULLETS */
+.bullet-list { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.bullet-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+.bullet-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-top: 8px; flex-shrink: 0; }
+.bullet-list li strong { color: var(--text); font-weight: 600; }
+.bullet-list.green li::before { background: var(--green); }
+.bullet-list.purple li::before { background: var(--accent2); }
+
+/* DIVIDER */
+.divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--magenta), transparent); background-size: 200% auto; margin: 20px 0; border-radius: 2px; box-shadow: 0 0 12px rgba(79,128,245,0.8), 0 0 32px rgba(124,90,245,0.4); animation: glowPulse 2.5s ease-in-out infinite, shimmerLine 3s linear infinite; }
+.cover-line { width: 56px; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--accent) 35%, var(--accent2) 60%, var(--magenta) 80%, transparent 100%); background-size: 200% auto; margin-bottom: 22px; border-radius: 2px; animation: shimmerLine 2.5s linear infinite; box-shadow: 0 0 12px rgba(124,90,245,0.5); }
+
+/* STAT CALLOUT */
+.stat-callout { display:flex; flex-direction:column; gap:2px; }
+.stat-number { font-family:'Hepta Slab',serif; font-size:clamp(48px,6vw,80px); font-weight:400; line-height:1; letter-spacing:-0.03em; color: var(--accent); }
+.stat-label { font-size:14px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+
+/* HERO LAYOUTS */
+.hero-right { flex-direction: row !important; align-items: stretch; padding: 0 !important; gap: 0; }
+.hero-right .hero-content { flex: 0 0 50%; display: flex; flex-direction: column; justify-content: center; padding: 96px 48px 40px 80px; z-index: 1; }
+.hero-right .hero-img { flex: 1; position: relative; overflow: visible; margin: 84px 44px 44px 16px; display: flex; align-items: center; justify-content: center; }
+
+/* LIGHT MODE */
+.slide-light {
+  --bg: #f4f6fd; --bg2: #eaecf8;
+  --surface: rgba(255,255,255,0.75); --border: rgba(0,0,0,0.09); --border-strong: rgba(0,0,0,0.18);
+  --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+  --bg3: #e8edf9; --faint: #6b80a0; --line: rgba(7,16,31,.12); --glass: rgba(255,255,255,.7);
+  background: #f4f6fd !important; color: #07101f;
+}
+body.on-light {
+  --fade: rgba(244,246,253,.92); --glass: rgba(255,255,255,.7); --line: rgba(7,16,31,.12);
+  --bg3: #e8edf9; --surface: rgba(255,255,255,.75); --border: rgba(7,16,31,.09); --border-strong: rgba(7,16,31,.18);
+  --faint: #6b80a0; --text: #07101f; --text-dim: #3a5070; --text-muted: #7a90a8;
+}
+body.on-light { background: #f4f6fd; }
+body.on-light .nav-logo { color: #07101f; }
+body.on-light .nav-btn { color: #3a5070; }
+body.on-light .nav-btn:hover { color: #07101f; }
+body.on-light .slide-counter { color: #3a5070; }
+body.on-light .arrow-btn { color: #3a5070; }
+#slide-01.slide-light { background: transparent !important; }
+.slide-light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); border-color: rgba(0,0,0,0.09); }
+.slide-light::after { background-image: linear-gradient(rgba(50,90,210,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(50,90,210,0.1) 1px, transparent 1px) !important; }
+
+/* BEFORE/AFTER */
+.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+.ba-card { border-radius: 12px; padding: 24px; border: 1px solid var(--border); }
+.ba-before { background:linear-gradient(rgba(255,99,50,0.04),rgba(255,99,50,0.04)),linear-gradient(170deg,var(--bg2),var(--bg)); border-color:rgba(255,99,50,0.2); }
+.ba-after  { background:linear-gradient(rgba(61,186,126,0.04),rgba(61,186,126,0.04)),linear-gradient(170deg,var(--bg2),var(--bg)); border-color:rgba(61,186,126,0.2); }
+.ba-tag { font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 10px; border-radius:4px; display:inline-block; margin-bottom:14px; }
+.ba-before .ba-tag { background:rgba(255,99,50,0.15); color:var(--red); }
+.ba-after  .ba-tag { background:rgba(61,186,126,0.15); color:var(--green); }
+
+/* GRID COLUMN TINTS */
+.grid-3 > .card:nth-child(3n+1) { background:linear-gradient(rgba(79,128,245,0.07),rgba(79,128,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color:rgba(79,128,245,0.22) !important; }
+.grid-3 > .card:nth-child(3n+2) { background:linear-gradient(rgba(124,90,245,0.07),rgba(124,90,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color:rgba(124,90,245,0.22) !important; }
+.grid-3 > .card:nth-child(3n)   { background:linear-gradient(rgba(197,90,245,0.07),rgba(197,90,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color:rgba(197,90,245,0.22) !important; }
+
+/* ANIMATIONS */
+@keyframes glowPulse { 0%,100% { box-shadow: 0 0 12px rgba(79,128,245,0.8), 0 0 32px rgba(79,128,245,0.4); } 50% { box-shadow: 0 0 22px rgba(79,128,245,1), 0 0 56px rgba(79,128,245,0.6); } }
+@keyframes shimmerLine { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+@keyframes coverGlowPulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.07); } }
+@keyframes progressShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+@keyframes subtlePop { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
+
+/* ENTRANCE ANIMATIONS */
+.slide.active h2 { animation: fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+.slide.active .subtitle { animation: fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.slide.active .grid-2,.slide.active .grid-3,.slide.active .grid-4 { animation: fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+.slide.active .ba-grid { animation: fadeInUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+
+/* MOBILE GATE */
+.mobile-gate { display:none; position:fixed; inset:0; z-index:9999; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; }
+@media (max-width:900px) { .mobile-gate { display:flex; } .slide, nav, .progress-bar { display:none !important; } }
+@media (max-width:1024px) { .slide { padding:44px 48px; } .grid-4 { grid-template-columns:repeat(2,1fr); } nav { padding:0 24px; } }
+@media (max-width:768px) { .slide { padding:32px 24px; } .grid-2,.grid-3,.grid-4,.ba-grid { grid-template-columns:1fr; } .nav-pills { display:none; } h1 { font-size:30px; } h2 { font-size:22px; } }
+</style>
+</head>
+<body>
+<canvas id="flow" aria-hidden="true"></canvas>
+<div class="mobile-gate">
+  <h2 style="font-size:24px;margin-bottom:16px">Best viewed on desktop</h2>
+  <p class="subtitle" style="max-width:320px">This deck is optimized for larger screens. Please open it on a laptop or desktop browser.</p>
+</div>
+
+<nav>
+  <a class="nav-logo" href="#"><b>Darío</b>&nbsp;Fidanza</a>
+  <div class="nav-pills">
+    <button class="nav-btn active" onclick="goToSection('context')">Context</button>
+    <button class="nav-btn" onclick="goToSection('solution')">Solution</button>
+    <button class="nav-btn" onclick="goToSection('progress')">Progress</button>
+    <button class="nav-btn" onclick="goToSection('next')">Next</button>
+  </div>
+  <div class="nav-right">
+    <span class="slide-counter" id="counter">1 / 9</span>
+    <div class="nav-arrows">
+      <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled>←</button>
+      <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
+    </div>
+  </div>
+</nav>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<div id="slides">
+
+<!-- ══ 01 · COVER ══ -->
+<div id="slide-01" class="slide slide-cover hero-right slide-light active" data-section="context">
+  <div style="position:absolute;top:10%;right:4%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+  <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;padding-top:0;padding-bottom:0;position:relative;z-index:1;">
+    <div class="cover-chip"><span class="dot"></span>AI-TDS Library Pilot</div>
+    <h1 style="font-size:clamp(32px,4.2vw,62px);">Tooling Design System,<br><span class="grad">rebuilt AI-native</span></h1>
+    <div class="cover-line"></div>
+    <p class="subtitle" style="max-width:440px;">A Mantine-free component library where every component is built on React Aria → ids-core, and documented so an AI agent can implement from it.</p>
+    <div style="margin-top:32px;display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag">Systems Design</span>
+      <span class="tag green">July 2026</span>
+      <span class="tag purple">Dario</span>
+    </div>
+  </div>
+  <div class="hero-img" style="flex:0 0 46%;display:flex;align-items:center;justify-content:center;padding:80px 48px 48px 24px;">
+    <!-- Stack diagram: React Aria → ids-core → TDS → AI doc -->
+    <div style="position:relative;width:340px;display:flex;flex-direction:column;gap:0;align-items:center;">
+      <!-- Stack nodes -->
+      <div style="width:100%;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:rgba(255,255,255,0.96);border:1px solid rgba(7,16,31,0.10);box-shadow:0 2px 10px rgba(7,16,31,0.09);color:#10141c;font-size:14px;font-weight:600;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e0459a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        React Aria
+        <span style="margin-left:auto;font-size:11px;color:#6b80a0;font-weight:400;">WAI-ARIA primitives</span>
+      </div>
+      <!-- Connector -->
+      <svg width="24" height="28" viewBox="0 0 24 28" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="12" y1="0" x2="12" y2="20" stroke="#1a1f29" stroke-width="1.5"/>
+        <polyline points="7,15 12,21 17,15" fill="none" stroke="#1a1f29" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="width:100%;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:rgba(255,255,255,0.96);border:1px solid rgba(7,16,31,0.10);box-shadow:0 2px 10px rgba(7,16,31,0.09);color:#10141c;font-size:14px;font-weight:600;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        ids-core
+        <span style="margin-left:auto;font-size:11px;color:#6b80a0;font-weight:400;">a11y + theming</span>
+      </div>
+      <svg width="24" height="28" viewBox="0 0 24 28" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="12" y1="0" x2="12" y2="20" stroke="#1a1f29" stroke-width="1.5"/>
+        <polyline points="7,15 12,21 17,15" fill="none" stroke="#1a1f29" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="width:100%;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:rgba(79,128,245,0.10);border:1.5px solid rgba(79,128,245,0.35);box-shadow:0 2px 14px rgba(79,128,245,0.12);color:#10141c;font-size:14px;font-weight:700;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        TDS
+        <span style="margin-left:auto;font-size:11px;color:#4f80f5;font-weight:600;">AI-native components</span>
+      </div>
+      <svg width="24" height="28" viewBox="0 0 24 28" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="12" y1="0" x2="12" y2="20" stroke="#1a1f29" stroke-width="1.5"/>
+        <polyline points="7,15 12,21 17,15" fill="none" stroke="#1a1f29" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="width:100%;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:rgba(61,186,126,0.08);border:1px solid rgba(61,186,126,0.3);color:#10141c;font-size:14px;font-weight:600;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        core.md contract
+        <span style="margin-left:auto;font-size:11px;color:#3dba7e;font-weight:600;">AI-readable</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 · WHAT THIS IS ══ -->
+<div class="slide slide-dots layout-vc" data-section="context">
+  <div style="width:100%;display:flex;align-items:flex-start;gap:64px;">
+    <div style="flex:1 1 0;min-width:0;">
+      <span class="overline">What this is</span>
+      <h2>Code is the system of record.<br>Figma is where we discuss it.</h2>
+      <p class="body-text" style="margin-top:14px;max-width:520px;">I'm rebuilding TDS as an <strong>AI-native, Mantine-free</strong> component library — every component on the same foundation, every component shippable with documentation an AI agent can implement from.</p>
+    </div>
+    <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:14px;">
+      <div class="card" style="border-color:rgba(79,128,245,0.25);background:linear-gradient(rgba(79,128,245,0.05),rgba(79,128,245,0.05)),linear-gradient(170deg,var(--bg2),var(--bg));">
+        <div class="card-label" style="color:var(--accent);">Foundation</div>
+        <h3>React Aria → ids-core → TDS</h3>
+        <p>Every component shares the same a11y + theming primitive stack. No more Mantine underneath.</p>
+      </div>
+      <div class="card" style="border-color:rgba(124,90,245,0.25);background:linear-gradient(rgba(124,90,245,0.05),rgba(124,90,245,0.05)),linear-gradient(170deg,var(--bg2),var(--bg));">
+        <div class="card-label" style="color:var(--accent2);">Documentation</div>
+        <h3>Per-component core.md contract</h3>
+        <p>Intent, anatomy, tokens, states, a11y, do/don't — in a form an AI agent can implement from.</p>
+      </div>
+      <div class="card" style="border-color:rgba(61,186,126,0.25);background:linear-gradient(rgba(61,186,126,0.05),rgba(61,186,126,0.05)),linear-gradient(170deg,var(--bg2),var(--bg));">
+        <div class="card-label" style="color:var(--green);">Operating model</div>
+        <h3>MCP pulls from code → renders Figma</h3>
+        <p>Code drives design. Figma becomes the discussion layer, not the source of truth.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 · CONTEXT ══ -->
+<div class="slide slide-dots layout-vc" data-section="context">
+  <div style="width:100%;">
+    <span class="overline">Where we're starting from</span>
+    <h2>The system we have today</h2>
+    <div class="ba-grid" style="margin-top:28px;">
+      <div class="ba-card ba-before">
+        <div class="ba-tag">Today</div>
+        <ul class="bullet-list" style="margin-top:0;">
+          <li><strong>Mantine under everything</strong> — third-party dependency under the whole component API</li>
+          <li><strong>Design and code drift</strong> — Figma and implementation maintained separately; they disagree</li>
+          <li><strong>No machine-readable contract</strong> — nothing describes a component's intent in a form an AI can use</li>
+          <li><strong>Slow net-new work</strong> — each component re-litigates tokens, a11y, locale, and motion from scratch</li>
+        </ul>
+      </div>
+      <div class="ba-card ba-after">
+        <div class="ba-tag">The opportunity</div>
+        <ul class="bullet-list green" style="margin-top:0;">
+          <li><strong>ids-core exists</strong> — a maintained a11y primitive layer wrapping and re-exporting React Aria</li>
+          <li><strong>AI tooling is ready</strong> — agents can implement from well-written contracts today</li>
+          <li><strong>Mantine-free path is clear</strong> — we've already rebuilt MenuBase, Stepper, Drawer, Multiselect</li>
+          <li><strong>MCP layer</strong> — can pull from code to build and mock pages in Figma</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 · PROBLEM ══ -->
+<div class="slide slide-dots layout-vc" data-section="context">
+  <div style="width:100%;">
+    <span class="overline red">The problem</span>
+    <h2>Five forces holding<br>the system <em>back</em></h2>
+    <div style="display:flex;gap:64px;align-items:center;margin-top:28px;">
+      <div style="flex:0 0 42%;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:22px;padding:18px 0;border-bottom:1px solid var(--line);">
+          <span style="font-family:'Hepta Slab',serif;font-size:30px;color:var(--red);flex-shrink:0;line-height:1;">01</span>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;">Third-party lock-in</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:22px;padding:18px 0;border-bottom:1px solid var(--line);">
+          <span style="font-family:'Hepta Slab',serif;font-size:30px;color:var(--red);flex-shrink:0;line-height:1;">02</span>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;">Two sources of truth</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:22px;padding:18px 0;border-bottom:1px solid var(--line);">
+          <span style="font-family:'Hepta Slab',serif;font-size:30px;color:var(--red);flex-shrink:0;line-height:1;">03</span>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;">Not machine-readable</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:22px;padding:18px 0;border-bottom:1px solid var(--line);">
+          <span style="font-family:'Hepta Slab',serif;font-size:30px;color:var(--red);flex-shrink:0;line-height:1;">04</span>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;">Slow, manual net-new work</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:22px;padding:18px 0;">
+          <span style="font-family:'Hepta Slab',serif;font-size:30px;color:var(--red);flex-shrink:0;line-height:1;">05</span>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;">Designers boxed in</h3>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+        <div style="padding:18px;border-radius:12px;background:rgba(255,99,50,0.05);border:1px solid rgba(255,99,50,0.15);">
+          <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Lock-in</div>
+          <p class="body-text">Mantine sits under every component; the system isn't ours end-to-end.</p>
+        </div>
+        <div style="padding:18px;border-radius:12px;background:rgba(255,99,50,0.05);border:1px solid rgba(255,99,50,0.15);">
+          <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Drift</div>
+          <p class="body-text">Figma and code drift apart; neither is canonical. Both are maintained separately.</p>
+        </div>
+        <div style="padding:18px;border-radius:12px;background:rgba(255,99,50,0.05);border:1px solid rgba(255,99,50,0.15);">
+          <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Scale blocker</div>
+          <p class="body-text">Each net-new component re-litigates tokens, theming, locale, a11y, motion, and loading states from scratch. Designers have no sanctioned way to extend.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 · SOLUTION ══ -->
+<div class="slide slide-grid layout-vc" data-section="solution">
+  <div style="width:100%;">
+    <span class="overline green">The solution</span>
+    <h2>An AI-native component library,<br>full feature set <em style="color:var(--green);">baked in</em></h2>
+    <div class="grid-3" style="margin-top:24px;">
+      <div class="card">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="card-label" style="color:var(--accent);">Tokens + theming</div>
+        <h3>Design tokens, density, dark mode</h3>
+        <p>Compact / regular density tokens, shared easing + duration scale, reduced-motion out of the box.</p>
+      </div>
+      <div class="card">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="card-label" style="color:var(--accent2);">A11y + locale</div>
+        <h3>Accessible, keyboard navigable, i18n-ready</h3>
+        <p>React Aria handles ARIA patterns. Locale and i18n wired into every component from the start.</p>
+      </div>
+      <div class="card">
+        <div style="width:34px;height:34px;border-radius:9px;background:rgba(61,186,126,0.13);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="card-label" style="color:var(--green);">core.md</div>
+        <h3>AI-readable component contract</h3>
+        <p>Per-component doc: intent, anatomy, tokens, states, a11y, do/don't. An agent can implement from it.</p>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:20px 24px;border-radius:14px;background:linear-gradient(rgba(79,128,245,0.06),rgba(79,128,245,0.06)),linear-gradient(170deg,var(--bg2),var(--bg));border:1px solid rgba(79,128,245,0.22);display:flex;gap:32px;align-items:center;flex-wrap:wrap;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);">New operating model</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:var(--text-dim);">📁 Library fully in code</span>
+        <span style="font-size:13px;color:var(--text-dim);">🔁 MCP renders Figma from code</span>
+        <span style="font-size:13px;color:var(--text-dim);">🧩 Designers scaffold on-contract</span>
+        <span style="font-size:13px;color:var(--text-dim);">📐 Full pages from prompt + low-fi</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 06 · MILESTONES ══ -->
+<div class="slide slide-dots layout-vc" data-section="progress">
+  <div style="width:100%;">
+    <span class="overline purple">Progress so far</span>
+    <h2>Foundations to first organisms</h2>
+    <div style="display:flex;gap:20px;margin-top:24px;align-items:stretch;">
+      <!-- Foundations column -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">Foundations</div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(79,128,245,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Atoms &amp; simple components</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;margin-left:18px;">Buttons, links, form controls, tokens — all rebuilt on React Aria → ids-core</p>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(79,128,245,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Motion atoms</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;margin-left:18px;">Canonical easing/duration scale wired system-wide, with <code style="font-size:11px;">prefers-reduced-motion</code></p>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(79,128,245,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Skeletons / shimmers</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;margin-left:18px;">First-class loading pattern, not an afterthought</p>
+        </div>
+      </div>
+      <!-- This week column -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;">This past week</div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.07),rgba(124,90,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg));">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);flex-shrink:0;"></div>
+            <span style="font-size:13px;font-weight:600;color:var(--text);">Searchable icon library, in code</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;margin-left:18px;">Full icon set, categorized and searchable. Lives in the codebase.</p>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.07),rgba(124,90,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg));">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);flex-shrink:0;"></div>
+            <span style="font-size:13px;font-weight:600;color:var(--text);">First organisms in the library</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:6px;margin-left:18px;">Navigation Bar with full compound-component API. Atom → organism model proven.</p>
+        </div>
+      </div>
+      <!-- Cleared column -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:4px;">Mantine cleared</div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(61,186,126,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">MenuBase</span>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(61,186,126,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Stepper</span>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(61,186,126,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Drawer + Notification Drawer</span>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(61,186,126,0.2);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">MultiselectDropdown</span>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px;border-color:rgba(245,166,35,0.3);background:linear-gradient(rgba(245,166,35,0.05),rgba(245,166,35,0.05)),linear-gradient(170deg,var(--bg2),var(--bg));">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text-dim);">Date-picker family — in progress</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 07 · GOAL ══ -->
+<div class="slide slide-dots layout-vc" data-section="progress">
+  <div style="width:100%;">
+    <span class="overline amber">The goal</span>
+    <h2>What we're hoping to achieve</h2>
+    <div class="grid-2" style="margin-top:24px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(79,128,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">Fully code-owned, Mantine-free</h3>
+              <p>Our system, end to end. No third-party dependency under the component API.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(124,90,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">One source of truth</h3>
+              <p>Code drives Figma via MCP, ending design/code drift for good.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(61,186,126,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">AI-implementable components</h3>
+              <p>Any component, implementable by an agent from its core.md contract alone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(197,90,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">Designers empowered to extend</h3>
+              <p>Break away from the system — on-system. Scaffold components and whole pages from a prompt + low-fi.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(245,166,35,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">Extensible and scalable</h3>
+              <p>Process captured in context files — other designers can pick it up and run with it.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(79,128,245,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">Clean engineering handoff</h3>
+              <p>Once a scaffold is finished, an engineer builds the backend pipeline directly from that work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 08 · SUCCESS MEASURES ══ -->
+<div class="slide slide-grid layout-vc" data-section="progress">
+  <div style="width:100%;">
+    <span class="overline green">Success measures</span>
+    <h2>How we'll know it worked</h2>
+    <div style="display:flex;gap:24px;margin-top:28px;align-items:stretch;">
+      <!-- Primary test -->
+      <div style="flex:0 0 38%;display:flex;flex-direction:column;gap:0;">
+        <div style="padding:28px;border-radius:18px;background:linear-gradient(rgba(79,128,245,0.08),rgba(79,128,245,0.08)),linear-gradient(170deg,var(--bg2),var(--bg));border:1.5px solid rgba(79,128,245,0.3);height:100%;display:flex;flex-direction:column;gap:14px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);">Primary test</div>
+          <div style="font-family:'Hepta Slab',serif;font-size:clamp(36px,4vw,56px);font-weight:400;color:var(--accent);line-height:1;">2</div>
+          <h3 style="font-size:18px;font-family:'Hepta Slab',serif;font-weight:400;">Real projects with Platform leads</h3>
+          <p class="body-text">Partners TBD — two actual product workstreams, not a demo environment.</p>
+          <div class="divider" style="margin:0;"></div>
+          <div style="font-size:13px;color:var(--text-dim);"><strong style="color:var(--text);">The measure:</strong> scaffold accuracy — how faithfully AI-scaffolded components and pages match intent and the component contract, with minimal manual correction.</div>
+        </div>
+      </div>
+      <!-- Supporting signals -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Supporting signals</div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Net-new components built entirely on-system</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:4px;margin-left:17px;">No Mantine, full quality bar met: tokens, a11y, i18n, motion, docs</p>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Code → Figma round-trip works via MCP</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:4px;margin-left:17px;">Components in code visually rendered in Figma without manual design work</p>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">A new designer can scaffold from context files alone</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:4px;margin-left:17px;">No tribal knowledge required — the system explains itself</p>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text);">Clean scaffold → engineering backend pipeline handoff</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:4px;margin-left:17px;">Engineers can take a finished scaffold and build directly from it</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 09 · NEXT STEPS ══ -->
+<div class="slide slide-dots layout-vc" data-section="next">
+  <div style="width:100%;">
+    <span class="overline purple">What's next</span>
+    <h2>Five steps to the pilot</h2>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:32px;">
+      <div style="display:flex;align-items:flex-start;gap:28px;padding:22px 0;border-bottom:1px solid var(--line);">
+        <span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--accent);flex-shrink:0;line-height:1;width:52px;">01</span>
+        <div>
+          <h3 style="font-size:19px;font-family:'Hepta Slab',serif;font-weight:400;">Finish the library rebuild</h3>
+          <p class="body-text" style="margin-top:4px;">Clear remaining Mantine (Date-picker family) and continue net-new components on-contract.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:28px;padding:22px 0;border-bottom:1px solid var(--line);">
+        <span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--accent2);flex-shrink:0;line-height:1;width:52px;">02</span>
+        <div>
+          <h3 style="font-size:19px;font-family:'Hepta Slab',serif;font-weight:400;">Build templates</h3>
+          <p class="body-text" style="margin-top:4px;">Rules around layouts so scaffolding produces coherent pages, not just coherent components.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:28px;padding:22px 0;border-bottom:1px solid var(--line);">
+        <span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--magenta);flex-shrink:0;line-height:1;width:52px;">03</span>
+        <div>
+          <h3 style="font-size:19px;font-family:'Hepta Slab',serif;font-weight:400;">Close the loop to engineering</h3>
+          <p class="body-text" style="margin-top:4px;">Once a scaffold is finished, an engineer builds the backend pipeline directly from that work.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:28px;padding:22px 0;border-bottom:1px solid var(--line);">
+        <span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--green);flex-shrink:0;line-height:1;width:52px;">04</span>
+        <div>
+          <h3 style="font-size:19px;font-family:'Hepta Slab',serif;font-weight:400;">Run the pilot</h3>
+          <p class="body-text" style="margin-top:4px;">Two real projects with Platform leads (TBD). Templates + eng-pipeline make it a real end-to-end test.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:28px;padding:22px 0;">
+        <span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--amber);flex-shrink:0;line-height:1;width:52px;">05</span>
+        <div>
+          <h3 style="font-size:19px;font-family:'Hepta Slab',serif;font-weight:400;">Measure scaffold accuracy and iterate</h3>
+          <p class="body-text" style="margin-top:4px;">Learn from the pilot. Improve the contract + context files. Scale to other designers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slides -->
+
+<div id="hint" class="hint" style="opacity:1;">
+  <kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>Space</kbd> advance
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const sections = { context: 0, solution: 4, progress: 5, next: 8 };
+
+function updateNav() {
+  const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
+  let activeIdx = 0;
+  for (let i = 0; i < entries.length; i++) {
+    if (current >= entries[i][1]) activeIdx = i;
+  }
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn')[activeIdx]?.classList.add('active');
+  document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  document.body.classList.toggle('on-light', slides[current].classList.contains('slide-light'));
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+  document.getElementById('progressBar').style.width = (current / (total - 1)) * 100 + '%';
+}
+
+function goTo(i) {
+  if (i < 0 || i >= total || i === current) return;
+  const prev = slides[current];
+  prev.classList.remove('active');
+  if (i > current) { prev.classList.add('exit-up'); setTimeout(() => prev.classList.remove('exit-up'), 500); }
+  current = i;
+  slides[current].classList.add('active');
+  updateNav();
+  document.getElementById('hint').style.opacity = '0';
+}
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+function goToSection(n) { goTo(sections[n]); }
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) { dx < 0 ? nextSlide() : prevSlide(); }
+});
+
+slides[current].classList.add('active');
+updateNav();
+
+// ═══════ FLOW-LINES CANVAS ═══════
+(function () {
+  const canvas = document.getElementById('flow');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0, raf;
+  const LINES = 18, SPEED = 0.3;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function draw() {
+    t += SPEED;
+    ctx.clearRect(0, 0, w, h);
+    const isLight = document.body.classList.contains('on-light');
+    const baseAlpha = isLight ? 0.06 : 0.13;
+    for (let i = 0; i < LINES; i++) {
+      const y = (h / LINES) * i + Math.sin(t * 0.012 + i * 0.7) * 18;
+      const alpha = baseAlpha * (0.5 + 0.5 * Math.sin(t * 0.018 + i * 0.9));
+      const hue = 220 + Math.sin(t * 0.01 + i * 0.4) * 40;
+      ctx.strokeStyle = `hsla(${hue}, 80%, 65%, ${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let x = 0; x < w; x += 4) {
+        const wave = Math.sin((x * 0.006) + t * 0.022 + i * 0.5) * 14
+                   + Math.sin((x * 0.011) + t * 0.014 + i * 1.2) * 8;
+        if (x === 0) ctx.moveTo(x, y + wave);
+        else ctx.lineTo(x, y + wave);
+      }
+      ctx.stroke();
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+</script>
+</body>
+</html>
