@@ -311,7 +311,7 @@ h1 em, h2 em { font-style: normal; color: var(--magenta); }
 .metric-number.purple { color: var(--accent2); }
 .metric-number.amber { color: var(--amber); }
 .metric-label {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-dim);
   margin-top: 6px;
   line-height: 1.4;
@@ -520,8 +520,8 @@ h1 em, h2 em { font-style: normal; color: var(--magenta); }
   width: 100%;
   text-align: center;
 }
-.timeline-card h3 { font-size: 13px; color: #07101f; }
-.timeline-card p { font-size: 12px; color: #3a5070; margin-top: 4px; }
+.timeline-card h3 { font-size: 15px; color: #07101f; }
+.timeline-card p { font-size: 14px; color: #3a5070; margin-top: 4px; }
 
 /* ─── IMAGE WRAPPER ─── */
 .uploaded-img-wrap {
@@ -651,7 +651,7 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .comp-table th {
   padding: 10px 14px;
@@ -869,6 +869,11 @@ html.presenter-mode .nav-hint { display:none !important; }
 #p-notes::placeholder { color:rgba(226,232,244,0.2); }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-toggle-row { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13px; color:rgba(226,232,244,0.75); }
+.p-switch { width:36px; height:20px; border-radius:999px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.10); position:relative; cursor:pointer; padding:0; transition:background .18s, border-color .18s; flex-shrink:0; }
+.p-switch .p-knob { position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:rgba(226,232,244,0.85); transition:transform .18s; display:block; }
+.p-switch.on { background:rgba(61,186,126,0.45); border-color:rgba(61,186,126,0.7); }
+.p-switch.on .p-knob { transform:translateX(16px); background:#fff; }
 .p-reset-btn {
   margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
@@ -1013,7 +1018,7 @@ html.presenter-mode .nav-hint { display:none !important; }
           <div style="width:38px;height:38px;border-radius:9px;background:rgba(61,186,126,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
             <h3 style="font-size:16px;">Support their customers</h3>
-            <span class="tag green" style="font-size:10px;">This project lives here</span>
+            <span class="tag green" style="font-size:12px;">This project lives here</span>
           </div>
         </div>
       </div>
@@ -1039,22 +1044,22 @@ html.presenter-mode .nav-hint { display:none !important; }
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent);">2,200+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail banners</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">Powered by the Instacart Enterprise platform</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Powered by the Instacart Enterprise platform</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--green);">1.6B+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Grocery orders</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">Moved through the platform, lifetime</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Moved through the platform, lifetime</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--amber);">3,059</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail partners</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent2);">26M+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Customers reached</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">By early 2026, across North America</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">By early 2026, across North America</p>
       </div>
     </div>
       </div>
@@ -1119,7 +1124,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">01</span>
       </div>
       <h3 style="margin-bottom:12px">Disconnected data sources</h3>
-      <p style="font-size:12px;color:var(--text-dim)">Agents averaged <strong style="color:var(--red)">3–4 tab switches</strong> per order resolution</p>
+      <p style="font-size:14px;color:var(--text-dim)">Agents averaged <strong style="color:var(--red)">3–4 tab switches</strong> per order resolution</p>
     </div>
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
@@ -1129,7 +1134,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">02</span>
       </div>
       <h3 style="margin-bottom:12px">No order details visibility</h3>
-      <p style="font-size:12px;color:var(--text-dim)">Order lifecycle was <strong style="color:var(--red)">invisible</strong> from a single dashboard</p>
+      <p style="font-size:14px;color:var(--text-dim)">Order lifecycle was <strong style="color:var(--red)">invisible</strong> from a single dashboard</p>
     </div>
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
@@ -1139,7 +1144,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">03</span>
       </div>
       <h3 style="margin-bottom:12px">Poor search &amp; filtering</h3>
-      <p style="font-size:12px;color:var(--text-dim)">No universal search — <strong style="color:var(--red)">exact IDs required</strong></p>
+      <p style="font-size:14px;color:var(--text-dim)">No universal search — <strong style="color:var(--red)">exact IDs required</strong></p>
     </div>
   </div>
 </div>
@@ -1174,8 +1179,8 @@ html.presenter-mode .nav-hint { display:none !important; }
         <div style="display:flex;align-items:center;gap:8px;margin-top:16px">
           <div style="width:28px;height:28px;border-radius:50%;background:#4f80f5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">MS</div>
           <div>
-            <div style="font-size:12px;font-weight:600;color:#07101f">Maya S.</div>
-            <div style="font-size:11px;color:#3a5070">CX Team</div>
+            <div style="font-size:15px;font-weight:600;color:#07101f">Maya S.</div>
+            <div style="font-size:14px;color:#3a5070">CX Team</div>
           </div>
         </div>
       </div>
@@ -1185,8 +1190,8 @@ html.presenter-mode .nav-hint { display:none !important; }
         <div style="display:flex;align-items:center;gap:8px;margin-top:16px">
           <div style="width:28px;height:28px;border-radius:50%;background:#7c5cbf;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">CR</div>
           <div>
-            <div style="font-size:12px;font-weight:600;color:#07101f">Carlos R.</div>
-            <div style="font-size:11px;color:#3a5070">Retailer Support Team</div>
+            <div style="font-size:15px;font-weight:600;color:#07101f">Carlos R.</div>
+            <div style="font-size:14px;color:#3a5070">Retailer Support Team</div>
           </div>
         </div>
       </div>
@@ -1244,7 +1249,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <li>Tailored for retail CX workflows</li>
       </ul>
       <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-        <p style="font-size:12px;color:var(--accent);font-weight:500">Gap: no solution combined clarity + depth for retail support agents</p>
+        <p style="font-size:14px;color:var(--accent);font-weight:500">Gap: no solution combined clarity + depth for retail support agents</p>
       </div>
     </div>
   </div>
@@ -1355,7 +1360,7 @@ html.presenter-mode .nav-hint { display:none !important; }
     <div style="width:56px;height:3px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);border-radius:2px;margin:20px 0"></div>
     <p class="subtitle" style="margin-bottom:24px">We mapped the spectrum of internal tools to find our <strong style="color:#FFB856">balanced middle ground</strong>.</p>
     <div style="margin-bottom:24px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text-muted);margin-bottom:8px">
         <span>Simple consumer UIs</span>
         <span>Over-engineered</span>
       </div>
@@ -1621,29 +1626,29 @@ html.presenter-mode .nav-hint { display:none !important; }
         <div class="phase-item">
           <div class="phase-num blue">M1</div>
           <div style="text-align:center">
-            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Foundation</div>
-            <div style="font-size:11px;color:var(--text-dim)">New look + Search + Filters</div>
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">Foundation</div>
+            <div style="font-size:14px;color:var(--text-dim)">New look + Search + Filters</div>
           </div>
         </div>
         <div class="phase-item">
           <div class="phase-num purple">M2</div>
           <div style="text-align:center">
-            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Intelligence</div>
-            <div style="font-size:11px;color:var(--text-dim)">Status tracker + New actions</div>
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">Intelligence</div>
+            <div style="font-size:14px;color:var(--text-dim)">Status tracker + New actions</div>
           </div>
         </div>
         <div class="phase-item">
           <div class="phase-num green">M3</div>
           <div style="text-align:center">
-            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">History</div>
-            <div style="font-size:11px;color:var(--text-dim)">Order history + Chat</div>
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">History</div>
+            <div style="font-size:14px;color:var(--text-dim)">Order history + Chat</div>
           </div>
         </div>
         <div class="phase-item">
           <div class="phase-num amber">M4</div>
           <div style="text-align:center">
-            <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">Scale</div>
-            <div style="font-size:11px;color:var(--text-dim)">More automations...</div>
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">Scale</div>
+            <div style="font-size:14px;color:var(--text-dim)">More automations...</div>
           </div>
         </div>
       </div>
@@ -1651,28 +1656,28 @@ html.presenter-mode .nav-hint { display:none !important; }
         <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:10px">
             <span class="tag">M1</span>
-            <span style="font-size:13px;color:var(--text)">New look + Search + Filters</span>
+            <span style="font-size:14px;color:var(--text)">New look + Search + Filters</span>
           </div>
           <span class="tag green">Shipped</span>
         </div>
         <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:10px">
             <span class="tag purple">M2</span>
-            <span style="font-size:13px;color:var(--text)">Status tracker + New actions</span>
+            <span style="font-size:14px;color:var(--text)">Status tracker + New actions</span>
           </div>
           <span class="tag green">Shipped</span>
         </div>
         <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:10px">
             <span class="tag green">M3</span>
-            <span style="font-size:13px;color:var(--text)">Order history + Chat</span>
+            <span style="font-size:14px;color:var(--text)">Order history + Chat</span>
           </div>
           <span class="tag amber">In progress</span>
         </div>
         <div class="card" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:10px">
             <span class="tag amber">M4</span>
-            <span style="font-size:13px;color:var(--text)">More automations...</span>
+            <span style="font-size:14px;color:var(--text)">More automations...</span>
           </div>
           <span class="tag" style="color:var(--text-muted);border-color:var(--border)">Planned</span>
         </div>
@@ -1739,7 +1744,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label blue">01</span>
       </div>
       <h3>Ship in phases, not perfection</h3>
-      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Early shipping → <strong style="color:var(--accent)">real feedback loop</strong></p>
+      <p style="font-size:14px;color:var(--text-dim);margin-top:auto">Early shipping → <strong style="color:var(--accent)">real feedback loop</strong></p>
     </div>
     <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(124,90,245,0.3)">
       <div style="display:flex;align-items:center;gap:10px">
@@ -1749,7 +1754,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label purple">02</span>
       </div>
       <h3>Bring content &amp; research early</h3>
-      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Cross-functional input → <strong style="color:var(--accent2)">better mental models</strong></p>
+      <p style="font-size:14px;color:var(--text-dim);margin-top:auto">Cross-functional input → <strong style="color:var(--accent2)">better mental models</strong></p>
     </div>
     <div class="card" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-color:rgba(245,166,35,0.3)">
       <div style="display:flex;align-items:center;gap:10px">
@@ -1759,7 +1764,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label amber">03</span>
       </div>
       <h3>Balance usability with accuracy</h3>
-      <p style="font-size:12px;color:var(--text-dim);margin-top:auto">Tested every shortcut → <strong style="color:var(--amber)">zero regression in accuracy</strong></p>
+      <p style="font-size:14px;color:var(--text-dim);margin-top:auto">Tested every shortcut → <strong style="color:var(--amber)">zero regression in accuracy</strong></p>
     </div>
   </div>
 </div>
@@ -1951,6 +1956,7 @@ function initDotCanvas(canvasId) {
 })();
 
 // ─── NAVIGATION ───
+
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
@@ -2281,7 +2287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["This project imagined a new Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer support teams use daily to help customers having problems with delivery orders.\n\nFor this project I was the lead designer, worked closely with a researcher, data scientist, one front end and one back end eng. \n\nThe timeline to m1 launch was 2 months. ", "Quick context before we get into the problems.\n\nThe Orders Dashboard runs inside the Instacart Partner Platform, or IPP. It's the tool retailers use to configure their online and physical stores, manage their catalog and operations, and it's also where their teams do customer support.\n\nSupport is the corner of IPP where this project lives, and that's the space we set out to improve.", "Before we get into the problems, a quick sense of scale: what actually sits on the other side of this platform.\n\nThe Instacart Enterprise platform powers over 2,200 retail banners across roughly 3,000 retail partners, reaching over 26 million customers by early 2026. Over the platform's lifetime, 1.6 billion grocery orders have moved through it.\n\nThe point: these aren't internal tools nobody sees. These surfaces ARE Instacart in front of every retailer we're trying to win and keep.", "A little about Instacart business and operations:\nWe powers multiple retailers e-commerce website. throughout our white label product called SFX Pro.\nRetailers like Costco, Kroger, Safeway are powered by instacart technology, and we theme their websites through our design system using design tokens. \n\nSome terminology that would be helpful for this project:\nCX agents (that's what we call our internal instacart support) \nRetailer support (are the retailers front line, the first to answer and attempt to solve customer problems with an order.\n\nCX teams were using 4 outdated tools to track costumer and order information. \nThey came to us with a request to help unified those tools. Handling time for retailer escalation was pretty high, ranging 45-58 minutes. \n\nThrough research, we also found that retailer support were using some of those tools as well to look up information. \nBut worse for them, they weren't able to see order information, or cancel orders, provide refunds, reorder or reschedule. actions that should be pretty normal for a support team. \n\nSo to resolve some of those customer problems, retailer support team would need to escalate to our CX agents.\n\n\nMy goal was to create a unified dashboard with more visibility of order status, more execution power for retailers, faster answers, fewer escalations.", "So to recap, our main pain points were\n\nthat data lived in many places, different tools for different information, \n\n(order number would pull up a receipt, but not itemized list or order status for cs agents.)\n\nNone of the support teams had a clear picture of orders lifecycle end to end.\n\nfor all of them search was unreliable and lack management tools to filter them. \n\nThat combination slowed every interaction.", "We run a pretty intensive research sprint\nand 4 weeks we were able to learn the current workflows, and iterate on designs fast.\n\nWe heard from interviews with retailer, customers and we also benchmarked our competitors. \n\nwe learned that our agents kept saying, ‘I just need to find the order fast and trust the information I see.’ or other common phrase 'I can't see that on my dashboard, so I need to escalate to instacart '\nHelping with those issues became our Northstar.", "When we looked at competitor tools\n\nDoorDash: a restaurant-facing delivery service, very clear; weak agent tools \n\nAmazon Delivery: strong tracking & predictive logistics; and very complex UI\n\nOur target became: Amazon-level visibility + doordash's efficiency.", "We also receive feedback from sales team, and we wanted our tooling to reflect a unique selling point. \n\nLooking across leaders in the industry we try to map retailer needs to differentiators that could give our tools an edge over the competition from the retailer side. \n\nFor instacart those features were clear order visibility, universal search, predictive insights for retailers.", "We also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nWe decided to focused on a balance approach.", "The design principles to build our tool became\n\nSimplicity: simplify the complexity of the experience\n\nUnification: reduce to one single data source for information, users data and orders.  \n\nAnd ship fast: the project was very large, and our original goal to start shipping was wishing to months.\n\nso we opted for a phased delivery approach for quick wins that help the teams feel supported. ", "The first milestone was around adding data management tools\n\nwe focused on accelerating finding orders and customer information.\n\nhow to narrow results, through customizable filters\n\nand added the ability to save preferences so that support agents had the ability to customize their workflows and jump right back Into their preferences over different sessions. ", "Milestone two introduce order tracking visualization so that agents could easily see whether an order was going well, or not, and diagnosed the problem.\n\nWe also began adding some of that missing functionality, with guardrails like permissioning, allowing for first time for retailers to re-schedule, re-order, or refund without escalating to CX.\n\nWe added order details and customer information allowing agents to understand context in seconds, for example highlighting potentially risky costumer that call often for refunds. \n\nand we began testing displaying more data like Handling times, orders refunded, cost of orders refunded, cancel orders totals, etc. \n\nAlong with more insights that helped understand the metrics or highlight potential issues before they became loses. So if appeasements increased, a manager would take note and diagnose potential issues in a product, or coach the team on the cost of giving refunds willy Nelly. \n\nLastly we also started experimenting with upselling features in-line offering more support and help to retailers as they grew in size. One example of those products is that if a retailer is over capacity in their picking staff, they can request pickers from our workforce to come to their store and cover orders.\n", "We moved quickly — just 4 weeks from kickoff to prototype. and 4 more weeks M1 features to start shipping\n\nWe tested with CX and retailer teams weekly. \nwe got used to a cycle of reviews and feedback - we run presentation to Krogger, Costco, Hannafords to At the time we were still attempting to sign them into the platform. So we wanted to lure them, but also check the pulse on the design and the new actions we were adding..\n\nEng alignment was sequenced and kickedoff shortly after design, and we iterated in parallel. We Started with Backend, move to m1 when designs were able to be handed off.", "Here are some rough early iterations.\n\nYou can see the progression towards a rough mock, focused around search and adding some metrics\nand visualization graphs. Early on we were still pretty much centered around a table.\n\nThe first test releases gave immediate time savings via the new filters and search.\n\nThis new Universal search replaced the order number search. and allowed agents to search by name, phone number or order. \n", "As we continue to iterate and refine the visuals, \nwe started hearing that the table may not be as important in all use cases. specially for Retail managers,  \n\nSo we ended up having it as an optional customization. and under a role flag, so it will show for support but not for managers. \n\nWe centered more around actionable insights, education, upselling other services when the metrics show that a business could benefit from them, and search remain available as an entry point still that would take them to the table of results. ", "Here is the milestone breakdown\n\nM1 focused on providing quick wins on time savings with data management: universal search and filters.\nM2 to give more clarity and visibility, plus added superpowers to retailer support to lower escalation: Cancel, reorder etc.\n\nM3 is in progress last time I checked. Mostly slowed down by legal checking on PII - this milestone is focused on retrieving more data from shopper app, so we could display chat between costumers and shoppers, shopper location, etc and help diagnose delayed orders or potential fraud better.\n\nM4 was planned for later this year and it was about escaling actionable insights, but I'm going assumed with the new AI strategy company wide the approach may change. ", "Within two months, handling time dropped forty percent. \n\nWe consolidated 4 different internal dashboards into a new one, that provided managers and customer support a lot more clarity on their support metrics, costs, and resolved customer issues faster leading to also higher costumer satisfaction with delivery.\n\nEscalations to our internal CX team also fell 21% since we empowered Retailer support to handle issues themselves and faster.", "some lessons: — \n\nship value early and learn fast, so you can iterate. \n\nstay close to research, since I was able to stayed close to our users mental models. and I was able to iterate on the status tracker steps the nomenclature very quickly and get feedback from real users.\n\nAnd clarity always beats complexity - so balance usability and accuracy, without making the tool so complex that no-one can understand them.", "My biggest take away\n\nThis project reminded me that good internal tools aren’t about showing more data. they’re about giving people good context and the confidence to act. "]</script>
+<script id="deck-notes-data" type="application/json">["This project imagined a new Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer support teams use daily to help customers having problems with delivery orders.\n\nFor this project I was the lead designer, worked closely with a researcher, data scientist, one front end and one back end eng. \n\nThe timeline to m1 launch was 2 months. ", "Quick context before we get into the problems.\n\nThe Orders Dashboard runs inside the Instacart Partner Platform, or IPP. It's the tool retailers use to configure their online and physical stores, manage their catalog and operations, and it's also where their teams do customer support.\n\nSupport is the corner of IPP where this project lives, and that's the space we set out to improve.", "Before we get into the problems, a quick sense of scale: what actually sits on the other side of this platform.\n\nThe Instacart Enterprise platform powers over 2,200 retail banners across roughly 3,000 retail partners, reaching over 26 million customers by early 2026. Over the platform's lifetime, 1.6 billion grocery orders have moved through it.\n\nThe point: these aren't internal tools nobody sees. These surfaces ARE Instacart in front of every retailer we're trying to win and keep.", "A little about Instacart business and operations:\nWe powers multiple retailers e-commerce website. throughout our white label product called SFX Pro.\nRetailers like Costco, Kroger, Safeway are powered by instacart technology, and we theme their websites through our design system using design tokens. \n\nSome terminology that would be helpful for this project:\nCX agents (that's what we call our internal instacart support) \nRetailer support (are the retailers front line, the first to answer and attempt to solve customer problems with an order.\n\nCX teams were using 4 outdated tools to track costumer and order information. \nThey came to us with a request to help unified those tools. Handling time for retailer escalation was pretty high, ranging 45-58 minutes. \n\nThrough research, we also found that retailer support were using some of those tools as well to look up information. \nBut worse for them, they weren't able to see order information, or cancel orders, provide refunds, reorder or reschedule. actions that should be pretty normal for a support team. \n\nSo to resolve some of those customer problems, retailer support team would need to escalate to our CX agents.\n\n\nMy goal was to create a unified dashboard with more visibility of order status, more execution power for retailers, faster answers, fewer escalations.", "So to recap, our main pain points were\n\nthat data lived in many places, different tools for different information, \n\n(order number would pull up a receipt, but not itemized list or order status for cs agents.)\n\nNone of the support teams had a clear picture of orders lifecycle end to end.\n\nfor all of them search was unreliable and lack management tools to filter them. \n\nThat combination slowed every interaction.", "We run a pretty intensive research sprint\nand 4 weeks we were able to learn the current workflows, and iterate on designs fast.\n\nWe heard from interviews with retailer, customers and we also benchmarked our competitors. \n\nwe learned that our agents kept saying, ‘I just need to find the order fast and trust the information I see.’ or other common phrase 'I can't see that on my dashboard, so I need to escalate to instacart '\nHelping with those issues became our Northstar.", "When we looked at competitor tools\n\nDoorDash: a restaurant-facing delivery service, very clear; weak agent tools \n\nAmazon Delivery: strong tracking & predictive logistics; and very complex UI\n\nOur target became: Amazon-level visibility + doordash's efficiency.", "We also receive feedback from sales team, and we wanted our tooling to reflect a unique selling point. \n\nLooking across leaders in the industry we try to map retailer needs to differentiators that could give our tools an edge over the competition from the retailer side. \n\nFor instacart those features were clear order visibility, universal search, predictive insights for retailers.", "We also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nWe decided to focused on a balance approach.", "The design principles to build our tool became\n\nSimplicity: simplify the complexity of the experience\n\nUnification: reduce to one single data source for information, users data and orders.  \n\nAnd ship fast: the project was very large, and our original goal to start shipping was wishing to months.\n\nso we opted for a phased delivery approach for quick wins that help the teams feel supported. ", "The first milestone was around adding data management tools\n\nwe focused on accelerating finding orders and customer information.\n\nhow to narrow results, through customizable filters\n\nand added the ability to save preferences so that support agents had the ability to customize their workflows and jump right back Into their preferences over different sessions. ", "Milestone two introduce order tracking visualization so that agents could easily see whether an order was going well, or not, and diagnosed the problem.\n\nWe also began adding some of that missing functionality, with guardrails like permissioning, allowing for first time for retailers to re-schedule, re-order, or refund without escalating to CX.\n\nWe added order details and customer information allowing agents to understand context in seconds, for example highlighting potentially risky costumer that call often for refunds. \n\nand we began testing displaying more data like Handling times, orders refunded, cost of orders refunded, cancel orders totals, etc. \n\nAlong with more insights that helped understand the metrics or highlight potential issues before they became loses. So if appeasements increased, a manager would take note and diagnose potential issues in a product, or coach the team on the cost of giving refunds willy Nelly. \n\nLastly we also started experimenting with upselling features in-line offering more support and help to retailers as they grew in size. One example of those products is that if a retailer is over capacity in their picking staff, they can request pickers from our workforce to come to their store and cover orders.\n", "We moved quickly — just 4 weeks from kickoff to prototype. and 4 more weeks M1 features to start shipping\n\nWe tested with CX and retailer teams weekly. \nwe got used to a cycle of reviews and feedback - we run presentation to Krogger, Costco, Hannafords to At the time we were still attempting to sign them into the platform. So we wanted to lure them, but also check the pulse on the design and the new actions we were adding..\n\nEng alignment was sequenced and kickedoff shortly after design, and we iterated in parallel. We Started with Backend, move to m1 when designs were able to be handed off.", "Here are some rough early iterations.\n\nYou can see the progression towards a rough mock, focused around search and adding some metrics\nand visualization graphs. Early on we were still pretty much centered around a table.\n\nThe first test releases gave immediate time savings via the new filters and search.\n\nThis new Universal search replaced the order number search. and allowed agents to search by name, phone number or order. \n", "As we continue to iterate and refine the visuals, \nwe started hearing that the table may not be as important in all use cases. specially for Retail managers,  \n\nSo we ended up having it as an optional customization. and under a role flag, so it will show for support but not for managers. \n\nWe centered more around actionable insights, education, upselling other services when the metrics show that a business could benefit from them, and search remain available as an entry point still that would take them to the table of results. ", "Here is the milestone breakdown\n\nM1 focused on providing quick wins on time savings with data management: universal search and filters.\nM2 to give more clarity and visibility, plus added superpowers to retailer support to lower escalation: Cancel, reorder etc.\n\nM3 is in progress last time I checked. Mostly slowed down by legal checking on PII - this milestone is focused on retrieving more data from shopper app, so we could display chat between costumers and shoppers, shopper location, etc and help diagnose delayed orders or potential fraud better.\n\nM4 was planned for later this year and it was about escaling actionable insights, but I'm going assumed with the new AI strategy company wide the approach may change. ", "Within two months, handling time dropped forty percent. \n\nWe consolidated 4 different internal dashboards into a new one, that provided managers and customer support a lot more clarity on their support metrics, costs, and resolved customer issues faster leading to also higher costumer satisfaction with delivery.\n\nEscalations to our internal CX team also fell 21% since we empowered Retailer support to handle issues themselves and faster.", "some lessons: — \n\nship value early and learn fast, so you can iterate. \n\nstay close to research, since I was able to stayed close to our users mental models. and I was able to iterate on the status tracker steps the nomenclature very quickly and get feedback from real users.\n\nAnd clarity always beats complexity - so balance usability and accuracy, without making the tool so complex that no-one can understand them.", "My biggest take away\n\nThis project reminded me that good internal tools aren’t about showing more data. they’re about giving people good context and the confidence to act. ", "Open it up. The areas I'd most like to dig into are the research sprint, how the milestones were sequenced, and how the handling-time result was measured."]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -2321,7 +2327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="p-next-section">
       <div class="p-label">Up Next</div>
       <div class="p-next-title" id="p-next-title">—</div>
-      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+            <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
     </div>
   </div>
 </div>

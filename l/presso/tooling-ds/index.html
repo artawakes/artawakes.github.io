@@ -128,7 +128,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .card:hover::before { opacity: 1; }
 .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
 .card h3 { font-family: 'Hepta Slab', serif; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
-.card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-top: 7px; }
+.card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-top: 7px; }
 
 /* METRIC */
 .metric-card { position: relative; background: linear-gradient(170deg,var(--bg2),var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.25s, border-color 0.25s; }
@@ -137,7 +137,7 @@ h3 { font-size: clamp(16px,1.8vw,24px); font-weight: 600; line-height: 1.25; let
 .metric-number.green { color: var(--green); }
 .metric-number.accent { color: var(--accent); }
 .metric-number.purple { color: var(--accent2); }
-.metric-label { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+.metric-label { font-size: 14px; color: var(--text-dim); line-height: 1.4; }
 
 /* TAGS */
 .tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 999px; background: rgba(79,128,245,0.12); color: var(--accent); border: 1px solid rgba(79,128,245,0.22); }
@@ -163,8 +163,8 @@ html.light .timeline > .timeline-item, .slide-light .timeline > .timeline-item {
 .timeline-item { position: relative; }
 .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); margin-bottom: 14px; position: relative; z-index: 1; animation: timelinePing 3s ease-out infinite; }
 .timeline-q { font-family: 'Hepta Slab', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-.timeline-item h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
-.timeline-item p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+.timeline-item h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+.timeline-item p { font-size: 14px; color: var(--text-dim); line-height: 1.5; }
 
 /* BEFORE/AFTER */
 .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
@@ -686,6 +686,11 @@ html.presenter-mode .nav-hint { display:none !important; }
 #p-notes::placeholder { color:rgba(226,232,244,0.2); }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-toggle-row { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13px; color:rgba(226,232,244,0.75); }
+.p-switch { width:36px; height:20px; border-radius:999px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.10); position:relative; cursor:pointer; padding:0; transition:background .18s, border-color .18s; flex-shrink:0; }
+.p-switch .p-knob { position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:rgba(226,232,244,0.85); transition:transform .18s; display:block; }
+.p-switch.on { background:rgba(61,186,126,0.45); border-color:rgba(61,186,126,0.7); }
+.p-switch.on .p-knob { transform:translateX(16px); background:#fff; }
 .p-reset-btn {
   margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
@@ -863,30 +868,30 @@ html.presenter-mode .nav-hint { display:none !important; }
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent);">2,200+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail banners</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">Powered by the Instacart Enterprise platform</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Powered by the Instacart Enterprise platform</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent2);">9,000+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Brand advertisers</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">Connected across the ads ecosystem</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Connected across the ads ecosystem</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--green);">1.6B+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Grocery orders</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">Moved through the platform, lifetime</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Moved through the platform, lifetime</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--amber);">3,059</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail partners</div>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
       </div>
     </div>
     <div class="card" style="margin-top:14px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; border-color:rgba(79,128,245,0.25); background:linear-gradient(rgba(79,128,245,0.04), rgba(79,128,245,0.04)), linear-gradient(170deg,var(--bg2),var(--bg));">
       <div class="card-label" style="margin-bottom:0; color:var(--accent);">The financials</div>
       <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:baseline;">
-        <div><span style="font-size:22px; font-weight:800; color:var(--text);">$800M+</span>&nbsp;<span style="font-size:12px; color:var(--text-muted);">net ad revenue via Ads Manager, 2024</span></div>
-        <div><span style="font-size:22px; font-weight:800; color:var(--text);">25%</span>&nbsp;<span style="font-size:12px; color:var(--text-muted);">avg. sales boost for advertised brands</span></div>
-        <div><span style="font-size:22px; font-weight:800; color:var(--text);">23x</span>&nbsp;<span style="font-size:12px; color:var(--text-muted);">ROI on Eversight pricing pilot, next TDS adopter</span></div>
+        <div><span style="font-size:22px; font-weight:800; color:var(--text);">$800M+</span>&nbsp;<span style="font-size:14px; color:var(--text-muted);">net ad revenue via Ads Manager, 2024</span></div>
+        <div><span style="font-size:22px; font-weight:800; color:var(--text);">25%</span>&nbsp;<span style="font-size:14px; color:var(--text-muted);">avg. sales boost for advertised brands</span></div>
+        <div><span style="font-size:22px; font-weight:800; color:var(--text);">23x</span>&nbsp;<span style="font-size:14px; color:var(--text-muted);">ROI on Eversight pricing pilot, next TDS adopter</span></div>
       </div>
     </div>
   </div>
@@ -1875,7 +1880,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(124,90,245,0.9),transparent);"></span>
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px;">
           <div class="card-label" style="margin-bottom:0; color:var(--accent2);">TDS Figma library layer count</div>
-          <span style="font-size:10.5px; color:var(--faint);">lower = faster library</span>
+          <span style="font-size:12px; color:var(--faint);">lower = faster library</span>
         </div>
         <svg viewBox="0 0 560 150" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -1909,7 +1914,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span style="position:absolute; top:-1px; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,rgba(124,90,245,0.9),transparent);"></span>
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px;">
           <div class="card-label" style="margin-bottom:0; color:var(--accent);">TDS adoption · share of total inserts</div>
-          <span style="font-size:10.5px; color:var(--faint);">projection to Dec '26</span>
+          <span style="font-size:12px; color:var(--faint);">projection to Dec '26</span>
         </div>
         <svg viewBox="0 0 560 150" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg">
           <g stroke="rgba(122,144,168,0.16)" stroke-width="1">
@@ -2020,6 +2025,7 @@ html.presenter-mode .nav-hint { display:none !important; }
 </div>
 
 <script>
+
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
@@ -2739,7 +2745,7 @@ if(false)(function(){
     <div class="p-next-section">
       <div class="p-label">Up Next</div>
       <div class="p-next-title" id="p-next-title">—</div>
-      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+            <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
     </div>
   </div>
 </div>

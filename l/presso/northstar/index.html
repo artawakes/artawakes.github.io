@@ -179,7 +179,7 @@ h1 em, h2 em { font-style: normal; color: var(--magenta); }
 .metric-number.accent { color: var(--accent); }
 .metric-number.purple { color: var(--accent2); }
 .metric-number.amber { color: var(--amber); }
-.metric-label { font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
+.metric-label { font-size: 14px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
 
 /* ─── TAGS ─── */
 .tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(79,128,245,0.3); background:linear-gradient(rgba(79,128,245,0.08), rgba(79,128,245,0.08)), linear-gradient(170deg,var(--bg2),var(--bg)); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
@@ -261,7 +261,7 @@ html.light .slide { background-color: var(--bg); background-image: radial-gradie
 /* ─── STAT CALLOUT ─── */
 .stat-callout { display: flex; flex-direction: column; gap: 2px; }
 .stat-number { font-family: 'Hepta Slab', serif; font-size: clamp(36px, 4.5vw, 64px); font-weight: 400; line-height: 1; letter-spacing: -0.03em; }
-.stat-label { font-size: 13px; color: var(--text-dim); font-weight: 400; }
+.stat-label { font-size: 14px; color: var(--text-dim); font-weight: 400; }
 
 /* ─── PHASE TRACK ─── */
 .phase-track { display: flex; gap: 0; position: relative; }
@@ -378,6 +378,11 @@ html.presenter-mode .nav-hint { display:none !important; }
 #p-notes::placeholder { color:rgba(226,232,244,0.2); }
 #p-notes:focus { border-color:rgba(79,128,245,0.42); background:rgba(79,128,245,0.045); }
 .p-next-title { font-size:14px; color:rgba(226,232,244,0.65); line-height:1.45; }
+.p-toggle-row { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13px; color:rgba(226,232,244,0.75); }
+.p-switch { width:36px; height:20px; border-radius:999px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.10); position:relative; cursor:pointer; padding:0; transition:background .18s, border-color .18s; flex-shrink:0; }
+.p-switch .p-knob { position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:rgba(226,232,244,0.85); transition:transform .18s; display:block; }
+.p-switch.on { background:rgba(61,186,126,0.45); border-color:rgba(61,186,126,0.7); }
+.p-switch.on .p-knob { transform:translateX(16px); background:#fff; }
 .p-reset-btn {
   margin-top:auto; background:linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), linear-gradient(170deg,var(--bg2),var(--bg)); border:1px solid rgba(255,255,255,0.1);
   color:rgba(226,232,244,0.4); border-radius:6px; padding:6px 12px; font-size:11px;
@@ -620,7 +625,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">01</span>
       </div>
       <h3 style="margin-bottom:10px">Fragmented app</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Multiple disconnected surfaces forced shoppers to context-switch constantly, increasing cognitive overhead on every batch.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.55">Multiple disconnected surfaces forced shoppers to context-switch constantly, increasing cognitive overhead on every batch.</p>
     </div>
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -630,7 +635,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">02</span>
       </div>
       <h3 style="margin-bottom:10px">High cognitive load</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Overwhelming information density with no clear hierarchy. Shoppers — especially new ones — felt lost and made more errors.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.55">Overwhelming information density with no clear hierarchy. Shoppers — especially new ones — felt lost and made more errors.</p>
     </div>
     <div class="card" style="border-color:rgba(255,99,50,0.25);background:linear-gradient(rgba(255,99,50,0.04), rgba(255,99,50,0.04)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -640,7 +645,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label red">03</span>
       </div>
       <h3 style="margin-bottom:10px">No guidance for complex tasks</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.55">Shoppers faced complex scenarios — substitutions, multi-store batches, customer issues — with no in-app guidance or support.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.55">Shoppers faced complex scenarios — substitutions, multi-store batches, customer issues — with no in-app guidance or support.</p>
     </div>
   </div>
   <div class="slide3-imgs">
@@ -703,44 +708,44 @@ html.presenter-mode .nav-hint { display:none !important; }
 <div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
   <canvas class="dots-canvas" id="canvas-5" width="1920" height="1145"></canvas>
   <span class="overline purple">Strategy</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:80px">Three design principles that guided every decision</h2>
+  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:28px">Three design principles that guided every decision</h2>
   <div style="display:flex;justify-content:space-evenly;margin-top:0">
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/LFW-store info.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/shopping-to do.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/prepare to shop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Frame 2147204126 1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
-    <div class="uploaded-img-wrap" style="width:221px;height:481px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:200px;height:435px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/LFW-store info.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:200px;height:435px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/shopping-to do.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:200px;height:435px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/prepare to shop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:200px;height:435px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Frame 2147204126 1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
+    <div class="uploaded-img-wrap" style="width:200px;height:435px;flex-shrink:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1)" data-edit-bound="1"><img src="images/slide5/Delivery-personalization.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block"></div>
   </div>
-  <div class="grid-3" style="margin-top:80px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+  <div class="grid-3" style="margin-top:20px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
     <div class="card" style="border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.05), rgba(79,128,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box blue">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
         </div>
-        <span class="card-label" style="font-size:10px">Principle 01</span>
+        <span class="card-label" style="font-size:12px">Principle 01</span>
       </div>
       <h3 style="font-size:16px;margin-bottom:6px">Human touch</h3>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.5">Celebrate effort, acknowledge difficulty, and build genuine connection into every interaction.</p>
     </div>
     <div class="card" style="border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.05), rgba(124,90,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box purple">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
         </div>
-        <span class="card-label purple" style="font-size:10px">Principle 02</span>
+        <span class="card-label purple" style="font-size:12px">Principle 02</span>
       </div>
       <h3 style="font-size:16px;margin-bottom:6px">Guidance</h3>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Surface the right information at the right moment with clear, contextual cues.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.5">Surface the right information at the right moment with clear, contextual cues.</p>
     </div>
     <div class="card" style="border-color:rgba(61,186,126,0.3);background:linear-gradient(rgba(61,186,126,0.05), rgba(61,186,126,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div class="icon-box green">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
-        <span class="card-label green" style="font-size:10px">Principle 03</span>
+        <span class="card-label green" style="font-size:12px">Principle 03</span>
       </div>
       <h3 style="font-size:16px;margin-bottom:6px">System cohesion</h3>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.5">Three pods, one experience. Shared design language, patterns, and decisions.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.5">Three pods, one experience. Shared design language, patterns, and decisions.</p>
     </div>
   </div>
 </div>
@@ -770,8 +775,8 @@ html.presenter-mode .nav-hint { display:none !important; }
           <li>Proactive alerts for store-specific issues</li>
         </ul>
         <div style="margin-top:12px">
-          <span class="tag" style="font-size:10px">↑ Shopper confidence</span>
-          <span class="tag" style="margin-left:8px;font-size:10px">↑ Efficiency</span>
+          <span class="tag" style="font-size:12px">↑ Shopper confidence</span>
+          <span class="tag" style="margin-left:8px;font-size:12px">↑ Efficiency</span>
         </div>
       </div>
       <div style="width:260px;flex-shrink:0">
@@ -795,8 +800,8 @@ html.presenter-mode .nav-hint { display:none !important; }
           <li>Objective, outcome-based performance reviews</li>
         </ul>
         <div style="margin-top:12px">
-          <span class="tag purple" style="font-size:10px">↑ Motivation</span>
-          <span class="tag green" style="margin-left:8px;font-size:10px">↑ Retention</span>
+          <span class="tag purple" style="font-size:12px">↑ Motivation</span>
+          <span class="tag green" style="margin-left:8px;font-size:12px">↑ Retention</span>
         </div>
       </div>
       <div style="width:260px;flex-shrink:0">
@@ -823,17 +828,17 @@ html.presenter-mode .nav-hint { display:none !important; }
       <div class="card" style="border-color:rgba(79,128,245,0.25)">
         <div class="card-label" style="margin-bottom:8px">What we solved</div>
         <ul class="bullet-list" style="gap:8px">
-          <li style="font-size:13px">Eliminated duplicate components across pods</li>
-          <li style="font-size:13px">Established shared color, type &amp; spacing tokens</li>
-          <li style="font-size:13px">Documented patterns for common shopper flows</li>
+          <li style="font-size:14px">Eliminated duplicate components across pods</li>
+          <li style="font-size:14px">Established shared color, type &amp; spacing tokens</li>
+          <li style="font-size:14px">Documented patterns for common shopper flows</li>
         </ul>
       </div>
       <div class="card" style="border-color:rgba(61,186,126,0.25)">
         <div class="card-label green" style="margin-bottom:8px">Outcomes</div>
         <ul class="bullet-list green" style="gap:8px">
-          <li style="font-size:13px">Faster cross-pod iteration</li>
-          <li style="font-size:13px">Consistent experience across all surfaces</li>
-          <li style="font-size:13px">Reduced design-dev rework</li>
+          <li style="font-size:14px">Faster cross-pod iteration</li>
+          <li style="font-size:14px">Consistent experience across all surfaces</li>
+          <li style="font-size:14px">Reduced design-dev rework</li>
         </ul>
       </div>
     </div>
@@ -906,9 +911,9 @@ html.presenter-mode .nav-hint { display:none !important; }
   <div class="divider"></div>
   <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
     <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
+      <span class="tag red" style="font-size:12px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Awkward pop-ups</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Generic pop-ups displaying in untimely moments — interrupting workflows, missed by shoppers, adding friction instead of value.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">Generic pop-ups displaying in untimely moments — interrupting workflows, missed by shoppers, adding friction instead of value.</p>
     </div>
     <div style="width:300px;border-radius:20px;overflow:hidden;flex-shrink:0">
       <img src="images/9/1.png" style="width:100%;display:block">
@@ -917,9 +922,9 @@ html.presenter-mode .nav-hint { display:none !important; }
       <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
+      <span class="tag green" style="font-size:12px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Timely lock-screen cards</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Live Notifications surfaced on the lock screen based on geolocation — appearing at exactly the right moment, before the shopper even opens the app.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">Live Notifications surfaced on the lock screen based on geolocation — appearing at exactly the right moment, before the shopper even opens the app.</p>
     </div>
     <div style="width:405px;border-radius:20px;overflow:hidden;flex-shrink:0">
       <img src="images/9/2.png" style="width:100%;display:block">
@@ -936,9 +941,9 @@ html.presenter-mode .nav-hint { display:none !important; }
   <div class="divider"></div>
   <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
     <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
+      <span class="tag red" style="font-size:12px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Generic celebratory toasts</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Static, one-size-fits-all congratulations with no data or context. Shoppers couldn't understand what drove their earnings or how to improve.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">Static, one-size-fits-all congratulations with no data or context. Shoppers couldn't understand what drove their earnings or how to improve.</p>
     </div>
     <div style="width:240px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
       <img src="images/10/1.png" style="width:100%;display:block">
@@ -947,9 +952,9 @@ html.presenter-mode .nav-hint { display:none !important; }
       <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
+      <span class="tag green" style="font-size:12px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Dashboards tied to earnings</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A dynamic dashboard showing trends, streaks, and earnings breakdowns. Shoppers can now understand their performance and take action to improve it.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">A dynamic dashboard showing trends, streaks, and earnings breakdowns. Shoppers can now understand their performance and take action to improve it.</p>
     </div>
     <div style="width:300px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
       <img src="images/10/2.png" style="width:100%;display:block">
@@ -966,9 +971,9 @@ html.presenter-mode .nav-hint { display:none !important; }
   <div class="divider"></div>
   <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start;justify-content:center">
     <div class="ba-card ba-before" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag red" style="font-size:10px;align-self:flex-start">Before</span>
+      <span class="tag red" style="font-size:12px;align-self:flex-start">Before</span>
       <h3 style="font-size:16px;color:var(--red)">Subjective star ratings</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">A single 1–5 star rating per order, highly susceptible to customer bias. No context, no explanation — shoppers couldn't appeal or learn from feedback.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">A single 1–5 star rating per order, highly susceptible to customer bias. No context, no explanation — shoppers couldn't appeal or learn from feedback.</p>
     </div>
     <div style="width:240px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
       <img src="images/11/1.png" style="width:100%;display:block">
@@ -977,9 +982,9 @@ html.presenter-mode .nav-hint { display:none !important; }
       <svg class="arrow-bounce" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </div>
     <div class="ba-card ba-after" style="width:264px;flex-shrink:0;display:flex;flex-direction:column;gap:14px">
-      <span class="tag green" style="font-size:10px;align-self:flex-start">After</span>
+      <span class="tag green" style="font-size:12px;align-self:flex-start">After</span>
       <h3 style="font-size:16px;color:var(--green)">Objective, outcome-based metrics</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Performance based on actual outcomes: on-time deliveries, substitution quality, item found rates. Fair, transparent, and actionable for every shopper.</p>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.6">Performance based on actual outcomes: on-time deliveries, substitution quality, item found rates. Fair, transparent, and actionable for every shopper.</p>
     </div>
     <div style="width:300px;border-radius:20px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.18);flex-shrink:0">
       <img src="images/11/2.png" style="width:100%;display:block">
@@ -1004,7 +1009,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label green">Satisfaction</span>
       </div>
       <div class="metric-number green" style="font-size:56px;line-height:1;margin-bottom:8px">+8%</div>
-      <h3 style="font-size:15px;min-height:60px">Shopper satisfaction measured via post-batch surveys across 100K+ active shoppers</h3>
+      <div class="metric-label" style="min-height:60px;margin-top:0">Shopper satisfaction measured via post-batch surveys across 100K+ active shoppers</div>
     </div>
     <div class="card" style="display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
@@ -1014,7 +1019,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label">Batch acceptance</span>
       </div>
       <div class="metric-number accent" style="font-size:56px;line-height:1;margin-bottom:8px">+5%</div>
-      <h3 style="font-size:15px;min-height:60px">Shoppers accepting more batches after dashboard and guidance improvements</h3>
+      <div class="metric-label" style="min-height:60px;margin-top:0">Shoppers accepting more batches after dashboard and guidance improvements</div>
     </div>
     <div class="card" style="display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
@@ -1024,7 +1029,7 @@ html.presenter-mode .nav-hint { display:none !important; }
         <span class="card-label purple">Diamond retention</span>
       </div>
       <div class="metric-number purple" style="font-size:56px;line-height:1;margin-bottom:8px">↑</div>
-      <h3 style="font-size:15px;min-height:60px">Reduced churn among top-tier shoppers — most impactful cohort for platform health</h3>
+      <div class="metric-label" style="min-height:60px;margin-top:0">Reduced churn among top-tier shoppers — most impactful cohort for platform health</div>
     </div>
   </div>
 </div>
@@ -1317,6 +1322,7 @@ function initDotWaveCanvas(canvasId) {
 })();
 
 // ─── NAVIGATION ───
+
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
@@ -1678,7 +1684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="p-next-section">
       <div class="p-label">Up Next</div>
       <div class="p-next-title" id="p-next-title">—</div>
-      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+            <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
     </div>
   </div>
 </div>
