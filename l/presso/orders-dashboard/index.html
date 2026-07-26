@@ -101,15 +101,31 @@ html:not(.light) .tb-moon { display: none; }
   overflow: hidden;
   background: transparent;
 }
-.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.enter-above { transform: translateY(-28px); }
 .slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide.exit-down { opacity: 0; transform: translateY(28px); }
 .slide.exit-left { opacity: 0; transform: translateX(-100%); }
 .slide.exit-right { opacity: 0; transform: translateX(100%); }
+/* .active is declared last on purpose: equal specificity to the exit rules, so
+   it must win if a slide is re-entered while an exit class is still on it. */
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
 .slide.enter-right { animation: slideFromRight 0.5s cubic-bezier(0.4,0,0.2,1) both; }
 .slide.enter-left { animation: slideFromLeft 0.5s cubic-bezier(0.4,0,0.2,1) both; }
 @keyframes slideFromRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 @keyframes slideFromLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-#slide-7, #slide-8 { transform: none !important; }
+/* #slide-7 / #slide-8 are the two full-bleed slides; they fade without moving.
+   Belt and braces with the inline transform:none they already carry. */
+/* The two full-bleed slides skip the deck's vertical travel (it would expose the
+   edge of the bleed). Deliberately NOT !important: an id beats the .slide and
+   .slide.active rules on its own, and dropping !important lets the horizontal
+   enter animation through, since animations outrank normal declarations but lose
+   to !important ones. The inline transform:none on both divs backs this up. */
+#slide-7, #slide-8 { transform: none; }
+/* Offscreen slides must not keep painting behind the one you are on: the grid
+   scan animates a mask and the logo marquee scrolls 15 images, both forever.
+   The marquee needs !important because its animation is declared inline. */
+.slide-grid:not(.active)::after { animation-play-state: paused; }
+.slide:not(.active) .logo-marquee { animation-play-state: paused !important; }
 #slide-7.active, #slide-8.active { opacity: 1; pointer-events: all; }
 #slide-7.exit-left, #slide-8.exit-left { opacity: 0; transform: translateX(-100%) !important; }
 #slide-7.exit-right, #slide-8.exit-right { opacity: 0; transform: translateX(100%) !important; }
@@ -1044,7 +1060,7 @@ html.presenter-mode .nav-hint { display:none !important; }
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent);">2,200+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail banners</div>
-        <p style="font-size:14px; color:var(--text-muted); margin:0;">Powered by the Instacart Enterprise platform</p>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">Powered by the Instacart Partner Portal</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--green);">1.6B+</div>
@@ -1328,7 +1344,7 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
     <!-- Competitor screenshots marquee — edge to edge -->
     <div style="margin-top:48px;margin-left:-80px;margin-right:-80px;overflow:hidden">
-      <div style="display:flex;gap:16px;animation:marqueeScroll 30s linear infinite;width:max-content">
+      <div class="logo-marquee" style="display:flex;gap:16px;animation:marqueeScroll 30s linear infinite;width:max-content">
         <img src="images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
         <img src="images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
         <img src="images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
@@ -1977,21 +1993,57 @@ function updateNav() {
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
 }
 
+const EXITS = ['exit-up','exit-down','exit-left','exit-right'];
+let _exitTimer = null;
+/* The horizontal pair is matched by id, never by array index: two slides in this
+   deck carry no id, so index N is NOT id slide-N. Hardcoding indices is what put
+   the sideways transition on the wrong pair. */
+function isHorizontalPair(a, b) {
+  const x = slides[a].id, y = slides[b].id;
+  return (x === 'slide-7' && y === 'slide-8') || (x === 'slide-8' && y === 'slide-7');
+}
 function goTo(i) {
   if (location.hash === '#presenter') return; // no-op in presenter window
   if (i<0||i>=total||i===current) return;
   const prev = slides[current];
-  const isHorizontal = (current===6&&i===7)||(current===7&&i===6);
+  const next = slides[i];
+  const back = i < current;
   prev.classList.remove('active');
-  if (isHorizontal) {
-    const dir = i>current ? 'exit-left' : 'exit-right';
-    prev.classList.add(dir);
-    slides[i].classList.add(i>current ? 'enter-right' : 'enter-left');
-    setTimeout(()=>{ prev.classList.remove(dir); slides[i].classList.remove('enter-right','enter-left'); },500);
-  } else if (i>current) {
-    prev.classList.add('exit-up'); setTimeout(()=>prev.classList.remove('exit-up'),500);
+  /* An enter animation still on the outgoing slide would hold it at
+     translateX(0) and beat the exit transform, so drop it before exiting. */
+  prev.classList.remove('enter-right', 'enter-left', 'enter-above');
+  /* Flipping back and forth re-enters a slide inside the cleanup window, so
+     clear its exit class now rather than waiting for the timer to do it. */
+  EXITS.forEach(function(c){ next.classList.remove(c); });
+  if (isHorizontalPair(current, i)) {
+    prev.classList.add(back ? 'exit-right' : 'exit-left');
+    next.classList.add(back ? 'enter-left' : 'enter-right');
+  } else {
+    /* Both slides have to travel the same direction. Without exit-down the
+       outgoing slide drifted DOWN to the base transform while the incoming one
+       came UP, so they crossed past each other mid-fade. */
+    prev.classList.add(back ? 'exit-down' : 'exit-up');
+    if (back) { next.classList.add('enter-above'); void next.offsetWidth; }
   }
-  current=i; slides[current].classList.add('active'); updateNav(); updateNotesPanel();
+  current = i;
+  next.classList.add('active');
+  next.classList.remove('enter-above');
+  clearTimeout(_exitTimer);
+  _exitTimer = setTimeout(function(){
+    slides.forEach(function(s){
+      if (s.classList.contains('active')) { s.classList.remove('enter-right','enter-left'); return; }
+      if (!EXITS.some(function(c){ return s.classList.contains(c); })) return;
+      /* Reset parked slides WITHOUT animating. Letting the transition run sent
+         the horizontal slide flying back across the viewport for another 500ms
+         after the new one had already landed. */
+      s.style.transition = 'none';
+      EXITS.forEach(function(c){ s.classList.remove(c); });
+      s.classList.remove('enter-right','enter-left');
+      void s.offsetWidth;
+      s.style.transition = '';
+    });
+  }, 520);
+  updateNav(); updateNotesPanel();
   if (typeof deckSend === 'function') deckSend({type:'nav',index:current,total});
 }
 
