@@ -138,6 +138,7 @@ body.on-light .slide-counter { color: #3a5070; }
 body.on-light .arrow-btn, body.on-light .notes-btn { color: #3a5070; }
 #slide-01.slide-light { background: transparent !important; }
 .slide-light .card { background: linear-gradient(170deg, var(--bg2), var(--bg)); border-color: rgba(0,0,0,0.09); }
+.slide-center { align-items: center; justify-content: center; text-align: center; }
 
 /* GRID COL TINTS */
 .grid-3 > .card:nth-child(3n+1) { background:linear-gradient(rgba(79,128,245,0.07),rgba(79,128,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg)) !important; border-color:rgba(79,128,245,0.22) !important; }
@@ -161,6 +162,7 @@ body.notes-open #notes-panel { display: flex; }
 @keyframes glowPulse { 0%,100% { box-shadow: 0 0 12px rgba(79,128,245,0.8), 0 0 32px rgba(79,128,245,0.4); } 50% { box-shadow: 0 0 22px rgba(79,128,245,1), 0 0 56px rgba(79,128,245,0.6); } }
 @keyframes shimmerLine { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 @keyframes coverGlowPulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.07); } }
+@keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes progressShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 @keyframes fadeInUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 @keyframes subtlePop { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
@@ -293,7 +295,7 @@ html.presenter-mode #presenter-ui { display:flex; }
     </div>
   </div>
   <div class="nav-right">
-    <span class="slide-counter" id="counter">1 / 12</span>
+    <span class="slide-counter" id="counter">1 / 16</span>
     <div class="nav-arrows">
       <button class="arrow-btn" id="prevBtn" onclick="prevSlide()" disabled>←</button>
       <button class="arrow-btn" id="nextBtn" onclick="nextSlide()">→</button>
@@ -539,25 +541,6 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 03 · CONTEXT ══ -->
-<div class="slide layout-vc" data-section="context">
-  <div style="width:100%;">
-    <span class="overline">Where we're starting from</span>
-    <h2>Why now: the pieces already exist</h2>
-    <div style="display:grid;grid-template-columns:1fr;max-width:760px;gap:16px;margin-top:28px;">
-      <div style="padding:24px;border-radius:16px;background:linear-gradient(rgba(61,186,126,0.04),rgba(61,186,126,0.04)),linear-gradient(170deg,var(--bg2),var(--bg));border:1px solid rgba(61,186,126,0.2);">
-        <div style="font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">The opening</div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:14px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--green);margin-top:1px;flex-shrink:0;">✓</span><span><strong style="color:var(--text);">ids-core exists</strong>: maintained a11y primitive layer wrapping React Aria</span></li>
-          <li style="font-size:14px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--green);margin-top:1px;flex-shrink:0;">✓</span><span><strong style="color:var(--text);">Mantine removal already underway</strong>: first components already cleared</span></li>
-          <li style="font-size:14px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--green);margin-top:1px;flex-shrink:0;">✓</span><span><strong style="color:var(--text);">AI can implement from a good spec</strong>: the core.md format is the missing piece</span></li>
-          <li style="font-size:14px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--green);margin-top:1px;flex-shrink:0;">✓</span><span><strong style="color:var(--text);">MCP layer</strong>: renders code changes directly into Figma</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ 05 · SOLUTION ══ -->
 <div class="slide slide-grid layout-vc" data-section="solution">
   <div style="width:100%;">
     <span class="overline green">The solution</span>
@@ -586,41 +569,6 @@ html.presenter-mode #presenter-ui { display:flex; }
 </div>
 
 <!-- ══ 06 · MILESTONES ══ -->
-<div class="slide layout-vc" data-section="progress">
-  <div style="width:100%;">
-    <span class="overline purple">Progress so far</span>
-    <h2>Foundations · first organisms · Mantine cleared</h2>
-    <div style="display:flex;gap:18px;margin-top:26px;align-items:stretch;">
-      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:2px;">Foundations</div>
-        <div class="card" style="flex:1;padding:4px 20px 12px;border-color:rgba(79,128,245,0.3);">
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Atoms + form controls</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Motion atoms: easing and duration scale</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Skeletons and shimmers</span></div>
-        </div>
-      </div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:2px;">First organisms</div>
-        <div class="card" style="flex:1;padding:4px 20px 12px;border-color:rgba(124,90,245,0.35);">
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 6px var(--accent2);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Searchable icon library, in code</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 6px var(--accent2);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Navigation Bar</span></div>
-        </div>
-      </div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:2px;">Mantine cleared</div>
-        <div class="card" style="flex:1;padding:4px 20px 12px;border-color:rgba(61,186,126,0.22);">
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">MenuBase</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Stepper</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">Drawer + Notification Drawer</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);"><div style="width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text);">MultiselectDropdown</span></div>
-          <div style="display:flex;gap:11px;align-items:center;padding:11px 0;"><div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;"></div><span style="font-size:14px;color:var(--text-dim);">Date-picker family, in progress</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ ICON LIBRARY ══ -->
 <div class="slide layout-vc" data-section="progress">
   <div style="width:100%;">
     <span class="overline">Built so far</span>
@@ -746,13 +694,8 @@ html.presenter-mode #presenter-ui { display:flex; }
   <div style="width:100%;">
     <span class="overline amber">The goal</span>
     <h2>What we're hoping to achieve</h2>
-    <p class="subtitle" style="margin-top:10px;max-width:860px;">One outcome for each of the five forces holding the system back.</p>
+    <p class="subtitle" style="margin-top:10px;max-width:860px;">One outcome for each of the four forces holding the system back.</p>
     <div style="display:flex;gap:16px;margin-top:24px;align-items:stretch;">
-      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 20px;border-color:rgba(79,128,245,0.28);">
-        <div style="width:38px;height:38px;border-radius:10px;background:rgba(79,128,245,0.12);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <h3 style="font-size:17px;">Fully code-owned</h3>
-        <p style="margin-top:auto;">Mantine-free, end to end</p>
-      </div>
       <div class="card" style="flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 20px;border-color:rgba(124,90,245,0.28);">
         <div style="width:38px;height:38px;border-radius:10px;background:rgba(124,90,245,0.12);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></div>
         <h3 style="font-size:17px;">One source of truth</h3>
@@ -784,12 +727,10 @@ html.presenter-mode #presenter-ui { display:flex; }
     <h2>How we'll know it worked</h2>
     <div style="margin-top:26px;padding:22px 26px;border-radius:18px;background:linear-gradient(rgba(79,128,245,0.07),rgba(79,128,245,0.07)),linear-gradient(170deg,var(--bg2),var(--bg));border:1.5px solid rgba(79,128,245,0.28);">
       <div style="font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">The test</div>
-      <div style="display:flex;gap:24px;align-items:center;">
-        <div style="display:flex;align-items:baseline;gap:14px;flex:0 0 auto;">
-          <div style="font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;font-size:46px;color:var(--accent);line-height:1;">2</div>
-          <h3 style="font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;font-size:19px;line-height:1.3;">Real projects with Platform leads</h3>
-        </div>
-        <div style="width:1px;align-self:stretch;background:var(--line);flex-shrink:0;"></div>
+      <div style="display:flex;gap:14px;align-items:baseline;">
+        <div style="font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;font-size:46px;color:var(--accent);line-height:1;flex:0 0 auto;">2</div>
+        <h3 style="font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-0.01em;font-size:19px;line-height:1.65;flex:0 0 auto;">Real projects with Platform leads</h3>
+        <div style="width:1px;align-self:stretch;background:var(--line);flex-shrink:0;margin:0 10px;"></div>
         <p style="font-size:14px;color:var(--text-dim);line-height:1.65;flex:1;min-width:0;">The measure: <strong style="color:var(--text);">scaffold accuracy</strong>. How closely AI output matches intent and the component contract.</p>
       </div>
     </div>
@@ -849,6 +790,22 @@ html.presenter-mode #presenter-ui { display:flex; }
   </div>
 </div>
 
+<!-- ══ QUESTIONS ══ -->
+<div class="slide slide-center slide-light" data-section="next" style="overflow:hidden;">
+  <div style="position:absolute;top:10%;right:4%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(79,128,245,0.18) 0%,transparent 70%);animation:coverGlowPulse 6s ease-in-out infinite;pointer-events:none;z-index:0;"></div>
+  <div style="max-width:640px; position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;">
+    <span class="overline" style="margin-bottom:22px;">Thank you</span>
+    <h1 style="font-size:clamp(52px,7.4vw,96px);"><span class="grad">Questions</span></h1>
+    <div class="divider" style="margin:28px auto;"></div>
+    <p style="margin-top:30px; font-size:14px; font-weight:400; letter-spacing:0.04em; color:var(--faint);">dariofidanza.com</p>
+    <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center; color:var(--faint);">
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 9s linear infinite;">✦</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 14s linear infinite reverse;">⬡</span>
+      <span style="font-size:22px;display:inline-block;animation:spinSlow 6s linear infinite;">◈</span>
+    </div>
+  </div>
+</div>
+
 </div><!-- /slides -->
 
 <!-- NOTES PANEL -->
@@ -862,14 +819,14 @@ html.presenter-mode #presenter-ui { display:flex; }
 
 <div id="tds-nav-hint" class="hint" style="display:none"></div>
 
-<script id="deck-notes-data" type="application/json">["This is a proposal deck. The goal is alignment on the approach before the pilot kicks off.\n\nKey thesis to land: we are making the system AI-legible. Mantine removal is a byproduct of building correctly.\n\nThe stack diagram on the left is the foundation story: every component starts at React Aria, gets styled through ids-core, and surfaces as a TDS component with a core.md contract attached.\n\nWhy now, in one sentence: AI readiness is a company priority this year, and this pilot is the design-system expression of it.", "TinyRoots was a personal side project, a product idea I was excited about. I used it as the test case because the stakes were low enough to experiment freely.\n\nThe starting observation: designers on socials were saying Claude was amazing for design systems, but when I looked closely they were prompting from nothing. No foundation. No contract. Just vibes.\n\nSo I tested the disciplined version: spec first, tokens before wireframes, components before pages. With a real foundation to read, the AI built correctly. One change to --color-primary cascaded from the tokens through the components to every screen to the live Vercel site. No manual updates. That is the moment construction became review.", "This slide is the intellectual underpinning of everything that follows. Slow down here.\n\nThe key insight: we have been calling Figma the source of truth, and it never really was. A picture under-specifies intent. It can't fully express logic, states, data, or behavior, so every handoff has been lossy. Engineers reverse-engineer what we meant and the file drifts from the build.\n\nPull apart the tangle and you get three things that were always in there. Intent is what it should be: lo-fi, flows, goals, taste. The contract makes intent precise enough that agents can build from it and code stays honest: tokens, specs, rules, enforced. Code is what actually ships and what users experience.\n\nFigma stays in the picture as a lens for discussion and feedback. The agents render into it.\n\nIf it lands, say the bigger claim: this reframe applies beyond TDS. It is how design tooling becomes AI-legible anywhere in the company.", "This slide is the credibility story: how a side project became an approved experiment with two engineers.\n\nStep 1 to 2: I built TinyRoots, then walked the team through the process itself, the spec-first discipline, the cascade, the moment construction became review. Their reaction told me the idea was worth writing down properly.\n\nStep 2 to 3: the POV doc, 'Is the Source of Truth Moving from Design to Code?', laid out the case in writing. That document is what earned the deeper look and a project plan.\n\nStep 3 to 4: we socialized the plan to the Director of Product and the AI Readiness lead. Resources approved. I'm at the helm with two engineers advising, one on the eval layer (how we test quality) and one on the doc template format (the core.md structure).\n\nThe dual-path commitment matters: the old model and the new model run side by side, and crossover is opt-in.\n\nName the arc out loud: experiment, evidence, written POV, sponsorship. And say the resourcing plainly: a designer-initiated experiment earned Director plus AI Readiness sign-off with two engineers staffed against it. That is the org endorsing the direction.", "Three things on this slide, in order of importance.\n\ncore.md is the novel part: a structured markdown file an AI agent can parse. Intent, anatomy, token map, state matrix, a11y requirements, do and don't. It is the spec the agent builds from.\n\nThe MCP layer renders code changes into Figma automatically. That ends the Figma and code drift structurally.\n\nReact Aria plus ids-core means accessibility comes from a maintained layer that wraps WAI-ARIA patterns. We build on top of it.", "Frame this as a scale problem. These five forces are structural limits that make AI-assisted work impossible at the current shape of the system.\n\nProblem 3, machine readability, is the crux. A machine needs a contract to build from, and without one the other four stay stuck even if we fix Mantine.\n\nThe full clauses behind the fragments: Mantine under every component means the system stops short of being ours end to end. Figma and code are maintained separately and drift, so neither is canonical. Nothing describes intent in a form an AI can implement from. Net-new re-litigates tokens, theming, locale, a11y, motion, and loading states every time. And designers have no sanctioned way to extend the system when it lacks something.", "This slide is the why-now. The audience just saw the five forces; this is the answer: the infrastructure to fix them already exists.\n\nids-core exists. The MCP layer exists. The first Mantine components are already cleared, the full list lives on the Progress slide. The missing piece was the format, core.md, and that is exactly what this pilot builds.", "The three cards are the baked-in story: requirements that ship with every component from day one.\n\nThe operating model is defined on the What-this-is slide, so connect instead of re-explaining: these baked-in requirements are what make that model trustworthy. Components are the atomic unit. The real change is that designers can scaffold a full page from a prompt and a low-fi sketch, inside the guardrails of the system.\n\nEmphasize that extending the system is sanctioned and guided. Breaking away is still on-system.\n\nThe clip on the right is the switch itself: dark to light, then through the languages. It makes the baked-in claim concrete before we get to the build.", "Lead with the headline wins: the icon library (full icon set, in code, searchable) and the Navigation Bar (first organism, compound-component API). These two prove the atom-to-organism model works end to end.\n\nMantine column: four components cleared, one left. The Date-picker family is complex, with real date logic, and it is the last Mantine dependency in this phase.\n\nProcess note: every step is documented and committed to context files so the work is extensible to other designers.", "The icon library is worth pausing on. Full set, in code, categorized and searchable, and themed like everything else.\n\nThat searchability matters as much for an agent as for a designer. It is the difference between an icon set you can use and one you have to hunt through.", "This is the payoff slide for everything before it. The visualizer is a browsable layer over the library itself, running the real compiled components straight from src.\n\nWorth saying out loud: this is not Storybook and it is not a Figma page. It is the library rendering itself, so the documentation cannot drift from the code.\n\nIf there is time, open it live and interact with something. Type in a field, open a dropdown, pick a date. That lands better than any screenshot.", "Two clips from the real visualizer. Atoms and form controls on the left, the heavier compound components on the right.\n\nThe point is that these are live, not recordings of a prototype. Every control in them works, which is why the atom-to-organism model holds up.", "The stills are the receipts for the switch we just watched. The same Forms and selection screen in light English, dark Spanish, and light French.\n\nLocale support catches layout problems early, since French and German strings run long and Spanish shifts the rhythm of every label. Nobody retrofits this later.", "This is theming at the component level, which is where it actually gets tested. One Alert component, five statuses, two themes, and in this case two languages.\n\nThe point to make: none of this is duplicated. Status is a semantic token, so light and dark resolve from the same definition, and the behavior, actions, dismissal, AI provenance, travels with the component instead of being rebuilt per team.", "One goal per problem force, say the mapping out loud: code-owned fixes the lock-in, one source of truth fixes the drift, core.md fixes machine readability, hours-not-days fixes slow net-new, and extensible fixes the missing extension path.\n\nScaffold-on-contract lives on the What-this-is slide, so this list stays clean.\n\nOn the hours-not-days line: it is qualitative on purpose, backed by the weekend evidence of 27 components in a weekend. The pilot puts real numbers on it.", "Lead with the test. Two real projects is the bar. Scaffold accuracy is intentionally simple, a judgment call: how much did the engineer have to fix after the agent built it?\n\nSupporting signals are leading indicators. The code to Figma round-trip and the new-designer test are the ones I'd watch most closely, they tell us the system is legible.\n\nIf asked what the accuracy bar is: the first pilot project sets the baseline and the second has to beat it. If accuracy comes back low, the contract format iterates. That is exactly why it runs on two real projects before scaling.\n\nOn the first signal, spell out what on-system means: Mantine-free end to end, with tokens, theming, locale, a11y and motion all in place. Full quality bar, and minimal manual correction after the agent builds.", "End on the pilot. Steps 1 and 2, the library rebuild and templates, are what make step 3 a real test: templates let us measure page-level accuracy on top of component-level accuracy.\n\nThe detail behind each step: 01 is the Date-picker family plus continuing net-new on-contract. 02 is layout rules so scaffolding produces coherent pages. 03 is two real Platform projects with templates in play, an end-to-end test. 04 feeds scaffold accuracy back into the next version of the contract and context files.\n\nIf engineering comes up: an engineer builds the backend pipeline directly from a finished scaffold. That happens inside the pilot rather than as a step of its own, and it is what turns this from a design pilot into a product pipeline.\n\nIf there's time for questions, the best area to dig into is the core.md format: what the contract contains and how the agent uses it."]</script>
+<script id="deck-notes-data" type="application/json">["This is a current project I am working on right now.\n\nThe goal is to create and test a new design system that AI-legible.\n\nThe stack would be using Reach Aria headless (unstyle) code for every component, get it styled through ids-core to TDS, and add a core.md contract to each that can be read back by ai on intent and usage.\n\nAI readiness is a company priority this year, and this pilot is the design-system expression of it.", "So this work project started with an Idea I had during a long weekend. \n\nI kept readying about designers on socials saying Claude was amazing for design systems, but the experience we had with TDS at work was very sloppy. Claude couldn't create mocks based on our figma components.\n\nTinyRoots was a personal side project, a product idea I was excited about.So I used it as the test case because the stakes were low. The concept was to create a online tool, using only Claude.\n\nI started from scratch with disciplined version: spec first, tokens, components, wireframes, then pages for web and for iOS. \n\nWith an organized documented foundation, the AI built correctly.", "While I started to form a stance around how to re-organize design systems. \n\nThe truth is that we have been calling Figma the source of truth, but in reality it never was. \n\nCode is a duplication of a picture but the picture can't fully express logic, states, data, or behavior, so every handoff has been lossy.\n\nEngineers always reverse-engineer what we meant and the file drifts from the build. How many hours do we spend as designers correcting and doing visual QA to get the production code just right?\n\nIntent is what it should be: lo-fi, UX flows, goals, taste. As designers we will continue to define that.\n\nBut in this new model the context contract makes intent precise enough that agents can build from it and code becomes the single source of truth: tokens, specs, rules, enforced. \n\nBecause ultimately code is what ships and what users experience.\n\nFigma can stays in the picture as discussion or feedback layer. The agents render into it.\n\nThis reframe applies beyond the system. It foundational changes how designers work in the company.", "So how did I turn this idea into a real project?:\n\nThat Monday, I showed my team what I have done. I built a design system and TinyRoots the tool, \n\nI walked the team through the process itself, the spec discipline, the cascade of changes on the system and how they rippled through the product,\nAnd I had the buy in.\n\nSo I drafted a POV doc, I called it: 'Is the Source of Truth Moving from Design to Code?', laid out my case and the document is what earned the deeper look and a project plan.\n\nI socialized the plan with the Director of Product and the AI Readiness lead. Resources approved. \n\nAnd currently I'm at the helm building the new system, and I have to supporting engineers advising, one on the eval layer (how we test quality) and one on the doc template format (how we are gonna build the core.md for each component structure).", "So as I hinted earlier, the new library is pure React Aria, which comes with built in accessibility, and we built the styling and API we need on top of it. \n\n\ncore.md is the novel part: a structured markdown file an AI agent can parse. Intent, anatomy, token map, state matrix, a11y requirements, do and don't. It is the spec the agent builds from.\n\nThis is optional, the figma MCP layer can render code back into Figma, or the visualization layer can simply be the browser, either way works.", "What really drove this pilot I think is the problems we've been facing with our current system.\nWe are locked in to a different stack library that doesn't support our IDS-core styling layer. \n\nFigma and code have been drifting. I have way more components designed that I have eng to develop them.\n\nThe most important one: machine readability, is the crux. A machine needs a contract to build from, and md files is by far the best language that the AI can read. Better than figma.\n\nWe also accumulated some design and tech debt in the sense that a lot of net-new functionality is costly to build in the current state. \n\nBut in the new system we can build out theming, locale, accessibility, motion, calculated colors very cheaply. And designers have no bottle necks when they need to extend the system when it lacks something.", "The baked-in requirements are what make this system trustworthy. Tokens, atomics and Components and document contracts are structural foundations. \n\nThe change is that designers can scaffold a full page from a prompt or a low-fi sketch, inside the guardrails of the system.\n\nBreaking away is possible by creating a new component spec.\n\nThe clip on the left is the visualizer on browser with the functionality built it: dark to light in this case, then languages tokens applying locale.", "Some nice to haves that we can build in are the full icon set, in code, categorized and searchable, and themed like everything else.\n\nThat search ability is important for the agents as well as for a designer.", "The HTML visualizer is a browsable layer over the library itself, running the real compiled components straight from src.\n\nConsumers can interact with each component, test them, try them, etc.", "Two clips from the real visualizer.\n\nEvery component control works just like it would be in production", "Here you can see the same form controls, with wired theming, and locale tokens, that change the language and the colors of all the inputs.\n\nLocale support catches layout problems early, since Spanish and French strings run longer than English usually.", "Zooming into an Alert component, five severity ratings, two themes, and different languages.", "one source of truth in code, AI-first with core.md powering machine readability, \nNet new components in hours-not-days, and extensible and flexible, giving designers more freedom to innovate.", "We are sourcing two real projects. We are going to test for scaffold accuracy and how much did the engineer have to fix after the agent built it\n\nWe are also going to test the code to Figma round-trip and test designers scaffolding from prompt or lo-fi wireframes.", "Steps 1 is in progress, we are rebuilding the library, with all the bells and whistles you saw.\n\nStep 2, will be building page templates, those are product specific layouts that will also serve as guardrails.\n\n3 is the actual project tests.\n\nMeasure and iterate on the component contracts.", ""]</script>
 
 <script>
 
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { origin: 0, context: 4, solution: 7, progress: 8, next: 11 };
+const sections = { origin: 0, context: 4, solution: 6, progress: 7, next: 14 };
 
 let _notes = [];
 try {
@@ -1001,7 +958,7 @@ updateNav();
     <div class="p-next-section">
       <div class="p-label">Up Next</div>
       <div class="p-next-title" id="p-next-title">—</div>
-            <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
     </div>
   </div>
 </div>
