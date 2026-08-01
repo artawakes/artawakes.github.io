@@ -43,11 +43,8 @@ nav::before{content:"";position:absolute;left:0;right:0;top:0;bottom:-64px;backg
 .wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
 
 .wrap{position:relative;z-index:2;flex:1;max-width:760px;margin:0 auto;padding:150px 40px 80px;display:flex;flex-direction:column;align-items:center;text-align:center}
-/* One of two unDraw illustrations, picked at random per load. Injected inline so
-   currentColor follows the theme: unDraw's near-black would vanish on dark. The
-   two have very different aspect ratios, so size by height, not width. */
-.art{width:100%;max-width:440px;margin-bottom:34px;color:var(--text);display:flex;align-items:center;justify-content:center;min-height:240px}
-.art svg{max-height:240px;max-width:100%;width:auto;height:auto;display:block}
+.art{width:100%;max-width:440px;margin-bottom:34px}
+.art img{width:100%;height:auto;display:block}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 14px;margin-bottom:20px;backdrop-filter:blur(8px)}
 .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta);animation:pulse 2.4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
@@ -80,7 +77,9 @@ footer a:hover{color:var(--text)}
 </nav>
 
 <div class="wrap">
-  <div class="art" aria-hidden="true"></div>
+  <div class="art">
+    <img src="/Assets/undraw/towing.svg" alt="" onerror="this.closest('.art').style.display='none'">
+  </div>
 
   <span class="eyebrow"><span class="dot"></span>404</span>
   <h1>This one <span class="grad">moved.</span></h1>
@@ -98,19 +97,6 @@ footer a:hover{color:var(--text)}
 </footer>
 
 <script>
-/* Rotate the illustration on every load. Fetched and injected rather than used
-   as an <img> so the SVG inherits currentColor from the active theme. If it
-   fails for any reason the block collapses and the page still reads fine. */
-(function () {
-  const art = document.querySelector('.art');
-  const set = ['/Assets/undraw/page-eaten.svg', '/Assets/undraw/towing.svg'];
-  const pick = set[Math.floor(Math.random() * set.length)];
-  fetch(pick)
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-    .then(function (svg) { art.innerHTML = svg; })
-    .catch(function () { art.style.display = 'none'; });
-})();
-
 /* No theme bootstrap here: this page is light only, so the stored darkMode
    preference is deliberately not applied. */
 
