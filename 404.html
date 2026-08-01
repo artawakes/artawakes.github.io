@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<!-- Light only on purpose: the unDraw illustrations read badly inverted on the
+     dark palette, so this page opts out of the site theme rather than toggling. -->
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,10 +41,6 @@ nav::before{content:"";position:absolute;left:0;right:0;top:0;bottom:-64px;backg
 .back:hover{color:var(--text);background:var(--bg3)}
 .wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
 .wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
-.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
-.theme:hover{color:var(--text)}
-html.dark .icon-moon{display:none}
-html:not(.dark) .icon-sun{display:none}
 
 .wrap{position:relative;z-index:2;flex:1;max-width:760px;margin:0 auto;padding:150px 40px 80px;display:flex;flex-direction:column;align-items:center;text-align:center}
 /* One of two unDraw illustrations, picked at random per load. Injected inline so
@@ -79,7 +77,6 @@ footer a:hover{color:var(--text)}
     <a class="back" href="/" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
     <a class="wordmark" href="/"><span><b>Dario</b>&nbsp;Fidanza</span></a>
   </div>
-  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
 </nav>
 
 <div class="wrap">
@@ -114,14 +111,8 @@ footer a:hover{color:var(--text)}
     .catch(function () { art.style.display = 'none'; });
 })();
 
-function toggleDarkMode() {
-  document.documentElement.classList.toggle('dark');
-  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
-}
-(function () {
-  const stored = localStorage.getItem('darkMode');
-  document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
-})();
+/* No theme bootstrap here: this page is light only, so the stored darkMode
+   preference is deliberately not applied. */
 
 /* flowing contour lines, same as the homepage */
 (function () {
