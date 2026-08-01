@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found · Dario Fidanza</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<style>
+:root{
+  --bg:#07101f; --bg2:#0d1a2e; --bg3:#12233b;
+  --text:#f0f4ff; --dim:#8fa8c4; --faint:#5a7396;
+  --blue:#4f80f5; --violet:#7c5af5; --magenta:#c55af5; --green:#3dba7e;
+  --line:rgba(143,168,196,.14);
+  --glass:rgba(13,26,46,.7);
+  --fade:rgba(7,16,31,.85);
+}
+html:not(.dark){
+  --bg:#f4f6fd; --bg2:#ffffff; --bg3:#e8edf9;
+  --text:#07101f; --dim:#3a5070; --faint:#6b80a0;
+  --line:rgba(7,16,31,.12);
+  --glass:rgba(255,255,255,.7);
+  --fade:rgba(244,246,253,.9);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3{font-family:'Hepta Slab',serif;font-weight:400;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+
+#flow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;min-height:76px}
+nav::before{content:"";position:absolute;left:0;right:0;top:0;bottom:-64px;background:var(--fade);mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.8) 52%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.32) 75%,rgba(0,0,0,.16) 84%,rgba(0,0,0,.06) 92%,transparent 100%);pointer-events:none;z-index:-1}
+.nav-left{display:flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:16px;transition:.2s}
+.back:hover{color:var(--text);background:var(--bg3)}
+.wordmark{display:inline-flex;align-items:center;font-family:'Hepta Slab',serif;font-size:17px;letter-spacing:-.02em;line-height:34px}
+.wordmark b{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.theme{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:var(--dim);font-size:14.5px;border:1px solid var(--line);background:var(--glass);cursor:pointer;transition:.2s}
+.theme:hover{color:var(--text)}
+html.dark .icon-moon{display:none}
+html:not(.dark) .icon-sun{display:none}
+
+.wrap{position:relative;z-index:2;flex:1;max-width:760px;margin:0 auto;padding:150px 40px 80px;display:flex;flex-direction:column;align-items:center;text-align:center}
+/* One of two unDraw illustrations, picked at random per load. Injected inline so
+   currentColor follows the theme: unDraw's near-black would vanish on dark. The
+   two have very different aspect ratios, so size by height, not width. */
+.art{width:100%;max-width:440px;margin-bottom:34px;color:var(--text);display:flex;align-items:center;justify-content:center;min-height:240px}
+.art svg{max-height:240px;max-width:100%;width:auto;height:auto;display:block}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 14px;margin-bottom:20px;backdrop-filter:blur(8px)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-size:clamp(30px,4.4vw,46px);line-height:1.12;margin-bottom:14px}
+h1 .grad{background:linear-gradient(90deg,var(--blue),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:15.5px;color:var(--dim);line-height:1.7;max-width:460px;margin-bottom:34px}
+
+.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:12px 22px;border-radius:999px;border:1px solid var(--line);transition:.22s}
+.btn .bi{font-size:.9em}
+.btn-primary{background:linear-gradient(90deg,var(--blue),var(--violet));border-color:transparent;color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(79,128,245,.32)}
+.btn-ghost{background:var(--glass);color:var(--dim);backdrop-filter:blur(8px)}
+.btn-ghost:hover{color:var(--text);border-color:rgba(124,90,245,.45)}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:26px 48px;display:flex;align-items:center;justify-content:center;gap:24px;color:var(--faint);font-size:12.5px;flex-wrap:wrap}
+footer a{color:var(--faint);transition:.2s}
+footer a:hover{color:var(--text)}
+@media(max-width:620px){.wrap{padding:130px 24px 60px}.art{max-width:250px}}
+</style>
+</head>
+<body>
+<canvas id="flow" aria-hidden="true"></canvas>
+
+<nav>
+  <div class="nav-left">
+    <a class="back" href="/" aria-label="Back to home"><i class="bi bi-arrow-left"></i></a>
+    <a class="wordmark" href="/"><span><b>Dario</b>&nbsp;Fidanza</span></a>
+  </div>
+  <button class="theme" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="bi bi-sun-fill icon-sun"></i><i class="bi bi-moon-fill icon-moon"></i></button>
+</nav>
+
+<div class="wrap">
+  <div class="art" aria-hidden="true"></div>
+
+  <span class="eyebrow"><span class="dot"></span>404</span>
+  <h1>This one <span class="grad">moved.</span></h1>
+  <p class="sub">The case study presentations now live together in one place. If you followed an older link to a deck, the current version is waiting there.</p>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="/l/presso/">See the presentations <i class="bi bi-arrow-right"></i></a>
+    <a class="btn btn-ghost" href="/">Back to home</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Dario Fidanza</span>
+  <a href="/l/presso/">Case study presentations →</a>
+</footer>
+
+<script>
+/* Rotate the illustration on every load. Fetched and injected rather than used
+   as an <img> so the SVG inherits currentColor from the active theme. If it
+   fails for any reason the block collapses and the page still reads fine. */
+(function () {
+  const art = document.querySelector('.art');
+  const set = ['/Assets/undraw/page-eaten.svg', '/Assets/undraw/towing.svg'];
+  const pick = set[Math.floor(Math.random() * set.length)];
+  fetch(pick)
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(function (svg) { art.innerHTML = svg; })
+    .catch(function () { art.style.display = 'none'; });
+})();
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+}
+(function () {
+  const stored = localStorage.getItem('darkMode');
+  document.documentElement.classList.toggle('dark', stored === null ? true : stored === 'true');
+})();
+
+/* flowing contour lines, same as the homepage */
+(function () {
+  const canvas = document.getElementById('flow');
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINES = 22;
+  function resize() { canvas.width = w = innerWidth; canvas.height = h = innerHeight; }
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    const dark = document.documentElement.classList.contains('dark');
+    for (let i = 0; i < LINES; i++) {
+      const yBase = (i / (LINES - 1)) * h * 1.1 - h * 0.05;
+      const p = i / LINES;
+      const r = dark ? Math.round(79 + p * 118) : Math.round(50 + p * 100);
+      const g = dark ? Math.round(128 - p * 38) : Math.round(90 - p * 30);
+      const b = dark ? 245 : 215;
+      const alpha = (0.09 + 0.16 * Math.sin(p * Math.PI)) * (i % 4 === 0 ? 1.6 : 1) * (dark ? 1 : 0.55);
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase
+          + Math.sin(x * 0.003 + t * 0.7 + i * 0.45) * 34
+          + Math.sin(x * 0.0011 - t * 0.4 + i * 0.8) * 52
+          + Math.sin(x * 0.006 + t * 1.1 + i * 0.2) * 10;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = i % 4 === 0 ? 1.5 : 1.1;
+      ctx.stroke();
+    }
+  }
+  function loop() { t += 0.012; render(); requestAnimationFrame(loop); }
+  addEventListener('resize', resize);
+  resize();
+  if (reduce) { render(); } else { requestAnimationFrame(loop); }
+})();
+</script>
+<script data-goatcounter="https://dfcom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
