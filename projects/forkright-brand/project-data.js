@@ -1,13 +1,13 @@
 // Sample project data structure
 const projectData = {
     // Basic info
-    title: "Forkright Brand System",
+    title: "Forkright Brand Identity",
     subtitle: "Creating a cohesive and scalable brand system that reflects Forkright's mission to revolutionize the food service industry.",
     description: "Development of a comprehensive brand system for Forkright, focusing on visual identity and design language",
-    keywords: ["Brand System", "Visual Identity", "Design Language", "UX Design"],
+    keywords: ["Brand Identity", "Visual Identity", "Design Language", "Brand Guidelines"],
     
     // Tags display on the project page
-    tags: ["Brand Design", "Visual Identity", "Design System"],
+    tags: ["Brand Design", "Visual Identity", "Brand Guidelines"],
     
     // Overview text
     overview: [
@@ -20,7 +20,7 @@ const projectData = {
         client: "Forkright",
         timeline: "4 months",
         role: "Lead Brand Designer",
-        deliverables: "Brand Guidelines, Design System, Component Library, Asset Library, Implementation Guide"
+        deliverables: "Brand Guidelines, Logo System, Asset Library, Implementation Guide"
     },
     
     // Feature image with caption
@@ -139,7 +139,7 @@ const projectData = {
                 },
                 {
                     src: "./Images/18c19358-c18d-43ba-8b35-5374f84c6dd7_rw_1200.jpeg",
-                    alt: "Component Library"
+                    alt: "Brand assets"
                 },
                 {
                     src: "./Images/2ca906a8-d696-4e6e-ad83-12f4734b16a9_rw_1920.jpeg",
@@ -164,7 +164,7 @@ const projectData = {
             ],
             outcomes: [
                 "Established a distinctive and cohesive brand presence",
-                "Created a scalable design system for future growth",
+                "Created a scalable identity for future growth",
                 "Improved design efficiency and consistency",
                 "Streamlined brand asset management",
                 "Enhanced brand recognition in the food service industry"
