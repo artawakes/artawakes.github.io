@@ -98,8 +98,13 @@ html:not(.light) .tb-moon { display: none; }
   overflow: hidden;
   background: transparent;
 }
-.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.enter-above { transform: translateY(-28px); }
 .slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide.exit-down { opacity: 0; transform: translateY(28px); }
+/* Offscreen slides must not keep painting behind the one you are on: gridScan
+   animates a mask, so it repaints every frame for as long as it runs. */
+.slide-grid:not(.active)::after { animation-play-state: paused; }
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
 .slide > * { position: relative; z-index: 1; }
 #slide-2 .slide2-imgs { position: absolute !important; right: 300px; top: 155px; display: flex; gap: 16px; align-items: flex-start; z-index: 2; }
 #slide-3 .slide3-imgs { position: absolute !important; left: 80px; top: 100px; display: flex; gap: 12px; align-items: flex-start; z-index: 2; padding-right: 40px; }
@@ -1343,14 +1348,38 @@ function updateNav() {
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
 }
 
+let _exitTimer = null;
 function goTo(i) {
   if (location.hash === '#presenter') return; // no-op in presenter window
   if (i < 0 || i >= total || i === current) return;
   const prev = slides[current];
+  const next = slides[i];
+  const back = i < current;
   prev.classList.remove('active');
-  if (i > current) { prev.classList.add('exit-up'); setTimeout(() => prev.classList.remove('exit-up'), 500); }
+  /* Flipping back and forth re-enters a slide inside the cleanup window, so
+     clear its exit class now rather than waiting for the timer. */
+  next.classList.remove('exit-up', 'exit-down');
+  /* Both slides must travel the same direction. Without exit-down the
+     outgoing slide drifted DOWN to the base transform while the incoming one
+     came UP, so they crossed past each other mid-fade. */
+  prev.classList.add(back ? 'exit-down' : 'exit-up');
+  if (back) { next.classList.add('enter-above'); void next.offsetWidth; }
+  clearTimeout(_exitTimer);
+  _exitTimer = setTimeout(function() {
+    slides.forEach(function(s) {
+      if (s.classList.contains('active')) return;
+      if (!s.classList.contains('exit-up') && !s.classList.contains('exit-down')) return;
+      /* Reset without animating: letting the transition run keeps a
+         full-viewport layer repainting after the new slide has landed. */
+      s.style.transition = 'none';
+      s.classList.remove('exit-up', 'exit-down');
+      void s.offsetWidth;
+      s.style.transition = '';
+    });
+  }, 520);
   current = i;
-  slides[current].classList.add('active');
+  next.classList.add('active');
+  next.classList.remove('enter-above');
   updateNav(); updateNotesPanel();
   if (typeof deckSend === 'function') deckSend({type:'nav',index:current,total});
 }

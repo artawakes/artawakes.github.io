@@ -74,8 +74,13 @@ body.on-light .theme-btn { color: #3a5070; }
 /* SLIDES */
 #slides { position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1; }
 .slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-start; padding: 96px 80px 40px; opacity: 0; transform: translateY(28px); pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
-.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide.enter-above { transform: translateY(-28px); }
 .slide.exit-up { opacity: 0; transform: translateY(-28px); }
+.slide.exit-down { opacity: 0; transform: translateY(28px); }
+/* Offscreen slides must not keep painting behind the one you are on: gridScan
+   animates a mask, so it repaints every frame for as long as it runs. */
+.slide-grid:not(.active)::after { animation-play-state: paused; }
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
 .slide > * { position: relative; z-index: 1; }
 .slide-cover { align-items: flex-start; justify-content: flex-end; padding-bottom: 80px; }
 .slide-center { align-items: center; justify-content: center; text-align: center; }
@@ -924,13 +929,36 @@ function updateNav() {
   document.getElementById('nextBtn').disabled = current === total-1;
   document.getElementById('progressBar').style.width = (current/(total-1))*100+'%';
 }
+let _exitTimer = null;
 function goTo(i) {
   if (location.hash === '#presenter') return; // no-op in presenter window
   if (i<0||i>=total||i===current) return;
   const prev = slides[current];
+  const next = slides[i];
+  const back = i < current;
   prev.classList.remove('active');
-  if (i>current) { prev.classList.add('exit-up'); setTimeout(()=>prev.classList.remove('exit-up'),500); }
-  current=i; slides[current].classList.add('active'); updateNav();
+  /* Flipping back and forth re-enters a slide inside the cleanup window, so
+     clear its exit class now rather than waiting for the timer. */
+  next.classList.remove('exit-up', 'exit-down');
+  /* Both slides must travel the same direction. Without exit-down the
+     outgoing slide drifted DOWN to the base transform while the incoming one
+     came UP, so they crossed past each other mid-fade. */
+  prev.classList.add(back ? 'exit-down' : 'exit-up');
+  if (back) { next.classList.add('enter-above'); void next.offsetWidth; }
+  clearTimeout(_exitTimer);
+  _exitTimer = setTimeout(function() {
+    slides.forEach(function(s) {
+      if (s.classList.contains('active')) return;
+      if (!s.classList.contains('exit-up') && !s.classList.contains('exit-down')) return;
+      /* Reset without animating: letting the transition run keeps a
+         full-viewport layer repainting after the new slide has landed. */
+      s.style.transition = 'none';
+      s.classList.remove('exit-up', 'exit-down');
+      void s.offsetWidth;
+      s.style.transition = '';
+    });
+  }, 520);
+  current = i; next.classList.add('active'); next.classList.remove('enter-above'); updateNav();
   document.getElementById('hint').style.opacity='0';
   deckSend({type:'nav',index:current,total,title:getSlideTitle(current),nextTitle:getSlideTitle(current+1),notes:_notes});
   updateNotesPanel();
@@ -1582,7 +1610,7 @@ if(false)(function(){
 </script><canvas id="dot-wave-canvas" width="1920" height="881" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1115" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s;"></canvas><canvas id="dot-wave-canvas" width="1920" height="1111" style="position: fixed; inset: 0px; z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1s;"></canvas>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["Darío is how you pronounce my name. I'm a Systems designer at IC, and let's dive in so we have time to cover all the material and questions at the end, my intro is baked in.\n\nSYSTEMS:\nI'm a L6 design systems designer at Instacart — \nI help teams design with more clarity and flexibility - \nand I act as the bridge between design and engineer development, \nso that teams can design faster and lower eng costs.\n\nPRODUCT: \nI'm a product designer currently working at Instacart which is an e-commerce and delivery platform. \nMy role currently is in the tooling design systems team, but prior to this I was part of the fulfillment org. \nMy background in fulfillment operations, helps me in my current role bring some perspective of how ecommerce actually works, from the warehouse to the interface", "I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit. and I love languages, currently learning arabic and Italian.\n\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.", "My manager recently asked me how I can context switch so fast, and across so many workstreams I have going on.\n\nI told her the best analogy is that my brain works the same way I cook: I open all the cabinets. I look at what I have, and I plan the appetizer, the main dish and the dessert. Then I execute: I turn multiple pots on with different things going at once. I intuitively understand the timing of it.\n\nFor a moment it looks like a lot of different things are going on without rhyme or reason from an observer's point of view, but there is a plan.\n\nAt dinner time, all the cycles resolve into a perfectly balanced meal with very flavorful dishes: an appetizer, a balanced carb/protein main, and a little sweet dessert.\n\nAn example is how I recently had to build a deck with my system's metrics for a pitch. So I queried the database, pulled the metrics, and fed them into my deck. But I also realized my manager would love to have those handy for a project she is working on called Customer Love Week, so I made her a dashboard. And I realized those metrics would come in handy for my mid cycle review, so I added them to my brag doc. And obviously, I put them here in this deck for you as well.", "I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 9 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Computer Interaction, User Experience Design and Graphic Design \n\nAnd i think all my side quests added perspetive to my work.", "Last 3 jobs:\n\nI worked at EA a gaming company \nWorking on enterprise tools and my first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace. Driver app, support and insurance tooling.\nI was also part of a Lyft tooling design system group, where we created a repository of reusable patterns to use across tooling. \n\nAfter lyft, I joined instacart, I've been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. \nThe first few years I was building tooling for retailers and also experiences for the shopper mobile app.. \nand the last 2.5 years I've been leading a design system for tooling", "Two projects in flight at Instacart right now, both to be completed next quarter:\n\nLiquid Glass migration: Apple is making the new material mandatory on iOS, and I'm working on how our design system adopts it, including the cross-platform story for web and Android.\n\nLeapfrog: an AI readiness design system pilot, testing how the system needs to evolve so AI agents can build from it."]</script>
+<script id="deck-notes-data" type="application/json">["Thank you for taking the time today to meet with me. \n\nMy name Darío .\n\nSYSTEMS:\nI'm a Senior Systems Designer II at Instacart — \nI help teams design with more clarity and flexibility - \nand I act as the bridge between design and engineer development, \nso that teams can design faster and lower eng costs.\n\nPRODUCT: \nI'm a product designer currently working at Instacart which is an e-commerce and delivery platform. \nMy role currently is in the tooling design systems team, but prior to this I was part of the fulfillment org. \nMy background in fulfillment operations, helps me in my current role bring some perspective of how ecommerce actually works, from the warehouse to the interface", "I define myself as a maker\ni draw, i host a podcast: mental health and dating and vulnerability, love photography, Im learning to knit. and I love languages, currently learning arabic and Italian.\n\nI have a bias towards execution in my design practice. \nMy motto is try it out. measure it, then adjust.", "My manager recently asked me how I can context switch so fast, and across so many workstreams I have going on.\n\nI told her the best analogy is that my brain works the same way I cook: I open all the cabinets. I look at what I have, and I plan the appetizer, the main dish and the dessert. Then I execute: I turn multiple pots on with different things going at once. I intuitively understand the timing of it.\n\nFor a moment it looks like a lot of different things are going on without rhyme or reason from an observer's point of view, but there is a plan.\n\nAt dinner time, all the cycles resolve into a perfectly balanced meal with very flavorful dishes: an appetizer, a balanced carb/protein main, and a little sweet dessert.\n\nAn example is how I recently had to build a deck with my system's metrics for a pitch. So I queried the database, pulled the metrics, and fed them into my deck. But I also realized my manager would love to have those handy for a project she is working on called Customer Love Week, so I made her a dashboard. And I realized those metrics would come in handy for my mid cycle review, so I added them to my brag doc. And obviously, I put them here in this deck for you as well.", "I left Argentina 26 years \nMy journey's been non-linear- \n\nI come from from agency world —i've been in design for over 15.  in tech product for over 9 years. \n\n Istarted internships in archtectural firms, contract roles in tech - Yoga teacher, Personal Trainer, I joined a circus. \n\nI study Human-Computer Interaction, User Experience Design and Graphic Design \n\nAnd i think all my side quests added perspetive to my work.", "Last 3 jobs:\n\nI worked at EA a gaming company \nWorking on enterprise tools and my first baby design system you can see it online.\n\nI later moved on to Lyft, where i worked on a 3sided marketplace. Driver app, support and insurance tooling.\nI was also part of a Lyft tooling design system group, where we created a repository of reusable patterns to use across tooling. \n\nAfter lyft, I joined instacart, I've been with them for almost 5 years. \nInstacart is a 4-sided marketplace. \nConsumer, retailers, advertisers, and shoppers. \nThe first few years I was building tooling for retailers and also experiences for the shopper mobile app.. \nand the last 2.5 years I've been leading a design system for tooling", "Two projects in flight at Instacart right now, both to be completed next quarter:\n\nLiquid Glass migration: Apple is making the new material mandatory on iOS, and I'm working on how our design system adopts it, including the cross-platform story for web and Android.\n\nLeapfrog: an AI readiness design system pilot, testing how the system needs to evolve so AI agents can build from it."]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
