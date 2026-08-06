@@ -942,8 +942,8 @@ html.presenter-mode .nav-hint { display:none !important; }
       <button class="nav-project-pill" data-project="orders">Orders Dashboard</button>
       <div class="nav-pills">
         <button class="nav-btn active" onclick="goToSection('problem')">Problem</button>
-        <button class="nav-btn" onclick="goToSection('system')">System</button>
-        <button class="nav-btn" onclick="goToSection('components')">Features</button>
+        <button class="nav-btn" onclick="goToSection('decisions')">Decisions</button>
+        <button class="nav-btn" onclick="goToSection('delivery')">Delivery</button>
         <button class="nav-btn" onclick="goToSection('impact')">Impact</button>
       </div>
     </div>
@@ -963,7 +963,6 @@ html.presenter-mode .nav-hint { display:none !important; }
 <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
 
 <div id="slides">
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 1 — COVER
 ══════════════════════════════════════════════════ -->
@@ -1011,7 +1010,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     <img src="images/slide1_img0.jpg" alt="Orders Dashboard screenshot">
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 2 — CONTEXT: IPP
 ══════════════════════════════════════════════════ -->
@@ -1047,7 +1045,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 3 — THE BUSINESS BEHIND THE PLATFORM
 ══════════════════════════════════════════════════ -->
@@ -1056,21 +1053,16 @@ html.presenter-mode .nav-hint { display:none !important; }
     <span class="overline">What IPP Powers</span>
     <h2>The business on the other side<br>of these tools</h2>
     <p class="body-text" style="margin-top:14px; max-width:640px;">These aren't internal tools nobody sees. Every retailer doing business on Instacart runs through this platform.</p>
-    <div class="grid-4" style="margin-top:28px;">
+    <div class="grid-3" style="margin-top:28px;">
       <div class="card">
-        <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent);">2,200+</div>
-        <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail banners</div>
-        <p style="font-size:14px; color:var(--text-muted); margin:0;">Powered by the Instacart Partner Portal</p>
+        <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent);">3,059</div>
+        <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail partners</div>
+        <p style="font-size:14px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--green);">1.6B+</div>
         <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Grocery orders</div>
         <p style="font-size:14px; color:var(--text-muted); margin:0;">Moved through the platform, lifetime</p>
-      </div>
-      <div class="card">
-        <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--amber);">3,059</div>
-        <div class="card-label" style="margin-top:8px; margin-bottom:2px;">Retail partners</div>
-        <p style="font-size:14px; color:var(--text-muted); margin:0;">From SMB to enterprise grocers</p>
       </div>
       <div class="card">
         <div class="stat-number" style="font-size:clamp(34px,3.4vw,52px); color:var(--accent2);">26M+</div>
@@ -1080,511 +1072,125 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
       </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
-     SLIDE 2 — CONTEXT & GOAL
+     THE PROBLEM + MANDATE
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots layout-vc" id="slide-2" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-2"></canvas>
-  <span class="overline">Context &amp; Goal</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both; max-width:640px">
-    Support agents had 4 dashboards and no unified view
+<div class="slide slide-dots layout-vc" data-section="problem">
+  <span class="overline red">The Problem</span>
+  <h2 style="max-width:840px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
+    What four fragmented tools<br>were costing us
   </h2>
   <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px; gap:24px; align-items:stretch">
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        </div>
-        <span class="card-label red">The problem</span>
-      </div>
-      <h3>Four fragmented tools, zero unified view</h3>
+  <div class="grid-3" style="margin-top:8px;align-items:stretch;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+    <div class="metric-card" style="border-color:rgba(255,99,50,0.3);background:linear-gradient(rgba(255,99,50,0.05), rgba(255,99,50,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
+      <div class="metric-number" style="font-size:clamp(30px,3.2vw,48px);color:var(--red)">45&ndash;58<span style="font-size:0.4em;font-weight:600;letter-spacing:0"> min</span></div>
+      <div class="metric-label" style="margin-top:8px">Handling time per retailer escalation</div>
     </div>
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div class="icon-box amber">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </div>
-        <span class="card-label amber">Who was affected</span>
-      </div>
-      <h3>CX agents &amp; retail partners</h3>
+    <div class="metric-card" style="border-color:rgba(245,166,35,0.3);background:linear-gradient(rgba(245,166,35,0.05), rgba(245,166,35,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
+      <div class="metric-number" style="font-size:clamp(30px,3.2vw,48px);color:var(--amber)">4 tools</div>
+      <div class="metric-label" style="margin-top:8px">No single source for order or customer data</div>
     </div>
-    <div class="card" style="border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.05), rgba(79,128,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        </div>
-        <span class="card-label">Goal</span>
-      </div>
-      <h3>Speed, clarity, &amp; confidence for every agent</h3>
+    <div class="metric-card" style="border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.06), rgba(124,90,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg))">
+      <div class="metric-number" style="font-size:clamp(30px,3.2vw,48px);color:var(--accent2)">3&ndash;4 tabs</div>
+      <div class="metric-label" style="margin-top:8px">Switched to resolve a single order</div>
     </div>
   </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 3 — CHALLENGE
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots layout-vc" id="slide-3" data-section="problem">
-  <span class="overline red">Challenge</span>
-  <h2 style="max-width:600px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Three core pain points made order support nearly impossible
-  </h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6a5 5 0 0 1 0-10h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-        </div>
-        <span class="card-label red">01</span>
-      </div>
-      <h3 style="margin-bottom:12px">Disconnected data sources</h3>
-      <p style="font-size:14px;color:var(--text-dim)">Agents averaged <strong style="color:var(--red)">3–4 tab switches</strong> per order resolution</p>
-    </div>
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-        </div>
-        <span class="card-label red">02</span>
-      </div>
-      <h3 style="margin-bottom:12px">No order details visibility</h3>
-      <p style="font-size:14px;color:var(--text-dim)">Order lifecycle was <strong style="color:var(--red)">invisible</strong> from a single dashboard</p>
-    </div>
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div class="icon-box red">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-        </div>
-        <span class="card-label red">03</span>
-      </div>
-      <h3 style="margin-bottom:12px">Poor search &amp; filtering</h3>
-      <p style="font-size:14px;color:var(--text-dim)">No universal search — <strong style="color:var(--red)">exact IDs required</strong></p>
-    </div>
+  <div class="card" style="margin-top:18px;border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.05), rgba(79,128,245,0.05)), linear-gradient(170deg,var(--bg2),var(--bg));display:flex;gap:16px;align-items:flex-start;padding:18px 22px;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.18s both">
+    <div class="icon-box blue" style="flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></div>
+    <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0"><strong style="color:var(--text)">CX came to me with four fragmented support tools. I reframed the goal:</strong> give retailers the power to act, cut escalations to CX, and give the business visibility into what support was costing.</p>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
-     SLIDE 4 — RESEARCH / KEY INSIGHTS
+     DECISION 01
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-light slide-grid" id="slide-4" data-section="problem" style="justify-content:center">
-  <div style="display:flex;flex-direction:row;gap:48px;align-items:stretch;width:100%">
-    <!-- Left: text + metrics -->
-    <div style="flex:0 0 32%;min-width:0">
-      <span class="overline">Research</span>
-      <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">What we learned in 4 weeks</h2>
+<div class="slide slide-dots layout-vc" data-section="decisions">
+  <div style="width:100%;display:flex;gap:48px;align-items:center">
+    <div style="flex:0 0 45%;min-width:0">
+      <span class="overline ">Decision 01 / 03</span>
+      <h2 style="font-size:clamp(28px,3.2vw,42px);animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Building one source of truth</h2>
       <div class="divider"></div>
-      <p class="subtitle" style="margin-bottom:20px">Methods: CX &amp; retailer interviews, concept tests, and competitive audits of DoorDash &amp; Amazon.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;max-width:320px">
-        <div class="metric-card" style="text-align:center;border-color:rgba(79,128,245,0.3);background:linear-gradient(rgba(79,128,245,0.06), rgba(79,128,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg))">
-          <div class="metric-number accent">4wk</div>
-          <div class="metric-label">research sprint</div>
-        </div>
-        <div class="metric-card" style="text-align:center;border-color:rgba(124,90,245,0.3);background:linear-gradient(rgba(124,90,245,0.06), rgba(124,90,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg))">
-          <div class="metric-number purple">3</div>
-          <div class="metric-label">competitors audited</div>
-        </div>
-      </div>
-    </div>
-    <!-- Right: quote cards in diagonal, each 3/4 width -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:12px;flex:1;align-self:stretch">
-      <div style="grid-column:1/span 3;grid-row:1;background:rgba(255,255,255,0.85);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px 20px 16px;display:flex;flex-direction:column;position:relative;overflow:hidden">
-        <span style="position:absolute;top:-18px;left:12px;font-size:120px;line-height:1;color:rgba(79,128,245,0.1);font-family:Georgia,serif;pointer-events:none;user-select:none">"</span>
-        <p style="font-size:19px;line-height:1.5;color:#8a9ab8;font-style:italic;font-family:Georgia,serif;margin:0;padding-top:36px;flex:1">"I just need to find the order fast and trust the information I see."</p>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:16px">
-          <div style="width:28px;height:28px;border-radius:50%;background:#4f80f5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">MS</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#07101f">Maya S.</div>
-            <div style="font-size:14px;color:#3a5070">CX Team</div>
-          </div>
-        </div>
-      </div>
-      <div style="grid-column:2/span 3;grid-row:2;background:rgba(255,255,255,0.85);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px 20px 16px;display:flex;flex-direction:column;position:relative;overflow:hidden">
-        <span style="position:absolute;top:-18px;left:12px;font-size:120px;line-height:1;color:rgba(124,92,191,0.1);font-family:Georgia,serif;pointer-events:none;user-select:none">"</span>
-        <p style="font-size:19px;line-height:1.5;color:#8a9ab8;font-style:italic;font-family:Georgia,serif;margin:0;padding-top:36px;flex:1">"I can't see that on my dashboard, so I need to escalate to Instacart."</p>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:16px">
-          <div style="width:28px;height:28px;border-radius:50%;background:#7c5cbf;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">CR</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#07101f">Carlos R.</div>
-            <div style="font-size:14px;color:#3a5070">Retailer Support Team</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 5 — BENCHMARKS
-══════════════════════════════════════════════════ -->
-<div class="slide slide-light slide-dots" id="slide-5" data-section="problem">
-  <canvas class="dots-canvas" id="canvas-5"></canvas>
-  <span class="overline purple">Benchmarks</span>
-  <h2 style="max-width:680px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Benchmarks that shaped our approach
-  </h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;align-items:stretch;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="display:flex;flex-direction:column;border-color:rgba(255,99,50,0.3);background:linear-gradient(rgba(255,99,50,0.05), rgba(255,99,50,0.05)), linear-gradient(170deg,var(--bg2),var(--bg))">
-      <div style="margin-bottom:16px">
-        <span class="tag red">Weak agent tools</span>
-      </div>
-      <div style="margin-bottom:12px"><img src="images/DD.png" alt="DoorDash" style="display:block;max-width:225px;border-radius:6px"></div>
-      <ul class="bullet-list" style="gap:8px">
-        <li>Strong restaurant-facing UX</li>
-        <li>Basic order status visibility</li>
-        <li style="color:var(--red)">No smart search or filtering</li>
-        <li style="color:var(--red)">No predictive insights for agents</li>
-        <li style="color:var(--red)">Weak support-specific tooling</li>
-      </ul>
-    </div>
-    <div class="card" style="border-color:rgba(245,166,35,0.3);background:linear-gradient(rgba(245,166,35,0.05), rgba(245,166,35,0.05)), linear-gradient(170deg,var(--bg2),var(--bg));display:flex;flex-direction:column">
-      <div style="margin-bottom:16px">
-        <span class="tag amber">Too complex for CX</span>
-      </div>
-      <div style="margin-bottom:12px"><img src="images/AF.png" alt="Amazon Fulfillment" style="display:block;max-width:225px;border-radius:6px"></div>
-      <ul class="bullet-list purple" style="gap:8px">
-        <li>Highly detailed order tracking</li>
-        <li>Strong predictive logistics</li>
-        <li style="color:var(--amber)">Overly complex for CX use</li>
-        <li>Advanced search capabilities</li>
-        <li style="color:var(--amber)">Dense information architecture</li>
-      </ul>
-    </div>
-    <div class="card" style="border-color:rgba(79,128,245,0.4);background:linear-gradient(rgba(79,128,245,0.06), rgba(79,128,245,0.06)), linear-gradient(170deg,var(--bg2),var(--bg));display:flex;flex-direction:column">
-      <div style="margin-bottom:16px">
-        <span class="tag">Our target</span>
-      </div>
-      <div style="margin-bottom:12px"><img src="images/IC.png" alt="Instacart" style="display:block;max-width:225px;border-radius:6px"></div>
-      <ul class="bullet-list green" style="gap:8px">
-        <li>Amazon-level order visibility</li>
-        <li>Uber-like flow efficiency</li>
-        <li>Smart search + custom filters</li>
-        <li>Predictive dashboards for store health</li>
-        <li>Tailored for retail CX workflows</li>
-      </ul>
-      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-        <p style="font-size:14px;color:var(--accent);font-weight:500">Gap: no solution combined clarity + depth for retail support agents</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 6 — COMPETITIVE ANALYSIS
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-6" data-section="problem" style="justify-content:center">
-  <span class="overline purple">Competitive Analysis</span>
-  <h2 style="max-width:640px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Studied leaders across food delivery &amp; logistics
-  </h2>
-  <div class="divider"></div>
-  <div style="flex:1;display:flex;flex-direction:column;gap:0;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="padding:0;overflow:hidden">
-      <table class="comp-table">
-        <thead>
-          <tr>
-            <th style="width:22%">Feature / Tool</th>
-            <th>Uber Eats</th>
-            <th>DoorDash</th>
-            <th>Amazon Delivery</th>
-            <th class="highlight">Instacart Partner Portal (Target)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="color:var(--text-muted);font-weight:500">Order status visibility</td>
-            <td><span class="partial">◑</span> Basic timeline</td>
-            <td><span class="partial">◑</span> Basic timeline</td>
-            <td><span class="check">✓</span> Highly detailed</td>
-            <td class="highlight"><span class="check">✓</span> Clear, transparent &amp; tailored for CX</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted);font-weight:500">Search &amp; filtering</td>
-            <td><span class="cross">✕</span> Limited</td>
-            <td><span class="cross">✕</span> Limited</td>
-            <td><span class="partial">◑</span> Advanced, dense</td>
-            <td class="highlight"><span class="check">✓</span> Smart search + customizable filters</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted);font-weight:500">Predictive insights</td>
-            <td><span class="cross">✕</span> None</td>
-            <td><span class="cross">✕</span> None</td>
-            <td><span class="partial">◑</span> Strong logistics</td>
-            <td class="highlight"><span class="check">✓</span> Predictive dashboards for store health</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted);font-weight:500">Ease of use</td>
-            <td><span class="check">✓</span> Restaurant-friendly</td>
-            <td><span class="check">✓</span> Restaurant-friendly</td>
-            <td><span class="cross">✕</span> Overly complex</td>
-            <td class="highlight"><span class="check">✓</span> Balanced clarity + depth</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted);font-weight:500">Customer history</td>
-            <td><span class="cross">✕</span> Not exposed</td>
-            <td><span class="cross">✕</span> Not exposed</td>
-            <td><span class="partial">◑</span> Full but heavy</td>
-            <td class="highlight"><span class="check">✓</span> Streamlined customer profiles</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="display:flex;gap:16px;margin-top:14px">
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
-        <span class="check">✓</span> Strong
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
-        <span class="partial">◑</span> Partial
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
-        <span class="cross">✕</span> Absent
-      </div>
-    </div>
-    <!-- Competitor screenshots marquee — edge to edge -->
-    <div style="margin-top:48px;margin-left:-80px;margin-right:-80px;overflow:hidden">
-      <div class="logo-marquee" style="display:flex;gap:16px;animation:marqueeScroll 30s linear infinite;width:max-content">
-        <img src="images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide4_img11.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide4_img12.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img13.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img14.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-        <img src="images/slide5_img15.png" alt="" style="height:234px;border-radius:8px;flex-shrink:0">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 7 — STRATEGY (split-image left half)
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-7" data-section="system" style="background:#242529;background-image:none;padding:0;flex-direction:row;transform:none">
-  <canvas class="dots-canvas" id="canvas-7"></canvas>
-  <div style="flex:1;padding:48px 48px 32px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
-    <span class="overline" style="color:#CD5A2E">System Design</span>
-    <h2 style="max-width:480px;font-size:clamp(32px,4vw,44px)">From complex to clear</h2>
-    <div style="width:56px;height:3px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);border-radius:2px;margin:20px 0"></div>
-    <p class="subtitle" style="margin-bottom:24px">We mapped the spectrum of internal tools to find our <strong style="color:#FFB856">balanced middle ground</strong>.</p>
-    <div style="margin-bottom:24px">
-      <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text-muted);margin-bottom:8px">
-        <span>Simple consumer UIs</span>
-        <span>Over-engineered</span>
-      </div>
-      <div style="height:8px;border-radius:4px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);position:relative;margin:20px 0">
-        <div style="position:absolute;top:50%;left:52%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#242529;border:3px solid #FFB856;box-shadow:0 0 12px rgba(255,184,86,0.6)"></div>
-      </div>
-      <div style="display:flex;justify-content:center;font-size:11px;color:#FFB856;margin-top:10px;letter-spacing:0.1em;font-weight:600;text-transform:uppercase">↑ Our target</div>
-    </div>
-    <div style="display:flex;gap:10px">
-      <span class="tag" style="border-color:rgba(255,184,86,0.3);background:rgba(255,184,86,0.1);color:#FFB856">Balanced UX</span>
-      <span class="tag" style="border-color:rgba(166,5,106,0.3);background:rgba(166,5,106,0.1);color:#A6056A">Power user tools</span>
-      <span class="tag" style="border-color:rgba(41,23,109,0.3);background:rgba(41,23,109,0.15);color:#8a7cc8">Efficiency-first</span>
-    </div>
-  </div>
-  <div style="flex:0 0 auto;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-end">
-    <img src="images/slide10/slide7part1.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 8 — STRATEGY (split-image right half)
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-8" data-section="system" style="background:#242529;background-image:none;padding:0;flex-direction:row;transform:none">
-  <canvas class="dots-canvas" id="canvas-8"></canvas>
-  <div style="flex:0 0 55%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-start">
-    <img src="images/slide10/slide8part2.jpg" alt="" style="height:597px;width:auto;max-width:none;opacity:0.9;position:relative;z-index:2">
-  </div>
-  <div style="flex:1;padding:48px 80px 32px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
-    <span class="overline" style="color:#FFB856">Strategy</span>
-    <h2 style="max-width:480px;font-size:clamp(32px,4vw,44px)">
-      Three pillars to guide every decision
-    </h2>
-    <div style="width:56px;height:3px;background:linear-gradient(90deg,#FFB856,#CD5A2E,#A6056A,#29176D);border-radius:2px;margin:12px 0"></div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:linear-gradient(rgba(255,184,86,0.06),rgba(255,184,86,0.06)),linear-gradient(170deg,#2f3035,#242529);border-color:rgba(255,184,86,0.22)">
-        <div style="width:42px;height:42px;border-radius:10px;background:rgba(255,184,86,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFB856" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+        <div>
+          <div class="card-label red" style="margin-bottom:6px">The tension</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">Agents rebuilt the same context across four tools every call, and search was unreliable across all of them.</p>
         </div>
         <div>
-          <span class="card-label" style="color:#FFB856;margin-bottom:2px">01 · Simplify</span>
-          <h3 style="font-size:15px">Simplify the experience</h3>
-        </div>
-      </div>
-      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:linear-gradient(rgba(205,90,46,0.07),rgba(205,90,46,0.07)),linear-gradient(170deg,#2f3035,#242529);border-color:rgba(205,90,46,0.26)">
-        <div style="width:42px;height:42px;border-radius:10px;background:rgba(205,90,46,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CD5A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <div class="card-label amber" style="margin-bottom:6px">The call</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">Build one unified dashboard. I gave up the faster path of patching the existing tools, and phased delivery to manage the bigger build.</p>
         </div>
         <div>
-          <span class="card-label" style="color:#CD5A2E;margin-bottom:2px">02 · Unify</span>
-          <h3 style="font-size:15px">Unify design system foundations</h3>
+          <div class="card-label green" style="margin-bottom:6px">What it drove</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text);margin:0">The foundation of the product, and a tool sales could put in front of retailers.</p>
         </div>
       </div>
-      <div class="card" style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:linear-gradient(rgba(166,5,106,0.09),rgba(166,5,106,0.09)),linear-gradient(170deg,#2f3035,#242529);border-color:rgba(166,5,106,0.30)">
-        <div style="width:42px;height:42px;border-radius:10px;background:rgba(166,5,106,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6056A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+    </div>
+    <div style="flex:1;min-width:0;display:flex;justify-content:center;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.12s both">
+      <img src="images/Slide%209/1-Tableresults.jpg" alt="Unified search and results" style="width:100%;max-height:68vh;object-fit:cover;object-position:top;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.42);display:block">
+    </div>
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════
+     DECISION 02
+══════════════════════════════════════════════════ -->
+<div class="slide slide-dots layout-vc" data-section="decisions">
+  <div style="width:100%;display:flex;gap:48px;align-items:center">
+    <div style="flex:0 0 45%;min-width:0">
+      <span class="overline purple">Decision 02 / 03</span>
+      <h2 style="font-size:clamp(28px,3.2vw,42px);animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Giving retailers the power to act</h2>
+      <div class="divider"></div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+        <div>
+          <div class="card-label red" style="margin-bottom:6px">The tension</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">Retailer support could barely see an order and could not act on it, so every real issue escalated to CX.</p>
         </div>
         <div>
-          <span class="card-label" style="color:#A6056A;margin-bottom:2px">03 · Ship</span>
-          <h3 style="font-size:15px">Deliver in phases for quick wins</h3>
+          <div class="card-label amber" style="margin-bottom:6px">The call</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">Give them cancel, refund, reschedule, and reorder. I gave up the safety of read-only, and bought it back with permissioning and guardrails.</p>
+        </div>
+        <div>
+          <div class="card-label green" style="margin-bottom:6px">What it drove</div>
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Hepta Slab',serif;font-size:40px;color:var(--green);line-height:1">&darr;21%</span><span style="font-size:15px;color:var(--text)">escalations into internal CX</span></div>
         </div>
       </div>
     </div>
+    <div style="flex:1;min-width:0;display:flex;justify-content:center;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.12s both">
+      <img src="images/slide10/Orderdetails.png" alt="Order details with support actions" style="width:100%;max-height:68vh;object-fit:cover;object-position:top;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.42);display:block">
+    </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
-     SLIDE 9 — M1 KEY FEATURES
+     DECISION 03
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-9" data-section="components">
-  <span class="overline">M1 Key Features</span>
-  <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Milestone 1: Mastering the data
-  </h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;align-items:stretch;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+<div class="slide slide-dots layout-vc" data-section="decisions">
+  <div style="width:100%;display:flex;gap:48px;align-items:center">
+    <div style="flex:0 0 45%;min-width:0">
+      <span class="overline green">Decision 03 / 03</span>
+      <h2 style="font-size:clamp(28px,3.2vw,42px);animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Different views for different roles</h2>
+      <div class="divider"></div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
+        <div>
+          <div class="card-label red" style="margin-bottom:6px">The tension</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">I started table-first. But managers did not need the table. They needed to catch problems before they became losses.</p>
         </div>
-        <span class="card-label">Smart Search</span>
-      </div>
-      <h3>Find orders &amp; customers instantly</h3>
-      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/Slide%209/1-Tableresults.jpg" alt="Smart search results" style="display:block;width:100%;border-radius:8px">
+        <div>
+          <div class="card-label amber" style="margin-bottom:6px">The call</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-dim);margin:0">Role-based views. Agents keep the table; managers get insights and metrics. I gave up one view for everyone.</p>
+        </div>
+        <div>
+          <div class="card-label green" style="margin-bottom:6px">What it drove</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text);margin:0">The product&rsquo;s identity, plus two new surfaces: cost-control metrics and in-line upsell.</p>
+        </div>
       </div>
     </div>
-    <div class="card" style="display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="10" y1="18" x2="14" y2="18"></line></svg>
-        </div>
-        <span class="card-label purple">Advanced Filters</span>
-      </div>
-      <h3>Narrow results with precision</h3>
-      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/Slide%209/2-Filters-to-narrow.jpg" alt="Advanced filters" style="display:block;width:100%;border-radius:8px">
-      </div>
-    </div>
-    <div class="card" style="display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M3 9h18"></path><path d="M9 3v18"></path></svg>
-        </div>
-        <span class="card-label green">Saved Views</span>
-      </div>
-      <h3>Personalized layouts &amp; preferences</h3>
-      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/Slide%209/3-Saveview.jpg" alt="Saved views customization" style="display:block;width:100%;border-radius:8px">
-      </div>
+    <div style="flex:1;min-width:0;display:flex;justify-content:center;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.12s both">
+      <img src="images/slide13_img33.png" alt="Predictive manager dashboard" style="width:100%;max-height:68vh;object-fit:cover;object-position:top;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.42);display:block">
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 10 — M2 KEY FEATURES
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-10" data-section="components" style="padding-top:60px">
-  <canvas class="dots-canvas" id="canvas-10"></canvas>
-  <span class="overline purple">M2 Key Features</span>
-  <h2 style="max-width:580px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
-    Milestone 2: Depth &amp; intelligence
-  </h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;align-items:stretch;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box blue">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f80f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        </div>
-        <span class="card-label">Status Tracker</span>
-      </div>
-      <h3>Clear order journey visualization</h3>
-      <div style="padding-top:16px;display:flex;flex-direction:column;justify-content:space-between;border-radius:8px;overflow:hidden;flex:1;min-height:0">
-        <img src="images/slide10_img22.png" alt="Status tracker order journey" style="display:block;width:100%;border-radius:6px">
-        <img src="images/slide10/Timeline.png" alt="Timeline" style="display:block;width:100%;border-radius:6px">
-        <img src="images/slide10/Timeline-1.png" alt="Timeline alternate" style="display:block;width:100%;border-radius:6px">
-      </div>
-    </div>
-    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box purple">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        </div>
-        <span class="card-label purple">Order Details</span>
-      </div>
-      <h3>Complete order context at a glance</h3>
-      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/slide10/Orderdetails.png" alt="Order details view" style="display:block;width:100%;border-radius:8px">
-      </div>
-    </div>
-    <div class="card" style="display:flex;flex-direction:column;gap:14px;max-height:560px;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="icon-box green">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3dba7e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        </div>
-        <span class="card-label green">Predictive Dashboard</span>
-      </div>
-      <h3>Trends &amp; store-health signals</h3>
-      <div style="padding-top:16px;border-radius:8px;overflow:hidden">
-        <img src="images/slide13_img33.png" alt="Predictive dashboard" style="display:block;width:100%;border-radius:8px">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 11 — DESIGN PROCESS
-══════════════════════════════════════════════════ -->
-<div class="slide slide-light slide-grid" id="slide-11" data-section="components" style="justify-content:center;padding-top:40px">
-  <span class="overline amber">Design Process</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">4-week design sprint</h2>
-  <div class="divider"></div>
-  <div style="display:flex;gap:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:32px;height:32px;border-radius:8px;background:rgba(79,128,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;color:var(--accent)">1</span>
-      </div>
-      <h3 style="font-size:14px">Discovery</h3>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:32px;height:32px;border-radius:8px;background:rgba(124,90,245,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;color:var(--accent2)">2</span>
-      </div>
-      <h3 style="font-size:14px">Synthesis</h3>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:32px;height:32px;border-radius:8px;background:rgba(245,166,35,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;color:var(--amber)">3</span>
-      </div>
-      <h3 style="font-size:14px">Design</h3>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:32px;height:32px;border-radius:8px;background:rgba(61,186,126,0.13);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;color:var(--green)">4</span>
-      </div>
-      <h3 style="font-size:14px">Handoff</h3>
-    </div>
-  </div>
-  <p class="subtitle" style="max-width:640px;margin-top:24px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.15s both">
-    To ship at this pace, we sequenced workstreams to run in parallel. While research was testing prototypes, design was handing off component structures to engineering for back-end scaffolding. Each research cycle fed directly into the next design iteration — keeping momentum high and rework low.
-  </p>
-</div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 12 — DESIGN PROGRESSION (ITERATIONS 1–3)
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-12" data-section="components" style="justify-content:center">
+<div class="slide slide-dots" id="slide-12" data-section="delivery" style="justify-content:center">
   <span class="overline">Iteration</span>
   <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Shaping the design</h2>
   <div class="divider"></div>
@@ -1603,34 +1209,10 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 13 — DESIGN PROGRESSION (ITERATIONS 4–6)
-══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-13" data-section="components" style="justify-content:center">
-  <span class="overline purple">Visual Design</span>
-  <h2 style="animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">Dialing the visual style</h2>
-  <div class="divider"></div>
-  <div class="grid-3" style="margin-top:8px;align-items:start;flex:1;min-height:0;overflow:hidden;animation:subtlePop 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both">
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent2)">Third iteration</span>
-      <img src="images/Progression/4.png" alt="Third iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber)">Fourth iteration</span>
-      <img src="images/Progression/5.png" alt="Fourth iteration" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--green)">Final direction</span>
-      <img src="images/Progression/6.png" alt="Final direction" style="display:block;width:100%;border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,0.5)">
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 14 — IMPLEMENTATION & ROLLOUT
 ══════════════════════════════════════════════════ -->
-<div class="slide slide-dots" id="slide-14" data-section="components">
+<div class="slide slide-dots" id="slide-14" data-section="delivery">
   <span class="overline green">Implementation &amp; Rollout</span>
   <h2 style="max-width:560px;animation:fadeInUp 0.45s cubic-bezier(0.22,1,0.36,1) both">
     Phased delivery for continuous impact
@@ -1701,7 +1283,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 15 — IMPACT
 ══════════════════════════════════════════════════ -->
@@ -1741,7 +1322,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 16 — WHAT WE LEARNED
 ══════════════════════════════════════════════════ -->
@@ -1784,7 +1364,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SLIDE 17 — TAKEAWAY
 ══════════════════════════════════════════════════ -->
@@ -1817,7 +1396,6 @@ html.presenter-mode .nav-hint { display:none !important; }
     </div>
   </div>
 </div>
-
 <!-- ══ QUESTIONS ══ -->
 <div class="slide slide-center slide-light" data-section="impact" style="overflow:hidden;">
   <canvas id="thankyou-canvas" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s; z-index: 0;" width="1920" height="957"></canvas>
@@ -1976,7 +1554,7 @@ function initDotCanvas(canvasId) {
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total = slides.length;
 let current = 0;
-const sections = { problem:0, system:8, components:10, impact:16 };
+const sections = { problem:0, decisions:4, delivery:7, impact:9 };
 
 function updateNav() {
   const entries = Object.entries(sections).sort((a, b) => a[1] - b[1]);
@@ -2339,7 +1917,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ── Embedded notes data (updated on every Save) ── -->
-<script id="deck-notes-data" type="application/json">["This project imagined a new Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer support teams use daily to help customers having problems with delivery orders.\n\nFor this project I was the lead designer, worked closely with a researcher, data scientist, one front end and one back end eng. \n\nThe timeline to m1 launch was 2 months. ", "Quick context before we get into the problems.\n\nThe Orders Dashboard runs inside the Instacart Partner Platform, or IPP. It's the tool retailers use to configure their online and physical stores, manage their catalog and operations, and it's also where their teams do customer support.\n\nSupport is the corner of IPP where this project lives, and that's the space I set out to improve.", "a quick sense of scale: \nThe Instacart Partner Portal powers over 2,200 retail banners across roughly 3,000 retail partners, reaching over 26 million customers by early 2026. Over the platform's lifetime, 1.6 billion grocery orders have moved through it.\n\nThe point: these aren't internal tools nobody sees. These surfaces ARE Instacart in front of every retailer we're trying to win and keep.", "A little about Instacart business and operations:\nWe powers multiple retailers e-commerce website. throughout our white label product called SFX Pro.\nRetailers like Costco, Kroger, Safeway are powered by instacart technology, and we theme their websites through our design system using design tokens. \n\nSome terminology that would be helpful for this project:\nCX agents (that's what we call our internal instacart support) \nRetailer support (are the retailers front line, the first to answer and attempt to solve customer problems with an order.\n\nCX teams were using 4 outdated tools to track costumer and order information. \nThey came to me with a request to help unified those tools. Handling time for retailer escalation was pretty high, ranging 45-58 minutes. \n\nThrough research, I also found that retailer support were using some of those tools as well to look up information. \nBut worse for them, they weren't able to see order information, or cancel orders, provide refunds, reorder or reschedule. actions that should be pretty normal for a support team. \n\nSo to resolve some of those customer problems, retailer support team would need to escalate to our CX agents.\n\n\nMy goal was to create a unified dashboard with more visibility of order status, more execution power for retailers, faster answers, fewer escalations.", "So to recap, our main pain points were\n\nthat data lived in many places, different tools for different information, \n\n(order number would pull up a receipt, but not itemized list)\n\nNone of the support teams had a clear picture of orders lifecycle end to end.\n\nfor all of them search was unreliable and lack management tools to filter them. \n\nThat combination slowed every interaction.", "I ran a pretty intensive research sprint\nand in 4 weeks I was able to learn the current workflows, and iterate on designs fast.\n\nI heard from interviews with retailer, customers and I also benchmarked our competitors. \n\nI learned that our agents kept saying, ‘I just need to find the order fast and trust the information I see.’ or other common phrase 'I can't see that on my dashboard, so I need to escalate to instacart '\nHelping with those issues became our Northstar.", "When I looked at competitor tools\n\nDoorDash: a restaurant-facing delivery service, very clear; weak agent tools \n\nAmazon Delivery: strong tracking & predictive logistics; and very complex UI\n\nOur target became: Amazon-level visibility + doordash's efficiency.", "I also received feedback from sales team, and we wanted our tooling to reflect a unique selling point. \n\nLooking across leaders in the industry I tried to map retailer needs to differentiators that could give our tools an edge over the competition from the retailer side. \n\nFor instacart those features were clear order visibility, universal search, predictive insights for retailers.", "I also looked at our internal tools that we were trying to integrate and noticed that they differentiated from simple and clear to overwhelming and powerful. \nI decided to focus on a balanced approach.", "The design principles to build our tool became\n\nSimplicity: simplify the complexity of the experience\n\nUnification: reduce to one single data source for all users data and orders information  \n\nAnd ship fast: the project was very large, and our original goal to start shipping was within two months.\n\nso I opted for a phased delivery approach for quick wins that help the teams feel supported. ", "The first milestone was around adding data management tools\n\nI focused on accelerating finding orders and customer information.\n\nhow to narrow results, through customizable filters\n\nand added the ability to save preferences so that support agents had the ability to customize their workflows and jump right back Into their preferences over different sessions. ", "Milestone two introduce order tracking visualization so that agents could easily see whether an order was going well, or not, and diagnosed the problem.\n\nI also began adding some of that missing functionality, with guardrails like permissioning, allowing for first time for retailers to re-schedule, re-order, or refund without escalating to CX.\n\nI added order details and customer information allowing agents to understand context in seconds, for example highlighting potentially risky costumer that call often for refunds. \n\nand I began testing displaying more data like Handling times, orders refunded, cost of orders refunded, cancel orders totals, etc. \n\nall of this metrics was to surface to support managers metrics and highlight potential issues before they became loses. So if appeasements increased, a manager would be able to diagnose potential issues in a product, or coach the team on the cost of giving refunds too freely. \n\nLastly I also started experimenting with upselling features in-line offering more support and help to retailers as they grew in size. One example of those products is that if a retailer is over capacity in their picking staff, they can request pickers from our workforce to come to their store and cover orders.\n", "I moved quickly — just 4 weeks from kickoff to prototype. and 4 more weeks M1 features to start shipping\n\nI tested with CX and retailer teams weekly. \nI got used to a cycle of reviews and feedback - I ran presentations to Krogger, Costco, Hannafords to At the time we were still attempting to sign them into the platform. So we wanted to lure them, but also check the pulse on the design and the new actions we were adding..\n\nEng alignment was sequenced and kickedoff shortly after design, and we iterated in parallel. We Started with Backend, move to m1 when designs were able to be handed off.", "Here are some rough early iterations.\n\nYou can see the progression towards a rough mock, focused around search and adding some metrics\nand visualization graphs. Early on I was still pretty much centered around a table.\n\nThe first test releases gave immediate time savings via the new filters and search.\n\nThis new Universal search replaced the order number search. and allowed agents to search by name, phone number or order. \n", "As I continued to iterate and refine the visuals, \nI started hearing that the table may not be as important in all use cases. specially for Retail managers,  \n\nSo I ended up having it as an optional customization. and under a role flag, so it will show for support but not for managers. \n\nI centered more around actionable insights, education, upselling other services when the metrics show that a business could benefit from them, and search remain available as an entry point still that would take them to the table of results. ", "Here is the milestone breakdown\n\nM1 focused on providing quick wins on time savings with data management: universal search and filters.\nM2 to give more clarity and visibility, plus added superpowers to retailer support to lower escalation: Cancel, reorder etc.\n\nM3 is in progress last time I checked. Mostly slowed down by legal checking on PII - this milestone is focused on retrieving more data from shopper app, so we could display chat between costumers and shoppers, shopper location, etc and help diagnose delayed orders or potential fraud better.\n\nM4 was planned for later this year and it was about escaling actionable insights, but I'm going assumed with the new AI strategy company wide the approach may change. ", "Within two months, handling time dropped forty percent. \n\nI was successful in consolidationg 4 different internal dashboards into a new one, giving managers and customer support a lot more clarity with support metrics, costs, and allowing them to resolve customer issues faster leading to also our costumers being more satisfied with our delivery service\n\nEscalations to our internal CX team also fell 21% since we empowered Retailer support to handle issues themselves and faster.", "some lessons: — \n\nship value early and learn fast, so you can iterate. \n\nstay close to research, since I was able to stayed close to our users mental models. and I was able to iterate on the status tracker steps, and the taxonomy very quickly and get feedback from real users.\n\nAnd clarity always beats complexity - so balance usability and accuracy, without making the tool so complex that no-one can understand them.", "My biggest take away\n\nThis project reminded me that good tools aren’t about showing more data. they’re about giving people good context and the confidence to act. ", "Opening it up for questions."]</script>
+<script id="deck-notes-data" type="application/json">["This project imagined a new Instacart’s Orders Dashboard — a tool that our CX Support agents and retailer support teams use daily to help customers having problems with delivery orders.\n\nFor this project I was the lead designer, worked closely with a researcher, data scientist, one front end and one back end eng. \n\nThe timeline to m1 launch was 2 months. ", "Quick context before we get into the problems.\n\nThe Orders Dashboard runs inside the Instacart Partner Platform, or IPP. It's the tool retailers use to configure their online and physical stores, manage their catalog and operations, and it's also where their teams do customer support.\n\nSupport is the corner of IPP where this project lives, and that's the space I set out to improve.", "a quick sense of scale: \nThe Instacart Partner Portal powers over 2,200 retail banners across roughly 3,000 retail partners, reaching over 26 million customers by early 2026. Over the platform's lifetime, 1.6 billion grocery orders have moved through it.\n\nThe point: these aren't internal tools nobody sees. These surfaces ARE Instacart in front of every retailer we're trying to win and keep.", "CX came to me with a request. They were working across four outdated tools to track customer and order information, and they wanted them unified. Handling time on a retailer escalation was running 45 to 58 minutes.\n\nTwo roles to know: CX agents are our internal Instacart support. Retailer support is the retailer's own front line, the first to try to solve a customer's order problem.\n\nWhen I dug in, the real problem was bigger than the tools. Retailer support could barely see order information and could not act on it. They could not cancel, refund, reschedule, or reorder. So every hard case got escalated to our CX team, which is slower for the customer and a direct cost to us.\n\nSo I reframed the mandate around three business goals: give retailers the power to resolve issues themselves, cut the escalations coming into CX, and give managers visibility into what support was actually costing. Turning a tooling request into those outcomes set the direction for everything after.", "First decision, and the biggest: build one unified tool, or just make the four existing ones better.\n\nThis is where the research pointed. In a four week sprint I interviewed CX and retailer teams and audited competitors. Our agents kept saying the same thing: I just need to find the order fast and trust what I see. Four tools made that impossible.\n\nOn benchmarks: DoorDash was clean but had weak agent tools. Amazon had deep visibility but was too complex. So the target I set was Amazon-level visibility with DoorDash-level efficiency, the balanced middle between simple and overwhelming.\n\nBusiness side, patching four tools would have shipped faster, but it would not have given sales a single product to put in front of retailers, and it would not have cut the escalation cost. So I chose to unify. The trade-off was scope, so I phased delivery to get value out early instead of making the teams wait a year.", "Second decision, and the one with the clearest business payoff. Retailer support was essentially read-only, so anything hard came to our CX team.\n\nCustomer side, that is a bad experience for the retailer and the shopper waiting on a fix. Business side, a big share of those escalations were avoidable cost, and retailer self-sufficiency was something sales could sell as a differentiator.\n\nSo I gave retailers real actions: cancel, refund, reschedule, reorder. The trade-off was risk, because you are handing out the power to move money, which opens fraud and cost exposure. I bought that back with permissioning and guardrails, so the power scaled with trust. The result was escalations into CX falling 21%.\n\nIf asked what that is worth: I did not have finance's numbers, so I sized it from my own, using just the base support wage with no benefits or overhead. A 21% deflection plus the handling-time savings comes out close to a million a year, and that is a floor.", "Third decision came out of iteration, and it is where I changed the product's direction.\n\nI started centered on a table, because that is how agents work. But as I tested, managers kept telling me they needed something else. A manager wants to see that appeasements are climbing this week and go coach the team before it becomes a real loss, and a raw table buries that.\n\nSo I moved to role-based views under a role flag. Agents keep search and the table as an entry point. Managers get actionable insights instead. The trade-off was simplicity: I gave up the clean idea of one view for everyone, and took on more permissioning.\n\nBut it gave the product its identity, and it opened two business surfaces that were not in the original ask. Manager metrics protect margin by catching refund and appeasement leakage. And in-line upsell surfaces services when the data shows a retailer would benefit, like offering our picker workforce when a store is over capacity. That is a new revenue path, from a support tool.", "Here are some rough early iterations.\n\nYou can see the progression towards a rough mock, focused around search and adding some metrics\nand visualization graphs. Early on I was still pretty much centered around a table.\n\nThe first test releases gave immediate time savings via the new filters and search.\n\nThis new Universal search replaced the order number search. and allowed agents to search by name, phone number or order. \n", "Here is how I sequenced it, and the order was a deliberate priority call. I chose what shipped when, and why.\n\nM1 was data management: universal search and filters. I put it first because finding the order fast was the loudest pain and the cheapest, fastest win, so the teams felt supported early.\nM2 added the clarity and the powers: the status tracker, and the retailer actions that drove the escalation drop.\nM3 is in progress, held up mostly by legal reviewing PII. It pulls more data from the shopper app, like the customer-shopper chat and shopper location, to diagnose delayed orders and fraud.\nM4 was actionable insights, planned for later. With the company-wide AI strategy now, I would assume that approach changes.\n\nThe phasing itself was the leadership move: ship value every milestone, learn from real use, and de-risk a very large build instead of waiting to launch it whole.", "Within two months, handling time dropped 40%, and escalations into our internal CX team fell 21% because retailer support could finally resolve issues themselves.\n\nI consolidated four internal dashboards into one, and gave managers real visibility into support metrics and cost, so they can resolve issues faster and catch problems earlier.\n\nTying it back to the business: the escalation drop is CX cost avoided, the retailer powers became a differentiator sales could use in live deals with Kroger, Costco, and Hannaford, and the manager metrics and upsell opened margin protection and a new revenue path. The 40% is the headline number, and underneath it, this became a support tool that started paying the business back.", "some lessons: — \n\nship value early and learn fast, so you can iterate. \n\nstay close to research, since I was able to stayed close to our users mental models. and I was able to iterate on the status tracker steps, and the taxonomy very quickly and get feedback from real users.\n\nAnd clarity always beats complexity - so balance usability and accuracy, without making the tool so complex that no-one can understand them.", "My biggest take away\n\nThis project reminded me that good tools aren’t about showing more data. they’re about giving people good context and the confidence to act. ", "Opening it up for questions."]</script>
 
 <!-- ── Notes panel: visible in edit mode ── -->
 <div id="notes-panel">
@@ -2379,7 +1957,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="p-next-section">
       <div class="p-label">Up Next</div>
       <div class="p-next-title" id="p-next-title">—</div>
-      <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
+            <button class="p-reset-btn" id="p-reset-btn" style="margin-top:24px;">↺ Reset Timer</button>
     </div>
   </div>
 </div>
