@@ -17,6 +17,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#e8ecf5;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;padding:40px 0}
+p,li,.tagline,.ai-item,.cap,.edu span,.award span,.job-sub,.co-list{text-wrap:pretty}
 .page{width:1000px;min-height:1294px;margin:0 auto;background:#fff;padding:56px 60px 48px;box-shadow:0 20px 60px rgba(7,16,31,.15)}
 @media print{
   body{background:#fff;padding:0}
@@ -112,6 +113,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
       <div class="block">
         <div class="kicker"><span class="n">02 /</span> AI &amp; Design Engineering</div>
+        <div class="ai-item"><b>AI-native design system pilot</b> <span class="arw">→</span> Building a code-first design system where code is the single source of truth and Figma mirrors it through an MCP (React Aria → IDS Core → TDS). It lets me ship code while holding the system's vision and quality bar, and packages the context I build each component with into a shared prompt harness, so any designer can prompt with that same context and generate on-system components. Being tested on 2 real projects with Platform leads this quarter.</div>
         <div class="ai-item"><b>Token architecture + AI migration</b> <span class="arw">→</span> Designed a cascading primitive → semantic → component token system (1:1 with code) and used AI to generate and migrate the token scheme, making instant theming, dark mode, and the Instacart rebrand real in Figma and in code.</div>
         <div class="ai-item"><b>Migration QA plugin</b> <span class="arw">→</span> Built a Figma plugin to audit all designed components, catching and correcting token drift in fonts, effects, borders, colors, and radii where hardcoded values had crept in.</div>
         <div class="ai-item"><b>Code Connect pipeline</b> <span class="arw">→</span> Used Claude Code + the Figma MCP to update 185+ components and wire Code Connect, linking the Figma library directly to our GitHub repo.</div>
